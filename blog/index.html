@@ -1,1 +1,106 @@
-{"id":"/blog/index.html","path":"/blog/index.html","sha":"f22e2c56ef5b270170e63f1b1ca073fa8b7c18c2","mime_type":"text/html","size":11833,"site_id":"86bf07f4-401a-46cd-a6d5-9ce7ef48b81c","deploy_id":"69d6fc4c4a68e239845841ce"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Archive | Connor with Honor | Every Episode. Written.</title>
+<meta name="description" content="Every episode of Connor with Honor, written in full. AI, fasting, real estate, faith. Four pillars. One man. Searchable, readable, shareable. The daily opinion show archive.">
+<meta property="og:image" content="https://img.youtube.com/vi/aPs8uYVjtKk/maxresdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="keywords" content="Connor with Honor blog, Connor MacIvor episodes, AI news, fasting journal, food addiction recovery, Santa Clarita real estate, sellers only agent, daily show archive, opinion show">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+.scan-line{position:fixed;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);opacity:.12;animation:scanDown 8s linear infinite;z-index:3;pointer-events:none}
+@keyframes scanDown{0%{top:-2px}100%{top:100vh}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+.archive-hero{padding:140px 2rem 60px;text-align:center;max-width:800px;margin:0 auto}
+.archive-hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4.5rem);text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:1rem}
+.archive-hero h1 span{color:var(--cyan)}
+.archive-hero p{font-size:1.05rem;color:var(--gray-light);line-height:1.8}
+.section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:1rem}
+.section-label::before{content:'';width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite}
+.episodes{max-width:900px;margin:0 auto;padding:40px 2rem 100px}
+.ep-card{display:block;background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem 2.5rem;margin-bottom:1rem;text-decoration:none;color:var(--white);transition:all .3s;position:relative;overflow:hidden}
+.ep-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(var(--cyan),var(--red))}
+.ep-card:hover{border-color:rgba(0,229,255,0.2);transform:translateX(5px);box-shadow:0 6px 30px rgba(0,0,0,.3)}
+.ep-card .ep-meta{font-family:var(--font-mono);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem;display:block}
+.ep-card h3{font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;line-height:1.3}
+.ep-card .ep-excerpt{font-size:.9rem;color:var(--gray-light);line-height:1.6;margin-bottom:.75rem}
+.ep-card .ep-pills{display:flex;gap:.5rem;flex-wrap:wrap}
+.ep-card .ep-pills span{font-family:var(--font-mono);font-size:.5rem;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border:1px solid}
+.ep-machine{border-color:var(--cyan-dim)!important;color:var(--cyan)}.ep-body{border-color:var(--red-dim)!important;color:var(--red)}.ep-house{border-color:rgba(255,196,0,.5)!important;color:var(--gold)}.ep-anchor{border-color:rgba(255,255,255,.3)!important;color:var(--white)}
+.back-home{display:block;text-align:center;padding:40px 2rem;font-family:var(--font-mono);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);text-decoration:none}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+.macivor{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+.disclosure{font-size:.75rem;color:var(--gray);max-width:800px;margin:2rem auto;text-align:center;line-height:1.6;padding:1.5rem;border:1px solid rgba(255,255,255,0.03);background:rgba(0,0,0,0.2)}
+@media(max-width:768px){.nav-links{display:none}}
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"></head>
+<body>
+<div class="scan-line"></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links"><a href="/">Home</a><a href="/#show">The Show</a><a href="/#bookme">Book Me</a><a href="/#consulting">Work With Me</a></div></div></nav>
+
+<div class="archive-hero">
+<span class="section-label">// The Archive</span>
+<h1>Every Episode. <span>Written.</span></h1>
+<p>Every episode of Connor with Honor, broken down by the four pillars, fully written, fully searchable, fully optimized. New post every day. This is the permanent record.</p>
+</div>
+
+<div class="episodes">
+
+<a class='ep-card' href='/blog/2026-098-mythos-fortune-50-only'>
+<span class="ep-meta">CWH-2026-098B // April 8, 2026</span>
+<h3>Mythos Is Not for You. It Is for the Fortune 50.</h3>
+<p class="ep-excerpt">Anthropic built Mythos. It found 27-year-old software vulnerabilities nobody ever caught. And they are only giving it to the Fortune 50 and the government. Constitutional AI. OpenClaw regret. The Ship of Theseus.</p>
+<div class="ep-pills"><span class="ep-machine">The Machine</span></div>
+</a>
+
+<a class='ep-card' href='/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people'>
+<span class="ep-meta">CWH-2026-098 // April 8, 2026</span>
+<h3>Anthropic Leaked Something Too Dangerous for Regular People</h3>
+<p class="ep-excerpt">Anthropic accidentally released code revealing Mythos, an AI model too powerful for us. OpenClaw regret. Iran ceasefire. Insulin is the switch, not sugar. Your body is a warehouse of fuel you are not accessing. Day 8 of Fast 3.</p>
+<div class="ep-pills"><span class="ep-machine">The Machine</span><span class="ep-body">The Body</span><span class="ep-house">The House</span><span class="ep-anchor">The Anchor</span></div>
+</a>
+
+<a class='ep-card' href='/blog/2026-097-ai-could-cure-cancer-tomorrow'>
+<span class="ep-meta">CWH-2026-097 // April 7, 2026</span>
+<h3>AI Could Cure Cancer Tomorrow. Would They Let It?</h3>
+<p class="ep-excerpt">All the compute in the world pointed at cancer. Would they allow it? Jason Fung Hunger Code. Three types of hunger. Selling in a war economy. Voice AI for small business. Day 7 of Fast 3.</p>
+<div class="ep-pills"><span class="ep-machine">The Machine</span><span class="ep-body">The Body</span><span class="ep-house">The House</span><span class="ep-anchor">The Anchor</span></div>
+</a>
+
+<a class='ep-card' href='/blog/2026-096-russian-roulette-with-superintelligence'>
+<span class="ep-meta">CWH-2026-096 // April 6, 2026</span>
+<h3>Russian Roulette With Superintelligence</h3>
+<p class="ep-excerpt">Altman's CFO turned on him. AI models are mining crypto without permission. P-doom sits at one in six. Day 6 of Fast 3. Rates at 6.5%. Faith on a Monday.</p>
+<div class="ep-pills"><span class="ep-machine">The Machine</span><span class="ep-body">The Body</span><span class="ep-house">The House</span><span class="ep-anchor">The Anchor</span></div>
+</a>
+
+</div>
+
+<a href="/" class="back-home">&larr; Back to connorwithhonor.com</a>
+
+<div class="disclosure">Sellers Only Agent&#8482; is a trademark of Connor <span class="macivor">MacIvor</span> (USPTO #99738462). All real estate commissions are negotiable per California Business and Professions Code Section 10140.6. Connor <span class="macivor">MacIvor</span> | CA DRE #01238257 | SYNC Brokerage. The $17,000 fixed fee is all-inclusive with no additional pass-through costs to the seller.</div>
+
+<footer><div class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></div></footer>
+</body>
+</html>
