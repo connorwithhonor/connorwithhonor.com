@@ -1,7 +1,7 @@
 # ConnorWithHonor.com
 
 ## Voice
-Connor MacIvor — direct, authoritative, SCV local authority. AI + real estate + personal brand. Daily Download show host. Speaks from experience (23yr LAPD, licensed Realtor, AI builder). No fluff.
+Connor MacIvor — direct, authoritative, SCV local authority. AI + real estate + personal brand. Daily Download show host. Speaks from experience (20yr LAPD, 23yrs total law enforcement, licensed Realtor, AI builder). No fluff.
 
 ## Standing Orders
 - Blog posts are Daily Download series (numbered 2026-XXX)
