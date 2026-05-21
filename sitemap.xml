@@ -1,81 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-096-russian-roulette-with-superintelligence/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://connorwithhonor.com/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-096</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://connorwithhonor.com/990</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-097-ai-could-cure-cancer-tomorrow/</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://connorwithhonor.com/ai</loc>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://connorwithhonor.com/ai/daily-download</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-098-mythos-fortune-50-only/</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://connorwithhonor.com/ai/bigger-picture</loc>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/blog/2026-099-the-homebuyer-advantage-what-credit-union-seminars-wont-tell-you/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/2026-099-the-wire-mortgage-rates-646-ai-power-deals-metal-thefts-scv</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/2026-100-200-messages-nobody-flagged-fsu-shooter-chatgpt-coreweave-ai-infrastructure/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/2026-101-meta-spent-14-billion-came-in-fourth-goldman-16k-jobs-gone-commission-lie/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/2026-103-your-real-estate-agent-uses-ai-mine-builds-it/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/2026-104-ai-pulled-every-scv-closing-39-sales/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://connorwithhonor.com/blog/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://connorwithhonor.com/ai/for-small-business</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://connorwithhonor.com/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://connorwithhonor.com/ai/for-real-estate</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/speaking</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-104-ai-pulled-every-scv-closing-39-sales</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-103-your-real-estate-agent-uses-ai-mine-builds-it</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-101-the-window-already-closing</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-101-meta-spent-14-billion-came-in-fourth-goldman-16k-jobs-gone-commission-lie</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-100-you-are-training-ai-for-free-own-your-memory</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-100-200-messages-nobody-flagged-fsu-shooter-chatgpt-coreweave-ai-infrastructure</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-099-the-wire-mortgage-rates-646-ai-power-deals-metal-thefts-scv</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-099-the-homebuyer-advantage-what-credit-union-seminars-wont-tell-you</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-098-mythos-fortune-50-only</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-097-ai-could-cure-cancer-tomorrow</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://connorwithhonor.com/blog/2026-096-russian-roulette-with-superintelligence</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
