@@ -234,6 +234,34 @@ footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:ce
 
 <section class="cta-section"><div class="cta-inner reveal"><h2>Follow the <span style="color:var(--cyan)">Show</span></h2><p>New episode every day. AI, fasting, real estate, and faith. No script. No filter. No committee. One man, four fronts, zero excuses. Subscribe on YouTube, listen on the podcast, or just pick up the phone.</p><a href="https://www.youtube.com/@AIwithHonor" target="_blank" class="btn-primary">Subscribe on YouTube</a><br><a href="tel:6614001720" class="cta-phone">661-400-1720</a></div></section>
 
+<section style="background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,229,255,0.04) 100%);padding:80px 2rem;border-top:1px solid rgba(0,229,255,0.1);position:relative;z-index:2;">
+<div style="max-width:680px;margin:0 auto;text-align:center;">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;">// The Daily Download · Direct to Inbox</div>
+<h2 style="font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.4rem);text-transform:uppercase;letter-spacing:1px;color:#fff;line-height:1.2;margin-bottom:16px;">AI News with the<br>Brain Attached.</h2>
+<p style="color:#a8a8a8;font-size:1.02rem;line-height:1.7;margin-bottom:8px;">Weekday morning AI news. Weekly Santa Clarita Valley real estate market deep-dives. Long-form essays when something needs to be said.</p>
+<p style="color:#888;font-size:.92rem;line-height:1.6;margin-bottom:28px;"><strong style="color:#fff;">No spam. No selling. Just signal.</strong> Unsubscribe any time and Connor will not chase you.</p>
+
+<form name="daily-download-subscribe" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you/" style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;max-width:560px;margin:0 auto;">
+<input type="hidden" name="form-name" value="daily-download-subscribe">
+<input type="hidden" name="signup-source" value="homepage">
+<p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+<input type="text" name="first-name" placeholder="First name" required style="padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,229,255,0.2);color:#fff;font-family:'Source Serif 4',serif;font-size:.95rem;border-radius:0;outline:none;">
+<input type="email" name="email" placeholder="Your email" required style="padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,229,255,0.2);color:#fff;font-family:'Source Serif 4',serif;font-size:.95rem;border-radius:0;outline:none;">
+<button type="submit" style="padding:14px 24px;background:var(--cyan);color:var(--bg-primary);border:none;font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:700;">Send It</button>
+</form>
+
+<p style="margin-top:18px;color:#666;font-size:.78rem;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">// or <a href="/blog/" style="color:#00e5ff;text-decoration:none;">browse the archive</a> · <a href="/about/" style="color:#00e5ff;text-decoration:none;">about Connor</a></p>
+</div>
+</section>
+
+<style>
+form[name="daily-download-subscribe"] input[type="text"]::placeholder,
+form[name="daily-download-subscribe"] input[type="email"]::placeholder{color:#666}
+form[name="daily-download-subscribe"] input:focus{border-color:var(--cyan) !important;background:rgba(0,229,255,0.04) !important}
+form[name="daily-download-subscribe"] button:hover{filter:brightness(1.15)}
+@media(max-width:640px){form[name="daily-download-subscribe"]{grid-template-columns:1fr !important;}}
+</style>
+
 <div class="disclosure">Sellers Only Agent&#8482; is a trademark of Connor <span class="macivor">MacIvor</span> (USPTO #99738462). All real estate commissions are negotiable per California Business and Professions Code Section 10140.6. Connor <span class="macivor">MacIvor</span> | CA DRE #01238257 | SYNC Brokerage. The $17,000 fixed fee is all-inclusive with no additional pass-through costs to the seller.</div>
 
 <footer><div class="footer-inner"><div class="footer-links"><a href="/blog/" target="_blank">Blog</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://scv123.com" target="_blank">SCV123</a><a href="https://scvreviews.com" target="_blank">SCV Reviews</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor <span class="macivor">MacIvor</span> | CA DRE #01238257 | SYNC Brokerage<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer>

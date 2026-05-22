@@ -65,6 +65,28 @@ footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:ce
 <p>Every episode of Connor with Honor, broken down by the four pillars, fully written, fully searchable, fully optimized. New post every day. This is the permanent record.</p>
 </div>
 
+<div style="max-width:900px;margin:0 auto 40px;padding:0 2rem;">
+<div style="background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.2);border-left:4px solid #00e5ff;padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;">
+<div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#00e5ff;margin-bottom:6px;">// Get the show in your inbox</div>
+<h2 style="font-family:'Oswald',sans-serif;font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 6px;line-height:1.2;">Daily Download · Direct to You</h2>
+<p style="font-size:.92rem;color:#a8a8a8;margin:0;line-height:1.5;">Weekday AI news, weekly SCV real estate market data, long-form essays. No spam. Unsubscribe whenever.</p>
+</div>
+<form name="daily-download-subscribe" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you/" style="display:flex;flex-direction:column;gap:8px;min-width:280px;">
+<input type="hidden" name="form-name" value="daily-download-subscribe">
+<input type="hidden" name="signup-source" value="blog-index">
+<p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+<input type="email" name="email" placeholder="Your email" required style="padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,229,255,0.25);color:#fff;font-size:.9rem;outline:none;font-family:inherit;">
+<button type="submit" style="padding:10px 18px;background:#00e5ff;color:#0a0a0f;border:none;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:700;">Subscribe</button>
+</form>
+</div>
+</div>
+<style>
+@media(max-width:760px){.archive-hero ~ div > div[style*="grid-template-columns:1fr auto"]{grid-template-columns:1fr !important;}}
+form[name="daily-download-subscribe"] input:focus{border-color:#00e5ff !important;background:rgba(0,229,255,0.04) !important}
+form[name="daily-download-subscribe"] button:hover{filter:brightness(1.15)}
+</style>
+
 <div class="episodes">
 
 <a class='ep-card' href='/blog/2026-107-backup-script-wiped-5-of-my-own-sites/'>
