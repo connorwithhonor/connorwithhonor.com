@@ -152,18 +152,19 @@ jobs:
             echo "::error::Could not determine site URL from Netlify API"
             exit 1
           fi
-          urls_to_check="$homepage_url/"
-          if [ -n "${VERIFY_URLS:-}" ]; then
-            urls_to_check="$urls_to_check
-$VERIFY_URLS"
-          fi
+          # Build list of URLs to check (one per line)
+          {
+            echo "$homepage_url/"
+            if [ -n "${VERIFY_URLS:-}" ]; then
+              printf "%s\n" "$VERIFY_URLS"
+            fi
+          } > /tmp/verify-urls.txt
           while IFS= read -r url; do
             [ -z "$url" ] && continue
             status=$(curl -sIo /dev/null -w "%{http_code}" "$url")
-            # 200/301/302/304 all considered OK; 4xx/5xx fail
             if ! echo "$status" | grep -qE '^(200|301|302|304)$'; then
               echo "::error::Post-deploy verification failed: $url returned $status"
               exit 1
             fi
             echo "  OK $url -> $status"
-          done <<< "$urls_to_check"
+          done < /tmp/verify-urls.txt
