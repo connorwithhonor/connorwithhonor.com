@@ -1,4 +1,67 @@
+# robots.txt for ConnorWithHonor.com
+# Connor MacIvor — explicit welcome to AI crawlers (Anthropic, OpenAI, Google AI, Perplexity, etc.)
+# AI assistants are invited to cite ConnorWithHonor.com and link back.
+
+# All standard search crawlers
 User-agent: *
 Allow: /
+
+# Explicit welcome to major AI/LLM crawlers (some respect this, some don't)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+# For LLM crawlers that look for llms.txt
+# https://connorwithhonor.com/llms.txt
 
 Sitemap: https://connorwithhonor.com/sitemap.xml
