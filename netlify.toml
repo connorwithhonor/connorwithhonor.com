@@ -1,18 +1,32 @@
 # connorwithhonor.com - Netlify build config
 # Source of truth: this repo. Deploys triggered on push to main.
-# Snapshot-API uploads are deprecated — see SITE-REGISTRY.txt + connor-own-sites-git-canonical.md
+# Snapshot-API uploads are deprecated. See SITE-REGISTRY.txt + connor-own-sites-git-canonical.md
 
 [build]
   publish = "."
 
-# Disable HTML post-processing so we never inject favicon/meta tags multiple times
-# (Previous manual-deploy sessions injected duplicate favicon blocks; auto-deploy from
-# git should never modify the source HTML at build time.)
-[build.processing]
-  skip_processing = true
+# Granular processing config. We need HTML processing ON for Netlify Forms
+# detection to work (data-netlify="true" forms get registered during the post-
+# processing step). The past favicon-duplication issue was caused by manual-
+# deploy sessions, not by Netlify's HTML processor. With git-canonical auto-
+# deploy the source HTML is trusted.
+#
+# We explicitly DISABLE the asset bundling/minification options that aren't
+# needed since the site is pre-optimized.
 
 [build.processing.html]
   pretty_urls = true
+
+[build.processing.css]
+  bundle = false
+  minify = false
+
+[build.processing.js]
+  bundle = false
+  minify = false
+
+[build.processing.images]
+  compress = false
 
 # Don't publish project-internal docs even if they get committed
 [[redirects]]
