@@ -14,6 +14,12 @@ concurrency:
   group: deploy-production
   cancel-in-progress: false  # never cancel a deploy mid-flight
 
+# Opt into Node 24 for all actions/* — Node 20 is deprecated effective 2026-06-02.
+# Keeps actions/checkout@v4 and actions/setup-node@v4 running on modern Node
+# without forcing version bumps that might have other compatibility issues.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   safety-check:
     name: Anti-wipe safety check
