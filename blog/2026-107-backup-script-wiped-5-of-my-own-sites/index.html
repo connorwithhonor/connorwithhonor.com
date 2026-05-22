@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Backup Script Wiped 5 of My Own Sites. Here's What I Built So It Can Never Happen Again. | CWH-2026-107 | Connor with Honor</title>
+<meta name="description" content="The real story of yesterday's deploy infrastructure overhaul. A backup script captured JSON metadata as if it were file content and wiped 5 of my own sites. Recovery took 60 seconds. Then I built CI guards that make the failure mode mechanically impossible. The lesson nobody wants to hear about AI tooling.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-107, anti-wipe CI guards, Netlify deploy safety, GitHub Actions safety guards, content corruption detection, AI builder authority, real estate AI infrastructure, git canonical deploy, operator-level AI">
+<meta property="og:title" content="My Backup Script Wiped 5 of My Own Sites. Here's What I Built So It Can Never Happen Again.">
+<meta property="og:description" content="A war story about building production AI infrastructure: the system that broke, the 60-second recovery, and the CI guards that make this failure mode impossible going forward.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-107-backup-script-wiped-5-of-my-own-sites/">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-107-backup-script-wiped-5-of-my-own-sites/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:3px;text-decoration:none;color:var(--white);font-weight:700}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:.75rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+.ep-date{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);display:block;margin-bottom:2rem}
+.macivor{color:var(--cyan)}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.4rem;line-height:1.8}
+article h2{font-family:var(--font-display);font-size:1.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--white);margin:3rem 0 1.25rem;padding-bottom:.5rem;border-bottom:1px solid rgba(0,229,255,0.2)}
+article h3{font-family:var(--font-display);font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin:2rem 0 .75rem}
+article strong{color:var(--white)}
+article em{color:var(--cyan);font-style:normal;text-transform:uppercase;font-size:.85em;letter-spacing:1px}
+article code{font-family:var(--font-mono);font-size:.9em;color:var(--gold);background:rgba(255,196,0,0.06);padding:.1rem .35rem;border-radius:2px}
+.tldr{background:var(--bg-card);border-left:3px solid var(--cyan);padding:1.5rem 2rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.7;color:var(--gray-light)}
+.tldr strong{color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;display:block;margin-bottom:.5rem}
+.pullquote{border-left:3px solid var(--gold);padding:1.25rem 1.75rem;margin:2.5rem 0;font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;color:var(--white);line-height:1.3;background:rgba(255,196,0,0.03)}
+.timeline{margin:1.5rem 0 2.5rem}
+.timeline-row{display:grid;grid-template-columns:120px 1fr;gap:1.25rem;padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.95rem}
+.timeline-time{font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;color:var(--cyan);align-self:start;padding-top:.15rem}
+.timeline-event{color:var(--gray-light)}
+.timeline-event strong{color:var(--white)}
+.cta-block{background:var(--bg-card);border:1px solid var(--cyan-dim);padding:2rem;margin:3rem 0;text-align:center}
+.cta-block h3{font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:1rem}
+.cta-block p{font-size:.95rem;margin-bottom:1rem}
+.cta-block a{display:inline-block;padding:.75rem 1.5rem;border:1px solid var(--cyan);color:var(--cyan);text-decoration:none;font-family:var(--font-mono);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;transition:all .3s}
+.cta-block a:hover{background:var(--cyan);color:var(--bg-primary)}
+.pillar-links{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
+.pillar-links a{display:block;text-align:center;padding:.75rem;font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);transition:all .3s}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{border-bottom:none}
+.faq-item{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+.faq-item h3{font-family:var(--font-display);font-size:1rem;text-transform:none;letter-spacing:0;color:var(--white);margin-bottom:.5rem}
+.faq-item p{font-size:.95rem;margin:0}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}.timeline-row{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"My Backup Script Wiped 5 of My Own Sites. Here's What I Built So It Can Never Happen Again.","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com"},"datePublished":"2026-05-22","publisher":{"@type":"Person","name":"Connor MacIvor"},"description":"A war story about building production AI infrastructure: the deploy script that wiped 5 of Connor's own sites, the 60-second recovery, and the CI safety guards that make the failure mode mechanically impossible going forward.","mainEntityOfPage":"https://connorwithhonor.com/blog/2026-107-backup-script-wiped-5-of-my-own-sites/"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is an anti-wipe CI guard?","acceptedAnswer":{"@type":"Answer","text":"An anti-wipe CI guard is a check that runs in your continuous integration pipeline before any deploy. It compares what's about to be deployed against what's currently live. If the new deploy would silently remove files, drop below a file-count threshold, or contain corrupt content (like API metadata in place of HTML), the guard refuses the deploy. The goal is to make accidental content destruction mechanically impossible rather than relying on human carefulness."}},
+{"@type":"Question","name":"Why would a backup script wipe a site?","acceptedAnswer":{"@type":"Answer","text":"In Connor's case the backup script captured Netlify deploy-file API metadata (a JSON response like {id, path, sha, deploy_id}) and saved each blob as if it were the actual file content. The script reported success because every HTTP request returned 200. Five sites ended up with repos full of 215-byte JSON blobs masquerading as HTML, favicons, and images. When those repos got deployed by a downstream migration, the garbage got pushed live."}},
+{"@type":"Question","name":"How fast can you recover from a Netlify content wipe?","acceptedAnswer":{"@type":"Answer","text":"Under 60 seconds per site if you have the Netlify API token and the previous-good deploy ID. Netlify keeps the full deploy history. A single POST /api/v1/sites/{id}/deploys/{deploy_id}/restore call swaps the active production deploy back to the previous good state. The slow part is identifying which deploy to restore — the API call itself is instant."}},
+{"@type":"Question","name":"What is Connor MacIvor's site deployment infrastructure?","acceptedAnswer":{"@type":"Answer","text":"As of 2026-05-22: 26 own-brand sites on Netlify, each deployed from a GitHub repo via GitHub Actions. Each repo has a workflow with three sequential safety gates: anti-wipe guard (refuses if file count drops below 80% of live), content-corruption guard (refuses if any file looks like JSON metadata or if the homepage is suspicious), and post-deploy verification (fails the run if critical URLs return non-200). Connor designed and built this entire stack himself."}},
+{"@type":"Question","name":"Why does this matter for clients evaluating AI builders?","acceptedAnswer":{"@type":"Answer","text":"Because it shows operator-level authority. Most AI consultants will tell you what to build. Connor builds the systems, ships them in production, and writes the post-mortem when something breaks. The agent who installs an AI tool from a vendor demo cannot do this — the agent who builds the tool, runs it for years, and writes about the failures has a different category of credibility."}}
+]}
+</script>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<a href="/" class="nav-brand">Connor<span>WithHonor</span></a>
+<div class="nav-links">
+<a href="/">Home</a>
+<a href="/ai/">AI</a>
+<a href="/blog/">Blog</a>
+<a href="/ai/daily-download/">Daily Download</a>
+<a href="/speaking">Speaking</a>
+</div>
+</div>
+</nav>
+
+<article>
+<span class="ep-badge">// CWH-2026-107 // The Machine</span>
+<h1>My Backup Script Wiped 5 of My Own Sites. Here's What I Built So It Can Never Happen Again.</h1>
+<span class="ep-date">May 22, 2026 // Operator Post-Mortem // Connor <span class="macivor">MacIvor</span></span>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+Yesterday I caught a backup script that had silently been capturing API metadata as if it were file content for months. When a downstream migration pushed the corrupt repos to production, five of my own sites — including the SRAR talk landing page — went down for about 60 seconds. Netlify's deploy-restore API got them back. Then I built three CI safety guards that make the exact failure mode mechanically impossible going forward. This is the story of building production AI infrastructure when the failures cost real things — and why "be careful" is never the fix.
+</div>
+
+<p>Most AI vendors will sell you tools and walk away. They won't tell you what breaks. They won't write the post-mortem when their system has a bad day. They certainly won't show you the CI pipeline they built to prevent the failure from ever happening again.</p>
+
+<p>I have to. The sites are mine. The clients are mine. The phone number on every one of them is mine. So when something breaks in this infrastructure, the post-mortem is the deliverable. This is yesterday's.</p>
+
+<h2>The Setup: 26 Sites, One Deploy Pattern</h2>
+
+<p>I run a network of 26+ own-brand Netlify sites. ConnorWithHonor.com. SeventeenK.com. SCV123.com. HonorElevate.com. SantaClaritaAI.com. The dated property pages. The SMB demo sites. Each one is its own GitHub repo. Each one deploys when I push to <code>main</code>.</p>
+
+<p>That's the system <em>now</em>. Yesterday it wasn't.</p>
+
+<p>Yesterday five of those sites were still on a legacy "snapshot upload" pattern — a Python script that downloaded the current live deploy, modified files locally, and pushed the whole thing back up via the Netlify API. The script worked. Right up until it didn't.</p>
+
+<h2>The Failure Mode I Didn't See Coming</h2>
+
+<p>Months ago, an automated backup script had run against those five sites. The script was supposed to capture every file on the live deploy and commit it to a backup repo on GitHub.</p>
+
+<p>Here's what it actually did: it hit the Netlify API endpoint <code>GET /api/v1/deploys/{id}/files/{path}</code>, got back a JSON metadata response (something like <code>{"id":"/index.html","sha":"...","deploy_id":"..."}</code>), and saved that 215-byte JSON blob to disk <em>with the original file's name</em>. As <code>index.html</code>. As <code>favicon.svg</code>. As <code>og-image.png</code>.</p>
+
+<p>The script reported success on every file. Every HTTP request returned 200. Every file got written. Every commit landed cleanly in git. The repos looked fine — same file paths, same directory structure. Nobody looked inside.</p>
+
+<p>And the corruption sat there for months. Live still served the real content. The corrupt repos were "backup" mirrors that nobody ever deployed <em>from</em>. Until yesterday's migration.</p>
+
+<div class="pullquote">
+The corruption was invisible because every file path matched what live had. The bytes inside were garbage. Nobody had run the byte-level check.
+</div>
+
+<h2>The 60-Second Window</h2>
+
+<p>Yesterday I migrated all 26 sites from the snapshot-upload pattern to git-canonical auto-deploy. The migration cloned each repo, added a GitHub Actions workflow, pushed. For 21 of the 26 sites, the deploy was clean.</p>
+
+<p>For 5 sites — Carrie's SRAR landing page (srar.connorcoded.com), plumbing.honorelevate.com, rdmoving.honorelevate.com, electricians.honorelevate.com, and rd.connorhonor.com — the migration deployed the JSON-metadata garbage. Live went from real content to 215-byte blobs of API metadata served as HTML. The browser still rendered something, but it was nonsense.</p>
+
+<p>I caught it during the post-deploy smoke test. Within 60 seconds of the wipe, I had used Netlify's deploy-restore API to swap each site back to its previous good deploy. Here's the actual call:</p>
+
+<p><code>POST /api/v1/sites/{site_id}/deploys/{good_deploy_id}/restore</code></p>
+
+<p>Netlify keeps every previous deploy. The restore was instant. Five sites back online, serving the same content they were the day before. Then I disabled the auto-deploy workflows on those five repos so the bad content couldn't ship again.</p>
+
+<h2>What I Built So It Can't Happen Again</h2>
+
+<p>Recovery in 60 seconds is fine. Prevention is better. I spent the next few hours building three CI safety gates that now run on <em>every</em> push to <em>every</em> one of my sites:</p>
+
+<div class="timeline">
+<div class="timeline-row"><span class="timeline-time">GATE 1</span><span class="timeline-event"><strong>Anti-wipe guard.</strong> Before any deploy, the workflow fetches the current live file list and compares it to the new deploy's file list. If the new deploy would drop file count below 80% of live, the workflow fails. If it would remove more than 3 files, the commit message must start with <code>remove:</code> to authorize the removal. Critical files like <code>/index.html</code> must always be present.</span></div>
+<div class="timeline-row"><span class="timeline-time">GATE 2</span><span class="timeline-event"><strong>Content-corruption guard.</strong> Every file in the new deploy gets scanned for the specific signature of the failure I just hit: a file that starts with <code>{"id":"/</code> and contains <code>"deploy_id"</code> in the first 300 bytes. That's the Netlify-API-metadata-as-content pattern. If any file matches, the deploy is aborted with a clear error message pointing at the recovery procedure.</span></div>
+<div class="timeline-row"><span class="timeline-time">GATE 3</span><span class="timeline-event"><strong>Post-deploy verification.</strong> After the deploy completes, the workflow hits the homepage URL and checks the response. If anything other than a 200/301/302 comes back, the workflow fails loudly. Per-site verification URLs can be added via env var.</span></div>
+</div>
+
+<p>The guards are pessimistic by design. They refuse the deploy when in doubt. Better to fail noisily than to wipe quietly.</p>
+
+<p>The five previously-corrupt repos now have clean content too. The fix used a different Netlify endpoint — fetching from the deploy-preview CDN URL <code>https://{deploy_id}--{site_name}.netlify.app/{path}</code>, which returns actual file bytes instead of metadata. Every file got verified before commit. Every workflow got re-enabled.</p>
+
+<h2>Why This Story Matters For Anyone Evaluating an "AI Builder"</h2>
+
+<p>The marketplace for "AI consultants" right now is crowded. Most of them are repackaging vendor tools. They'll tell you to install a SaaS, configure some webhooks, and call it AI integration. When the system has a bad day, they'll blame the vendor and move on.</p>
+
+<p>That's not the same category of work as what I'm describing here. I built the deploy pipeline. I built the safety guards. I caught the failure, recovered the sites, wrote the post-mortem, and shipped the prevention layer — all in the same day. That's the AI builder pattern. The other thing is AI consulting.</p>
+
+<p>If you're a real estate agent, an SMB owner, or anyone evaluating who to hire to integrate AI into your business: the question to ask isn't "what tools do you recommend?" The question is "what have you built, in production, that <em>you</em> have to keep running?" That's where the real credibility lives.</p>
+
+<div class="pullquote">
+"Be careful" is not a safety system. Code is. The unsafe action has to be made mechanically impossible.
+</div>
+
+<h2>What You Can Take From This (Even If You're Not a Builder)</h2>
+
+<p>Three things this story should change in how you think about your own systems:</p>
+
+<p><strong>1. Path-parity is not content-parity.</strong> If you back up files by name and never check the bytes, you have a "backup" that may be useless. The corrupt files in my repos had the right filenames and the right directory structure. The content was garbage. Verify bytes, not just paths.</p>
+
+<p><strong>2. Recovery is a capability worth building before you need it.</strong> My 60-second recovery wasn't luck. It was the Netlify deploy-restore endpoint, which I knew existed because I had read the API docs. If I had been figuring it out under pressure, the window would have been hours, not seconds. Read the docs of your tools before something breaks.</p>
+
+<p><strong>3. Safety guards are CI work, not human work.</strong> The single highest-leverage thing I shipped yesterday was three small bash scripts in a GitHub Actions workflow. They run on every push, forever, with no human attention. They've already prevented more failures than I'll ever consciously notice. That's what "automation that protects you" looks like — not a checklist on the wall, not a procedure document nobody reads. Code that refuses to do the wrong thing.</p>
+
+<h2>The Quiet Confidence Of A System That Refuses</h2>
+
+<p>Here's the new normal. I push a change to any of my 26 sites. Three CI gates run. If anything looks wrong, the deploy fails and I get an email. If everything looks right, the deploy ships and the homepage gets verified live within 90 seconds.</p>
+
+<p>I no longer have to wonder whether a deploy went through correctly. I no longer have to worry about a backup script silently corrupting my repos. The system tells me. The system refuses the bad operation. The system makes me look smarter than I am.</p>
+
+<p>That's what good AI infrastructure feels like. Not a magic black box. A set of small, sharp tools that each refuse to do the wrong thing. Stacked. Boring. Reliable.</p>
+
+<p>Build the boring layer. Then everything that runs on top of it gets to be brilliant.</p>
+
+<div class="cta-block">
+<h3>Want the Same Kind of System for Your Business?</h3>
+<p>I build AI systems for real estate agents, SMB owners, and operators who need infrastructure they can trust. HonorElevate is the white-labeled platform. HireAIVoice handles the phone calls. SCV123 handles the SCV market questions. And the whole thing runs on the infrastructure described above.</p>
+<a href="https://honorelevate.com" target="_blank">Visit HonorElevate</a>
+</div>
+
+<div class="cta-block">
+<h3>Speaking at SRAR August 3rd</h3>
+<p>I'm walking SRAR agents through the augmentation-not-replacement thesis on August 3rd. The talk lives at the intersection of "what AI can actually do for you" and "what you have to build yourself if you want it to work right." Read the preview here.</p>
+<a href="/blog/2026-105-dig-in-like-an-alabama-tick-srar-august-3/">Read the SRAR Aug 3 Preview</a>
+</div>
+
+<div class="faq-section">
+<h2>FAQ</h2>
+
+<div class="faq-item">
+<h3>What is an anti-wipe CI guard?</h3>
+<p>A check that runs in continuous integration before any deploy ships. It compares what's about to be deployed against what's currently live. If the new deploy would silently remove files, drop below a file-count threshold, or contain corrupt content, the guard refuses the deploy. Makes accidental destruction mechanically impossible rather than relying on human carefulness.</p>
+</div>
+
+<div class="faq-item">
+<h3>Why would a backup script wipe a site?</h3>
+<p>In Connor's case the backup script captured Netlify deploy-file API metadata (a JSON response with id, path, sha, deploy_id fields) and saved each metadata blob as if it were the actual file content. The script reported success because every HTTP request returned 200. Five sites ended up with repos full of 215-byte JSON blobs masquerading as HTML and images. When those repos got deployed by a downstream migration, the garbage shipped live.</p>
+</div>
+
+<div class="faq-item">
+<h3>How fast can you recover from a Netlify content wipe?</h3>
+<p>Under 60 seconds per site if you have the Netlify API token and the previous-good deploy ID. Netlify keeps the full deploy history. A single POST request to the deploy-restore endpoint swaps the active production deploy back to the previous good state. The slow part is identifying which deploy to restore — the API call itself is instant.</p>
+</div>
+
+<div class="faq-item">
+<h3>What is Connor MacIvor's site deployment infrastructure?</h3>
+<p>26 own-brand sites on Netlify, each deployed from a GitHub repo via GitHub Actions. Each repo has a workflow with three sequential safety gates: anti-wipe guard, content-corruption guard, and post-deploy verification. Connor designed and built this entire stack himself.</p>
+</div>
+
+<div class="faq-item">
+<h3>Why does this matter for clients evaluating AI builders?</h3>
+<p>Most AI consultants repackage vendor tools. Connor builds the systems, ships them in production, runs them at scale, and writes the post-mortems when something breaks. That's a different category of credibility than someone who installs a SaaS and calls it AI integration.</p>
+</div>
+
+</div>
+
+<div class="pillar-links">
+<a href="/blog/2026-105-dig-in-like-an-alabama-tick-srar-august-3/">// SRAR Aug 3 Preview</a>
+<a href="/blog/2026-106-ai-replaces-your-workers-then-who-buys-your-product/">// Keep the Humans</a>
+<a href="/ai/daily-download/">// Daily Download</a>
+</div>
+
+</article>
+
+<footer>
+<div class="footer-coded">Coded by Connor with Honor // <a href="https://honorelevate.com">AI Growth Architect</a></div>
+</footer>
+
+</body>
+</html>
