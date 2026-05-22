@@ -190,7 +190,10 @@ jobs:
           # --no-build: skip Netlify's site-level build commands. We're deploying
           # the repo contents as-is. Any build a site needs should be done in CI
           # before this step (or via netlify.toml [build] command).
-          netlify deploy --dir=. --prod --no-build --message="git commit ${{ github.sha }} — ${{ github.event.head_commit.message }}"
+          # Use only the commit SHA + first line of message — full multi-line
+          # messages break the shell argument because of embedded newlines.
+          deploy_msg="git $(echo '${{ github.sha }}' | cut -c1-7) — $(git log -1 --pretty=%s)"
+          netlify deploy --dir=. --prod --no-build --message="$deploy_msg"
 
       - name: Verify deploy is live
         env:
