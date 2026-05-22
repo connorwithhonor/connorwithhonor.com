@@ -193,13 +193,16 @@ jobs:
           .github/
           scripts/
           EOF
-          # --no-build: skip Netlify's site-level build commands. We're deploying
-          # the repo contents as-is. Any build a site needs should be done in CI
-          # before this step (or via netlify.toml [build] command).
+          # NOTE: --no-build was removed here for cwh.com so Netlify's post-processing
+          # pipeline runs — Netlify Forms detection requires this to scan HTML for
+          # data-netlify="true" attributes. cwh.com has no site-level build command
+          # so the build step is effectively a no-op. If you re-add --no-build to
+          # any site that uses Netlify Forms, form detection will silently stop
+          # working until the build is run again.
           # Use only the commit SHA + first line of message — full multi-line
           # messages break the shell argument because of embedded newlines.
           deploy_msg="git $(echo '${{ github.sha }}' | cut -c1-7) — $(git log -1 --pretty=%s)"
-          netlify deploy --dir=. --prod --no-build --message="$deploy_msg"
+          netlify deploy --dir=. --prod --message="$deploy_msg"
 
       - name: Verify deploy is live
         env:
