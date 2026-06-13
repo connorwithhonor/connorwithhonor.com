@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Government Pulled the Plug on Anthropic Fable 5 | CWH-2026-112</title>
+<meta name="description" content="Three days after launch, the US government ordered Anthropic to disable Claude Fable 5 and Mythos 5 worldwide. A plain-English breakdown of what happened, why it matters, and the single-vendor risk it exposes for every business built on one AI.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-112, Anthropic Fable 5, Claude Fable 5 shut down, Mythos 5, US government AI order, export control AI, Commerce Department BIS, Dario Amodei, AI jailbreak, frontier model recall, single vendor AI risk, Santa Clarita AI, recursive self improvement, Sam Altman IPO, AI news, AI for small business, Connor MacIvor">
+<meta property="og:title" content="The Government Pulled the Plug on Anthropic Fable 5 | Connor with Honor">
+<meta property="og:description" content="Built on June 9. Killed by June 12. What the Fable 5 shutdown really means, and the risk it just exposed for anyone betting a business on one AI vendor.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/">
+<meta property="og:image" content="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/og.png">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:3px;text-decoration:none;color:var(--white);font-weight:700}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:.75rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+.ep-date{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);display:block;margin-bottom:2rem}
+.video-embed{margin:0 0 2rem;border:1px solid rgba(0,229,255,0.2);box-shadow:0 10px 60px rgba(0,229,255,0.08),0 0 40px rgba(255,23,68,0.06)}
+.video-embed .frame{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.tldr{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.5rem 2rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.7;color:var(--gray-light)}
+.tldr strong{color:var(--gold);font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;display:block;margin-bottom:.5rem}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.5rem;line-height:1.9}
+article p strong{color:var(--white)}
+article h2{font-family:var(--font-display);font-size:1.8rem;text-transform:uppercase;letter-spacing:3px;margin:3rem 0 1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--cyan-dim);color:var(--cyan)}
+blockquote{border-left:3px solid var(--red-dim);background:var(--bg-card);padding:1.2rem 1.6rem;margin:2rem 0;font-style:italic;color:var(--gray-light)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:2rem;color:var(--cyan);border-bottom:none}
+.faq-item{margin-bottom:2rem}
+.faq-item h3{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;color:var(--white)}
+.faq-item p{font-size:.95rem;color:var(--gray-light);line-height:1.8}
+.cta{margin:3rem 0 0;padding:2rem;background:linear-gradient(135deg,#12121e,#0d0d16);border:1px solid rgba(255,196,0,0.25);border-radius:8px;text-align:center}
+.cta h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;color:var(--white);border:none;margin:0 0 .6rem;padding:0}
+.cta p{font-size:1rem;color:var(--gray-light);margin:0 auto .5rem;max-width:560px}
+.cta b{color:var(--gold)}
+.pillar-links{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
+.pillar-links a{display:block;text-align:center;padding:.75rem;font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);transition:all .3s}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.disclosure{max-width:800px;margin:2rem auto;padding:1.5rem 2rem;font-family:var(--font-mono);font-size:.6rem;letter-spacing:1px;color:var(--gray);text-align:center;line-height:2;border-top:1px solid rgba(0,229,255,0.05)}
+.macivor{font-family:'Times New Roman',Georgia,serif}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(255,196,0,0.3)}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"The Government Pulled the Plug on Anthropic Fable 5","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com","sameAs":["https://santaclaritaai.com","https://seventeenk.com","https://thelastaddiction.com"]},"datePublished":"2026-06-13","dateModified":"2026-06-13","publisher":{"@type":"Organization","name":"Connor with Honor","url":"https://connorwithhonor.com"},"image":"https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/og.png","mainEntityOfPage":"https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/","description":"Three days after launch, the US government ordered Anthropic to disable Claude Fable 5 and Mythos 5 worldwide. A plain-English breakdown of what happened and the single-vendor risk it exposed."},
+{"@type":"VideoObject","name":"The Government Pulled the Plug on Anthropic Fable 5","description":"Connor breaks down the US government export-control order that forced Anthropic to disable Claude Fable 5 and Mythos 5 worldwide, the jailbreak that triggered it, and what it means for businesses built on one AI vendor.","thumbnailUrl":"https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/og.png","uploadDate":"2026-06-13","embedUrl":"https://www.loom.com/embed/2564452bb1944634b1cae148a08f45b8","contentUrl":"https://www.loom.com/share/2564452bb1944634b1cae148a08f45b8"},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://connorwithhonor.com/"},
+{"@type":"ListItem","position":2,"name":"Blog","item":"https://connorwithhonor.com/blog/"},
+{"@type":"ListItem","position":3,"name":"The Government Pulled the Plug on Anthropic Fable 5","item":"https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What happened to Claude Fable 5 and Mythos 5?","acceptedAnswer":{"@type":"Answer","text":"On June 12, 2026, the US government issued an export-control directive ordering Anthropic to suspend all access to Fable 5 and Mythos 5 by any foreign national, inside or outside the country. Because Anthropic cannot filter users by nationality at the model level, it had to disable both models for every customer worldwide that night. Anthropic's other models were not affected."}},
+{"@type":"Question","name":"Why did the government shut down Fable 5?","acceptedAnswer":{"@type":"Answer","text":"The government cited national security authority and a concern about a method to jailbreak the model. Anthropic says the directive appears to rest on a narrow, non-universal jailbreak that asked the model to read a codebase and surface known software flaws, capability Anthropic argues is already available in other public models like OpenAI's GPT-5.5. Anthropic called the action a misunderstanding."}},
+{"@type":"Question","name":"How long was Fable 5 actually live?","acceptedAnswer":{"@type":"Answer","text":"About three days. Anthropic launched Fable 5 on June 9, 2026, a researcher published a jailbreak around June 11, the government order arrived June 12 at 5:21 PM Eastern, and the models were disabled that evening. It is one of the shortest-lived flagship AI products in history."}},
+{"@type":"Question","name":"Does this mean my Claude account stopped working?","acceptedAnswer":{"@type":"Answer","text":"No. Only Fable 5 and Mythos 5 were suspended. All other Anthropic models, including the standard Claude models most people and businesses use, continue to work normally."}},
+{"@type":"Question","name":"What is the real lesson for a business owner?","acceptedAnswer":{"@type":"Answer","text":"If a single government order can disable a frontier model worldwide in one day, then any business built entirely on one AI vendor just learned its tools can vanish by decree. The practical move is to avoid single-vendor lock-in, own your core systems and data, and know your fallback before you need it."}},
+{"@type":"Question","name":"Should I still build my business on AI after this?","acceptedAnswer":{"@type":"Answer","text":"Yes, but build it on systems you control rather than renting your entire stack from one provider. AI is still the biggest leverage available to a small business. The Fable 5 shutdown is an argument for owning your infrastructure and keeping vendor options open, not for sitting on the sidelines."}}]}]}
+</script>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor with <span>Honor</span></a><div class="nav-links"><a href="/#pillars">Segments</a><a href="/#show">Show</a><a href="/#blog">Blog</a><a href="https://santaclaritaai.com" target="_blank">Santa Clarita AI</a><a href="https://connorwithhonor.com/blog" target="_blank">All Episodes</a></div></div></nav>
+
+<article>
+<span class="ep-badge">CWH-2026-112 // AI News Breakdown</span>
+<h1>The Government Pulled the Plug on Anthropic Fable 5</h1>
+<span class="ep-date">June 13, 2026 // Human to Human</span>
+
+<div class="video-embed"><div class="frame">
+<iframe src="https://www.loom.com/embed/2564452bb1944634b1cae148a08f45b8" title="The Government Pulled the Plug on Anthropic Fable 5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div></div>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+Anthropic launched its most powerful public model, Claude Fable 5, on June 9. By the evening of June 12, the US government had ordered it disabled worldwide. The official reason was an export-control directive citing national security, triggered by a jailbreak. Anthropic complied immediately, called it a misunderstanding, and argued the same capability is already sitting inside competitors' models. The bigger story is not the drama. It is that a frontier AI can be switched off for the whole planet in a single day. If your business runs on one vendor's model, you just watched your risk get exposed in real time.
+</div>
+
+<p>I am going to cover this as somebody who genuinely does not claim to know everything about it. I read. I watch. I take it all with a grain of salt, same as you should take what I am saying right now. But this one is worth slowing down for, because it is the kind of thing people will gloss over and it actually matters.</p>
+
+<p>Lately the AI news cycle feels like watching a tennis match. Up, down, in, out, up, down. Some days it reads like the Laker playoffs, where everybody is somehow in it together, and you start to wonder how much of the drama is real and how much is staged for us. Then something concrete happens, and this is concrete. Yesterday, around 5 PM Eastern on June 12, 2026, the United States government reached into one of the biggest AI companies on earth and turned off the lights on their newest model.</p>
+
+<h2>What Actually Happened to Fable 5</h2>
+
+<p>Here is the short version, the part you can hand to anybody. Anthropic is the company behind Claude. It is one of the major large language models, right next to ChatGPT and Gemini. Dario Amodei runs it. They brand themselves as the safety-first lab, the constitutional-AI people, the ones who care about getting this right.</p>
+
+<p>A few days ago they released Fable 5, a powerful public model in the same family as their restricted Mythos model. The reviews were big. People were saying we are here, this is artificial general intelligence territory. Then, three days later, it was gone. I went to my own Claude and it read "Claude Fable 5 is currently unavailable." So I clicked learn more. Let us learn more together.</p>
+
+<h2>Read It Straight From Anthropic</h2>
+
+<p>The statement Anthropic posted is titled a statement on the US government directive to suspend access to Fable 5 and Mythos 5. The core of it reads like this:</p>
+
+<blockquote>The US government, citing national security authority, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees. The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all of our customers to ensure compliance.</blockquote>
+
+<p>Sit with that mechanism for a second, because it is the clever part. The order did not say take the model off the internet. It said no foreign national may access it. Anthropic cannot reliably filter every user in the world by nationality at the level of the model. So the only way to comply is to shut it off for everybody. A targeting rule about some people became a kill switch for all people. That is how you disable an AI overnight without ever using the word ban.</p>
+
+<h2>Why Did They Pull It</h2>
+
+<p>The government pointed at a jailbreak, a way of bypassing the model's safety guardrails. Anthropic's read, in their own words, is that this rests on a narrow, non-universal jailbreak. Their description of it is almost boring: asking the model to read a specific codebase and fix any software flaws. They say they reviewed the demonstration, that it surfaced a small number of previously known minor vulnerabilities, and that their publicly available models can find those same things without any bypass at all.</p>
+
+<p>They go further and say the same level of capability is widely available from other models, and they name a competitor directly, pointing at OpenAI's GPT-5.5, and note it is used every day by defenders who keep systems safe. Translation: they believe they got singled out for something the whole industry already does.</p>
+
+<h2>The Part Nobody Else Will Lead With</h2>
+
+<p>Here is my angle, and it is not the one every other channel will run. Anthropic spent the last couple of years as the loudest voice in the room asking Washington to regulate AI hard. Put guardrails on it. Give the government the power to step in. Slow it down for safety.</p>
+
+<p>Washington listened. Then it used that exact logic to switch off Anthropic's flagship product in a single night. The hand that helps build the cage tends to be the first one locked inside it. I am not cheering against safety. I am pointing out that when you hand someone a kill switch and tell them it is for everyone's good, you do not get to choose the day they decide to flip it.</p>
+
+<p>And read their closing line, because it is the tell. Anthropic says if this standard, where one narrow jailbreak triggers a global recall, were applied across the industry, it would essentially halt all new deployments for every frontier model provider. They are right. And that is the quiet threat sitting under this whole story.</p>
+
+<h2>What This Means If You Run a Business</h2>
+
+<p>This is where it stops being tech gossip and starts being your problem. Imagine you went all in on Fable 5 three days ago. You wired it into your workflows, your customer service, your product. Last night it vanished, and you had no say and no warning.</p>
+
+<p>If a single government directive can disable a frontier model for the entire planet in one day, then every business built on one vendor's model just learned a hard lesson about dependence. This is not an argument against AI. I build on AI every day. It is an argument against renting your entire operation from one landlord who can be told to evict you overnight. Own your core systems. Keep your data. Know your fallback model before you need it. That is the difference between a tool and a leash.</p>
+
+<h2>The Bigger Current Underneath</h2>
+
+<p>Zoom out and the drama makes more sense. Sam Altman reportedly pulled OpenAI's public offering plans recently, saying we might be six months away from recursive self-improvement, where the models start meaningfully improving themselves faster than we can follow. We already do not fully understand how these systems do what they do. The progression keeps getting allowed, in large part because other governments are racing too and nobody wants to be the one who fell behind.</p>
+
+<p>So you get this strange board where Anthropic is renting compute on Colossus, Amazon and others are tangled in the same infrastructure, lawsuits fly between Musk and Altman, and a government can reach in and freeze a product on a Friday evening. When you are talking about something this powerful, the drama is not a distraction from the story. The drama is the story.</p>
+
+<h2>The Honest Take From One Human to Another</h2>
+
+<p>I do not know what is required to keep the free world safe. You have seen the movies. Maybe ugly things genuinely have to happen behind the curtain. Maybe this order quietly prevented something real. Maybe it was a flex. I cannot verify it and neither can you, and anybody who tells you they know for certain is selling something.</p>
+
+<p>What I can tell you is what to do with it. Stay curious, stay skeptical, and do not build your livelihood on a single switch somebody else controls. Use these tools. They are genuinely beyond what most people realize. Just do not forget who can turn them off.</p>
+
+<div class="cta">
+<h2>Want AI That Works For You</h2>
+<p>I do not just talk about this. I build it, for small businesses that want AI working the door 24/7 instead of betting the company on one vendor. See it at <a class="inline" href="https://santaclaritaai.com">SantaClaritaAI.com</a>.</p>
+<p>Questions, or want it built for your shop? Text <b>AI</b> to <b>661-400-1720</b>.</p>
+</div>
+
+<div class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><h3>What happened to Claude Fable 5 and Mythos 5?</h3><p>On June 12, 2026 the US government issued an export-control directive ordering Anthropic to suspend all access to Fable 5 and Mythos 5 by any foreign national, inside or outside the country. Because Anthropic cannot filter users by nationality at the model level, it disabled both models for every customer worldwide that night. Anthropic's other models were not affected.</p></div>
+<div class="faq-item"><h3>Why did the government shut down Fable 5?</h3><p>It cited national security authority and a concern about a method to jailbreak the model. Anthropic says the directive appears to rest on a narrow, non-universal jailbreak that asked the model to read a codebase and surface known software flaws, capability it argues is already available in other public models like OpenAI's GPT-5.5. Anthropic called the action a misunderstanding.</p></div>
+<div class="faq-item"><h3>How long was Fable 5 actually live?</h3><p>About three days. Anthropic launched it June 9, a researcher published a jailbreak around June 11, the order arrived June 12 at 5:21 PM Eastern, and the models went dark that evening. It is one of the shortest-lived flagship AI products in history.</p></div>
+<div class="faq-item"><h3>Does this mean my Claude account stopped working?</h3><p>No. Only Fable 5 and Mythos 5 were suspended. Every other Anthropic model, including the standard Claude models most people and businesses use, keeps working normally.</p></div>
+<div class="faq-item"><h3>What is the real lesson for a business owner?</h3><p>If one government order can disable a frontier model worldwide in a day, any business built entirely on one AI vendor just learned its tools can vanish by decree. Avoid single-vendor lock-in, own your core systems and data, and know your fallback before you need it.</p></div>
+<div class="faq-item"><h3>Should I still build my business on AI after this?</h3><p>Yes, but build on systems you control rather than renting your whole stack from one provider. AI is still the biggest leverage a small business has. This is an argument for owning your infrastructure and keeping options open, not for sitting out.</p></div>
+</div>
+
+<div class="pillar-links">
+<a href="https://santaclaritaai.com" target="_blank">Santa Clarita AI</a>
+<a href="https://honorelevate.com" target="_blank">HonorElevate AI</a>
+<a href="https://hireaivoice.com" target="_blank">Hire AI Voice</a>
+<a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a>
+<a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a>
+<a href="https://godisnotthemachine.com" target="_blank">God Is Not the Machine</a>
+</div>
+</article>
+
+<div class="disclosure">
+Connor T. <span class="macivor">MacIvor</span> &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490<br>
+This content is commentary and education, not legal, financial, or investment advice.<br>
+&copy; 2026 Connor with Honor. All rights reserved.
+</div>
+
+<footer><p class="footer-coded">Coded by <a href="https://honorelevate.com" target="_blank">Connor with Honor</a> | AI Growth Architect</p></footer>
+</body>
+</html>
