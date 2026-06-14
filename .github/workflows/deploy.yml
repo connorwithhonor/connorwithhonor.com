@@ -14,12 +14,6 @@ concurrency:
   group: deploy-production
   cancel-in-progress: false  # never cancel a deploy mid-flight
 
-# Opt into Node 24 for all actions/* — Node 20 is deprecated effective 2026-06-02.
-# Keeps actions/checkout@v4 and actions/setup-node@v4 running on modern Node
-# without forcing version bumps that might have other compatibility issues.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   safety-check:
     name: Anti-wipe safety check
@@ -29,7 +23,7 @@ jobs:
       ok: ${{ steps.guard.outputs.ok }}
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Fetch current live manifest
         env:
@@ -171,12 +165,12 @@ jobs:
     if: always() && (needs.safety-check.result == 'success' || github.event.inputs.skip_safety_check == 'true')
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli@latest
