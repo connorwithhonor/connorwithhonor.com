@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>They're Using AI to Hunt Medicaid Fraud in All 50 States | CWH-2026-115</title>
+<meta name="description" content="The government is now scanning Medicaid files in all 50 states with ChatGPT to hunt fraud. Here is what that means, plus why they pulled Fable 5 and killed Sora.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-115, AI Medicaid fraud, ChatGPT Medicaid fraud, government AI fraud detection, healthcare fraud AI, Anthropic Fable 5, Mythos model, OpenAI Sora, AI regulation, Daily Download, Connor MacIvor, artificial intelligence news, SeventeenK">
+<meta property="og:title" content="They're Using AI to Hunt Medicaid Fraud in All 50 States | Connor with Honor">
+<meta property="og:description" content="The government just pointed ChatGPT at Medicaid files in all 50 states to find fraud. Plus why they pulled Fable 5 and killed Sora. The AI nobody is watching.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/">
+<meta property="og:image" content="https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/og.png">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:3px;text-decoration:none;color:var(--white);font-weight:700}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:.75rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+.ep-date{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);display:block;margin-bottom:2rem}
+.tldr{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.5rem 2rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.7;color:var(--gray-light)}
+.tldr strong{color:var(--gold);font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;display:block;margin-bottom:.5rem}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.5rem;line-height:1.9}
+article p strong{color:var(--white)}
+article h2{font-family:var(--font-display);font-size:1.8rem;text-transform:uppercase;letter-spacing:3px;margin:3rem 0 1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--cyan-dim);color:var(--cyan)}
+blockquote{border-left:3px solid var(--red-dim);background:var(--bg-card);padding:1.2rem 1.6rem;margin:2rem 0;font-style:italic;color:var(--gray-light)}
+.pullquote{border-left:3px solid var(--gold);background:var(--bg-card);padding:1.4rem 1.8rem;margin:2.5rem 0;font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:1px;line-height:1.3;color:var(--gold)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:2rem;color:var(--cyan);border-bottom:none}
+.faq-item{margin-bottom:2rem}
+.faq-item h3{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;color:var(--white)}
+.faq-item p{font-size:.95rem;color:var(--gray-light);line-height:1.8}
+.cta{margin:3rem 0 0;padding:2rem;background:linear-gradient(135deg,#12121e,#0d0d16);border:1px solid rgba(255,196,0,0.25);border-radius:8px;text-align:center}
+.cta h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;color:var(--white);border:none;margin:0 0 .6rem;padding:0}
+.cta p{font-size:1rem;color:var(--gray-light);margin:0 auto .5rem;max-width:560px}
+.cta b{color:var(--gold)}
+.pillar-links{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
+.pillar-links a{display:block;text-align:center;padding:.75rem;font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);transition:all .3s}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.disclosure{max-width:800px;margin:2rem auto;padding:1.5rem 2rem;font-family:var(--font-mono);font-size:.6rem;letter-spacing:1px;color:var(--gray);text-align:center;line-height:2;border-top:1px solid rgba(0,229,255,0.05)}
+.macivor{font-family:'Times New Roman',Georgia,serif}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(255,196,0,0.3)}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"They're Using AI to Hunt Medicaid Fraud in All 50 States","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com","sameAs":["https://sellersonlyagent.com","https://seventeenk.com","https://scv123.com"]},"datePublished":"2026-06-15","dateModified":"2026-06-15","publisher":{"@type":"Organization","name":"Connor with Honor","url":"https://connorwithhonor.com"},"image":"https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/og.png","mainEntityOfPage":"https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/","description":"The government is now scanning Medicaid files in all 50 states with ChatGPT to hunt fraud and misuse. Plus why they pulled Anthropic's Fable 5 and why OpenAI killed Sora image generation."},
+{"@type":"VideoObject","name":"Fable 5 Pulled, Sora Killed, and AI Hunting Medicaid Fraud","description":"Connor MacIvor breaks down three AI stories: the government pulling Anthropic's Fable 5 after a jailbreak, OpenAI killing Sora image generation, and the government scanning Medicaid files in all 50 states with ChatGPT to find fraud.","thumbnailUrl":"https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/og.png","uploadDate":"2026-06-15","embedUrl":"https://www.youtube.com/embed/k5vE6Fx7j08","contentUrl":"https://youtube.com/shorts/k5vE6Fx7j08","hasPart":[{"@type":"Clip","name":"AI in about three minutes","startOffset":0,"endOffset":5,"url":"https://youtu.be/k5vE6Fx7j08?t=0"},{"@type":"Clip","name":"The government pulled Fable 5 after someone snitched","startOffset":5,"endOffset":48,"url":"https://youtu.be/k5vE6Fx7j08?t=5"},{"@type":"Clip","name":"OpenAI killed Sora and what really comes next","startOffset":48,"endOffset":129,"url":"https://youtu.be/k5vE6Fx7j08?t=48"},{"@type":"Clip","name":"ChatGPT is now scanning Medicaid in all 50 states","startOffset":129,"endOffset":158,"url":"https://youtu.be/k5vE6Fx7j08?t=129"},{"@type":"Clip","name":"California, and see you tomorrow","startOffset":158,"endOffset":170,"url":"https://youtu.be/k5vE6Fx7j08?t=158"}]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://connorwithhonor.com/"},
+{"@type":"ListItem","position":2,"name":"Blog","item":"https://connorwithhonor.com/blog/"},
+{"@type":"ListItem","position":3,"name":"They're Using AI to Hunt Medicaid Fraud in All 50 States","item":"https://connorwithhonor.com/blog/2026-115-ai-hunting-medicaid-fraud-all-50-states/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the government using AI to find Medicaid fraud?","acceptedAnswer":{"@type":"Answer","text":"Yes. The US government is scanning Medicaid files across all 50 states using ChatGPT to identify fraud and misuse. The goal is to surface the largest abusers, including overbilling and procedures that were not medically required. A human auditor reads a handful of files. AI reads every file at once and the pattern shows itself, which is why this matters far more than it sounds."}},
+{"@type":"Question","name":"What happened to Anthropic's Fable 5 model?","acceptedAnswer":{"@type":"Answer","text":"Fable 5 was a new Anthropic model meant to mirror the so-called Mythos model, the one deemed too dangerous for the public and routed to banks and financial institutions instead. Fable 5 was jailbroken, somebody reported it, the government got involved, and the public version was pulled. If you have a Claude membership you can see that Fable 5 is no longer available."}},
+{"@type":"Question","name":"Why did OpenAI kill Sora image generation?","acceptedAnswer":{"@type":"Answer","text":"OpenAI removed the Sora image generation, and the better read is that it points at where this is going rather than a retreat. The next step is generated worlds built pixel by pixel on code, synthesized from nothing into something brand new, instead of stock image models. When that is the product, the code underneath becomes the most important part of the whole stack and the image models drop to an entertainment layer."}},
+{"@type":"Question","name":"What does the Medicaid AI scan mean for medical professionals?","acceptedAnswer":{"@type":"Answer","text":"Honest providers have nothing to fear. Providers who set patients up for procedures that were not required, just to bill for them, are the target. When AI reads every record across every state at once, the billing patterns that hid inside the volume become obvious. Expect real fallout for the worst actors."}},
+{"@type":"Question","name":"Why does Connor say the code is the most important part of AI?","acceptedAnswer":{"@type":"Answer","text":"Because the output is not the asset, the system is. Image models, chat windows, and dancing-animal videos are the entertainment layer that keeps casual users paying. The real value, and the real moat, is the code that synthesizes those outputs. Business owners who own their systems and their data are not at the mercy of a tool that can be pulled overnight, the way Fable 5 was."}}]}]}
+</script>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor with <span>Honor</span></a><div class="nav-links"><a href="/#pillars">Segments</a><a href="/#show">Show</a><a href="/#blog">Blog</a><a href="https://santaclaritaai.com" target="_blank">Santa Clarita AI</a><a href="https://connorwithhonor.com/blog" target="_blank">All Episodes</a></div></div></nav>
+
+<article>
+<span class="ep-badge">CWH-2026-115 // The Machine</span>
+<h1>They're Using AI to Hunt Medicaid Fraud in All 50 States</h1>
+<span class="ep-date">June 15, 2026 // Daily Download // Connor <span class="macivor">MacIvor</span></span>
+
+<div style="margin:0 auto 1.5rem">
+<div style="position:relative;padding-bottom:56.25%;height:0;border:1px solid rgba(0,229,255,0.2);border-radius:8px;overflow:hidden">
+<iframe src="https://www.youtube.com/embed/k5vE6Fx7j08" title="Fable 5 Pulled, Sora Killed, and AI Hunting Medicaid Fraud" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+</div>
+<p style="text-align:center;margin:.6rem 0 0;font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px"><a href="https://youtube.com/shorts/k5vE6Fx7j08" target="_blank" rel="noopener" style="color:var(--gold)">&#9654; WATCH ON YOUTUBE</a></p>
+</div>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+The US government is now scanning Medicaid files in all 50 states with ChatGPT to find fraud, and the people who should be nervous are the providers who billed for things nobody needed. In the same week, the government pulled Anthropic's Fable 5 model after it got jailbroken and somebody snitched, and OpenAI killed Sora image generation. Three stories, one current underneath. The powerful AI goes to the institutions first, and the rest of us get the managed version that can vanish overnight. Do not believe everything you see.
+</div>
+
+<p>Here is the AI story almost nobody is leading with, and it is the one that touches the most lives. <strong>The US government is looking through Medicaid files in all 50 states using ChatGPT, trying to identify fraud and misuse.</strong> That is the government pointing a language model at the records themselves, at scale, in every state at once. A lot of people are nervous about it, and I understand why. So let us cover it, along with two other things that happened this week, because they all rhyme.</p>
+
+<h2>The Government Just Pointed AI at Medicaid Fraud</h2>
+
+<p>They are using AI to hunt down the biggest criminals in the Medicaid world, the ones overcharging the system. Think about why that is a big deal mechanically. A human auditor can read a handful of files in a day. AI reads every file at once, across every state, and the pattern shows itself instantly. The fraud that used to hide inside the sheer volume of paperwork is exactly the thing a model eats for breakfast.</p>
+
+<p>I think we are going to see fallback land on some of the medical professionals out there. The ones who set patients up to have certain things done that were not actually required, just so they could bill for it and get the money. When the audit never sleeps and reads everything, those billing patterns stop being invisible.</p>
+
+<div class="pullquote">A human auditor reads a handful of files. AI reads every file at once, and the pattern shows itself.</div>
+
+<p>If you run an honest practice, this is not your problem, it is your protection. If you have been gaming the codes, the tireless reader just showed up. This is the same shift I keep pointing at on the show. Whatever the machine is built to find, it finds at a scale no human ever could, the way I described when <a class="inline" href="https://connorwithhonor.com/blog/2026-104-ai-pulled-every-scv-closing-39-sales/">I put AI on every closed real estate sale in a single week</a> and read what the numbers actually said.</p>
+
+<h2>They Gave the Dangerous AI to the Banks</h2>
+
+<p>Second story. If you have been watching this lately, the government pulled off Fable 5, which was a new Anthropic model that was going to replicate the Mythos model. The Mythos model was the one they thought was too dangerous for us regular people to get. So they gave it to the banks and the top financial institutions. Then they put out Fable 5 to make everybody happy.</p>
+
+<p>And the government pulled that off after it was jailbroken, which is interesting. Every model that gets put out there gets jailbroken, every single one. There is a guy on X who loves doing exactly this, and he did it to this model. Somebody snitched, the government got involved, and Fable 5 got pulled. If you have a Claude membership, you will see that Fable 5 is no longer available. That is cute. Do not believe everything you see.</p>
+
+<p>I went deeper on the Fable 5 pull in <a class="inline" href="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/">its own breakdown here</a>, so I will keep it short. The lesson is the sequence. The most capable version goes to the institutions with the most power and money. The public version disappears the moment it gets interesting. That is not safety. That is the same pattern I keep flagging, the one behind <a class="inline" href="https://connorwithhonor.com/blog/2026-113-argentina-ai-corporation-no-human-owner/">an AI corporation with no human owner</a> and behind <a class="inline" href="https://connorwithhonor.com/blog/2026-110-a-machine-built-a-smarter-machine-without-us/">a machine building a smarter machine without us</a>. The power concentrates up top, fast.</p>
+
+<h2>OpenAI Killed Sora, and That Is a Tell</h2>
+
+<p>Third story, a little older but it matters. OpenAI killed Sora, they got rid of the image generation. People treated it like a retreat. I do not see it that way at all. I think they are going to start creating photographs and images pixel by pixel, so the result is brand new, totally never existed before.</p>
+
+<p>That is how they are going to do it instead of pulling from a library and getting a little better each time. They can create worlds now that are generated next pixel after next pixel, and you watch entire worlds start to develop. I think AI is going to be that powerful, where it completely creates something from nothing, absolutely brand new. So these older image models start taking a back seat.</p>
+
+<p>The reason they keep them around is because people love them. That is where the dancing cats and the dancing frogs and the dancing dogs and the couples that look like animals come from. That is what a lot of people buy into, because not everybody is using this to build a business. A lot of folks are using it for entertainment, so these companies keep an entertainment layer bolted onto the real thing.</p>
+
+<p>But pretty soon it gets away from photo generation and moves to actually synthesizing a photo, pixel by pixel, all the way through the process. And that is where the coding platform comes into place. That is why it is so important to have it built on code, and why that code is the most important part of it. The output is the toy. The code is the product. It is the exact reason <a class="inline" href="https://codedbyconnor.com">I build my own AI systems</a> instead of just renting whatever app is trending, and why the systems we install at <a class="inline" href="https://hireaivoice.com">HireAIVoice</a> are ours to keep.</p>
+
+<h2>The Pattern Underneath All Three</h2>
+
+<p>Put the three together and the current is obvious. The dangerous model goes to the banks. The public model gets pulled the second somebody breaks it open. The image tools get quietly swapped for something built deeper on code. And the same AI that makes dancing frogs is now reading Medicaid files in all 50 states to decide who committed fraud. The capability is racing ahead, the access is being sorted by who holds the power, and most people are watching the entertainment layer while the real machine runs underneath.</p>
+
+<p>This is not a doom take. It is a wake-up. I broke down why this is <a class="inline" href="https://connorwithhonor.com/blog/2026-111-the-ai-paradox-biggest-bet-in-history/">the biggest bet in history</a> on a recent episode, and nothing this week changed my mind. The move is not to fear it. The move is to understand what each system is optimized for, and to own your own.</p>
+
+<h2>What This Means If You Run a Business</h2>
+
+<p>Here is the practical takeaway for owners, operators, and anyone whose income depends on these tools. If your business is built on a consumer AI app you do not control, you are building on rented land. Fable 5 proved it. There one day, gone the next, by forces that have nothing to do with you. Own your systems. Own your data. Own the code that runs your operation, so that when the tool of the month disappears, your business does not flinch.</p>
+
+<p>That is the work we do every day. Real systems, owned by the business, built to keep working no matter what gets pulled, jailbroken, or swapped. If you want AI that works for you instead of around you, that is the day job at <a class="inline" href="https://honorelevate.com">HonorElevate</a>.</p>
+
+<div class="cta">
+<h2>Want AI That Actually Works For Your Business?</h2>
+<p>We build owned AI systems for real businesses, the kind that keep running no matter which app gets pulled this week. See how it works at <a class="inline" href="https://honorelevate.com">HonorElevate.com</a>.</p>
+<p>Get the daily three-minute AI breakdown the moment it drops. Subscribe to the <a class="inline" href="https://connorwithhonor.com/blog">Daily Download</a>.</p>
+</div>
+
+<div class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><h3>Is the government using AI to find Medicaid fraud?</h3><p>Yes. The US government is scanning Medicaid files across all 50 states using ChatGPT to identify fraud and misuse. The goal is to surface the largest abusers, including overbilling and procedures that were not medically required. A human auditor reads a handful of files. AI reads every file at once and the pattern shows itself, which is why this matters far more than it sounds.</p></div>
+<div class="faq-item"><h3>What happened to Anthropic's Fable 5 model?</h3><p>Fable 5 was a new Anthropic model meant to mirror the so-called Mythos model, the one deemed too dangerous for the public and routed to banks and financial institutions instead. Fable 5 was jailbroken, somebody reported it, the government got involved, and the public version was pulled. If you have a Claude membership you can see that Fable 5 is no longer available.</p></div>
+<div class="faq-item"><h3>Why did OpenAI kill Sora image generation?</h3><p>OpenAI removed the Sora image generation, and the better read is that it points at where this is going rather than a retreat. The next step is generated worlds built pixel by pixel on code, synthesized from nothing into something brand new, instead of stock image models. When that is the product, the code underneath becomes the most important part of the whole stack and the image models drop to an entertainment layer.</p></div>
+<div class="faq-item"><h3>What does the Medicaid AI scan mean for medical professionals?</h3><p>Honest providers have nothing to fear. Providers who set patients up for procedures that were not required, just to bill for them, are the target. When AI reads every record across every state at once, the billing patterns that hid inside the volume become obvious. Expect real fallout for the worst actors.</p></div>
+<div class="faq-item"><h3>Why does Connor say the code is the most important part of AI?</h3><p>Because the output is not the asset, the system is. Image models, chat windows, and dancing-animal videos are the entertainment layer that keeps casual users paying. The real value, and the real moat, is the code that synthesizes those outputs. Business owners who own their systems and their data are not at the mercy of a tool that can be pulled overnight, the way Fable 5 was.</p></div>
+</div>
+
+<div class="pillar-links">
+<a href="https://connorwithhonor.com/blog/2026-112-government-pulled-the-plug-on-anthropic-fable-5/" target="_blank">Fable 5 Pulled</a>
+<a href="https://connorwithhonor.com/blog/2026-111-the-ai-paradox-biggest-bet-in-history/" target="_blank">The AI Paradox</a>
+<a href="https://connorwithhonor.com/blog/2026-110-a-machine-built-a-smarter-machine-without-us/" target="_blank">Machine Builds Machine</a>
+<a href="https://honorelevate.com" target="_blank">HonorElevate</a>
+<a href="https://santaclaritaai.com" target="_blank">Santa Clarita AI</a>
+<a href="https://connorwithhonor.com/blog" target="_blank">All Episodes</a>
+</div>
+
+<p style="margin-top:3rem;font-style:italic;color:var(--gray-light)">Let us be careful out there. The powerful version always goes upstairs first, so know what each machine is optimized for, and own your own. I am Connor with honor, and I will see you in the next one.</p>
+</article>
+
+<div class="disclosure">
+Connor T. <span class="macivor">MacIvor</span> &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490<br>
+This content is commentary and education, not legal, financial, medical, or investment advice.<br>
+&copy; 2026 Connor with Honor. All rights reserved.
+</div>
+
+<footer><p class="footer-coded">Coded by <a href="https://honorelevate.com" target="_blank">Connor with Honor</a> | AI Growth Architect</p></footer>
+</body>
+</html>
