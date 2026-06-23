@@ -1,8 +1,12 @@
-name: Deploy to Netlify
+name: Deploy to Netlify (DEPRECATED — site is on Cloudflare Pages)
+
+# 2026-06-22: connorwithhonor.com migrated off Netlify to Cloudflare Pages.
+# The domain now serves from the `connorwithhonor` Pages project. Deploys are
+# done with ./deploy-cf.sh (wrangler OAuth). This Netlify workflow no longer runs
+# on push (it would deploy to an orphaned Netlify site nothing points at) and is
+# kept manual-only for reference / emergency rollback.
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       skip_safety_check:
