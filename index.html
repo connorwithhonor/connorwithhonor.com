@@ -18,7 +18,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Connor MacIvor","alternateName":"Connor with Honor","jobTitle":"Real Estate Broker, AI Growth Architect, Show Host","url":"https://connorwithhonor.com","image":"https://connorwithhonor.com/og-image.png","description":"Former LAPD motor officer (20 years sworn, 23 years total law enforcement), 27+ year Santa Clarita Valley real estate broker (CA DRE #01238257, Sync Brokerage, Inc.), self-taught programmer since 1983, AI builder, founder of the Fair Fixed Fee Realtor Certification, and host of the Daily Download show. Believer in Jesus Christ.","email":"connor@connorwithhonor.com","telephone":"+16614001720","address":{"@type":"PostalAddress","addressLocality":"Santa Clarita","addressRegion":"CA","postalCode":"91350","addressCountry":"US"},"worksFor":[{"@type":"Organization","name":"Sync Brokerage, Inc."},{"@type":"Organization","name":"HonorElevate","url":"https://honorelevate.com"},{"@type":"Organization","name":"SeventeenK","url":"https://seventeenk.com"},{"@type":"Organization","name":"HireAIVoice","url":"https://hireaivoice.com"}],"founder":[{"@type":"Organization","name":"Fair Fixed Fee Realtor Certification"},{"@type":"Organization","name":"HonorElevate","url":"https://honorelevate.com"},{"@type":"Organization","name":"HireAIVoice","url":"https://hireaivoice.com"},{"@type":"Organization","name":"Santa Clarita Artificial Intelligence","url":"https://santaclaritaartificialintelligence.com"}],"sameAs":["https://seventeenk.com","https://sellersonlyagent.com","https://honorelevate.com","https://hireaivoice.com","https://santaclaritaartificialintelligence.com","https://thelastaddiction.com","https://godisnotthemachine.com","https://scv123.com","https://santaclaritaopenhouses.com","https://codedbyconnor.com"],"knowsAbout":["AI for real estate agents","AI for small business","voice AI for lead capture","Santa Clarita Valley real estate market","sellers-only real estate representation","flat-fee real estate listing model","food addiction recovery","extended fasting","law enforcement to entrepreneurship transition","AI ethics from practitioner perspective"],"identifier":[{"@type":"PropertyValue","propertyID":"CA DRE","value":"01238257"}]}
 </script>
@@ -27,244 +27,407 @@
 </script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--bg-card-hover:#181828;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+:root{
+  --ink:#0c0b10;--ink-2:#15141b;--ink-3:#1e1c25;--ink-soft:#100f15;
+  --cream:#f3eee4;--muted:#a8a298;--dim:#726c62;
+  --gold:#e8a838;--gold-bright:#f3bd54;--gold-deep:#b9831f;--gold-soft:rgba(232,168,56,.09);
+  --line:rgba(232,168,56,.16);--line-soft:rgba(255,255,255,.07);
+  --body-c:#d08a52;--machine-c:#8aa9c4;--house-c:#d4ab46;--anchor-c:#d8c8a4;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
 html{scroll-behavior:smooth}
-body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,0.04) 0%,transparent 55%);pointer-events:none;z-index:0}
-/* 3D TRON GRID */
-.tron-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
-.tron-grid{position:absolute;top:55%;left:-50%;width:200%;height:200%;background-image:linear-gradient(rgba(0,229,255,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.12) 1px,transparent 1px);background-size:80px 80px;transform:perspective(600px) rotateX(75deg);transform-origin:center top;animation:flyThrough 4s linear infinite;box-shadow:inset 0 0 400px var(--bg-primary)}
-.tron-horizon{position:absolute;top:55%;left:0;width:100%;height:2px;background:var(--cyan);box-shadow:0 0 60px 20px rgba(0,229,255,0.15);opacity:.3}
-@keyframes flyThrough{0%{background-position-y:0}100%{background-position-y:80px}}
-body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
-/* SCAN LINE */
-.scan-line{position:fixed;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);opacity:.12;animation:scanDown 8s linear infinite;z-index:3;pointer-events:none}
-@keyframes scanDown{0%{top:-2px}100%{top:100vh}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 15px rgba(0,229,255,0.06)}50%{box-shadow:0 0 35px rgba(0,229,255,0.15)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes borderGlow{0%,100%{border-color:rgba(0,229,255,0.15)}50%{border-color:rgba(0,229,255,0.4)}}
-section,nav,footer{position:relative;z-index:2}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
-.nav-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--white);text-decoration:none}
-.nav-brand span{color:var(--cyan)}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
-.nav-links a:hover{color:var(--cyan)}
-.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:8px 20px!important;font-size:.8rem!important;letter-spacing:2px;border:none;cursor:pointer;transition:all .3s!important}
-.nav-cta:hover{background:#ff3d5a!important;transform:scale(1.05)}
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px}
-.nav-hamburger span{width:28px;height:2px;background:var(--cyan)}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,rgba(255,23,68,0.03) 40%,transparent 70%);pointer-events:none}
-.hero-badge{font-family:var(--font-mono);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,0.3);padding:8px 24px;margin-bottom:2.5rem;display:inline-block;animation:fadeDown 1s ease-out,glowPulse 4s ease-in-out infinite 1s}
-.hero h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,7rem);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-2px;margin-bottom:1.5rem;animation:fadeUp 1s ease-out .2s both}
-.hero h1 .line1{display:block;color:var(--white)}
-.hero h1 .line2{display:block;color:var(--cyan)}
-.hero h1 .line3{display:block;font-size:.3em;letter-spacing:6px;color:var(--gray-light);margin-top:.5rem;font-weight:400}
-.hero-sub{font-family:var(--font-body);font-size:1.15rem;color:var(--gray-light);max-width:680px;margin-bottom:2.5rem;animation:fadeUp 1s ease-out .4s both;line-height:1.9}
-.hero-pillars{display:flex;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s ease-out .6s both}
-.hero-pill{font-family:var(--font-display);font-size:.8rem;text-transform:uppercase;letter-spacing:3px;padding:10px 20px;border:1px solid;transition:all .4s;cursor:default}
-.pill-body{border-color:var(--red-dim);color:var(--red)}.pill-body:hover{background:rgba(255,23,68,0.1)}
-.pill-machine{border-color:var(--cyan-dim);color:var(--cyan)}.pill-machine:hover{background:rgba(0,229,255,0.1)}
-.pill-house{border-color:var(--gold-dim);color:var(--gold)}.pill-house:hover{background:rgba(255,196,0,0.1)}
-.pill-anchor{border-color:rgba(255,255,255,0.3);color:var(--white)}.pill-anchor:hover{background:rgba(255,255,255,0.05)}
-.hero-cta-group{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s ease-out .8s both}
-.btn-primary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:var(--red);color:var(--white);text-decoration:none;border:none;cursor:pointer;transition:all .3s}
-.btn-primary:hover{background:#ff3d5a;transform:translateY(-2px)}
-.btn-secondary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:transparent;color:var(--cyan);border:1px solid var(--cyan-dim);text-decoration:none;cursor:pointer;transition:all .3s}
-.btn-secondary:hover{background:rgba(0,229,255,0.1);transform:translateY(-2px)}
-.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:pulse 2s infinite}
-.scroll-indicator span{font-family:var(--font-mono);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
-.scroll-arrow{width:20px;height:20px;border-right:2px solid var(--cyan-dim);border-bottom:2px solid var(--cyan-dim);transform:rotate(45deg)}
-.section-header{text-align:center;margin-bottom:4rem}
-.section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:1rem}
-.section-label::before{content:'';width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0}
-.section-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);text-transform:uppercase;letter-spacing:2px;font-weight:700}
-.briefing-section{padding:80px 2rem;max-width:900px;margin:0 auto}
-.briefing-embed{border:1px solid rgba(0,229,255,0.15);background:var(--bg-card);position:relative;animation:borderGlow 4s ease-in-out infinite}
-.briefing-embed::before{content:'';position:absolute;top:-1px;left:-1px;width:24px;height:24px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);z-index:3;pointer-events:none}
-.briefing-embed::after{content:'';position:absolute;bottom:-1px;right:-1px;width:24px;height:24px;border-bottom:2px solid var(--red);border-right:2px solid var(--red);z-index:3;pointer-events:none}
-.pillars{padding:100px 2rem;max-width:1400px;margin:0 auto}
-.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.pillar-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .4s;text-decoration:none;color:var(--white);display:block}
-.pillar-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .4s}
-.pillar-card:hover{transform:translateY(-8px);background:var(--bg-card-hover);box-shadow:0 8px 40px rgba(0,0,0,.4)}
-.pillar-body:hover{box-shadow:0 8px 40px rgba(255,23,68,0.15)}
-.pillar-machine:hover{box-shadow:0 8px 40px rgba(0,229,255,0.15)}
-.pillar-house:hover{box-shadow:0 8px 40px rgba(255,196,0,0.15)}
-.pillar-anchor:hover{box-shadow:0 8px 40px rgba(255,255,255,0.08)}
-.pillar-card:hover::before{height:5px}
-.pillar-body::before{background:var(--red)}.pillar-machine::before{background:var(--cyan)}.pillar-house::before{background:var(--gold)}.pillar-anchor::before{background:var(--white)}
-.pillar-number{font-family:var(--font-mono);font-size:.65rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:1.5rem;display:block}
-.pillar-body .pillar-number{color:var(--red)}.pillar-machine .pillar-number{color:var(--cyan)}.pillar-house .pillar-number{color:var(--gold)}.pillar-anchor .pillar-number{color:var(--gray-light)}
-.pillar-card h3{font-family:var(--font-display);font-size:1.6rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;font-weight:600}
-.pillar-card p{font-size:.95rem;color:var(--gray-light);line-height:1.7;margin-bottom:1.5rem}
-.pillar-link{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;opacity:.6;transition:opacity .3s}
-.pillar-card:hover .pillar-link{opacity:1}
-.show-section{padding:100px 2rem;background:var(--bg-secondary);border-top:1px solid rgba(0,229,255,0.05);border-bottom:1px solid rgba(0,229,255,0.05)}
-.show-inner{max-width:1200px;margin:0 auto}
-.show-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.show-content h3{font-family:var(--font-display);font-size:2.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;line-height:1.1}
-.show-content h3 span{color:var(--cyan)}
-.show-content p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.5rem;line-height:1.8}
-.show-format{list-style:none;margin-bottom:2rem}
-.show-format li{font-family:var(--font-mono);font-size:.8rem;letter-spacing:1px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:12px}
-.format-time{font-weight:500;min-width:70px}
-.format-time.t-body{color:var(--red)}.format-time.t-machine{color:var(--cyan)}.format-time.t-house{color:var(--gold)}.format-time.t-anchor{color:var(--white)}.format-time.t-recap{color:var(--gray-light)}
-.show-embed{background:var(--bg-card);border:1px solid rgba(0,229,255,0.1);aspect-ratio:16/9;position:relative;overflow:hidden;animation:borderGlow 5s ease-in-out infinite}
-.show-embed iframe{width:100%;height:100%;border:none}
-.podcast-embed{margin-top:1.5rem;background:var(--bg-card);border:1px solid rgba(0,229,255,0.1);padding:1.5rem}
-.podcast-header{text-align:center}
-.blog-section{padding:80px 2rem;max-width:1200px;margin:0 auto}
-.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
-.blog-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;text-decoration:none;color:var(--white);display:block;transition:all .3s;position:relative;overflow:hidden}
-.blog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--red))}
-.blog-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-4px)}
-.blog-card .blog-ep{font-family:var(--font-mono);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:.75rem;display:block}
-.blog-card h4{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.75rem;line-height:1.3}
-.blog-card .blog-excerpt{font-size:.9rem;color:var(--gray-light);line-height:1.6;margin-bottom:1rem}
-.blog-card .blog-pillars{display:flex;gap:.5rem;flex-wrap:wrap}
-.blog-card .blog-pillars span{font-family:var(--font-mono);font-size:.55rem;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid}
-.bp-machine{border-color:var(--cyan-dim)!important;color:var(--cyan)}.bp-body{border-color:var(--red-dim)!important;color:var(--red)}.bp-house{border-color:var(--gold-dim)!important;color:var(--gold)}.bp-anchor{border-color:rgba(255,255,255,0.3)!important;color:var(--white)}
-/* BOOK ME */
-.bookme-section{padding:100px 2rem;background:var(--bg-secondary);border-top:1px solid rgba(0,229,255,0.05);border-bottom:1px solid rgba(0,229,255,0.05)}
-.bookme-inner{max-width:1200px;margin:0 auto}
-.bookme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.bookme-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem 2rem;text-align:center;transition:all .3s}
-.bookme-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,229,255,0.1)}
-.bookme-card .bm-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
-.bookme-card h4{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem}
-.bookme-card p{font-size:.9rem;color:var(--gray-light);line-height:1.7;margin-bottom:1.5rem}
-.bookme-card .bm-cta{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);text-decoration:none;border:1px solid var(--cyan-dim);padding:8px 20px;display:inline-block;transition:all .3s}
-.bookme-card .bm-cta:hover{background:rgba(0,229,255,0.1)}
-/* CONSULTING */
-.consult-section{padding:100px 2rem;max-width:1200px;margin:0 auto}
-.consult-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.consult-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .3s}
-.consult-card.featured{border-color:var(--cyan-dim)}
-.consult-card.featured::before{content:'MOST POPULAR';position:absolute;top:0;left:0;right:0;background:var(--cyan);color:var(--bg-primary);font-family:var(--font-mono);font-size:.6rem;letter-spacing:3px;text-align:center;padding:6px;font-weight:700}
-.consult-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,229,255,0.1)}
-.consult-card .consult-price{font-family:var(--font-display);font-size:2.2rem;color:var(--gold);margin-bottom:.25rem;display:block}
-.consult-card .consult-freq{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:1rem;display:block}
-.consult-card h4{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-.consult-card ul{list-style:none;margin-bottom:1.5rem}
-.consult-card ul li{font-size:.85rem;color:var(--gray-light);padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.03);line-height:1.5}
-.consult-card ul li::before{content:'>';color:var(--cyan);margin-right:.5rem;font-family:var(--font-mono)}
-.consult-card .consult-cta{display:block;text-align:center;font-family:var(--font-display);font-size:.85rem;text-transform:uppercase;letter-spacing:3px;padding:12px 24px;text-decoration:none;transition:all .3s}
-.consult-cta-primary{background:var(--red);color:var(--white)}
-.consult-cta-primary:hover{background:#ff3d5a}
-.consult-cta-secondary{border:1px solid var(--cyan-dim);color:var(--cyan)}
-.consult-cta-secondary:hover{background:rgba(0,229,255,0.1)}
-/* SOCIAL BAR */
-.social-bar{padding:60px 2rem;text-align:center;border-top:1px solid rgba(0,229,255,0.05)}
-.social-bar h3{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:4px;color:var(--gray-light);margin-bottom:2rem}
-.social-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
-.social-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;padding:8px 16px;border:1px solid rgba(255,255,255,0.05);transition:all .3s}
-.social-links a:hover{color:var(--cyan);border-color:var(--cyan-dim)}
-@media(max-width:768px){.bookme-grid{grid-template-columns:1fr}.consult-grid{grid-template-columns:1fr}}
-.about-section{padding:100px 2rem;max-width:1000px;margin:0 auto}
-.about-grid{display:grid;grid-template-columns:1fr;gap:3rem}
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
-.stat-block{text-align:center;padding:2rem 1rem;border:1px solid rgba(255,255,255,0.05);background:var(--bg-card);transition:all .3s}
-.stat-block:hover{border-color:rgba(0,229,255,0.2);box-shadow:0 0 20px rgba(0,229,255,0.08)}
-.stat-number{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--cyan);display:block}
-.stat-label{font-family:var(--font-mono);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-top:.5rem;display:block}
-.ecosystem{padding:100px 2rem;background:var(--bg-secondary);border-top:1px solid rgba(0,229,255,0.05)}
-.eco-inner{max-width:1200px;margin:0 auto}
-.eco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.eco-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;transition:all .3s;text-decoration:none;color:var(--white);display:block}
-.eco-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-4px);box-shadow:0 6px 30px rgba(0,229,255,0.08)}
-.eco-card h4{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem}
-.eco-card p{font-size:.9rem;color:var(--gray-light);line-height:1.6;margin-bottom:1rem}
-.eco-url{font-family:var(--font-mono);font-size:.7rem;color:var(--cyan-dim);letter-spacing:1px}
-.cta-section{padding:100px 2rem;text-align:center}
-.cta-inner{max-width:700px;margin:0 auto}
-.cta-inner h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem}
-.cta-inner p{font-size:1.05rem;color:var(--gray-light);margin-bottom:2.5rem;line-height:1.7}
-.cta-phone{display:inline-block;font-family:var(--font-display);font-size:2rem;color:var(--gold);text-decoration:none;letter-spacing:3px;margin-top:1.5rem;transition:color .3s}
-.cta-phone:hover{color:var(--white)}
-footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-.footer-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s}
-.footer-links a:hover{color:var(--cyan)}
-.footer-legal{font-size:.8rem;color:var(--gray);line-height:1.8}
-.footer-legal a{color:var(--cyan-dim);text-decoration:none}
-.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);margin-top:1.5rem}
-.footer-coded a{color:var(--cyan-dim);text-decoration:none}
-.disclosure{font-size:.75rem;color:var(--gray);max-width:800px;margin:2rem auto 0;text-align:center;line-height:1.6;padding:1.5rem;border:1px solid rgba(255,255,255,0.03);background:rgba(0,0,0,0.2)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-@media(max-width:1024px){.pillars-grid{grid-template-columns:repeat(2,1fr)}.show-layout{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:flex}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:rgba(10,10,15,0.98);padding:2rem;border-bottom:1px solid rgba(0,229,255,0.1)}.pillars-grid{grid-template-columns:1fr}.eco-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.hero-pillars{gap:.75rem}.hero-pill{font-size:.7rem;padding:8px 14px}.blog-grid{grid-template-columns:1fr}}
-.macivor{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;font-weight:600}
+body{font-family:var(--sans);background:var(--ink);color:var(--muted);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--cream);font-weight:700;line-height:1.12}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative}
+.eyebrow{font-family:var(--sans);font-size:.74rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:inline-block}
+.section-head{text-align:center;max-width:760px;margin:0 auto 54px}
+.section-head .eyebrow{margin-bottom:16px}
+.section-head h2{font-size:clamp(2rem,4.4vw,3.1rem)}
+.section-head h2 em{font-style:italic;color:var(--gold)}
+.section-head p{margin-top:14px;color:var(--muted);font-size:1.05rem}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:700;font-size:.86rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:6px;padding:15px 30px;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.btn-primary{background:var(--gold);color:#231703;box-shadow:0 6px 22px rgba(232,168,56,.22)}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(12,11,16,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line-soft)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:14px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.nav-brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:1.32rem;font-weight:800;color:var(--cream)}
+.nav-brand img{width:32px;height:32px}
+.nav-brand span{color:var(--gold);font-style:italic;font-weight:700}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--cream)}
+.nav-cta{color:var(--gold) !important;border:1px solid var(--line);padding:8px 16px;border-radius:6px;letter-spacing:.04em}
+.nav-cta:hover{background:var(--gold-soft)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.nav-hamburger span{width:24px;height:2px;background:var(--gold);display:block}
+
+/* HERO */
+.hero{padding:96px 0 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(232,168,56,.07),transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:7px 18px;margin-bottom:30px}
+.hero h1{font-family:var(--serif);font-weight:900;line-height:.98;margin-bottom:26px;color:var(--cream)}
+.hero h1 .l1{display:block;font-size:clamp(3.2rem,9vw,7rem)}
+.hero h1 .l2{display:block;font-size:clamp(3.2rem,9vw,7rem);font-style:italic;color:var(--gold)}
+.hero h1 .l3{display:block;font-family:var(--sans);font-size:clamp(.95rem,2.1vw,1.32rem);font-weight:600;letter-spacing:.04em;color:var(--muted);margin-top:22px;text-transform:none}
+.hero-sub{max-width:720px;margin:0 auto 34px;font-size:1.1rem;line-height:1.75;color:var(--muted)}
+.hero-pillars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:38px}
+.hero-pill{font-family:var(--sans);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:100px;border:1px solid var(--line-soft)}
+.pill-body{color:var(--body-c)}.pill-machine{color:var(--machine-c)}.pill-house{color:var(--house-c)}.pill-anchor{color:var(--anchor-c)}
+.hero-cta-group{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.scroll-indicator{margin-top:54px;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.scroll-arrow{width:1px;height:32px;background:linear-gradient(var(--gold),transparent)}
+
+/* SECTION SHELL */
+.band{padding:90px 0}
+.band-alt{background:var(--ink-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+
+/* BRIEFING */
+.briefing-embed{max-width:840px;margin:0 auto}
+.video-frame{position:relative;padding-bottom:56.25%;height:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink-2)}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* PILLARS */
+.pillars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:1000px;margin:0 auto}
+.pillar-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;padding:36px;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden}
+.pillar-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:currentColor;opacity:.0;transition:opacity .25s}
+.pillar-card:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,0,0,.4)}
+.pillar-card:hover::before{opacity:1}
+.pillar-body{color:var(--body-c)}.pillar-machine{color:var(--machine-c)}.pillar-house{color:var(--house-c)}.pillar-anchor{color:var(--anchor-c)}
+.pillar-card:hover{border-color:currentColor}
+.pillar-number{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:currentColor;opacity:.85}
+.pillar-card h3{font-family:var(--serif);font-size:1.7rem;color:var(--cream);margin:10px 0 12px}
+.pillar-card p{font-size:.96rem;color:var(--muted);line-height:1.7}
+.pillar-link{display:inline-block;margin-top:16px;font-family:var(--sans);font-size:.82rem;font-weight:700;color:currentColor;letter-spacing:.02em}
+
+/* SHOW */
+.show-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;max-width:1080px;margin:0 auto}
+.show-content h3{font-family:var(--serif);font-size:2rem;color:var(--cream);margin-bottom:14px;line-height:1.15}
+.show-content h3 span{font-style:italic;color:var(--gold)}
+.show-content p{font-size:1rem;color:var(--muted);margin-bottom:22px;line-height:1.75}
+.show-format{list-style:none;margin-bottom:26px}
+.show-format li{display:flex;gap:14px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:var(--sans);font-size:.92rem;color:var(--cream)}
+.format-time{font-family:var(--sans);font-weight:700;font-size:.78rem;letter-spacing:.04em;min-width:48px}
+.t-body{color:var(--body-c)}.t-machine{color:var(--machine-c)}.t-house{color:var(--house-c)}.t-anchor{color:var(--anchor-c)}.t-recap{color:var(--gold)}
+.show-embed .video-frame{padding-bottom:56.25%}
+.podcast-section{max-width:840px;margin:48px auto 0;text-align:center}
+.podcast-header p{color:var(--muted);font-size:1rem;margin-top:8px}
+.podcast-embed{margin-top:24px}
+
+/* BLOG */
+.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1000px;margin:0 auto}
+.blog-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;padding:32px;transition:transform .25s,border-color .25s}
+.blog-card:hover{transform:translateY(-3px);border-color:var(--line)}
+.blog-ep{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep)}
+.blog-card h4{font-family:var(--serif);font-size:1.4rem;color:var(--cream);margin:12px 0 12px;line-height:1.25}
+.blog-excerpt{font-size:.94rem;color:var(--muted);line-height:1.7}
+.blog-pillars{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.blog-pillars span{font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;border:1px solid var(--line-soft)}
+.bp-body{color:var(--body-c)}.bp-machine{color:var(--machine-c)}.bp-house{color:var(--house-c)}.bp-anchor{color:var(--anchor-c)}
+.blog-all{text-align:center;margin-top:36px}
+
+/* BOOK ME + CARDS GRID */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1040px;margin:0 auto}
+.info-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;padding:34px;transition:transform .25s,border-color .25s}
+.info-card:hover{transform:translateY(-3px);border-color:var(--line)}
+.info-card .ic{width:44px;height:44px;border-radius:10px;background:var(--gold-soft);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.info-card .ic svg{width:22px;height:22px}
+.info-card h4{font-family:var(--serif);font-size:1.35rem;color:var(--cream);margin-bottom:10px}
+.info-card p{font-size:.93rem;color:var(--muted);line-height:1.7;margin-bottom:18px}
+.bm-cta{font-family:var(--sans);font-size:.82rem;font-weight:700;color:var(--gold);letter-spacing:.02em}
+.bm-cta:hover{color:var(--gold-bright)}
+
+/* CONSULT */
+.consult-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:840px;margin:0 auto}
+.consult-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:38px 34px;position:relative}
+.consult-card.featured{border:1px solid var(--gold);box-shadow:0 18px 50px rgba(0,0,0,.4)}
+.consult-card.featured::after{content:'Most Popular';position:absolute;top:-12px;left:34px;background:var(--gold);color:#231703;font-family:var(--sans);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:100px}
+.consult-price{font-family:var(--serif);font-size:2.6rem;font-weight:800;color:var(--gold)}
+.consult-freq{font-family:var(--sans);font-size:.9rem;color:var(--muted)}
+.consult-card h4{font-family:var(--serif);font-size:1.45rem;color:var(--cream);margin:6px 0 18px}
+.consult-card ul{list-style:none;margin-bottom:26px}
+.consult-card li{display:flex;gap:11px;align-items:flex-start;font-family:var(--sans);font-size:.93rem;color:var(--muted);padding:7px 0}
+.consult-card li svg{width:17px;height:17px;flex-shrink:0;color:var(--gold);margin-top:3px}
+.consult-cta{display:block;text-align:center;font-family:var(--sans);font-weight:700;font-size:.86rem;padding:14px;border-radius:6px;transition:all .2s}
+.consult-cta-primary{background:var(--gold);color:#231703}
+.consult-cta-primary:hover{background:var(--gold-bright)}
+.consult-cta-secondary{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.consult-cta-secondary:hover{border-color:var(--gold);color:var(--gold)}
+
+/* BOOKING IFRAME */
+.booking-shell{margin-top:40px;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:2rem;max-width:1000px;margin-left:auto;margin-right:auto}
+.booking-shell iframe{width:100%;border:none;min-height:800px}
+
+/* ABOUT */
+.about-grid{max-width:880px;margin:0 auto}
+.about-grid p{font-family:var(--serif);font-size:1.2rem;color:var(--cream);line-height:1.85;margin-bottom:1.5rem;font-weight:500}
+.about-grid p:last-child{font-size:1.05rem;color:var(--muted);font-weight:400;font-family:var(--sans);line-height:1.85}
+.macivor{font-style:italic;color:var(--gold)}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:900px;margin:48px auto 0}
+.stat-block{text-align:center;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:26px 16px}
+.stat-number{display:block;font-family:var(--serif);font-size:2.2rem;font-weight:800;color:var(--gold)}
+.stat-label{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+
+/* ECOSYSTEM */
+.eco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:0 auto}
+.eco-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:28px;transition:transform .25s,border-color .25s}
+.eco-card:hover{transform:translateY(-3px);border-color:var(--line)}
+.eco-card h4{font-family:var(--serif);font-size:1.25rem;color:var(--cream);margin-bottom:8px}
+.eco-card p{font-size:.9rem;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.eco-url{font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--gold-deep);letter-spacing:.03em}
+
+/* CTA */
+.cta-section{padding:100px 0;text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(232,168,56,.06),transparent 70%)}
+.cta-inner h2{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.4rem);color:var(--cream);margin-bottom:16px}
+.cta-inner h2 span{font-style:italic;color:var(--gold)}
+.cta-inner p{max-width:620px;margin:0 auto 30px;color:var(--muted);font-size:1.05rem;line-height:1.75}
+.cta-phone{display:inline-block;margin-top:18px;font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--gold)}
+.cta-phone:hover{color:var(--gold-bright)}
+
+/* SUBSCRIBE */
+.subscribe{padding:84px 0;background:var(--ink-soft);border-top:1px solid var(--line-soft);text-align:center}
+.subscribe .inner{max-width:680px;margin:0 auto;padding:0 28px}
+.subscribe h2{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.6rem);color:var(--cream);line-height:1.15;margin-bottom:16px}
+.subscribe h2 span{font-style:italic;color:var(--gold)}
+.subscribe .lead{color:var(--muted);font-size:1.02rem;line-height:1.7;margin-bottom:8px}
+.subscribe .fine{color:var(--dim);font-size:.92rem;margin-bottom:28px}
+.subscribe .fine strong{color:var(--cream)}
+.dd-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;max-width:560px;margin:0 auto}
+.dd-form input{padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--cream);font-family:var(--sans);font-size:.95rem;border-radius:6px;outline:none}
+.dd-form input::placeholder{color:var(--dim)}
+.dd-form input:focus{border-color:var(--gold);background:var(--gold-soft)}
+.dd-form button{padding:14px 26px;background:var(--gold);color:#231703;border:none;font-family:var(--sans);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-weight:800;border-radius:6px}
+.dd-form button:hover{background:var(--gold-bright)}
+.dd-legal{margin-top:12px;color:var(--dim);font-size:.72rem;font-family:var(--sans);letter-spacing:.02em}
+.dd-or{margin-top:18px;color:var(--dim);font-size:.82rem}
+.dd-or a{color:var(--gold)}
+
+/* SOCIAL */
+.social-bar{padding:60px 0;text-align:center;border-top:1px solid var(--line-soft)}
+.social-bar h3{font-family:var(--serif);font-size:1.4rem;color:var(--cream);margin-bottom:22px}
+.social-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.social-links a{font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--muted);border:1px solid var(--line-soft);border-radius:100px;padding:9px 20px;transition:all .2s}
+.social-links a:hover{border-color:var(--gold);color:var(--gold)}
+
+/* DISCLOSURE + FOOTER */
+.disclosure{max-width:900px;margin:0 auto;padding:40px 28px;font-family:var(--sans);font-size:.74rem;color:var(--dim);line-height:1.7;text-align:center}
+footer{background:var(--ink-soft);border-top:1px solid var(--line-soft);padding:50px 0 30px}
+.footer-inner{max-width:1160px;margin:0 auto;padding:0 28px;text-align:center}
+.footer-links{display:flex;justify-content:center;gap:8px 22px;flex-wrap:wrap;margin-bottom:24px}
+.footer-links a{font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-legal{font-family:var(--sans);font-size:.8rem;color:var(--dim);line-height:1.7}
+.footer-legal a{color:var(--gold-deep)}
+.footer-coded{margin-top:14px;font-family:var(--sans);font-size:.76rem}
+.footer-coded a{color:var(--dim)}
+.footer-coded a:hover{color:var(--gold)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.btn:hover,.pillar-card:hover,.info-card:hover,.eco-card:hover,.blog-card:hover{transform:none}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .show-layout{grid-template-columns:1fr;gap:32px}
+  .cards-3,.eco-grid{grid-template-columns:1fr 1fr}
+  .stat-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(12,11,16,.98);padding:22px 28px;gap:16px;border-bottom:1px solid var(--line-soft)}
+  .nav-links.active{display:flex}
+  .nav-hamburger{display:flex}
+  .band{padding:64px 0}
+  .pillars-grid,.blog-grid,.consult-grid,.cards-3,.eco-grid{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .dd-form{grid-template-columns:1fr}
+}
 </style>
-<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://connorwithhonor.com/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connorwithhonor.com/og-image.png"></head>
+</head>
 <body>
-<div class="scan-line"></div>
-<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
-<nav><div class="nav-inner"><a href="#" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="#today">Today</a><a href="#pillars">The Four</a><a href="#show">The Show</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="/about/">About</a><a href="#bookme">Book Me</a><a href="#consulting">Work With Me</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
 
-<section class="hero"><div class="hero-badge">Santa Clarita, California</div><h1><span class="line1">Connor</span><span class="line2">with Honor</span><span class="line3">Former cop. Self-taught coder. AI builder. Believer.</span></h1><p class="hero-sub">Nobody else on the internet is simultaneously a former LAPD motor officer, a self-taught programmer since 1983, an AI SaaS builder deploying systems for small businesses, a fixed-fee real estate disruptor, and a born-again believer grounding all of it in Jesus Christ. That intersection does not exist anywhere else. This is the show.</p><div class="hero-pillars"><div class="hero-pill pill-body">The Body</div><div class="hero-pill pill-machine">The Machine</div><div class="hero-pill pill-house">The House</div><div class="hero-pill pill-anchor">The Anchor</div></div><div class="hero-cta-group"><a href="#today" class="btn-primary">Today's Episode</a><a href="#show" class="btn-secondary">Watch the Show</a></div><div class="scroll-indicator"><span>Scroll</span><div class="scroll-arrow"></div></div></section>
+<nav><div class="nav-inner">
+  <a href="#" class="nav-brand"><img src="/favicon-shield.svg" alt="Connor with Honor shield">Connor <span>with Honor</span></a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#today">Today</a><a href="#pillars">The Four</a><a href="#show">The Show</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="/about/">About</a><a href="#bookme">Book Me</a><a href="#consulting">Work With Me</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a>
+  </div>
+</div></nav>
 
-<section class="briefing-section" id="today"><div class="briefing-inner"><div class="section-header reveal"><span class="section-label">// Today's Briefing</span><h2 class="section-title" style="font-size:clamp(1.5rem,3.5vw,2.5rem);">Fresh Off the Mic</h2><p style="color:var(--gray-light);margin-top:.75rem;font-size:1rem;">The latest episode. Recorded today. No script. No filter.</p></div><div class="briefing-embed reveal"><div style="position:relative;padding-bottom:56.25%;height:0;max-width:800px;margin:0 auto;"><iframe src="https://www.loom.com/embed/840a703b2b36413195e3c8fc0fc5706e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div></div></div></section>
+<!-- HERO -->
+<section class="hero"><div class="wrap">
+  <div class="hero-badge">Santa Clarita, California</div>
+  <h1><span class="l1">Connor</span><span class="l2">with Honor</span><span class="l3">Former cop. Self-taught coder. AI builder. Believer.</span></h1>
+  <p class="hero-sub">Nobody else on the internet is simultaneously a former LAPD motor officer, a self-taught programmer since 1983, an AI SaaS builder deploying systems for small businesses, a fixed-fee real estate disruptor, and a born-again believer grounding all of it in Jesus Christ. That intersection does not exist anywhere else. This is the show.</p>
+  <div class="hero-pillars">
+    <span class="hero-pill pill-body">The Body</span><span class="hero-pill pill-machine">The Machine</span><span class="hero-pill pill-house">The House</span><span class="hero-pill pill-anchor">The Anchor</span>
+  </div>
+  <div class="hero-cta-group"><a href="#today" class="btn btn-primary">Today's Episode</a><a href="#show" class="btn btn-ghost">Watch the Show</a></div>
+  <div class="scroll-indicator"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</div></section>
 
-<section class="pillars" id="pillars"><div class="section-header reveal"><span class="section-label">// The Four Segments</span><h2 class="section-title">Every Episode. Four Fronts.</h2></div><div class="pillars-grid"><a href="https://thelastaddiction.com" target="_blank" class="pillar-card pillar-body reveal"><span class="pillar-number">Segment 01</span><h3>The Body</h3><p>Fat loss through fasting. Food addiction recovery. Not a diet show. A recovery meeting. Three types of hunger: homeostatic, hedonic, and conditioned. We fight all three.</p><span class="pillar-link">thelastaddiction.com &rarr;</span></a><a href="https://honorelevate.com" target="_blank" class="pillar-card pillar-machine reveal"><span class="pillar-number">Segment 02</span><h3>The Machine</h3><p>Artificial intelligence for regular people. Not for billionaires. Not for developers. For the plumber, the hairstylist, the veteran, the single mom. The $10/month revolution.</p><span class="pillar-link">honorelevate.com &rarr;</span></a><a href="https://sellersonlyagent.com" target="_blank" class="pillar-card pillar-house reveal"><span class="pillar-number">Segment 03</span><h3>The House</h3><p>Sellers Only Agent&#8482;. $17,000 fixed fee. No dual agency. No divided loyalty. 27+ years of watching families get overcharged. The system is broken. We built the fix.</p><span class="pillar-link">sellersonlyagent.com &rarr;</span></a><a href="https://godisnotthemachine.com" target="_blank" class="pillar-card pillar-anchor reveal"><span class="pillar-number">Segment 04</span><h3>The Anchor</h3><p>Faith. Not religion. Not ritual. Jesus Christ. The grounding that holds everything else together. Without the anchor, the rest is noise.</p><span class="pillar-link">godisnotthemachine.com &rarr;</span></a></div></section>
+<!-- TODAY -->
+<section class="band band-alt" id="today"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Today's Briefing</span><h2>Fresh Off the Mic</h2><p>The latest episode. Recorded today. No script. No filter.</p></div>
+  <div class="briefing-embed reveal"><div class="video-frame"><iframe src="https://www.loom.com/embed/840a703b2b36413195e3c8fc0fc5706e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div></div>
+</div></section>
 
-<section class="show-section" id="show"><div class="show-inner"><div class="section-header reveal"><span class="section-label">// Daily Opinion Show</span><h2 class="section-title">Connor with <span style="color:var(--cyan)">Honor</span></h2></div><div class="show-layout"><div class="show-content reveal"><h3>The Opinion Show <span>Nobody Asked For</span></h3><p>Every episode, four segments. Real news. Real takes. Real stakes. This is not commentary from the sidelines. This is a man with active fronts in fat loss, AI, real estate, and faith who reads the headlines and tells you what they actually mean for the rest of us.</p><ul class="show-format"><li><span class="format-time t-body">00:00</span> Cold Open / Hooks</li><li><span class="format-time t-body">01:00</span> The Body / Fasting + Addiction</li><li><span class="format-time t-machine">08:00</span> The Machine / AI News + Reaction</li><li><span class="format-time t-house">18:00</span> The House / Real Estate Truth</li><li><span class="format-time t-anchor">23:00</span> The Anchor / Faith + Grounding</li><li><span class="format-time t-recap">26:00</span> The Recap / Best Lines + CTAs</li></ul><a href="https://www.youtube.com/@AIwithHonor" target="_blank" class="btn-primary">Subscribe on YouTube</a></div><div class="show-embed reveal"><iframe src="https://www.youtube.com/embed/I2NxlvC8nPQ" title="Connor with Honor CWH-2026-099" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div><div class="podcast-section reveal" style="margin-top:3rem;"><div class="podcast-header"><span class="section-label">// Listen on the Go</span><p style="font-size:1rem;color:var(--gray-light);margin-top:.75rem;">Prefer audio? Every episode is available as a podcast. Subscribe wherever you listen.</p></div><div class="podcast-embed"><div id='buzzsprout-large-player'></div><script type='text/javascript' charset='utf-8' src='https://www.buzzsprout.com/298109.js?container_id=buzzsprout-large-player&player=large'></script></div></div></div></section>
+<!-- PILLARS -->
+<section class="band" id="pillars"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">The Four Segments</span><h2>Every Episode. <em>Four Fronts.</em></h2></div>
+  <div class="pillars-grid">
+    <a href="https://thelastaddiction.com" target="_blank" class="pillar-card pillar-body reveal"><span class="pillar-number">Segment 01</span><h3>The Body</h3><p>Fat loss through fasting. Food addiction recovery. Not a diet show. A recovery meeting. Three types of hunger: homeostatic, hedonic, and conditioned. We fight all three.</p><span class="pillar-link">thelastaddiction.com &rarr;</span></a>
+    <a href="https://honorelevate.com" target="_blank" class="pillar-card pillar-machine reveal"><span class="pillar-number">Segment 02</span><h3>The Machine</h3><p>Artificial intelligence for regular people. Not for billionaires. Not for developers. For the plumber, the hairstylist, the veteran, the single mom. The $10/month revolution.</p><span class="pillar-link">honorelevate.com &rarr;</span></a>
+    <a href="https://sellersonlyagent.com" target="_blank" class="pillar-card pillar-house reveal"><span class="pillar-number">Segment 03</span><h3>The House</h3><p>Sellers Only Agent&#8482;. $17,000 fixed fee. No dual agency. No divided loyalty. 27+ years of watching families get overcharged. The system is broken. We built the fix.</p><span class="pillar-link">sellersonlyagent.com &rarr;</span></a>
+    <a href="https://godisnotthemachine.com" target="_blank" class="pillar-card pillar-anchor reveal"><span class="pillar-number">Segment 04</span><h3>The Anchor</h3><p>Faith. Not religion. Not ritual. Jesus Christ. The grounding that holds everything else together. Without the anchor, the rest is noise.</p><span class="pillar-link">godisnotthemachine.com &rarr;</span></a>
+  </div>
+</div></section>
 
-<section class="blog-section" id="blog"><div class="section-header reveal"><span class="section-label">// Latest from the Show</span><h2 class="section-title">Read the <span style="color:var(--cyan)">Episodes</span></h2></div><div class="blog-grid"><a class='blog-card reveal' href='/blog/2026-099-the-wire-mortgage-rates-646-ai-power-deals-metal-thefts-scv'><span class="blog-ep">CWH-2026-099 // April 9, 2026</span><h4>The Wire: Mortgage Rates 6.46%, AI Power Deals, Metal Thefts Hit SCV</h4><p class="blog-excerpt">Mortgage rates at 6.46% on inflation fears. Anthropic locks massive Google TPU deal. Jobs report says 178K added but AI is emptying offices. Refi apps dead 40%. Metal thefts surge in SCV. Wallet swipers busted. Castaic earthquake.</p><div class="blog-pillars"><span class="bp-house">The House</span><span class="bp-machine">The Machine</span></div></a><a class='blog-card reveal' href='/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people'><span class="blog-ep">CWH-2026-099 // April 8, 2026</span><h4>Anthropic Leaked Something Too Dangerous for Regular People</h4><p class="blog-excerpt">Anthropic accidentally released code revealing Mythos. An AI model too powerful for regular people. Only the Fortune 50 get access. OpenClaw got scooped by OpenAI. The government is watching everything already.</p><div class="blog-pillars"><span class="bp-machine">The Machine</span><span class="bp-body">The Body</span><span class="bp-house">The House</span><span class="bp-anchor">The Anchor</span></div></a></div></section>
+<!-- SHOW -->
+<section class="band band-alt" id="show"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Daily Opinion Show</span><h2>Connor with <em>Honor</em></h2></div>
+  <div class="show-layout">
+    <div class="show-content reveal">
+      <h3>The Opinion Show <span>Nobody Asked For</span></h3>
+      <p>Every episode, four segments. Real news. Real takes. Real stakes. This is not commentary from the sidelines. This is a man with active fronts in fat loss, AI, real estate, and faith who reads the headlines and tells you what they actually mean for the rest of us.</p>
+      <ul class="show-format">
+        <li><span class="format-time t-body">00:00</span> Cold Open / Hooks</li>
+        <li><span class="format-time t-body">01:00</span> The Body / Fasting + Addiction</li>
+        <li><span class="format-time t-machine">08:00</span> The Machine / AI News + Reaction</li>
+        <li><span class="format-time t-house">18:00</span> The House / Real Estate Truth</li>
+        <li><span class="format-time t-anchor">23:00</span> The Anchor / Faith + Grounding</li>
+        <li><span class="format-time t-recap">26:00</span> The Recap / Best Lines + CTAs</li>
+      </ul>
+      <a href="https://www.youtube.com/@homemuscle" target="_blank" class="btn btn-primary">Subscribe on YouTube</a>
+    </div>
+    <div class="show-embed reveal"><div class="video-frame"><iframe src="https://www.youtube.com/embed/I2NxlvC8nPQ" title="Connor with Honor CWH-2026-099" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+  </div>
+  <div class="podcast-section reveal">
+    <div class="podcast-header"><span class="eyebrow">Listen on the Go</span><p>Prefer audio? Every episode is available as a podcast. Subscribe wherever you listen.</p></div>
+    <div class="podcast-embed"><div id='buzzsprout-large-player'></div><script type='text/javascript' charset='utf-8' src='https://www.buzzsprout.com/298109.js?container_id=buzzsprout-large-player&player=large'></script></div>
+  </div>
+</div></section>
 
-<section class="bookme-section" id="bookme"><div class="bookme-inner"><div class="section-header reveal"><span class="section-label">// Book Connor</span><h2 class="section-title">Put Me on Your <span style="color:var(--gold)">Stage</span></h2></div><div class="bookme-grid"><div class="bookme-card reveal"><span class="bm-icon">&#127908;</span><h4>Podcast Guest</h4><p>Former LAPD. Food addict. AI builder. Believer. If your audience wants a guest who has lived four lives in one body, this is the booking. No prep needed. Just press record.</p><a href="mailto:connor@connorwithhonor.com?subject=Podcast%20Guest%20Booking" class="bm-cta">Request Booking</a></div><div class="bookme-card reveal"><span class="bm-icon">&#127916;</span><h4>Speaking / Keynote</h4><p>AI for small businesses. Food addiction and fasting. Real estate disruption. Faith in the age of machines. Any one of the four pillars or all of them together. Conferences, corporate events, podcasts, panels.</p><a href="mailto:connor@connorwithhonor.com?subject=Speaking%20Engagement" class="bm-cta">Inquire</a></div><div class="bookme-card reveal"><span class="bm-icon">&#128250;</span><h4>Media / Press</h4><p>Interviews, documentaries, features, panels. The intersection of AI, addiction, law enforcement, and faith is a story nobody else can tell. Available for local and national media.</p><a href="mailto:connor@connorwithhonor.com?subject=Media%20Inquiry" class="bm-cta">Media Request</a></div></div></div></section>
+<!-- BLOG -->
+<section class="band" id="blog"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Latest from the Show</span><h2>Read the <em>Episodes</em></h2></div>
+  <div class="blog-grid">
+    <a class='blog-card reveal' href='/blog/2026-099-the-wire-mortgage-rates-646-ai-power-deals-metal-thefts-scv'><span class="blog-ep">CWH-2026-099 // April 9, 2026</span><h4>The Wire: Mortgage Rates 6.46%, AI Power Deals, Metal Thefts Hit SCV</h4><p class="blog-excerpt">Mortgage rates at 6.46% on inflation fears. Anthropic locks massive Google TPU deal. Jobs report says 178K added but AI is emptying offices. Refi apps dead 40%. Metal thefts surge in SCV. Wallet swipers busted. Castaic earthquake.</p><div class="blog-pillars"><span class="bp-house">The House</span><span class="bp-machine">The Machine</span></div></a>
+    <a class='blog-card reveal' href='/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people'><span class="blog-ep">CWH-2026-098 // April 8, 2026</span><h4>Anthropic Leaked Something Too Dangerous for Regular People</h4><p class="blog-excerpt">Anthropic accidentally released code revealing Mythos. An AI model too powerful for regular people. Only the Fortune 50 get access. OpenClaw got scooped by OpenAI. The government is watching everything already.</p><div class="blog-pillars"><span class="bp-machine">The Machine</span><span class="bp-body">The Body</span><span class="bp-house">The House</span><span class="bp-anchor">The Anchor</span></div></a>
+  </div>
+  <div class="blog-all reveal"><a href="/blog/" class="btn btn-ghost">Browse the Archive</a></div>
+</div></section>
 
-<section class="consult-section" id="consulting"><div class="section-header reveal"><span class="section-label">// Work With Connor</span><h2 class="section-title">AI That <span style="color:var(--cyan)">Makes Money</span></h2><p style="color:var(--gray-light);margin-top:1rem;font-size:1rem;text-align:center;max-width:700px;margin-left:auto;margin-right:auto;">Connor has trained 1,000+ brokers and agents in AI. He builds the systems, deploys the agents, and sets up the automation. This is not theory. This is implementation.</p></div><div class="consult-grid" style="grid-template-columns:repeat(2,1fr);max-width:800px;margin:0 auto;"><div class="consult-card featured reveal" style="padding-top:3.5rem;"><span class="consult-price">$497</span><span class="consult-freq">/month</span><h4>HonorElevate Platform</h4><ul><li>Full CRM, funnels, and automation</li><li>AI voice agent (24/7 phone coverage)</li><li>Reputation management system</li><li>Review generation automation</li><li>Monthly strategy call with Connor</li></ul><a href="https://honorelevate.com" target="_blank" class="consult-cta consult-cta-primary">Get Started</a></div><div class="consult-card reveal"><span class="consult-price">$297</span><span class="consult-freq">/month</span><h4>HireAIVoice</h4><ul><li>AI voice agent answers your phone 24/7</li><li>Custom-trained on your business</li><li>Books appointments automatically</li><li>Qualifies leads before you talk to them</li><li>$297 onboarding + $297/month</li></ul><a href="https://hireaivoice.com" target="_blank" class="consult-cta consult-cta-secondary">See Demo</a></div></div><div class="reveal" style="text-align:center;margin-top:3rem;"><p style="color:var(--gray-light);font-size:1rem;margin-bottom:1.5rem;">Not sure where to start? Book a free strategy call. No pitch. Just answers.</p><a href="#book-call" class="consult-cta consult-cta-primary" style="display:inline-block;padding:16px 48px;font-size:.9rem;">Book a Strategy Call</a></div></section>
+<!-- BOOK ME -->
+<section class="band band-alt" id="bookme"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Book Connor</span><h2>Put Me on Your <em>Stage</em></h2></div>
+  <div class="cards-3">
+    <div class="info-card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div><h4>Podcast Guest</h4><p>Former LAPD. Food addict. AI builder. Believer. If your audience wants a guest who has lived four lives in one body, this is the booking. No prep needed. Just press record.</p><a href="mailto:connor@connorwithhonor.com?subject=Podcast%20Guest%20Booking" class="bm-cta">Request Booking &rarr;</a></div>
+    <div class="info-card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div><h4>Speaking / Keynote</h4><p>AI for small businesses. Food addiction and fasting. Real estate disruption. Faith in the age of machines. Any one of the four pillars or all of them together. Conferences, corporate events, podcasts, panels.</p><a href="mailto:connor@connorwithhonor.com?subject=Speaking%20Engagement" class="bm-cta">Inquire &rarr;</a></div>
+    <div class="info-card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></div><h4>Media / Press</h4><p>Interviews, documentaries, features, panels. The intersection of AI, addiction, law enforcement, and faith is a story nobody else can tell. Available for local and national media.</p><a href="mailto:connor@connorwithhonor.com?subject=Media%20Inquiry" class="bm-cta">Media Request &rarr;</a></div>
+  </div>
+</div></section>
 
-<section id="book-call" style="padding:100px 2rem;max-width:1000px;margin:0 auto;"><div class="section-header reveal"><span class="section-label">// Book a Call</span><h2 class="section-title">Let's <span style="color:var(--cyan)">Talk Strategy</span></h2><p style="color:var(--gray-light);margin-top:1rem;font-size:1rem;text-align:center;max-width:700px;margin-left:auto;margin-right:auto;">90 minutes. Your business. AI opportunities across every department. Custom automation roadmap. Voice AI readiness assessment. Recording delivered after the call. Pick a time.</p></div><div class="reveal" style="margin-top:2.5rem;background:var(--bg-card);border:1px solid rgba(0,229,255,0.12);border-radius:12px;padding:2rem;box-shadow:0 0 60px rgba(0,229,255,0.04);"><iframe src="https://site.honorelevate.com/widget/booking/2HfWAefFdYAVOk57vqZ3" style="width:100%;border:none;min-height:800px;" id="booking-iframe-main" scrolling="no"></iframe><script src="https://site.honorelevate.com/js/form_embed.js" type="text/javascript"></script></div></section>
+<!-- CONSULTING -->
+<section class="band" id="consulting"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Work With Connor</span><h2>AI That <em>Makes Money</em></h2><p>Connor has trained 1,000+ brokers and agents in AI. He builds the systems, deploys the agents, and sets up the automation. This is not theory. This is implementation.</p></div>
+  <div class="consult-grid">
+    <div class="consult-card featured reveal"><span class="consult-price">$497</span><span class="consult-freq">/month</span><h4>HonorElevate Platform</h4><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Full CRM, funnels, and automation</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>AI voice agent (24/7 phone coverage)</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Reputation management system</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Review generation automation</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Monthly strategy call with Connor</li></ul><a href="https://honorelevate.com" target="_blank" class="consult-cta consult-cta-primary">Get Started</a></div>
+    <div class="consult-card reveal"><span class="consult-price">$297</span><span class="consult-freq">/month</span><h4>HireAIVoice</h4><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>AI voice agent answers your phone 24/7</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Custom-trained on your business</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Books appointments automatically</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Qualifies leads before you talk to them</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>$297 onboarding + $297/month</li></ul><a href="https://hireaivoice.com" target="_blank" class="consult-cta consult-cta-secondary">See Demo</a></div>
+  </div>
+  <div class="reveal" style="text-align:center;margin-top:40px"><p style="color:var(--muted);font-size:1rem;margin-bottom:20px">Not sure where to start? Book a free strategy call. No pitch. Just answers.</p><a href="#book-call" class="btn btn-primary">Book a Strategy Call</a></div>
+</div></section>
 
-<section class="social-bar"><h3 class="reveal">Follow Connor Everywhere</h3><div class="social-links reveal"><a href="https://www.youtube.com/@AIwithHonor" target="_blank">YouTube</a><a href="https://www.tiktok.com/@connorwithhonor" target="_blank">TikTok</a><a href="https://www.instagram.com/connerwithhonor" target="_blank">Instagram</a><a href="https://www.facebook.com/ConnerwithHonor" target="_blank">Facebook</a><a href="https://www.linkedin.com/in/aiwithhonor" target="_blank">LinkedIn</a><a href="https://x.com/connorwithhonor" target="_blank">X</a><a href="https://www.pinterest.com/connorwithhonor" target="_blank">Pinterest</a></div></section>
+<!-- BOOK A CALL -->
+<section class="band band-alt" id="book-call"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Book a Call</span><h2>Let's <em>Talk Strategy</em></h2><p>90 minutes. Your business. AI opportunities across every department. Custom automation roadmap. Voice AI readiness assessment. Recording delivered after the call. Pick a time.</p></div>
+  <div class="booking-shell reveal"><iframe src="https://site.honorelevate.com/widget/booking/2HfWAefFdYAVOk57vqZ3" id="booking-iframe-main" scrolling="no"></iframe><script src="https://site.honorelevate.com/js/form_embed.js" type="text/javascript"></script></div>
+</div></section>
 
-<section class="about-section" id="story"><div class="section-header reveal"><span class="section-label">// Who Is This Guy</span><h2 class="section-title">Not a Commentator. A <span style="color:var(--red)">Practitioner</span>.</h2></div><div class="about-grid reveal"><div><p style="font-size:1.15rem;color:var(--gray-light);line-height:1.9;margin-bottom:1.5rem;">At 18, he was working jail cells in Roosevelt County, New Mexico, watching corn-fed inmates lose their minds at 2 AM. By 21, he was sworn LAPD, running motors through the San Fernando Valley, writing 40,000+ citations over 20 years. He taught himself to code at 12 years old in 1983 on a TRS-80 and never stopped building. He broke his own food addiction through extended fasting after watching it nearly destroy him. He trained 1,000+ brokers and agents in artificial intelligence. He filed a federal trademark. He built an AI SaaS company. He fell in love. He kept going.</p><p style="font-size:1.15rem;color:var(--gray-light);line-height:1.9;">Connor <span class="macivor">MacIvor</span> is not famous yet. But the intersection he occupies does not exist anywhere else on the internet. A food addict in active recovery, an AI builder deploying real systems for real businesses, a fixed-fee real estate disruptor who charges $17,000 regardless of home price, and a believer in Jesus Christ who grounds all of it in faith. The show exists because these are not four separate conversations. They are one conversation about what it means to be human in a world changing faster than any of us expected. He is not above the audience. He is in it. Struggling. Building. Believing. Fighting. Every single day.</p></div></div><div class="stat-row reveal"><div class="stat-block"><span class="stat-number">27+</span><span class="stat-label">Years in Real Estate</span></div><div class="stat-block"><span class="stat-number">1,000+</span><span class="stat-label">Agents Trained in AI</span></div><div class="stat-block"><span class="stat-number">$17K</span><span class="stat-label">Fixed Fee. Every Home.</span></div><div class="stat-block"><span class="stat-number">20</span><span class="stat-label">Years LAPD</span></div></div></section>
+<!-- ABOUT -->
+<section class="band" id="story"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">Who Is This Guy</span><h2>Not a Commentator. A <em>Practitioner.</em></h2></div>
+  <div class="about-grid reveal">
+    <p>At 18, he was working jail cells in Roosevelt County, New Mexico, watching corn-fed inmates lose their minds at 2 AM. By 21, he was sworn LAPD, running motors through the San Fernando Valley, writing 40,000+ citations over 20 years. He taught himself to code at 12 years old in 1983 on a TRS-80 and never stopped building. He broke his own food addiction through extended fasting after watching it nearly destroy him. He trained 1,000+ brokers and agents in artificial intelligence. He filed a federal trademark. He built an AI SaaS company. He fell in love. He kept going.</p>
+    <p>Connor <span class="macivor">MacIvor</span> is not famous yet. But the intersection he occupies does not exist anywhere else on the internet. A food addict in active recovery, an AI builder deploying real systems for real businesses, a fixed-fee real estate disruptor who charges $17,000 regardless of home price, and a believer in Jesus Christ who grounds all of it in faith. The show exists because these are not four separate conversations. They are one conversation about what it means to be human in a world changing faster than any of us expected. He is not above the audience. He is in it. Struggling. Building. Believing. Fighting. Every single day.</p>
+  </div>
+  <div class="stat-row reveal">
+    <div class="stat-block"><span class="stat-number">27+</span><span class="stat-label">Years in Real Estate</span></div>
+    <div class="stat-block"><span class="stat-number">1,000+</span><span class="stat-label">Agents Trained in AI</span></div>
+    <div class="stat-block"><span class="stat-number">$17K</span><span class="stat-label">Fixed Fee. Every Home.</span></div>
+    <div class="stat-block"><span class="stat-number">20</span><span class="stat-label">Years LAPD</span></div>
+  </div>
+</div></section>
 
-<section class="ecosystem" id="ecosystem"><div class="eco-inner"><div class="section-header reveal"><span class="section-label">// The Empire</span><h2 class="section-title">What Connor Builds</h2></div><div class="eco-grid"><a href="https://sellersonlyagent.com" target="_blank" class="eco-card reveal"><h4>Sellers Only Agent&#8482;</h4><p>$17,000 fixed fee. No dual agency. 100% of energy focused on one thing: highest price, shortest time.</p><span class="eco-url">sellersonlyagent.com</span></a><a href="https://honorelevate.com" target="_blank" class="eco-card reveal"><h4>HonorElevate</h4><p>AI-powered business automation platform. CRM, funnels, voice AI, reputation management. Built for small businesses that want enterprise-level tools.</p><span class="eco-url">honorelevate.com</span></a><a href="https://hireaivoice.com" target="_blank" class="eco-card reveal"><h4>HireAIVoice</h4><p>AI voice agents that answer your phone 24/7. Never miss a lead. Never lose a customer. $297/month.</p><span class="eco-url">hireaivoice.com</span></a><a href="https://thelastaddiction.com" target="_blank" class="eco-card reveal"><h4>The Last Addiction</h4><p>Food is the only addiction you cannot quit. Extended fasting, recovery language, real accountability. Not a diet. A reckoning.</p><span class="eco-url">thelastaddiction.com</span></a><a href="https://scvreviews.com" target="_blank" class="eco-card reveal"><h4>SCV Reviews</h4><p>AI-powered reputation management for Santa Clarita businesses. Automated review generation, monitoring, and response.</p><span class="eco-url">scvreviews.com</span></a><a href="https://godisnotthemachine.com" target="_blank" class="eco-card reveal"><h4>God Is Not The Machine</h4><p>A doctrinal foundation for the age of artificial intelligence. Jesus Christ is Lord. The machine is a tool. Know the difference.</p><span class="eco-url">godisnotthemachine.com</span></a></div></div></section>
+<!-- ECOSYSTEM -->
+<section class="band band-alt" id="ecosystem"><div class="wrap">
+  <div class="section-head reveal"><span class="eyebrow">The Empire</span><h2>What Connor <em>Builds</em></h2></div>
+  <div class="eco-grid">
+    <a href="https://sellersonlyagent.com" target="_blank" class="eco-card reveal"><h4>Sellers Only Agent&#8482;</h4><p>$17,000 fixed fee. No dual agency. 100% of energy focused on one thing: highest price, shortest time.</p><span class="eco-url">sellersonlyagent.com</span></a>
+    <a href="https://honorelevate.com" target="_blank" class="eco-card reveal"><h4>HonorElevate</h4><p>AI-powered business automation platform. CRM, funnels, voice AI, reputation management. Built for small businesses that want enterprise-level tools.</p><span class="eco-url">honorelevate.com</span></a>
+    <a href="https://hireaivoice.com" target="_blank" class="eco-card reveal"><h4>HireAIVoice</h4><p>AI voice agents that answer your phone 24/7. Never miss a lead. Never lose a customer. $297/month.</p><span class="eco-url">hireaivoice.com</span></a>
+    <a href="https://thelastaddiction.com" target="_blank" class="eco-card reveal"><h4>The Last Addiction</h4><p>Food is the only addiction you cannot quit. Extended fasting, recovery language, real accountability. Not a diet. A reckoning.</p><span class="eco-url">thelastaddiction.com</span></a>
+    <a href="https://scvreviews.com" target="_blank" class="eco-card reveal"><h4>SCV Reviews</h4><p>AI-powered reputation management for Santa Clarita businesses. Automated review generation, monitoring, and response.</p><span class="eco-url">scvreviews.com</span></a>
+    <a href="https://godisnotthemachine.com" target="_blank" class="eco-card reveal"><h4>God Is Not The Machine</h4><p>A doctrinal foundation for the age of artificial intelligence. Jesus Christ is Lord. The machine is a tool. Know the difference.</p><span class="eco-url">godisnotthemachine.com</span></a>
+  </div>
+</div></section>
 
-<section class="cta-section"><div class="cta-inner reveal"><h2>Follow the <span style="color:var(--cyan)">Show</span></h2><p>New episode every day. AI, fasting, real estate, and faith. No script. No filter. No committee. One man, four fronts, zero excuses. Subscribe on YouTube, listen on the podcast, or just pick up the phone.</p><a href="https://www.youtube.com/@AIwithHonor" target="_blank" class="btn-primary">Subscribe on YouTube</a><br><a href="tel:6614001720" class="cta-phone">661-400-1720</a></div></section>
+<!-- CTA -->
+<section class="cta-section"><div class="wrap"><div class="cta-inner reveal">
+  <h2>Follow the <span>Show</span></h2>
+  <p>New episode every day. AI, fasting, real estate, and faith. No script. No filter. No committee. One man, four fronts, zero excuses. Subscribe on YouTube, listen on the podcast, or just pick up the phone.</p>
+  <a href="https://www.youtube.com/@homemuscle" target="_blank" class="btn btn-primary">Subscribe on YouTube</a>
+  <a href="tel:6614001720" class="cta-phone">661-400-1720</a>
+</div></div></section>
 
-<section style="background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,229,255,0.04) 100%);padding:80px 2rem;border-top:1px solid rgba(0,229,255,0.1);position:relative;z-index:2;">
-<div style="max-width:680px;margin:0 auto;text-align:center;">
-<div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;">// The Daily Download · Direct to Inbox</div>
-<h2 style="font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.4rem);text-transform:uppercase;letter-spacing:1px;color:#fff;line-height:1.2;margin-bottom:16px;">AI News with the<br>Brain Attached.</h2>
-<p style="color:#a8a8a8;font-size:1.02rem;line-height:1.7;margin-bottom:8px;">Weekday morning AI news. Weekly Santa Clarita Valley real estate market deep-dives. Long-form essays when something needs to be said.</p>
-<p style="color:#888;font-size:.92rem;line-height:1.6;margin-bottom:28px;"><strong style="color:#fff;">No spam. No selling. Just signal.</strong> Unsubscribe any time and Connor will not chase you.</p>
+<!-- SUBSCRIBE (Netlify form — preserved exactly) -->
+<section class="subscribe"><div class="inner">
+  <span class="eyebrow">The Daily Download &middot; Direct to Inbox</span>
+  <h2 style="margin-top:14px">AI News with the <span>Brain Attached.</span></h2>
+  <p class="lead">Weekday morning AI news. Weekly Santa Clarita Valley real estate market deep-dives. Long-form essays when something needs to be said.</p>
+  <p class="fine"><strong>No spam. No selling. Just signal.</strong> Unsubscribe any time and Connor will not chase you.</p>
+  <div style="max-width:560px;margin:0 auto"><iframe src="https://api.honorelevate.com/widget/form/mGUSifFd4c8kL442n86x" style="width:100%;border:none;min-height:560px;background:transparent;" id="inline-mGUSifFd4c8kL442n86x" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-form-name="Connor with Honor contact me" title="Connor with Honor contact me" scrolling="no"></iframe></div>
+  <script src="https://api.honorelevate.com/js/form_embed.js" type="text/javascript"></script>
+  <p class="dd-legal">Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490</p>
+  <p class="dd-or">or <a href="/blog/">browse the archive</a> &middot; <a href="/about/">about Connor</a></p>
+</div></section>
 
-<iframe src="https://api.honorelevate.com/widget/form/mGUSifFd4c8kL442n86x" style="width:100%;border:none;min-height:560px;background:transparent;" id="inline-mGUSifFd4c8kL442n86x" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-form-name="Connor with Honor contact me" title="Connor with Honor contact me" scrolling="no"></iframe>
-<script src="https://api.honorelevate.com/js/form_embed.js" type="text/javascript"></script>
-<p style="margin-top:10px;color:#666;font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-align:center;">Connor T. MacIvor · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490</p>
+<!-- SOCIAL -->
+<section class="social-bar"><div class="wrap">
+  <h3 class="reveal">Follow Connor Everywhere</h3>
+  <div class="social-links reveal">
+    <a href="https://www.youtube.com/@homemuscle" target="_blank">YouTube</a>
+    <a href="https://www.tiktok.com/@connorwithhonor" target="_blank">TikTok</a>
+    <a href="https://www.instagram.com/connorwithhonorshow" target="_blank">Instagram</a>
+    <a href="https://www.facebook.com/connorwithhonorshow" target="_blank">Facebook</a>
+    <a href="https://www.linkedin.com/in/connorwithhonor" target="_blank">LinkedIn</a>
+    <a href="https://x.com/ConnorwithHonor" target="_blank">X</a>
+    <a href="https://www.pinterest.com/connorwithhonor" target="_blank">Pinterest</a>
+  </div>
+</div></section>
 
-<p style="margin-top:18px;color:#666;font-size:.78rem;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">// or <a href="/blog/" style="color:#00e5ff;text-decoration:none;">browse the archive</a> · <a href="/about/" style="color:#00e5ff;text-decoration:none;">about Connor</a></p>
-</div>
-</section>
+<div class="disclosure">Sellers Only Agent&#8482; is a trademark of Connor <span class="macivor">MacIvor</span> (USPTO #99738462). All real estate commissions are negotiable per California Business and Professions Code Section 10140.6. Connor T. <span class="macivor">MacIvor</span> &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490. The $17,000 fixed fee is all-inclusive with no additional pass-through costs to the seller.</div>
 
-<style>
-form[name="daily-download-subscribe"] input[type="text"]::placeholder,
-form[name="daily-download-subscribe"] input[type="email"]::placeholder{color:#666}
-form[name="daily-download-subscribe"] input:focus{border-color:var(--cyan) !important;background:rgba(0,229,255,0.04) !important}
-form[name="daily-download-subscribe"] button:hover{filter:brightness(1.15)}
-@media(max-width:640px){form[name="daily-download-subscribe"]{grid-template-columns:1fr !important;}}
-</style>
-
-<div class="disclosure">Sellers Only Agent&#8482; is a trademark of Connor <span class="macivor">MacIvor</span> (USPTO #99738462). All real estate commissions are negotiable per California Business and Professions Code Section 10140.6. Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490. The $17,000 fixed fee is all-inclusive with no additional pass-through costs to the seller.</div>
-
-<footer><div class="footer-inner"><div class="footer-links"><a href="/blog/" target="_blank">Blog</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://scv123.com" target="_blank">SCV123</a><a href="https://scvreviews.com" target="_blank">SCV Reviews</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer>
+<footer><div class="footer-inner">
+  <div class="footer-links"><a href="/blog/">Blog</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://scv123.com" target="_blank">SCV123</a><a href="https://scvreviews.com" target="_blank">SCV Reviews</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div>
+  <p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p>
+  <p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p>
+</div></footer>
 
 <script>
 document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});
-const reveals=document.querySelectorAll('.reveal');const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>{entry.target.classList.add('visible')},i*100);observer.unobserve(entry.target)}})},{threshold:0.1});reveals.forEach(el=>observer.observe(el));
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{anchor.addEventListener('click',function(e){e.preventDefault();const target=document.querySelector(this.getAttribute('href'));if(target){target.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('active')}})});
+const reveals=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>{entry.target.classList.add('visible')},i*70);io.unobserve(entry.target)}})},{threshold:0.1});
+reveals.forEach(el=>io.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('active')}})});
 </script>
 </body>
 </html>
