@@ -1,0 +1,63 @@
+/* CWH blog — premium dark editorial override (matches homepage). Loaded AFTER each post's inline <style> so it wins on cascade. */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Re-skin the palette + fonts via :root (cascades to every var() the inline styles use) */
+:root{
+  --bg-primary:#0c0b10;--bg-secondary:#100f15;--bg-card:#15141b;--bg-card-hover:#1e1c25;
+  --cyan:#e8a838;--cyan-dim:#b9831f;--red:#d08a52;--red-dim:#a8693a;--gold:#e8a838;--gold-dim:#b9831f;
+  --white:#f3eee4;--gray:#726c62;--gray-light:#a8a298;
+  --font-display:'Playfair Display',Georgia,serif;--font-body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-mono:'Inter',sans-serif;
+}
+
+/* Kill the Tron grid + scanlines for a clean editorial dark */
+body::before,body::after{display:none !important}
+body{font-family:var(--font-body);background:var(--bg-primary);color:var(--white);-webkit-font-smoothing:antialiased}
+
+/* Headlines: elegant Playfair, mixed case (drop the Oswald all-caps) */
+article h1,.pillar-header,.faq-section h2{text-transform:none !important;letter-spacing:-0.01em !important;font-family:var(--font-display) !important}
+article h1{font-weight:800;line-height:1.12}
+.pillar-header{font-weight:700;border-bottom-width:1px !important}
+.faq-item h3{text-transform:none !important;letter-spacing:0 !important;font-family:var(--font-display) !important;font-weight:600}
+article p{font-family:var(--font-body);color:var(--gray-light)}
+article p strong{color:var(--white)}
+
+/* Brand mark in nav: Playfair + shield, mixed case */
+.nav-brand{font-family:var(--font-display) !important;text-transform:none !important;letter-spacing:0 !important;font-weight:800;display:inline-flex;align-items:center;gap:10px}
+.nav-brand::before{content:'';width:28px;height:28px;background:url('/favicon-shield.svg') center/contain no-repeat;display:inline-block;flex-shrink:0}
+.nav-brand span{color:var(--gold)}
+.nav-links a{font-family:var(--font-body) !important;text-transform:none !important;letter-spacing:.01em !important;font-weight:600}
+
+/* Small labels: Inter, gold, pill */
+.ep-badge{font-family:var(--font-body) !important;font-weight:700;letter-spacing:.12em !important;border:1px solid rgba(232,168,56,.3) !important;border-radius:100px;color:var(--gold) !important}
+.ep-date{font-family:var(--font-body) !important;letter-spacing:.04em !important}
+.tldr{border-radius:12px;border-left:3px solid var(--gold) !important;background:var(--bg-card)}
+.tldr strong{font-family:var(--font-body) !important;color:var(--gold) !important;letter-spacing:.1em !important}
+
+/* Recolor the hardcoded cyan accents -> warm gold hairlines */
+nav{border-bottom:1px solid rgba(232,168,56,.14) !important}
+.video-embed{border:1px solid rgba(232,168,56,.16) !important;border-radius:12px;overflow:hidden}
+.faq-section{border-top:1px solid rgba(232,168,56,.12) !important}
+footer{border-top:1px solid rgba(232,168,56,.1) !important}
+.footer-coded{font-family:var(--font-body) !important;letter-spacing:.04em !important}
+.footer-coded a{color:var(--gold-dim) !important}
+.pillar-links a{font-family:var(--font-body) !important;letter-spacing:.06em !important;border-radius:10px}
+.pillar-links a:hover{border-color:var(--gold) !important;color:var(--gold) !important}
+.macivor{font-family:var(--font-display) !important;font-style:italic;color:var(--gold)}
+
+/* ---- blog index (archive page) ---- */
+.scan-line{display:none !important}
+.archive-hero h1{text-transform:none !important;letter-spacing:-0.01em !important;font-family:var(--font-display) !important;font-weight:800}
+.archive-hero h1 span{color:var(--gold) !important;font-style:italic}
+.section-label{font-family:var(--font-body) !important;text-transform:uppercase !important;letter-spacing:.2em !important;color:var(--gold) !important;font-weight:700}
+.section-label::before{display:none !important}
+.episodes .ep-card{border:1px solid rgba(255,255,255,.06) !important;border-radius:12px;padding:1.75rem 2rem !important;transition:transform .25s,border-color .25s,box-shadow .25s !important}
+.ep-card::before{background:var(--gold) !important}
+.ep-card:hover{border-color:rgba(232,168,56,.3) !important;transform:translateY(-3px) !important;box-shadow:0 14px 40px rgba(0,0,0,.4) !important}
+.ep-card .ep-meta{font-family:var(--font-body) !important;letter-spacing:.12em !important;color:var(--gold) !important}
+.ep-card h3{font-family:var(--font-display) !important;text-transform:none !important;letter-spacing:-0.01em !important;font-weight:700;color:var(--white)}
+.ep-card .ep-pills span{font-family:var(--font-body) !important;letter-spacing:.06em !important;border-radius:100px;font-size:.6rem !important;padding:3px 10px !important}
+.ep-machine{color:#8aa9c4 !important;border-color:rgba(138,169,196,.45) !important}
+.ep-body{color:#d08a52 !important;border-color:rgba(208,138,82,.45) !important}
+.ep-house{color:#e8a838 !important;border-color:rgba(232,168,56,.45) !important}
+.ep-anchor{color:#d8c8a4 !important;border-color:rgba(216,200,164,.4) !important}
+.back-home{font-family:var(--font-body) !important;letter-spacing:.06em !important;color:var(--gold) !important}
