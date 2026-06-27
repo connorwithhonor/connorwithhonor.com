@@ -99,6 +99,13 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,11,16,.82);backdrop-fil
 .vlabel{font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:4px 13px;white-space:nowrap}
 .vtitle{font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.3}
 @media(max-width:780px){.latest-grid{grid-template-columns:1fr;gap:34px}.latest-short{max-width:330px;margin:0 auto}}
+.track-record{margin-top:22px;padding:24px 28px;background:var(--ink-2);border:1px solid var(--line-soft);border-left:3px solid var(--gold);border-radius:12px}
+.track-record .tr-eyebrow{font-family:var(--sans);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+.track-record h3{font-family:var(--serif);font-size:1.45rem;color:var(--cream);margin-bottom:10px;line-height:1.15}
+.track-record p{font-size:.97rem;color:var(--muted);line-height:1.7}
+.tr-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.tr-chips span{font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.02em;color:var(--cream);background:var(--ink-3);border:1px solid var(--line-soft);border-radius:100px;padding:7px 15px}
+.tr-chips span b{color:var(--gold);font-weight:700}
 .video-frame{position:relative;padding-bottom:56.25%;height:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink-2)}
 .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
@@ -288,6 +295,12 @@ footer{background:var(--ink-soft);border-top:1px solid var(--line-soft);padding:
     <figure class="latest-main">
       <div class="video-frame"><iframe id="latestEpisode" src="https://www.youtube.com/embed/jTRY9vN3xeA" title="Latest episode" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
       <figcaption><span class="vlabel">Latest Episode</span><span class="vtitle" id="epTitle"></span></figcaption>
+      <div class="track-record">
+        <span class="tr-eyebrow">The Track Record</span>
+        <h3>Reps, not luck.</h3>
+        <p>Thousands of videos across several YouTube channels. Hundreds of thousands of views. On camera nearly every day, for years. This is not a trend account chasing a moment. It is a body of work.</p>
+        <div class="tr-chips"><span><b>Thousands</b> of videos</span><span><b>Hundreds of thousands</b> of views</span><span><b>Several</b> channels</span></div>
+      </div>
     </figure>
     <figure class="latest-short">
       <div class="video-frame vertical"><iframe id="latestShort" src="https://www.youtube.com/embed/3S8cF63CIdA" title="Latest Short" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
