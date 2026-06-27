@@ -90,8 +90,15 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,11,16,.82);backdrop-fil
 .band{padding:90px 0}
 .band-alt{background:var(--ink-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
 
-/* BRIEFING */
+/* BRIEFING / LATEST (auto from YouTube) */
 .briefing-embed{max-width:840px;margin:0 auto}
+.latest-grid{display:grid;grid-template-columns:1fr .44fr;gap:26px;max-width:1080px;margin:0 auto;align-items:start}
+.latest-grid figure{margin:0}
+.video-frame.vertical{padding-bottom:177.78%}
+.latest-grid figcaption{display:flex;align-items:center;gap:11px;margin-top:13px;flex-wrap:wrap}
+.vlabel{font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:4px 13px;white-space:nowrap}
+.vtitle{font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.3}
+@media(max-width:780px){.latest-grid{grid-template-columns:1fr;gap:34px}.latest-short{max-width:330px;margin:0 auto}}
 .video-frame{position:relative;padding-bottom:56.25%;height:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink-2)}
 .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
@@ -258,7 +265,7 @@ footer{background:var(--ink-soft);border-top:1px solid var(--line-soft);padding:
   <a href="#" class="nav-brand"><img src="/favicon-shield.svg" alt="Connor with Honor shield">Connor <span>with Honor</span></a>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links" id="navLinks">
-    <a href="#today">Today</a><a href="#pillars">The Four</a><a href="#show">The Show</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="/about/">About</a><a href="#bookme">Book Me</a><a href="#consulting">Work With Me</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a>
+    <a href="/daily-download/">The Show</a><a href="/blog/">Blog</a><a href="/story/">Story</a><a href="/work-with-me/">Work With Me</a><a href="/speaking">Speaking</a><a href="/press/">Press</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a>
   </div>
 </div></nav>
 
@@ -276,8 +283,17 @@ footer{background:var(--ink-soft);border-top:1px solid var(--line-soft);padding:
 
 <!-- TODAY -->
 <section class="band band-alt" id="today"><div class="wrap">
-  <div class="section-head reveal"><span class="eyebrow">Today's Briefing</span><h2>Fresh Off the Mic</h2><p>The latest episode. Recorded today. No script. No filter.</p></div>
-  <div class="briefing-embed reveal"><div class="video-frame"><iframe src="https://www.loom.com/embed/840a703b2b36413195e3c8fc0fc5706e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div></div>
+  <div class="section-head reveal"><span class="eyebrow">Fresh Off the Mic</span><h2>The Latest <em>Drop</em></h2><p>Newest full episode and newest Short, straight from the channel. Always current.</p></div>
+  <div class="latest-grid reveal">
+    <figure class="latest-main">
+      <div class="video-frame"><iframe id="latestEpisode" src="https://www.youtube.com/embed/jTRY9vN3xeA" title="Latest episode" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <figcaption><span class="vlabel">Latest Episode</span><span class="vtitle" id="epTitle"></span></figcaption>
+    </figure>
+    <figure class="latest-short">
+      <div class="video-frame vertical"><iframe id="latestShort" src="https://www.youtube.com/embed/3S8cF63CIdA" title="Latest Short" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <figcaption><span class="vlabel">Latest Short</span></figcaption>
+    </figure>
+  </div>
 </div></section>
 
 <!-- PILLARS -->
@@ -428,6 +444,12 @@ const reveals=document.querySelectorAll('.reveal');
 const io=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>{entry.target.classList.add('visible')},i*70);io.unobserve(entry.target)}})},{threshold:0.1});
 reveals.forEach(el=>io.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('active')}})});
+/* Auto-load newest episode + newest Short from YouTube (CF Pages function reads the public RSS, no API key). Defaults above show real current videos if this fails. */
+fetch('/api/latest-videos').then(r=>r.json()).then(d=>{
+  const ep=document.getElementById('latestEpisode'),sh=document.getElementById('latestShort'),et=document.getElementById('epTitle');
+  if(d&&d.episode&&d.episode.id){ep.src='https://www.youtube.com/embed/'+d.episode.id;if(et)et.textContent=d.episode.title||'';}
+  if(d&&d.short&&d.short.id){sh.src='https://www.youtube.com/embed/'+d.short.id;}
+}).catch(()=>{});
 </script>
 </body>
 </html>
