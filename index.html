@@ -349,9 +349,9 @@ footer{background:var(--ink-soft);border-top:1px solid var(--line-soft);padding:
 <!-- BLOG -->
 <section class="band" id="blog"><div class="wrap">
   <div class="section-head reveal"><span class="eyebrow">Latest from the Show</span><h2>Read the <em>Episodes</em></h2></div>
-  <div class="blog-grid">
-    <a class='blog-card reveal' href='/blog/2026-099-the-wire-mortgage-rates-646-ai-power-deals-metal-thefts-scv'><span class="blog-ep">CWH-2026-099 // April 9, 2026</span><h4>The Wire: Mortgage Rates 6.46%, AI Power Deals, Metal Thefts Hit SCV</h4><p class="blog-excerpt">Mortgage rates at 6.46% on inflation fears. Anthropic locks massive Google TPU deal. Jobs report says 178K added but AI is emptying offices. Refi apps dead 40%. Metal thefts surge in SCV. Wallet swipers busted. Castaic earthquake.</p><div class="blog-pillars"><span class="bp-house">The House</span><span class="bp-machine">The Machine</span></div></a>
-    <a class='blog-card reveal' href='/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people'><span class="blog-ep">CWH-2026-098 // April 8, 2026</span><h4>Anthropic Leaked Something Too Dangerous for Regular People</h4><p class="blog-excerpt">Anthropic accidentally released code revealing Mythos. An AI model too powerful for regular people. Only the Fortune 50 get access. OpenClaw got scooped by OpenAI. The government is watching everything already.</p><div class="blog-pillars"><span class="bp-machine">The Machine</span><span class="bp-body">The Body</span><span class="bp-house">The House</span><span class="bp-anchor">The Anchor</span></div></a>
+  <div class="blog-grid" id="blogGrid">
+    <a class='blog-card reveal' href='/blog/2026-121-what-is-the-endgame-superintelligence/'><span class="blog-ep">CWH-2026-121 // June 22, 2026</span><h4>What Is The Endgame The Humans Building AI Are Really After</h4><p class="blog-excerpt">What happens when AI gets to where its creators want it to be? The rude question, asked out loud. Superintelligence is beyond everybody's control, and almost nobody will say it.</p></a>
+    <a class='blog-card reveal' href='/blog/2026-120-the-antichrist-sermon-against-ai-safety/'><span class="blog-ep">CWH-2026-120 // June 22, 2026</span><h4>A Billionaire Preached The Antichrist At AI Safety, Then Quietly Bought A Bunker</h4><p class="blog-excerpt">There is a room in San Francisco where the richest men in tech sat down to hear a sermon. No cameras, no recordings, and what they did next tells you everything.</p></a>
   </div>
   <div class="blog-all reveal"><a href="/blog/" class="btn btn-ghost">Browse the Archive</a></div>
 </div></section>
@@ -463,6 +463,20 @@ fetch('/api/latest-videos').then(r=>r.json()).then(d=>{
   const ep=document.getElementById('latestEpisode'),sh=document.getElementById('latestShort'),et=document.getElementById('epTitle');
   if(d&&d.episode&&d.episode.id){ep.src='https://www.youtube.com/embed/'+d.episode.id;if(et)et.textContent=d.episode.title||'';}
   if(d&&d.short&&d.short.id){sh.src='https://www.youtube.com/embed/'+d.short.id;}
+}).catch(()=>{});
+/* Auto-load the latest 2 blog posts into "Read the Episodes" from the same-origin /blog/ index (newest-first). Falls back to the two cards above if it fails. */
+fetch('/blog/').then(r=>r.text()).then(t=>{
+  const cards=[...new DOMParser().parseFromString(t,'text/html').querySelectorAll('.ep-card')].slice(0,2);
+  if(!cards.length)return;
+  const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const html=cards.map(c=>{
+    const href=c.getAttribute('href')||'/blog/';
+    const meta=((c.querySelector('.ep-meta')||{}).textContent||'').trim().split(' // ').slice(0,2).join(' // ');
+    const title=((c.querySelector('h3')||{}).textContent||'').trim();
+    const exc=((c.querySelector('.ep-excerpt')||{}).textContent||'').trim();
+    return `<a class="blog-card reveal visible" href="${esc(href)}"><span class="blog-ep">${esc(meta)}</span><h4>${esc(title)}</h4><p class="blog-excerpt">${esc(exc)}</p></a>`;
+  }).join('');
+  const g=document.getElementById('blogGrid'); if(g)g.innerHTML=html;
 }).catch(()=>{});
 </script>
 </body>
