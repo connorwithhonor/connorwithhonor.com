@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Truth About the Claude Code 20% Claim | CWH-2026-132 | Connor with Honor</title>
+<meta name="description" content="You will see a hundred posts saying you only use 20 percent of Claude Code and the hidden 80 percent will cut your work in half. That number is made up. Here is what is actually true and more useful: most people run it stock and never wire in the five features that change the work. A CLAUDE.md rules file, plan mode, subagents, hooks, and one connector to your real tools.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-132, Claude Code, Claude Code 20 percent claim, Claude Code features, CLAUDE.md, plan mode, subagents, hooks, MCP connector, Anthropic Claude, AI automation, AI for business operators, HonorElevate, Connor MacIvor, Daily Download, SeventeenK, flat fee, sellers only agent, SCV real estate">
+<meta property="og:title" content="The Truth About the Claude Code 20% Claim">
+<meta property="og:description" content="The 20 percent claim is invented. Here are the five Claude Code features that actually change the work, verified against current docs, explained for operators, not just coders.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/og.png">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:3px;text-decoration:none;color:var(--white);font-weight:700}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:.75rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+.ep-date{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);display:block;margin-bottom:2rem}
+.macivor{color:var(--cyan)}
+.video-wrapper{margin:2rem auto 2.5rem;background:var(--bg-card);border:1px solid rgba(0,229,255,0.1);padding:.5rem;max-width:400px}
+.video-inner{position:relative;padding-bottom:177.78%;height:0;overflow:hidden}
+.video-inner iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.hero-img{margin:2rem 0 2.5rem;border:1px solid rgba(0,229,255,0.1);background:var(--bg-card);padding:.5rem}
+.hero-img img{width:100%;height:auto;display:block}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.4rem;line-height:1.8}
+article h2{font-family:var(--font-display);font-size:1.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--white);margin:3rem 0 1.25rem;padding-bottom:.5rem;border-bottom:1px solid rgba(0,229,255,0.2)}
+article h3{font-family:var(--font-display);font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin:2rem 0 .75rem}
+article strong{color:var(--white)}
+article em{color:var(--cyan);font-style:normal;text-transform:uppercase;font-size:.85em;letter-spacing:1px}
+.tldr{background:var(--bg-card);border-left:3px solid var(--cyan);padding:1.5rem 2rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.7;color:var(--gray-light)}
+.tldr strong{color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;display:block;margin-bottom:.5rem}
+.toc{background:var(--bg-card);border:1px solid rgba(255,255,255,0.06);padding:1.5rem 2rem;margin-bottom:2.5rem}
+.toc strong{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;color:var(--cyan);display:block;margin-bottom:.75rem;text-transform:uppercase}
+.toc ol{margin:0;padding-left:1.2rem;color:var(--gray-light);font-size:.9rem;line-height:1.9}
+.toc a{color:var(--gray-light);text-decoration:none}
+.toc a:hover{color:var(--cyan)}
+.pullquote{border-left:3px solid var(--cyan-dim);padding:1.25rem 1.75rem;margin:2.5rem 0;font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;color:var(--white);line-height:1.3}
+.cta-block{background:var(--bg-card);border:1px solid var(--cyan-dim);padding:2rem;margin:3rem 0;text-align:center}
+.cta-block h3{font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:1rem}
+.cta-block p{font-size:.95rem;margin-bottom:1rem}
+.cta-block a{display:inline-block;padding:.75rem 1.5rem;border:1px solid var(--cyan);color:var(--cyan);text-decoration:none;font-family:var(--font-mono);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;transition:all .3s}
+.cta-block a:hover{background:var(--cyan);color:var(--bg-primary)}
+.source-note{background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.2);border-left:3px solid var(--gold);padding:1rem 1.5rem;margin:2.5rem 0;font-size:.9rem;color:var(--gray-light)}
+.source-note a{color:var(--gold-dim);text-decoration:none}
+.source-note a:hover{color:var(--gold)}
+.pillar-links{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
+.pillar-links a{display:block;text-align:center;padding:.75rem;font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--gray-light);border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);transition:all .3s}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{border-bottom:none}
+.faq-item{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+.faq-item h3{font-family:var(--font-display);font-size:1rem;text-transform:none;letter-spacing:0;color:var(--white);margin-bottom:.5rem}
+.faq-item p{font-size:.95rem;margin:0}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"The Truth About the Claude Code 20% Claim","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com","sameAs":["https://sellersonlyagent.com","https://seventeenk.com","https://honorelevate.com","https://thelastaddiction.com"]},"datePublished":"2026-06-30","dateModified":"2026-07-01","publisher":{"@type":"Person","name":"Connor MacIvor"},"image":"https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/og.png","description":"The 20 percent claim is invented. Here are the five Claude Code features that actually change the work, verified against current docs, explained for operators, not just coders.","mainEntityOfPage":"https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/"},
+{"@type":"VideoObject","name":"The Truth About the Claude Code 20% Claim","description":"The claim that you only use 20 percent of Claude Code is invented. Here are the five features that actually matter: a CLAUDE.md rules file, plan mode, subagents, hooks, and one connector to your tools.","thumbnailUrl":"https://img.youtube.com/vi/Fu0ajEKmRa4/hqdefault.jpg","uploadDate":"2026-06-30","contentUrl":"https://youtu.be/Fu0ajEKmRa4","embedUrl":"https://www.youtube.com/embed/Fu0ajEKmRa4"},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://connorwithhonor.com/"},
+{"@type":"ListItem","position":2,"name":"Blog","item":"https://connorwithhonor.com/blog/"},
+{"@type":"ListItem","position":3,"name":"The Truth About the Claude Code 20% Claim","item":"https://connorwithhonor.com/blog/2026-132-the-truth-about-the-claude-code-20-percent-claim/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Do you really only use 20 percent of Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Nobody measured that. The 20 percent figure and the claim that a hidden 80 percent cuts your work in half are made-up numbers used to grab attention. The real and useful point underneath is that most people run Claude Code stock and never wire in the handful of features that actually change the work."}},
+{"@type":"Question","name":"What actually helps in Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Five features, verified against current documentation: a CLAUDE.md rules file that loads your standards every session, plan mode that shows you the approach before it makes changes, subagents that hand grunt work to a separate worker in parallel, hooks that run set commands every time, and one connector to your real tools like your browser, database, or email. Wire in the few that match your work, not all twenty settings."}},
+{"@type":"Question","name":"Do I need to be a developer to use Claude Code well?","acceptedAnswer":{"@type":"Answer","text":"No. This is operator work, not developer work. The leverage comes from knowing your own process and writing down your rules clearly, which is exactly why a business owner with good judgment can get more out of these tools than someone chasing every new feature."}},
+{"@type":"Question","name":"Is this hard to set up?","acceptedAnswer":{"@type":"Answer","text":"No. Start with a CLAUDE.md rules file and plan mode, which take minutes and pay off immediately. Add subagents, hooks, and a connector one at a time, only as your work calls for them. You are wiring in tools, not building software."}},
+{"@type":"Question","name":"Which Claude Code feature should I add first?","acceptedAnswer":{"@type":"Answer","text":"The one that removes your most repeated annoyance. For most people that is a CLAUDE.md rules file, because it ends the daily grind of re-explaining your project, your voice, and your do-not-touch list at the start of every session."}}]}]}
+</script>
+<link rel="stylesheet" href="/css/blog-editorial.css"></head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<a href="/" class="nav-brand">Connor<span>WithHonor</span></a>
+<div class="nav-links">
+<a href="/">Home</a>
+<a href="/ai/">AI</a>
+<a href="/blog/">Blog</a>
+<a href="/ai/daily-download/">Daily Download</a>
+<a href="/speaking/">Speaking</a>
+</div>
+</div>
+</nav>
+
+<article>
+<span class="ep-badge">// CWH-2026-132 // The Machine</span>
+<h1>The Truth About the Claude Code 20% Claim</h1>
+<span class="ep-date">June 30, 2026 // Daily Download // Connor <span class="macivor">MacIvor</span></span>
+
+<div class="video-wrapper">
+<div class="video-inner">
+<iframe src="https://www.youtube.com/embed/Fu0ajEKmRa4" title="The Truth About the Claude Code 20% Claim" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+You will see a hundred posts this week saying you only use 20 percent of Claude Code and the hidden 80 percent will cut your work in half. That number is made up. Nobody measured a real 80 percent, and no single feature cuts all your work in half. Strip the hype and there is a real point. Most people run Claude Code stock, and never wire in the few things that actually change the work. Not twenty features. Five: a CLAUDE.md rules file, plan mode, subagents, hooks, and one connector to your real tools. It is not about collecting features. It is about wiring in the four or five that match the work you actually do. This is operator work, not coder work.
+</div>
+
+<div class="toc">
+<strong>// In This Breakdown</strong>
+<ol>
+<li><a href="#fake">Why the numbers are fake</a></li>
+<li><a href="#five">The five that actually matter</a></li>
+<li><a href="#lesson">The real lesson the hype skips</a></li>
+<li><a href="#start">Where to start today</a></li>
+</ol>
+</div>
+
+<p>You will see a hundred posts this week saying you only use 20 percent of Claude Code, and the hidden 80 percent will cut your work in half. That number is made up. Here is what is actually true, and it is more useful than the hype.</p>
+
+<h2 id="fake">Why The Numbers Are Fake</h2>
+
+<p>Nobody measured a literal 80 percent, and no single feature cuts all of your work in half. Those are clickbait figures, invented to make you feel behind so you click. I am not going to repeat a number I cannot stand behind, because the whole point of this show is straight talk.</p>
+
+<p>But strip the hype and there is a real point underneath, which is why the post keeps spreading. Most people run Claude Code stock. They install it, they type, and they never wire in the few things that actually change the economics of the work. The fix is not twenty features. It is about five, and they are the same five whether you are writing software or running a business.</p>
+
+<h2 id="five">The Five That Actually Matter</h2>
+
+<p>These are verified against the current Claude Code documentation as of June 30, 2026, not guessed from a viral thread.</p>
+
+<h3>1. A CLAUDE.md rules file</h3>
+<p>You write your rules once. Your project, your voice, your do-not-touch list. It loads every session, so you stop re-explaining yourself every single time. This is the one that pays off fastest for almost everyone, because it kills the daily grind of starting from zero.</p>
+
+<h3>2. Plan mode</h3>
+<p>Before it touches anything, it shows you the plan. You catch the mistake before it gets built, not after you have to unwind it. This is the difference between checking the blueprint and finding out the wall is in the wrong place after it is framed.</p>
+
+<h3>3. Subagents</h3>
+<p>You hand the grunt work, the research, the log reading, to a separate cheaper worker running in parallel. Your main thread stays clean for the real task. This is the same maestro idea I broke down in <a href="/blog/2026-131-the-maestro-of-ai-agents/">why the job of the next decade is conducting agents, not coding them</a>. You are not doing the work. You are directing a team that does.</p>
+
+<h3>4. Hooks</h3>
+<p>Commands that always fire at set points. Format the code, run the test, send the notification. Every time, not when it feels like it. This is how you turn good intentions into a system that cannot forget.</p>
+
+<h3>5. One connector to your real tools</h3>
+<p>Your browser, your database, your email. With a connector, the system acts on live systems instead of only talking about them. This is the jump from an assistant that describes what to do to one that goes and does it.</p>
+
+<div class="pullquote">It is not about collecting features. It is about wiring in the four or five that match the work you actually do.</div>
+
+<h2 id="lesson">The Real Lesson The Hype Skips</h2>
+
+<p>The lesson is not to collect features. It is to wire in the few that fit your workflow and let the rest go. That distinction matters, because it means a business owner with judgment can get more out of these tools than someone chasing every new setting. We run our businesses on this, as operators, not coders.</p>
+
+<p>That is the whole point of paying attention while these tools are still <a href="/blog/2026-125-the-locked-rooms-are-opening/">coming out of the locked rooms</a> and landing in normal hands. The same wave that already had <a href="/blog/2026-126-robots-clocked-in-before-the-workers/">machines clocking in before a lot of the workers</a> is the wave putting a serious operating tool on your desk for the price of a subscription. The people who win are not the ones who memorize every feature. They are the ones who wire in the handful that remove their real friction and then get back to running the business.</p>
+
+<div class="cta-block">
+<h3>See the Setup We Actually Run</h3>
+<p>We build our companies on AI systems like these, wired to the work instead of chasing hype. If you want the same kind of setup running your business, from voice agents to workflows that never drop a lead, that is what we build at HonorElevate.</p>
+<a href="https://honorelevate.com">See HonorElevate</a>
+</div>
+
+<h2 id="start">Where To Start Today</h2>
+
+<p>Do not try to install all five this afternoon. Start with the one that removes your most repeated annoyance. For most people that is a CLAUDE.md rules file, because it ends the tax of re-explaining your project at the start of every session. Add plan mode next so you stop cleaning up avoidable mistakes. Then add subagents, hooks, and a connector one at a time, only when the work calls for it.</p>
+
+<p>Ignore the fake 20 percent number. Wire in the features that fit your workflow and let the rest go. That is the truth the hype crowd skips, and it is the version that actually saves you time.</p>
+
+<div class="source-note">
+<strong>Accuracy note:</strong> The viral "20 percent / cut your work in half" figures are invented and I do not repeat them as fact. The five features named here were checked against the current Claude Code documentation on June 30, 2026. This breakdown expands my Daily Download short, <a href="https://youtu.be/Fu0ajEKmRa4" rel="nofollow">The Truth About the Claude Code 20% Claim</a>.
+</div>
+
+<div style="margin:3rem 0;padding:2rem;background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.2);border-left:4px solid var(--cyan);">
+<div style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;">// Want More Like This?</div>
+<h3 style="font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.5px;color:#fff;margin:0 0 10px;">The Daily Download in Your Inbox</h3>
+<p style="font-size:.95rem;color:var(--gray-light);margin-bottom:18px;line-height:1.6;">Weekday morning AI news, weekly SCV real estate market deep-dives, and long-form essays when something needs to be said. No spam. Unsubscribe anytime.</p>
+<iframe src="https://api.honorelevate.com/widget/form/mGUSifFd4c8kL442n86x" style="width:100%;border:none;min-height:560px;background:transparent;" id="inline-mGUSifFd4c8kL442n86x" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-form-name="Connor with Honor contact me" title="Connor with Honor contact me" scrolling="no"></iframe>
+<script src="https://api.honorelevate.com/js/form_embed.js" type="text/javascript"></script>
+<p style="font-size:.6rem;color:var(--gray);margin-top:1rem;line-height:1.8;font-family:var(--font-mono);letter-spacing:1px;">Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490</p>
+</div>
+
+<div class="faq-section">
+<h2>FAQ</h2>
+
+<div class="faq-item">
+<h3>Do you really only use 20 percent of Claude Code?</h3>
+<p>Nobody measured that. The 20 percent figure and the claim that a hidden 80 percent cuts your work in half are made-up numbers used to grab attention. The real and useful point underneath is that most people run Claude Code stock and never wire in the handful of features that actually change the work.</p>
+</div>
+
+<div class="faq-item">
+<h3>What actually helps in Claude Code?</h3>
+<p>Five features, verified against current documentation: a CLAUDE.md rules file that loads your standards every session, plan mode that shows you the approach before it makes changes, subagents that hand grunt work to a separate worker in parallel, hooks that run set commands every time, and one connector to your real tools like your browser, database, or email. Wire in the few that match your work, not all twenty settings.</p>
+</div>
+
+<div class="faq-item">
+<h3>Do I need to be a developer to use Claude Code well?</h3>
+<p>No. This is operator work, not developer work. The leverage comes from knowing your own process and writing down your rules clearly, which is exactly why a business owner with good judgment can get more out of these tools than someone chasing every new feature.</p>
+</div>
+
+<div class="faq-item">
+<h3>Is this hard to set up?</h3>
+<p>No. Start with a CLAUDE.md rules file and plan mode, which take minutes and pay off immediately. Add subagents, hooks, and a connector one at a time, only as your work calls for them. You are wiring in tools, not building software.</p>
+</div>
+
+<div class="faq-item">
+<h3>Which Claude Code feature should I add first?</h3>
+<p>The one that removes your most repeated annoyance. For most people that is a CLAUDE.md rules file, because it ends the daily grind of re-explaining your project, your voice, and your do-not-touch list at the start of every session.</p>
+</div>
+
+</div>
+
+<p>That is the truth on June 30, 2026. The hype sells you a fake number and a shortcut. The real move is quieter and better. Wire in the five features that fit your work, run your business like an operator, and let the rest of the noise go. I'm Connor with honor, and I'll see you in the next one.</p>
+
+<div class="pillar-links">
+<a href="/blog/2026-131-the-maestro-of-ai-agents/">// Become The Maestro</a>
+<a href="/blog/2026-126-robots-clocked-in-before-the-workers/">// Robots Clocked In First</a>
+<a href="/blog/2026-125-the-locked-rooms-are-opening/">// The Locked Rooms Are Opening</a>
+</div>
+
+</article>
+
+<footer>
+<p class="footer-legal" style="font-size:.8rem;color:var(--gray);line-height:1.8;margin-bottom:1rem">Connor T. <span class="macivor">MacIvor</span> &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; AI commentary is opinion and general information, not professional advice.</p>
+<div class="footer-coded"> // <a href="https://honorelevate.com">AI Growth Architect</a></div>
+</footer>
+
+</body>
+</html>
