@@ -1,0 +1,4 @@
+# Daily Download AI show — friendly entry that redirects to the always-fresh hub channel
+# (daily-download.pages.dev/ai, refreshed every morning).
+/daily       https://daily-download.pages.dev/ai  302
+/daily-show  https://daily-download.pages.dev/ai  302
