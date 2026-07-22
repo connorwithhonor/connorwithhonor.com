@@ -244,6 +244,6 @@ reveals.forEach(el=>io.observe(el));
 document.querySelectorAll('[data-copy]').forEach(btn=>{btn.addEventListener('click',function(){const t=this.parentElement.querySelector('[data-bio]').innerText;navigator.clipboard.writeText(t).then(()=>{const o=this.innerText;this.innerText='Copied';setTimeout(()=>this.innerText=o,1600)})})});
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
 </script>
-<script src="https://santaclaritaopenhouses.com/macbox/v1.js" data-site="cwh" data-accent="#E8A838" data-bg="#0C0B10" data-ink="#F3EEE4" data-placeholder="Ask anything. Or type a word: ai &middot; sold &middot; fat &middot; truth" defer></script>
+<script src="https://santaclaritaopenhouses.com/macbox/v1.js?v=2" data-site="cwh" data-accent="#E8A838" data-bg="#0C0B10" data-ink="#F3EEE4" data-placeholder="Ask anything. Or type a word: ai &middot; sold &middot; fat &middot; truth" defer></script>
 </body>
 </html>
