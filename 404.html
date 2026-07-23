@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | Connor with Honor</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0c0b10; --ink-soft:#100f15; --cream:#f3eee4; --muted:#a8a298; --dim:#726c62;
+  --gold:#e8a838; --gold-bright:#f3bd54; --gold-deep:#b9831f;
+  --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(900px 500px at 50% -5%, rgba(232,168,56,.10), transparent 62%), var(--ink);
+  color:var(--cream);font-family:var(--sans);text-align:center;padding:34px;}
+.card{max-width:640px;}
+.code{font-family:var(--serif);font-weight:800;font-size:clamp(3.6rem,15vw,7rem);line-height:1;
+  color:var(--gold);margin:0;letter-spacing:-.02em;}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,4.2vw,2rem);margin:.5em 0 .35em;}
+p{font-size:1.06rem;color:var(--muted);line-height:1.7;margin:0 0 1.7em;}
+.links{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;}
+a.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:600;
+  padding:14px 30px;border-radius:9px;min-height:44px;letter-spacing:.3px;}
+a.primary{background:var(--gold);color:var(--ink);}
+a.primary:hover{background:var(--gold-bright);}
+a.ghost{border:1px solid rgba(232,168,56,.45);color:var(--gold);}
+a.ghost:hover{border-color:var(--gold-bright);color:var(--gold-bright);}
+.rule{margin-top:36px;padding-top:20px;border-top:1px solid rgba(243,238,228,.10);font-size:.8rem;color:var(--dim);line-height:1.7;}
+.rule a{color:var(--dim);}
+</style>
+</head>
+<body>
+  <div class="card">
+    <p class="code">404</p>
+    <h1>That page moved on</h1>
+    <p>The link you followed does not point anywhere anymore. Nothing is broken, this one address just does not exist. The blog and the rest of the site are right where you left them.</p>
+    <div class="links">
+      <a class="btn primary" href="/">Back to Home</a>
+      <a class="btn ghost" href="/blog/">Read the Blog</a>
+    </div>
+    <div class="rule">
+      <p>Connor with Honor &middot; Santa Clarita Valley</p>
+      <p>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490</p>
+    </div>
+  </div>
+</body>
+</html>
