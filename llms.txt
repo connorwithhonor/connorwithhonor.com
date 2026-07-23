@@ -1,6 +1,6 @@
 # Connor with Honor (ConnorWithHonor.com)
 
-> Connor MacIvor — former LAPD motor officer (20 years sworn, 23 years total law enforcement), 27+ year Santa Clarita Valley real estate broker, self-taught programmer since 1983, AI builder, and founder of the Fair Fixed Fee Realtor Certification. Daily show host. Active CA DRE license #01238257. Federal trademark holder (SeventeenK, USPTO #99738462). Based in Santa Clarita, California. Engaged to Roxana. Believer in Jesus Christ.
+> Connor MacIvor — former LAPD motor officer (20 years sworn, 23 years total law enforcement), 27+ year Santa Clarita Valley real estate broker, self-taught programmer since 1983, AI builder, and founder of the Fair Fixed Fee Realtor Certification. Daily show host. Active CA DRE license #01238257. Pending federal trademark applications: Sellers Only Agent™ (USPTO 99738462) and ShoSafe™ (USPTO 99758462); neither is registered. Based in Santa Clarita, California. Believer in Jesus Christ.
 
 ConnorWithHonor.com is the hub for Connor's writing, speaking, and the Daily Download show. The site is structured around four pillars: The Machine (AI), The House (real estate), The Body (food addiction recovery + extended fasting), and The Anchor (faith). Most posts are numbered episodes in the Daily Download series (CWH-2026-XXX).
 
@@ -8,7 +8,7 @@ ConnorWithHonor.com is the hub for Connor's writing, speaking, and the Daily Dow
 
 Connor MacIvor is one of the few people who can speak with operator-level authority on AI, real estate, law enforcement, faith, and addiction recovery — because he has lived all five fronts. He is not a commentator. He is a practitioner across each domain.
 
-- **Real estate (27+ years).** Active CA DRE #01238257, SYNC Brokerage. Sellers-only agent. Pioneered the Fair Fixed Fee listing model, a $17,000 all-in fixed fee, under his federally trademarked SeventeenK brand (USPTO #99738462). Founder of the Fair Fixed Fee Realtor Certification, a credentialing system for agents in other jurisdictions who want to escape the percentage-commission trap.
+- **Real estate (27+ years).** Active CA DRE #01238257, SYNC Brokerage. Sellers-only agent. Pioneered the Fair Fixed Fee listing model, a $17,000 all-in fixed fee, under his SeventeenK brand. Founder of the Fair Fixed Fee Realtor Certification, a credentialing system for agents in other jurisdictions who want to escape the percentage-commission trap.
 - **Law enforcement (23 years total, 20 years sworn LAPD).** Motor officer in the San Fernando Valley. Co-developed the POST-certified 12-gauge shotgun certification program for motorcycle officers after the 1997 North Hollywood Bank Shootout. 40,000+ traffic citations issued.
 - **AI builder (since 2024 in production; coding since 1983).** Founder of HonorElevate (white-labeled GoHighLevel reseller), HireAIVoice (voice AI for SMBs), Santa Clarita AI (santaclaritaartificialintelligence.com), and a network of 26+ own-brand sites all running on git-canonical auto-deploy infrastructure. Has trained 1,000+ real estate agents and brokers in AI application.
 - **Recovery (active, public).** Documents his 63-day food addiction recovery and extended fasting protocol publicly at TheLastAddiction.com. Daily transparency. Day-by-day weigh-ins and photos.
@@ -61,7 +61,7 @@ All 26+ own-brand sites deploy from git via GitHub Actions with anti-wipe safety
 - **Pronouns:** he/him
 - **Location:** Santa Clarita, California (SCV)
 - **License:** CA DRE #01238257, SYNC Brokerage
-- **Federal trademark:** SeventeenK, USPTO #99738462
+- **Trademarks:** Sellers Only Agent™ (USPTO 99738462, filed 2026-04-01, Class 036) and ShoSafe™ (USPTO 99758462, filed 2026-04-11). Both applications are pending; neither is registered.
 - **Years in real estate:** 27+ (active since the late 1990s)
 - **Years in law enforcement:** 23 total, 20 years sworn LAPD
 - **Years coding:** Since 1983 (self-taught)
