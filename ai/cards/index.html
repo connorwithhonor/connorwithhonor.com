@@ -177,18 +177,51 @@ function gridFloor(px,w,h,accent,animate){
     L.push(`<line x1="${cx.toFixed(1)}" y1="${hz.toFixed(1)}" x2="${xb.toFixed(1)}" y2="${h}"
       stroke="${accent}" stroke-width="${(1.15*px).toFixed(2)}" opacity="${(0.5-Math.abs(i/N-0.5)*0.45).toFixed(2)}"/>`);
   }
-  // horizontals: power curve so rows bunch up near the horizon
-  const R=13;
+  // horizontals: power curve so rows bunch up near the horizon.
+  //
+  // These carry a class + index because the motion loop below re-solves their Y every
+  // frame instead of sliding the whole group. A uniform translate is wrong here: rows
+  // must ACCELERATE as they approach, because that acceleration is the entire cue that
+  // you are moving through a space rather than watching a pattern scroll past.
+  const R=14;
   for(let i=1;i<=R;i++){
-    const y=hz+depth*Math.pow(i/R,2.05);
-    const o=(0.12+0.5*(i/R)).toFixed(2);
-    L.push(`<line x1="0" y1="${y.toFixed(1)}" x2="${w}" y2="${y.toFixed(1)}"
-      stroke="${accent}" stroke-width="${(1.25*px).toFixed(2)}" opacity="${o}"/>`);
+    L.push(`<line class="gh" data-i="${i}" x1="0" y1="${(hz+depth*Math.pow(i/R,2.05)).toFixed(1)}"
+      x2="${w}" y2="${(hz+depth*Math.pow(i/R,2.05)).toFixed(1)}"
+      stroke="${accent}" stroke-width="${(1.25*px).toFixed(2)}" opacity="${(0.12+0.5*(i/R)).toFixed(2)}"/>`);
   }
-  return `<div style="position:absolute;left:0;top:0;width:${w}px;height:${h}px;
-      ${animate?'animation:drift 4.2s linear infinite;':''}">
+  return `<div class="gridwrap" data-hz="${hz}" data-depth="${depth}" data-rows="${R}">
+    <div style="position:absolute;left:0;top:0;width:${w}px;height:${h}px">
     <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0;
-      filter:drop-shadow(0 0 ${5*px}px ${accent}aa)">${L.join('')}</svg></div>`;
+      filter:drop-shadow(0 0 ${5*px}px ${accent}aa)">${L.join('')}</svg></div></div>`;
+}
+
+// THE MOTION. Rows travel toward the viewer, recycling at the horizon, so the card reads
+// as gaining ground rather than looping wallpaper. Cheap on purpose: 14 attribute writes
+// per frame, no re-render, no layout. Export freezes it because a PNG is one frame.
+let gridRAF=null, gridPhase=0, gridLast=0;
+function stopGrid(){ if(gridRAF){cancelAnimationFrame(gridRAF); gridRAF=null;} }
+function startGrid(){
+  stopGrid();
+  const wrap=document.querySelector('#card .gridwrap');
+  if(!wrap) return;
+  const hz=+wrap.dataset.hz, depth=+wrap.dataset.depth, R=+wrap.dataset.rows;
+  const lines=[...wrap.querySelectorAll('line.gh')];
+  const speed=0.22;                       // rows per second
+  gridLast=performance.now();
+  const step=(t)=>{
+    const dt=Math.min(0.05,(t-gridLast)/1000); gridLast=t;
+    gridPhase=(gridPhase+dt*speed)%1;
+    for(const ln of lines){
+      // fractional row index, wrapped: a row that runs off the bottom reappears at the horizon
+      const i=((+ln.dataset.i + gridPhase - 1) % R) + 1;
+      const frac=i/R, y=hz+depth*Math.pow(frac,2.05);
+      ln.setAttribute('y1',y.toFixed(1)); ln.setAttribute('y2',y.toFixed(1));
+      // fade a recycled row in at the horizon so it does not pop into existence
+      ln.setAttribute('opacity',(0.12+0.5*frac).toFixed(2));
+    }
+    gridRAF=requestAnimationFrame(step);
+  };
+  gridRAF=requestAnimationFrame(step);
 }
 // 2. THE HORIZON. A hard bright line with bloom above it. This is the single element
 // that makes the grid read as a world instead of graph paper.
@@ -331,6 +364,9 @@ function render(){
   const scale=Math.min(1,fmt.disp/fmt.w);
   card.style.transform=`scale(${scale})`;
   card.parentElement.style.height=(fmt.h*scale+8)+'px';
+
+  // card.innerHTML was just replaced, so the old line handles are dead. Rebind or stop.
+  if(animate) startGrid(); else stopGrid();
 
   document.getElementById('caption').value=t.caption(p);
   document.getElementById('assumption').textContent = curType==='missed'
