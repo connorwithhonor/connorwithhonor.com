@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AI Card Studio | Connor with Honor</title>
+<!--
+  AI CARD STUDIO — TRON BUILD
+  The AI-lane twin of the SCOH market-snapshot cards. Same DOCTRINE (one shared
+  engine, layered-glow number that survives social recompression, fixed brand band,
+  a rail that never moves, dated stamp so a re-shared card never ages into a lie).
+  Completely different SKIN: this lane must not read as real estate.
+
+  THE LOOK: Battlezone viewfinder. Perspective vector grid running to a horizon,
+  neon cyan primary with green/red/magenta accent per card, corner reticle brackets,
+  scanline sweep, wireframe marks. No gold, no serif, no warmth.
+
+  ANIMATION IS PREVIEW-ONLY. A PNG is one frame, so the still has to carry the look
+  on its own: the grid, horizon bloom and scanline are all baked as static geometry
+  and only *drift* on screen. Never design motion the export cannot ship.
+
+  NUMBERS ARE TYPED, NOT FETCHED. The real-estate cards ride a live MLS feed and can
+  generate themselves. This lane has no equivalent feed, and a card that invents a
+  statistic under Connor's name is worse than no card. Every figure is entered by
+  hand and every assumption prints on the card face.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#04060c; --panel:#0a1018; --line:#16303f;
+    --cy:#00f0ff; --grn:#39ff88; --red:#ff2d55; --mag:#c04bff;
+    --txt:#d8f6ff; --dim:#5f8496;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif;padding:22px 16px 60px}
+  .wrap{max-width:1120px;margin:0 auto}
+  h1{font-family:Orbitron,sans-serif;font-size:23px;font-weight:900;letter-spacing:.06em;
+     color:#fff;text-shadow:0 0 18px rgba(0,240,255,.6)}
+  .sub{color:var(--dim);font-size:13.5px;margin:6px 0 20px;font-family:'Share Tech Mono',monospace}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:14px;
+         box-shadow:inset 0 0 40px rgba(0,240,255,.04)}
+  .lbl{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+       color:var(--cy);margin-bottom:9px;display:block;opacity:.8}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}
+  .chip{background:transparent;border:1.5px solid var(--line);color:var(--dim);border-radius:4px;
+        padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Share Tech Mono',monospace;
+        letter-spacing:.05em;text-transform:uppercase;transition:all .15s}
+  .chip:hover{border-color:var(--cy);color:var(--txt)}
+  .chip.on{background:rgba(0,240,255,.12);border-color:var(--cy);color:#fff;box-shadow:0 0 14px rgba(0,240,255,.35)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:11px;color:var(--dim);margin-bottom:4px;
+               font-family:'Share Tech Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  input,textarea{width:100%;background:#050a10;border:1.5px solid var(--line);color:var(--txt);
+        border-radius:5px;padding:10px 12px;font-size:14px;font-family:inherit}
+  input:focus,textarea:focus{outline:none;border-color:var(--cy);box-shadow:0 0 12px rgba(0,240,255,.25)}
+  textarea{resize:vertical;min-height:54px}
+  .btn{background:rgba(0,240,255,.14);color:#eafcff;border:1.5px solid var(--cy);border-radius:5px;
+       padding:12px 20px;font-weight:700;font-size:13px;cursor:pointer;
+       font-family:'Share Tech Mono',monospace;letter-spacing:.1em;text-transform:uppercase;
+       box-shadow:0 0 16px rgba(0,240,255,.2)}
+  .btn.ghost{background:transparent;border-color:var(--line);color:var(--dim);box-shadow:none}
+  .btnrow{display:flex;gap:9px;flex-wrap:wrap}
+  .stage{overflow:auto;background:#000;border:1px solid var(--line);border-radius:10px;padding:14px}
+  #card{transform-origin:top left}
+  .note{font-size:11.5px;color:var(--dim);margin-top:9px;line-height:1.55;font-family:'Share Tech Mono',monospace}
+  .warn{background:rgba(0,240,255,.06);border-left:2px solid var(--cy);padding:9px 12px;border-radius:4px;
+        font-size:12px;color:#9fd8e8;margin-top:10px;line-height:1.55}
+  .row2{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .tog{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim);
+       font-family:'Share Tech Mono',monospace;cursor:pointer}
+  @keyframes drift{to{background-position:0 260px}}
+  @keyframes sweep{0%{top:-4%}100%{top:104%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI CARD STUDIO</h1>
+  <div class="sub">// same engine as the market snapshot &nbsp;·&nbsp; different grid &nbsp;·&nbsp; type the number, pick the size, download</div>
+
+  <div class="panel">
+    <span class="lbl">Card</span><div class="chips" id="types"></div>
+    <span class="lbl">Size</span><div class="chips" id="formats"></div>
+    <div class="row2">
+      <label class="tog"><input type="checkbox" id="subj" checked> Connor in frame</label>
+      <label class="tog"><input type="checkbox" id="anim" checked> Animate preview</label>
+    </div>
+  </div>
+
+  <div class="panel" id="fields"></div>
+
+  <div class="panel">
+    <div class="btnrow">
+      <button class="btn" id="dl">Download PNG</button>
+      <button class="btn ghost" id="share">Save / Share</button>
+      <button class="btn ghost" id="copy">Copy caption</button>
+    </div>
+    <div class="note">On a phone use Save / Share: it hands the real file to the native share sheet, the only reliable way to save an image on iOS. The exported PNG is a still, so the grid and scanline are baked, not moving.</div>
+  </div>
+
+  <div class="stage"><div id="card"></div></div>
+
+  <div class="panel" style="margin-top:14px">
+    <span class="lbl">Caption</span>
+    <textarea id="caption" rows="6"></textarea>
+    <div class="warn" id="assumption"></div>
+  </div>
+</div>
+
+<script src="/js/html-to-image.js"></script>
+<script>
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SITE='ConnorWithHonor.com', PHONE='661-400-1720';
+const CUT='/img/connor-cutout.png';
+
+const FORMATS=[
+  {key:'1x1',w:1080,h:1080,label:'1:1 post',      disp:470},
+  {key:'4x5',w:1080,h:1350,label:'4:5 feed',      disp:404},
+  {key:'og', w:1200,h:630, label:'1200x630 link', disp:640},
+  {key:'fb', w:851, h:315, label:'851x315 cover', disp:760},
+];
+
+// Accent per card type. The colour carries meaning: red is money leaving,
+// green is a system that works, cyan is the world changing, magenta is the show.
+const TYPES={
+  stat:{label:'AI stat', accent:'#00f0ff', kicker:'AI Signal',
+    fields:[{k:'figure',l:'The number',v:'$2,000'},
+            {k:'label',l:'What it measures',v:'Compute cost to solve 10 open problems'},
+            {k:'body',l:'The line under it',v:'An internal frontier model solved ten previously unsolved problems in mathematics and computer science, and published machine-checkable proofs.'},
+            {k:'source',l:'Source (prints on card)',v:'OpenAI · August 1, 2026'}],
+    caption:p=>`${p.figure}. That is what it cost in compute.\n\n${p.body}\n\nWhat it means for your business: the price of hard thinking is collapsing. What was a research budget last year is a rounding error now.\n\nSource: ${p.source}\n\n${SITE}`},
+  missed:{label:'Missed-call math', accent:'#ff2d55', kicker:'Revenue Leak',
+    fields:[{k:'calls',l:'Missed calls per day',v:'3'},
+            {k:'ticket',l:'Average ticket ($)',v:'400'},
+            {k:'close',l:'Close rate on answered calls (%)',v:'50'},
+            {k:'trade',l:'Who this is for',v:'HVAC shops in Santa Clarita'}],
+    caption:p=>{const m=Math.round((+p.calls||0)*(+p.ticket||0)*((+p.close||0)/100)*30);
+      return `${p.calls} missed calls a day.\n\nAt a $${Number(p.ticket).toLocaleString()} average ticket and a ${p.close}% close rate, that is $${m.toLocaleString()} a month walking to the shop that picked up.\n\nThat is not a scare number. It is your own math, and it is printed on the card so you can change any part of it.\n\nAn AI receptionist answers on the first ring, books the job, and texts you the summary. It does not take lunch.\n\n${SITE} · ${PHONE}`}},
+  proof:{label:'Proof', accent:'#39ff88', kicker:'Running Now',
+    fields:[{k:'figure',l:'The number',v:'15 MIN'},
+            {k:'label',l:'What it measures',v:'Reply to answer, automatically'},
+            {k:'body',l:'The line under it',v:'A homeowner replies with their address. The system answers with their own street’s recorded closing data inside the quarter hour, day or night.'},
+            {k:'source',l:'Measured on / caveat',v:'Live system · measured August 2026'}],
+    caption:p=>`${p.figure} ${p.label}.\n\n${p.body}\n\nThis is not a demo. It is running.\n\n${p.source}\n\n${SITE}`},
+  episode:{label:'Daily Download', accent:'#c04bff', kicker:'The Daily Download',
+    fields:[{k:'figure',l:'Episode / hook',v:'EP 214'},
+            {k:'label',l:'Episode title',v:'The confession economy'},
+            {k:'body',l:'The hook',v:'The AI labs published their own failures this week. The confession is the advertisement, and here is how to read it.'},
+            {k:'source',l:'Where to watch',v:'shows.connorwithhonor.com/ai'}],
+    caption:p=>`${p.figure}: ${p.label}\n\n${p.body}\n\nWatch: ${p.source}\n\n${SITE}`},
+};
+
+let curType='stat', curFmt='1x1';
+const state={}; for(const [k,t] of Object.entries(TYPES)){state[k]={};t.fields.forEach(f=>state[k][f.k]=f.v);}
+
+// ============ TRON ENGINE ============
+// 1. THE GRID FLOOR — real perspective, drawn as SVG.
+//
+// The first build did this with a rotateX'd plane and two repeating gradients. It
+// rendered as pure black: transform-origin plus the fade mask collapsed the whole
+// plane out of the visible band, and the signature element of the entire look was
+// simply missing. CSS 3D inside a fixed-size export canvas is not worth the risk.
+//
+// This draws the lines where they actually belong. Verticals converge on a vanishing
+// point sitting on the horizon; horizontals compress toward it on a power curve, which
+// is what sells depth. SVG also stays sharp at pixelRatio 2 and html-to-image
+// rasterizes it natively.
+function gridFloor(px,w,h,accent,animate){
+  const hz=h*0.52, cx=w*0.5, depth=h-hz;
+  const L=[];
+  // verticals: fan from the vanishing point out past both edges
+  const N=17, spread=w*2.1;
+  for(let i=0;i<=N;i++){
+    const xb=cx-spread/2+(spread*i/N);
+    L.push(`<line x1="${cx.toFixed(1)}" y1="${hz.toFixed(1)}" x2="${xb.toFixed(1)}" y2="${h}"
+      stroke="${accent}" stroke-width="${(1.15*px).toFixed(2)}" opacity="${(0.5-Math.abs(i/N-0.5)*0.45).toFixed(2)}"/>`);
+  }
+  // horizontals: power curve so rows bunch up near the horizon
+  const R=13;
+  for(let i=1;i<=R;i++){
+    const y=hz+depth*Math.pow(i/R,2.05);
+    const o=(0.12+0.5*(i/R)).toFixed(2);
+    L.push(`<line x1="0" y1="${y.toFixed(1)}" x2="${w}" y2="${y.toFixed(1)}"
+      stroke="${accent}" stroke-width="${(1.25*px).toFixed(2)}" opacity="${o}"/>`);
+  }
+  return `<div style="position:absolute;left:0;top:0;width:${w}px;height:${h}px;
+      ${animate?'animation:drift 4.2s linear infinite;':''}">
+    <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0;
+      filter:drop-shadow(0 0 ${5*px}px ${accent}aa)">${L.join('')}</svg></div>`;
+}
+// 2. THE HORIZON. A hard bright line with bloom above it. This is the single element
+// that makes the grid read as a world instead of graph paper.
+function horizonLine(px,h,accent){
+  const y=h*0.52;
+  return `<div style="position:absolute;left:0;right:0;top:${y}px;height:${2*px}px;background:${accent};
+      box-shadow:0 0 ${26*px}px ${accent},0 0 ${70*px}px ${accent}88;opacity:.92"></div>
+    <div style="position:absolute;left:0;right:0;top:${y-110*px}px;height:${110*px}px;pointer-events:none;
+      background:linear-gradient(180deg,${accent}00,${accent}22)"></div>`;
+}
+// 3. RETICLE BRACKETS. Battlezone viewfinder corners. Not decoration: they frame the
+// number the way a gunsight frames a target, which is why the eye lands centre-left.
+function reticle(px,w,h,accent){
+  const s=34*px,t=2*px,m=26*px,c=[[m,m,1,1],[w-m-s,m,-1,1],[m,h-m-s,1,-1],[w-m-s,h-m-s,-1,-1]];
+  return c.map(([x,y,fx,fy])=>`<div style="position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px;
+    border-top:${t}px solid ${accent};border-left:${t}px solid ${accent};opacity:.6;
+    transform:scale(${fx},${fy});transform-origin:center;filter:drop-shadow(0 0 ${6*px}px ${accent})"></div>`).join('');
+}
+// 4. SCANLINE. One bright sweep line, baked at a fixed height for the export.
+function scanline(px,h,accent,animate){
+  return `<div style="position:absolute;left:0;right:0;top:${animate?'-4%':'30%'};height:${2*px}px;
+    background:linear-gradient(90deg,${accent}00,${accent}dd 22%,${accent}dd 78%,${accent}00);
+    box-shadow:0 0 ${18*px}px ${accent};opacity:.5;
+    ${animate?'animation:sweep 4.5s linear infinite;':''}"></div>
+    <div style="position:absolute;inset:0;pointer-events:none;opacity:.16;
+      background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,0) ${2.4*px}px,rgba(0,0,0,.85) ${2.4*px}px,rgba(0,0,0,.85) ${3.6*px}px)"></div>`;
+}
+// 5. THE NUMBER. Same four-shadow doctrine as the gold cards: outer bloom, tight glow,
+// hard dark stroke, ground shadow. The stroke is load-bearing -- platforms recompress
+// uploads and a pure neon glow smears into the background while a hard edge survives.
+function heroCss(size,px,accent){
+  return `font-family:Orbitron,sans-serif;font-weight:900;line-height:.9;color:#ffffff;font-size:${size*px}px;
+    letter-spacing:-.01em;
+    text-shadow:0 0 ${16*px}px ${accent},0 0 ${44*px}px ${accent},0 0 ${90*px}px ${accent}99,
+      0 ${3*px}px 0 rgba(0,0,0,.85),0 ${7*px}px ${20*px}px rgba(0,0,0,.9);
+    -webkit-text-stroke:${1.4*px}px ${accent}`;
+}
+// 6. THE SUBJECT. Connor duotoned to the accent and rim-lit so a warm photograph does
+// not fight a cold vector world. Brand rule: he appears on CWH work.
+// A grayscale photo on a cyan field still reads as a warm photo. The tint has to be
+// painted ON, so the image is wrapped and a hard accent-coloured layer is blended
+// through it. Without this he sits in front of the world instead of inside it.
+function subject(px,h,right,accent){
+  return `<div style="position:absolute;right:${right*px}px;bottom:0;height:${h*px}px;
+      filter:drop-shadow(${-2*px}px 0 0 ${accent}) drop-shadow(${2*px}px 0 0 ${accent}cc)
+        drop-shadow(0 0 ${40*px}px ${accent}55) drop-shadow(0 ${12*px}px ${26*px}px rgba(0,0,0,.92));
+      opacity:.88">
+    <img src="${CUT}" crossorigin="anonymous" style="height:100%;width:auto;display:block;
+      filter:grayscale(1) contrast(1.45) brightness(.62)">
+    <div style="position:absolute;inset:0;background:${accent};mix-blend-mode:color;opacity:.62;
+      -webkit-mask-image:url(${CUT});mask-image:url(${CUT});
+      -webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+      -webkit-mask-position:bottom right;mask-position:bottom right"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,6,12,0) 42%,rgba(4,6,12,.85) 100%)"></div>
+  </div>`;
+}
+// 7. BRAND MARK. Wireframe hexagon, not a logo lockup: the gold shield belongs to the
+// real-estate lane and must never appear here.
+function brandMark(px,x,y,accent){
+  return `<div style="position:absolute;left:${x}px;top:${y}px;display:flex;align-items:center;gap:${11*px}px">
+    <div style="width:${34*px}px;height:${34*px}px;border:${2*px}px solid ${accent};transform:rotate(45deg);
+      box-shadow:0 0 ${14*px}px ${accent},inset 0 0 ${10*px}px ${accent}55;display:flex;align-items:center;justify-content:center">
+      <span style="transform:rotate(-45deg);font-family:Orbitron,sans-serif;font-weight:900;
+        font-size:${15*px}px;color:#fff;text-shadow:0 0 ${8*px}px ${accent}">C</span></div>
+    <div style="font-family:Orbitron,sans-serif;font-weight:700;font-size:${14*px}px;color:#eafcff;
+      letter-spacing:.04em;line-height:1.25">CONNOR WITH HONOR<br>
+      <span style="font-family:'Share Tech Mono',monospace;font-weight:400;font-size:${10.5*px}px;
+        letter-spacing:.22em;color:${accent}">AI GROWTH ARCHITECT</span></div></div>`;
+}
+// 8. THE STAMP. Dated, never a bare "live": these get re-shared for months and an
+// undated claim ages into a false one.
+function stampTxt(){const d=new Date(),tz={timeZone:'America/Los_Angeles'};
+  return d.toLocaleDateString('en-US',{...tz,weekday:'short'}).toUpperCase()+' '
+    +d.toLocaleDateString('en-US',{...tz,month:'short',day:'numeric',year:'numeric'}).toUpperCase();}
+function kickerChip(px,txt,accent){
+  return `<div style="display:inline-flex;align-items:center;gap:${8*px}px;border:${1.5*px}px solid ${accent};
+    border-radius:${3*px}px;padding:${5*px}px ${13*px}px;background:${accent}14;box-shadow:0 0 ${16*px}px ${accent}44">
+    <span style="width:${7*px}px;height:${7*px}px;background:${accent};box-shadow:0 0 ${10*px}px ${accent}"></span>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:${11.5*px}px;letter-spacing:.2em;
+      text-transform:uppercase;color:#eafcff;white-space:nowrap">${esc(txt)} · ${stampTxt()}</span></div>`;
+}
+// 9. THE RAIL. Contact on every card, always, never moves.
+function rail(px,w,h,fs,accent){
+  return `<div style="position:absolute;left:0;right:0;bottom:0;height:${h}px;display:flex;align-items:center;
+    padding:0 ${26*px}px;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.6));
+    border-top:${1.5*px}px solid ${accent}55;font-family:'Share Tech Mono',monospace;
+    font-size:${fs*px}px;letter-spacing:.09em;color:#7fb8c8">
+    <span style="color:${accent};text-shadow:0 0 ${10*px}px ${accent}">${SITE}</span>
+    <span style="margin-left:${14*px}px">CONNOR MacIVOR · ${PHONE}</span></div>`;
+}
+
+function render(){
+  const fmt=FORMATS.find(f=>f.key===curFmt), t=TYPES[curType], p=state[curType];
+  const px=fmt.w/1080, wide=fmt.w/fmt.h>1.6, A=t.accent;
+  const animate=document.getElementById('anim').checked;
+  const showSubj=document.getElementById('subj').checked;
+  const pad=wide?38:62;
+
+  let figure,label,body,source;
+  if(curType==='missed'){
+    const m=Math.round((+p.calls||0)*(+p.ticket||0)*((+p.close||0)/100)*30);
+    figure='$'+m.toLocaleString(); label='Walking out the door every month';
+    body=`${p.calls} missed calls/day × $${Number(p.ticket).toLocaleString()} ticket × ${p.close}% close × 30 days.`;
+    source=`Illustrative math for ${p.trade}. Change any input and the number changes.`;
+  } else {figure=p.figure;label=p.label;body=p.body;source=p.source;}
+
+  const fl=String(figure).length;
+  const heroSize = wide ? (fl>8?52:fl>5?64:76) : (fl>8?92:fl>5?112:132);
+  const bodySize = wide?15:21, labelSize=wide?12.5:16.5;
+  const railH = Math.round((wide?42:58)*px), railFs = wide?10.5:12.5;
+  const subjH = wide?290:560, subjRight = wide?14:10;
+  const textRight = showSubj ? (wide?fmt.w*0.42:fmt.w*0.30) : pad*px;
+
+  const inner=`
+    <div style="position:absolute;inset:0;background:
+      radial-gradient(120% 80% at 18% 12%, ${A}1f 0%, rgba(4,6,12,0) 58%),
+      linear-gradient(180deg,#050a12 0%,#04060c 55%,#020306 100%)"></div>
+    ${gridFloor(px,fmt.w,fmt.h,A,animate)}
+    ${horizonLine(px,fmt.h,A)}
+    ${showSubj?subject(px,subjH,subjRight,A):''}
+    ${scanline(px,fmt.h,A,animate)}
+    ${reticle(px,fmt.w,fmt.h,A)}
+    ${brandMark(px,pad*px,(wide?26:44)*px,A)}
+    <div style="position:absolute;left:${pad*px}px;right:${textRight}px;top:${(wide?92:140)*px}px">
+      ${kickerChip(px,t.kicker,A)}
+      <div style="${heroCss(heroSize,px,A)};margin-top:${(wide?12:22)*px}px">${esc(figure)}</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:${labelSize*px}px;letter-spacing:.17em;
+        text-transform:uppercase;color:${A};margin-top:${(wide?10:18)*px}px;
+        text-shadow:0 0 ${12*px}px ${A}88">${esc(label)}</div>
+      <div style="font-family:Inter,sans-serif;font-size:${bodySize*px}px;line-height:1.52;color:#cfe9f2;
+        margin-top:${(wide?11:22)*px}px;text-shadow:0 ${2*px}px ${8*px}px rgba(0,0,0,.9)">${esc(body)}</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:${(wide?10.5:13)*px}px;color:#6f9fb0;
+        margin-top:${(wide?11:20)*px}px;letter-spacing:.06em">${esc(source)}</div>
+    </div>
+    ${rail(px,fmt.w,railH,railFs,A)}`;
+
+  const card=document.getElementById('card');
+  Object.assign(card.style,{width:fmt.w+'px',height:fmt.h+'px',position:'relative',overflow:'hidden',background:'#04060c'});
+  card.innerHTML=inner;
+  const scale=Math.min(1,fmt.disp/fmt.w);
+  card.style.transform=`scale(${scale})`;
+  card.parentElement.style.height=(fmt.h*scale+8)+'px';
+
+  document.getElementById('caption').value=t.caption(p);
+  document.getElementById('assumption').textContent = curType==='missed'
+    ? 'This card prints its own math on the face. Deliberate: a money claim you cannot show the work for is one an owner will not believe, and should not.'
+    : 'Every figure here is typed by you. Nothing is auto-generated, so nothing on this card can be a number the system invented.';
+}
+
+function buildUI(){
+  const tw=document.getElementById('types');tw.innerHTML='';
+  for(const [k,t] of Object.entries(TYPES)){
+    const b=document.createElement('button');b.className='chip'+(k===curType?' on':'');b.textContent=t.label;
+    b.onclick=()=>{curType=k;buildUI();render();};tw.appendChild(b);}
+  const fw=document.getElementById('formats');fw.innerHTML='';
+  for(const f of FORMATS){
+    const b=document.createElement('button');b.className='chip'+(f.key===curFmt?' on':'');b.textContent=f.label;
+    b.onclick=()=>{curFmt=f.key;buildUI();render();};fw.appendChild(b);}
+  const fl=document.getElementById('fields');fl.innerHTML='<span class="lbl">Content</span>';
+  for(const f of TYPES[curType].fields){
+    const d=document.createElement('div');d.className='field';
+    d.innerHTML=`<label>${esc(f.l)}</label>`;
+    const el=document.createElement(String(state[curType][f.k]).length>60?'textarea':'input');
+    el.value=state[curType][f.k];
+    el.oninput=e=>{state[curType][f.k]=e.target.value;render();};
+    d.appendChild(el);fl.appendChild(d);}
+}
+document.getElementById('anim').onchange=render;
+document.getElementById('subj').onchange=render;
+
+async function png(ratio){
+  const fmt=FORMATS.find(f=>f.key===curFmt);
+  const c=document.getElementById('card');
+  const wasAnim=document.getElementById('anim').checked;
+  if(wasAnim){document.getElementById('anim').checked=false;render();}  // freeze for a clean still
+  const clone=c.cloneNode(true);
+  Object.assign(clone.style,{transform:'none',position:'fixed',left:'-99999px',top:'0'});
+  document.body.appendChild(clone);
+  try{
+    try{await htmlToImage.toPng(clone,{width:fmt.w,height:fmt.h,pixelRatio:1,cacheBust:false});}catch(e){}
+    return await htmlToImage.toPng(clone,{width:fmt.w,height:fmt.h,pixelRatio:ratio,cacheBust:false});
+  } finally {
+    clone.remove();
+    if(wasAnim){document.getElementById('anim').checked=true;render();}
+  }
+}
+document.getElementById('dl').onclick=async()=>{
+  const url=await png(2);const a=document.createElement('a');
+  a.href=url;a.download=`cwh-ai-${curType}-${curFmt}-${new Date().toISOString().slice(0,10)}.png`;a.click();};
+document.getElementById('share').onclick=async()=>{
+  const url=await png(2);const blob=await(await fetch(url)).blob();
+  const file=new File([blob],`cwh-ai-${curType}.png`,{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file]});
+  else{const a=document.createElement('a');a.href=url;a.download=file.name;a.click();}};
+document.getElementById('copy').onclick=()=>{
+  navigator.clipboard.writeText(document.getElementById('caption').value);
+  const b=document.getElementById('copy'),o=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=o,1200);};
+buildUI();render();
+</script>
+</body></html>
