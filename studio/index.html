@@ -113,26 +113,35 @@ const el=id=>document.getElementById(id);
 })();
 
 // ---------- slides ----------
-// Positioning first, then proof. The proof slides are what a competitor cannot copy by
-// changing their bio, and they are all things that exist and can be checked.
+// Positioning first, then proof.
+//
+// THIS WALL CARRIES NO REAL-ESTATE DATA, ON PURPOSE. The first build proved the point by
+// getting it wrong: every "proof" slide was a real-estate outcome (closings analysed,
+// homeowner pages, market answers) wearing an AI label. That is the wrong argument on this
+// domain. It makes him look like a Realtor who dabbles, when the claim is the reverse.
+// The real-estate wall at santaclaritaopenhouses.com/studio/ owns those numbers and keeps
+// the gold treatment. This one owns the BUILDING, and the two never share a figure.
+//
+// Every number below is a count of something that exists and runs, verified 2026-08-05.
 const base=[
-  {kick:'Santa Clarita',   fig:'AI',       lab:'Built here, running here',
-   sub:'Not a course. Not a consultant deck. Systems that run every day.'},
-  {kick:'The question',    fig:'WHO',      lab:'Answers when you cannot',
+  {kick:'Santa Clarita',   fig:'AI',      lab:'Built here, running here',
+   sub:'Not a course. Not a reseller deck. Systems that run every day without anyone watching.'},
+  {kick:'The question',    fig:'WHO',     lab:'Answers when you cannot',
    sub:'The call you miss is the job your competitor books.'},
-  {kick:'First ring',      fig:'24/7',     lab:'Every call, answered',
-   sub:'Books the job, texts you the summary, never takes lunch.'},
-  {kick:'Ask the guy who', fig:'BUILDS',   lab:'Not the guy who resells',
+  {kick:'Ask the guy who', fig:'BUILDS',  lab:'Not the guy who resells',
    sub:'Everything on this wall was built in this room.'},
+  {kick:'The difference',  fig:'RUNS',    lab:'Not a demo, not a pilot',
+   sub:'Anyone can show you a chatbot. Ask them what of theirs is running tonight.'},
 ];
-// Real counts, checkable. Updated when the numbers change, never invented.
 const proof=[
-  {kick:'Answered automatically', fig:'15 MIN', lab:'Reply to real answer',
-   sub:'A homeowner writes back, the system answers with their own street’s closing data. Day or night.'},
-  {kick:'Recorded closings analysed', fig:'30,037', lab:'Nine years of Santa Clarita',
-   sub:'Not a national average. Every closing in this valley since 2017.'},
-  {kick:'Private pages built', fig:'327', lab:'One per household, one street',
-   sub:'Each one encrypted, each one their own numbers.'},
+  {kick:'Running right now', fig:'19',    lab:'Automations on one machine',
+   sub:'Answering, sending, watching, reporting. They do not call in sick.'},
+  {kick:'The workshop',      fig:'4',     lab:'Machines, one shared memory',
+   sub:'They hand work to each other overnight and pick up where the last one stopped.'},
+  {kick:'Inbound handled',   fig:'15 MIN', lab:'Question to real answer',
+   sub:'Automatically, day or night, with the actual data behind it. No one is typing.'},
+  {kick:'While you sleep',   fig:'24/7',  lab:'The system does not take lunch',
+   sub:'Answers the phone, books the job, texts you the summary before you wake up.'},
 ];
 let slides=base.concat(proof);
 let idx=(PANEL-1)%slides.length;
