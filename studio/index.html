@@ -33,6 +33,7 @@
   :root{ --bg:#04060c; --ink:#eaf9ff; --dim:#6f93a6; --cy:#00f0ff; --cy2:#7dfcff; }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden;background:var(--bg);cursor:none}
+  body.cur-visible{cursor:default}
   body{font-family:Inter,system-ui,sans-serif;color:var(--ink);
        display:flex;align-items:center;justify-content:center;position:relative}
   #grid{position:fixed;inset:0;z-index:0;opacity:.55}
@@ -183,5 +184,15 @@ paint(); setInterval(paint,SECS*1000);
 
 addEventListener('keydown',e=>{ if(e.key.toLowerCase()==='f'){
   document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen(); }});
+
+// Cursor stays hidden for the camera (wall is a backdrop), but shows on
+// mouse movement so it can be found, then re-hides after 2.5s idle.
+(function cursorReveal(){
+  let hideT;
+  const show=()=>{ document.body.classList.add('cur-visible'); clearTimeout(hideT);
+    hideT=setTimeout(()=>document.body.classList.remove('cur-visible'),2500); };
+  addEventListener('mousemove',show,{passive:true});
+  addEventListener('mousedown',show,{passive:true});
+})();
 </script>
 </body></html>
