@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Your AI Keeps Making Things Up, And The Free Google Tool That Cannot | CWH-2026-154 | Connor with Honor</title>
+<meta name="description" content="Episode CWH-2026-154: Your AI does not look anything up. It predicts the next likely word, which is why it hands you a confident wrong answer and never flinches. Here is the fix that costs nothing: a grounding layer that only answers from sources you loaded, and cites every one.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-154, why does AI make things up, AI hallucination, grounded AI, NotebookLM, Google NotebookLM, AI that cites sources, RAG grounding, stop AI hallucinations, AI for real estate agents, AI for small business, free AI tool, AI research assistant, ground first polish second, Connor MacIvor, HonorElevate, AI Growth Architect, Santa Clarita AI">
+<meta property="og:title" content="Why Your AI Keeps Making Things Up, And The Free Google Tool That Cannot | Connor with Honor">
+<meta property="og:description" content="A large language model does not have a database of facts. It predicts the next likely word. Sounds right and is right are not the same thing. Episode CWH-2026-154.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-154-why-your-ai-keeps-making-things-up-and-the-free-google-tool-that-cannot.html">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-154-why-your-ai-keeps-making-things-up-and-the-free-google-tool-that-cannot.html">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,0.3);padding:6px 18px;display:inline-block;margin-bottom:1.5rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+article h1 span{color:var(--cyan)}
+.ep-date{font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;color:var(--gray);margin-bottom:2rem;display:block}
+.tldr{background:var(--bg-card);border-left:3px solid var(--cyan);padding:1.5rem 2rem;margin-bottom:3rem;font-size:.95rem;color:var(--gray-light);line-height:1.7}
+.tldr strong{color:var(--cyan);font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;font-size:.8rem;display:block;margin-bottom:.5rem}
+.pillar-header{font-family:var(--font-display);font-size:1.8rem;text-transform:uppercase;letter-spacing:2px;margin:3rem 0 1.5rem;padding-bottom:.5rem;border-bottom:2px solid}
+.ph-machine{color:var(--cyan);border-color:var(--cyan-dim)}
+.ph-body{color:var(--red);border-color:var(--red-dim)}
+.ph-house{color:var(--gold);border-color:var(--gold-dim)}
+.ph-anchor{color:var(--white);border-color:rgba(255,255,255,0.3)}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.5rem;line-height:1.9}
+article p strong{color:var(--white)}
+article h3.step{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin:2.5rem 0 1rem;color:var(--cyan)}
+article h3.step span{color:var(--white)}
+.video-embed{margin:2.5rem 0;background:var(--bg-card);border:1px solid rgba(0,229,255,0.15)}
+.video-embed iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+.loom-wrap{position:relative;padding-bottom:180%;height:0;background:var(--bg-card);border:1px solid rgba(0,229,255,0.15);margin:2.5rem 0}
+.loom-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.cta-box{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,23,68,0.05));border:1px solid rgba(0,229,255,0.3);padding:2rem;margin:2.5rem 0;text-align:center}
+.cta-box strong{color:var(--cyan);font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:.75rem;font-size:.85rem}
+.cta-box p{font-size:1.05rem;color:var(--white);line-height:1.7;margin-bottom:1.25rem}
+.cta-box a{display:inline-block;font-family:var(--font-display);font-size:.9rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg-primary);background:var(--cyan);padding:.75rem 2rem;text-decoration:none;transition:all .3s}
+.cta-box a:hover{background:var(--gold);transform:translateY(-2px)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:2rem;color:var(--cyan)}
+.faq-item{margin-bottom:2rem}
+.faq-item h3{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;color:var(--white)}
+.faq-item p{font-size:.95rem;color:var(--gray-light);line-height:1.7}
+.pillar-links{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:3rem 0}
+.pillar-links a{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:1rem 1.5rem;text-decoration:none;color:var(--white);font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;transition:all .3s;text-align:center}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.macivor{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+.disclosure{font-size:.75rem;color:var(--gray);max-width:800px;margin:2rem auto;text-align:center;line-height:1.6;padding:1.5rem;border:1px solid rgba(255,255,255,0.03);background:rgba(0,0,0,0.2)}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Why Your AI Keeps Making Things Up, And The Free Google Tool That Cannot","author":{"@type":"Person","name":"Connor T. MacIvor"},"datePublished":"2026-08-12","publisher":{"@type":"Organization","name":"Connor with Honor","url":"https://connorwithhonor.com"},"description":"Episode CWH-2026-154: Your AI does not look anything up. It predicts the next likely word, which is why it hands you a confident wrong answer and never flinches. Here is the fix that costs nothing: a grounding layer that only answers from sources you loaded, and cites every one.","mainEntityOfPage":{"@type":"WebPage","@id":"https://connorwithhonor.com/blog/2026-154-why-your-ai-keeps-making-things-up-and-the-free-google-tool-that-cannot.html"},"image":"https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg","video":{"@type":"VideoObject","name":"Why Your AI Keeps Making Things Up, And The Free Google Tool That Cannot","description":"Why general chatbots produce confident wrong answers, and how a grounding layer that only answers from your own sources fixes it.","thumbnailUrl":"https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg","uploadDate":"2026-08-12","embedUrl":"https://www.youtube.com/embed/CyhQkH36cX0","contentUrl":"https://youtu.be/CyhQkH36cX0"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does AI make things up in the first place?","acceptedAnswer":{"@type":"Answer","text":"A large language model has no database of facts to consult. It generates text by predicting the most likely next word from patterns in its training data. When the pattern is thin the model keeps predicting rather than stopping, so the output stays fluent and confident while being wrong."}},{"@type":"Question","name":"Can I just prompt my way out of hallucinations?","acceptedAnswer":{"@type":"Answer","text":"You can reduce them, not eliminate them. Telling a model to say it does not know helps at the margins, but you are still asking a prediction engine not to predict. The structural fix is grounding, where the system is limited to a specific source set and must cite what it used."}},{"@type":"Question","name":"Is NotebookLM actually free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Sign in at notebooklm.google.com with a free Google account. The free tier allows 50 sources per notebook, which is more than most people need. A paid tier exists but nothing described here requires it."}},{"@type":"Question","name":"Does this replace ChatGPT, Claude, or Gemini?","acceptedAnswer":{"@type":"Answer","text":"No. It is a grounding and research layer, not a general assistant. Use it first to get an answer anchored in material you can verify, then take that answer to a general tool for tone and polish. The failure mode is reversing that order."}},{"@type":"Question","name":"What should I not load into it?","acceptedAnswer":{"@type":"Answer","text":"Keep out private client financial details, signed contracts containing information you cannot share, and anything under a confidentiality obligation. Training material, market data, and your own scripts and notes are the intended use."}}]}</script>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"><meta property="og:image" content="https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://img.youtube.com/vi/CyhQkH36cX0/maxresdefault.jpg"></head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor with <span>Honor</span></a><div class="nav-links"><a href="/#pillars">Segments</a><a href="/#show">Show</a><a href="/blog">Blog</a><a href="/#bookme">Book Me</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a></div></div></nav>
+
+<article>
+<span class="ep-badge">CWH-2026-154 // The Machine</span>
+<h1>Why Your AI Keeps <span>Making Things Up.</span> And The Free Tool That Cannot.</h1>
+<span class="ep-date">August 12, 2026 // Episode 154</span>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+Your chatbot does not look anything up. It predicts the next likely word based on patterns, which means "sounds right" and "is right" are two different machines running at the same time. That is not a bug you can prompt your way out of. The fix is grounding: a layer that is structurally incapable of answering from anything except the sources you handed it, with a citation on every claim. Google built one. It is free. Most people have never opened it.
+</div>
+
+<div class="video-embed">
+<iframe src="https://www.youtube.com/embed/CyhQkH36cX0" title="Why Your AI Keeps Making Things Up, And The Free Google Tool That Cannot CWH-2026-154" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<h2 class="pillar-header ph-machine">The Machine</h2>
+
+<p><strong>Here is the part nobody explains before they hand you a chatbot.</strong> It does not have a filing cabinet. There is no database of facts inside it that it consults before answering you. It works by predicting the most likely next word, then the next one, then the next one, based on patterns in an enormous pile of text it absorbed during training.</p>
+
+<p>Most of the time that prediction lands on something true, because true things appear more often in writing than false ones. But when the pattern runs thin, it does not stop. It does not say <em>I do not know</em>. It keeps predicting, because predicting is the only thing it does. What comes out is fluent, well-structured, correctly punctuated, and wrong.</p>
+
+<p><strong>The confidence is not a signal of accuracy. The confidence is the product.</strong></p>
+
+<p>That is why you cannot fix this with a better prompt. You can reduce it. You cannot remove it. Asking a prediction engine to stop predicting is asking it to stop being the thing it is.</p>
+
+<h3 class="step">Where This Actually Costs You <span>Real Money</span></h3>
+
+<p>In a regulated business, a confident wrong answer is not an inconvenience. It is exposure.</p>
+
+<p>I work with real estate agents, and the pattern is identical every time. An agent types a real question into a general chatbot. Something like how to handle a seller who wants to price two hundred thousand dollars over the comparable value. Back comes a tidy paragraph that could apply to selling a used car, a timeshare, or a house in a market the model has never heard of.</p>
+
+<p>It sounds smart. It is guessing. It blended internet noise from a thousand sources with no idea which ones were written by somebody who has closed real production and which ones were written by a blogger who has never held an open house in their life.</p>
+
+<p>Now picture repeating that to a client sitting across the table. That is the moment the whole thing stops being a productivity conversation and starts being a liability conversation.</p>
+
+<p><strong>You cannot build a business on a tool that guesses with confidence.</strong></p>
+
+<p>And this is exactly why most people try AI once, get a bad answer, and never come back. They were not wrong to walk away. They were handed the wrong instrument and told it was magic.</p>
+
+<h3 class="step">Grounding Is The Fix, And It Is <span>A Structural One</span></h3>
+
+<p>Grounding means the model is not permitted to answer from its training. It has to retrieve from a specific set of documents you provided, and it has to show you where the answer came from.</p>
+
+<p>The industry calls the general technique retrieval augmented generation. You do not need the term. You need the behavior: <strong>it can only answer from what you gave it, and it has to cite.</strong></p>
+
+<p>That second half is the part people skip past, and it is the part that matters most. A citation is not decoration. It is a verification handle. It means you can click through to the original passage and check it yourself before you repeat it to anybody who is paying you.</p>
+
+<p>It turns AI from an oracle you have to trust into a research assistant you can audit. Those are not the same relationship, and only one of them belongs anywhere near a client.</p>
+
+<h3 class="step">The Free Tool Almost Nobody Opens</h3>
+
+<p>Google built NotebookLM. It is free with a Google account. It only answers from the sources you upload.</p>
+
+<p>You load your own material. Training videos. PDFs of scripts you paid for years ago. Transcripts of coaching calls. Market reports. Your own notes. Then you ask it a question and it goes and finds the answer inside those specific sources and hands it back with the citation attached.</p>
+
+<p>It is a research assistant who actually did the reading instead of faking the book report.</p>
+
+<p>That is the whole difference. Not that it is smarter. That it is <em>grounded</em>. You know exactly where every answer came from.</p>
+
+<p>I built a notebook loaded with over a hundred videos of real estate training from people who have actually closed production. When a hard question shows up, I do not ask a general chatbot that has never sold a house. I ask that notebook, and it answers from those recordings with the timestamp attached so I can go watch the exact moment.</p>
+
+<div class="cta-box">
+<p><strong>The full agent build-out lives on my AI site.</strong> Step by step, the three features people sleep on, six real use cases, and the assignment that takes 15 minutes tonight. Free, no opt-in: <a href="https://santaclaritaartificialintelligence.com/blog/notebooklm-for-real-estate-agents-free-google-ai-tool-that-only-answers-from-your-own-sources">NotebookLM For Real Estate Agents</a>.</p>
+<p>New to this? Start with Part 1: <a href="https://youtu.be/Gr9mcr-EnnE">Realtors Are Scared Of AI For One Reason. This Free Google Tool Fixes It.</a></p>
+</div>
+
+<h3 class="step">Ground First. <span>Polish Second.</span></h3>
+
+<p>I want to be clear about something, because people take this the wrong direction. A grounding tool does not replace the other AI tools you are already using. It is not supposed to.</p>
+
+<p>Think of it as the layer you go to <em>first</em>, to make sure whatever you produce next is built on real material instead of a guess. Once you have a grounded, sourced answer in hand, take it anywhere you like and refine the wording. Polish a headline. Adjust the tone for a platform.</p>
+
+<p>The mistake is doing the polish step first. Asking a general tool to write from nothing and hoping the output happens to be true.</p>
+
+<p><strong>Ground first. Polish second. That order matters more than which tool you use for the polish.</strong></p>
+
+<p>This is the same principle I wrote about in <a href="/blog/2026-100-you-are-training-ai-for-free-own-your-memory.html">You Are Training AI For Free</a>. The tool is not the advantage. What you own and what you feed it is the advantage. Everybody is using the same models. The gap is who keeps what they built.</p>
+
+<h3 class="step">The Advantage Big Teams Have Had <span>Quietly</span></h3>
+
+<p>None of this is new to the people with budgets. Large teams have been building private knowledge systems out of their own top performers' calls and scripts for a while now, so the whole group levels up faster than the market around them.</p>
+
+<p>The solo operator got locked out. Not because the tool is expensive. It is free. Because nobody explained it in plain language.</p>
+
+<p>That is the entire reason I keep publishing this material. The technology conversation is dominated by people who benefit from you finding it complicated. It is not complicated. If you can type a question into a search bar, you already have every skill required.</p>
+
+<p>I have written before about <a href="/blog/2026-098-anthropic-leaked-something-too-dangerous-for-regular-people.html">what the labs say in public versus what they do</a>, and about <a href="/blog/2026-096-russian-roulette-with-superintelligence.html">the race nobody voted on</a>. This is the other side of that same coin. While the frontier argument runs hot, there is a free, boring, grounded tool sitting there that would solve the actual problem in front of most working people this week.</p>
+
+<h3 class="step">What To Do Tonight</h3>
+
+<p>Go to notebooklm.google.com. Create one notebook. Load five things you already own, whatever is sitting in a folder collecting digital dust. Ask it one real question about a real situation you are facing this week.</p>
+
+<p>Then check the citation it hands you against the actual source.</p>
+
+<p>That is the whole test. You are not building the perfect system on day one. You are proving to yourself that a grounded answer built from real sources beats a confident guess every single time.</p>
+
+<p><strong>Once you see it once, you will not go back.</strong></p>
+
+<div class="faq-section">
+<h2>Common Questions</h2>
+
+<div class="faq-item">
+<h3>Why does AI make things up in the first place?</h3>
+<p>Because a large language model has no database of facts to consult. It generates text by predicting the most likely next word based on patterns in its training data. When the pattern is thin or the question is ambiguous, it keeps predicting anyway rather than stopping. The output stays fluent and confident because fluency is what it optimizes for. Sounding right and being right are two different things, and only one of them is what the machine is built to produce.</p>
+</div>
+
+<div class="faq-item">
+<h3>Can I just prompt my way out of hallucinations?</h3>
+<p>You can reduce them. You cannot eliminate them. Telling a model to only use reliable information or to say it does not know will help at the margins, because you are nudging the prediction. But you are still asking a prediction engine not to predict. The structural fix is grounding, where the system is limited to a specific source set and has to cite what it used, so you can verify instead of trust.</p>
+</div>
+
+<div class="faq-item">
+<h3>Is NotebookLM actually free?</h3>
+<p>Yes. Sign in at notebooklm.google.com with a free Google account. The free tier allows 50 sources per notebook, which is far more than most people need to build something genuinely useful. There is a paid tier with higher limits, but nothing described here requires it. The real cost is about 15 minutes to create your first notebook and load your first few sources.</p>
+</div>
+
+<div class="faq-item">
+<h3>Does this replace ChatGPT, Claude, or Gemini?</h3>
+<p>No, and it is not meant to. It is a grounding and research layer, not a general assistant. Use it first to get an answer anchored in material you trust and can verify. Then take that grounded answer to whichever general tool you like for tone, headlines, and polish. The failure mode is reversing that order and asking a general tool to write from nothing.</p>
+</div>
+
+<div class="faq-item">
+<h3>What should I not load into it?</h3>
+<p>Apply the same judgment you already apply to email and any cloud drive. Keep out private client financial details, signed contracts containing information you are not permitted to share, and anything covered by a confidentiality obligation. Training material, market data, public transaction documents, and your own scripts and notes are the intended use. When in doubt, leave it out.</p>
+</div>
+
+<div class="faq-item">
+<h3>Can Connor with Honor set this up for my business?</h3>
+<p>Yes. HonorElevate is the AI consulting practice for small business owners and operators who want grounded, private AI systems without figuring out the plumbing themselves. Visit <a href="https://honorelevate.com" style="color:var(--cyan);">HonorElevate.com</a> or <a href="https://connorwithhonor.com" style="color:var(--cyan);">ConnorWithHonor.com</a>.</p>
+</div>
+</div>
+
+<div class="pillar-links">
+<a href="https://honorelevate.com" target="_blank">HonorElevate AI</a>
+<a href="https://hireaivoice.com" target="_blank">Hire AI Voice</a>
+<a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a>
+<a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a>
+<a href="https://godisnotthemachine.com" target="_blank">God Is Not the Machine</a>
+</div>
+</article>
+
+<div class="disclosure">
+Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>
+If your home is currently listed for sale, this is not a solicitation.<br>
+&copy; 2026 Connor with Honor. All rights reserved.
+</div>
+
+<footer>
+<p class="footer-coded">Coded by <a href="https://honorelevate.com" target="_blank">Connor with Honor</a> | AI Growth Architect</p>
+</footer>
+<script src="https://santaclaritaopenhouses.com/macbox/v1.js?v=2" data-site="cwh" data-accent="#E8A838" data-bg="#0C0B10" data-ink="#F3EEE4" data-placeholder="Ask anything. Or type a word: ai &middot; sold &middot; fat &middot; truth" defer></script>
+</body>
+</html>
