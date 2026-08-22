@@ -2,3 +2,8 @@
 # (daily-download.pages.dev/ai, refreshed every morning).
 /daily       https://daily-download.pages.dev/ai  302
 /daily-show  https://daily-download.pages.dev/ai  302
+
+# MCP — Master Control Program. Connor's private mission deck on Frank.
+# Public URL is only a signpost: the target resolves ONLY inside the tailnet,
+# so anyone else who clicks gets a connection failure, never data.
+/mcp         https://frank.tail70d4c1.ts.net/  302
