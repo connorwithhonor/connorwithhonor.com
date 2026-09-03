@@ -151,7 +151,10 @@ function paint(){
   },1100);
   idx++;
 }
-el('brand').innerHTML='ConnorWithHonor.com &nbsp;&middot;&nbsp; SantaClaritaOpenHouses.com &nbsp;&middot;&nbsp; <b>Connor MacIvor</b> &nbsp;&middot;&nbsp; 661-400-1720';
+// This is the one wall that argues both lanes, so a single bare number is ambiguous
+// by construction: a viewer cannot tell which business it reaches. Both numbers, each
+// labelled. AI/agency 661-476-2217, real estate 661-400-1720, never mixed.
+el('brand').innerHTML='<b>Connor MacIvor</b> &nbsp;&middot;&nbsp; AI 661-476-2217 &nbsp;&middot;&nbsp; REAL ESTATE 661-400-1720';
 
 (function bar(){
   const t0=performance.now();
