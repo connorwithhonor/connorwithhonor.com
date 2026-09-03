@@ -1,0 +1,125 @@
+/* ---------------------------------------------------------------------------
+   STUDIO WALL, SHARED SKIN. One file behind /1 /2 /3 /4 so four monitors read
+   as one system instead of four one-off pages that drift apart.
+
+   EVERY RULE BELOW IS A CAMERA RULE, NOT A TASTE RULE:
+    - near-black ground, peak luminance capped. A bright monitor behind a face
+      makes the camera stop down and underexposes Connor.
+    - no hairlines, no 1px anything, no dense repeating texture. Fine detail
+      beats against the sensor grid and moires on camera while looking fine live.
+    - nothing blinks or strobes. Slow drift only, because rolling shutter tears
+      fast motion and a flashing backdrop pulls the eye off the speaker.
+    - enormous type, because the wall sits behind the subject, slightly soft,
+      and is usually watched on a phone.
+
+   Theme is four custom properties set by each wall page: --ac, --ac2, --bg, --ink.
+--------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Share+Tech+Mono&family=Inter:wght@600;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);cursor:none}
+body.cur-visible{cursor:default}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);position:relative}
+
+#motif{position:fixed;inset:0;z-index:0;opacity:.5}
+.vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+     background:radial-gradient(120% 85% at 50% 44%,rgba(0,0,0,0) 26%,rgba(0,0,0,.78) 100%)}
+/* coarse on purpose: a 1px scanline strobes on camera, 3px reads as texture */
+.scan{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.12;
+      background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 3px,rgba(0,0,0,.9) 3px 6px)}
+
+/* viewfinder corners, thick enough to survive a lens */
+.ret{position:fixed;z-index:2;width:4.6vw;height:4.6vw;border-color:var(--ac);opacity:.38;
+     filter:drop-shadow(0 0 8px var(--ac))}
+.r1{top:3vh;left:3vw;border-top:3px solid;border-left:3px solid}
+.r2{top:3vh;right:3vw;border-top:3px solid;border-right:3px solid}
+.r3{bottom:9.5vh;left:3vw;border-bottom:3px solid;border-left:3px solid}
+.r4{bottom:9.5vh;right:3vw;border-bottom:3px solid;border-right:3px solid}
+
+.bar{position:fixed;top:0;left:0;height:4px;background:var(--ac);z-index:5;width:0;
+     box-shadow:0 0 14px var(--ac);opacity:.65}
+
+.stage{position:absolute;z-index:2;inset:0 0 9vh 0;display:flex;align-items:center;
+       justify-content:center;padding:0 6vw;text-align:center}
+.slide{width:100%}
+
+/* ---- kinetic type -------------------------------------------------------
+   Every line rises and settles its letterspacing over 1.2s, staggered. Slow
+   enough that the sensor never tears it, alive enough that a 20 minute take is
+   not one frozen frame. Transform and opacity only, so it stays on the GPU. */
+.ln{opacity:0;transform:translateY(26px);
+    transition:opacity .95s cubic-bezier(.2,.7,.2,1),transform 1.15s cubic-bezier(.2,.7,.2,1),
+               letter-spacing 1.4s cubic-bezier(.2,.7,.2,1)}
+.slide.on .ln{opacity:1;transform:none}
+.slide.out .ln{opacity:0;transform:translateY(-18px);transition-duration:.6s}
+
+.kick{font-family:'Share Tech Mono',monospace;font-size:clamp(15px,1.85vw,34px);
+      letter-spacing:.5em;text-transform:uppercase;color:var(--ac);
+      text-shadow:0 0 26px color-mix(in srgb,var(--ac) 65%,transparent)}
+.slide.on .kick{letter-spacing:.44em}
+
+.fig{font-family:Anton,Impact,sans-serif;letter-spacing:.005em;
+     font-size:clamp(78px,15.5vw,300px);line-height:.9;color:#fff;margin:.09em 0 .06em;
+     text-shadow:0 0 30px color-mix(in srgb,var(--ac) 80%,transparent),
+                 0 0 96px color-mix(in srgb,var(--ac) 42%,transparent),
+                 0 6px 0 rgba(0,0,0,.6)}
+
+.lab{font-family:'Share Tech Mono',monospace;font-size:clamp(18px,2.6vw,50px);
+     letter-spacing:.22em;text-transform:uppercase;color:var(--ac2)}
+.slide.on .lab{letter-spacing:.18em}
+
+.sub{font-size:clamp(15px,1.5vw,28px);color:var(--dim);margin-top:1.15em;letter-spacing:.03em;
+     max-width:34ch;margin-left:auto;margin-right:auto;line-height:1.5}
+
+/* stack: three or four short lines, each one huge, arriving one after another */
+.stk{font-family:'Archivo Black',Anton,sans-serif;font-size:clamp(48px,10vw,190px);
+     line-height:.98;text-transform:uppercase;color:#fff;
+     text-shadow:0 0 34px color-mix(in srgb,var(--ac) 55%,transparent),0 5px 0 rgba(0,0,0,.6)}
+.stk.hi{color:var(--ac);text-shadow:0 0 40px color-mix(in srgb,var(--ac) 85%,transparent)}
+
+/* rows: label on the left, value on the right, a rule between them */
+.rows{max-width:min(88vw,1500px);margin:0 auto;text-align:left}
+.row{display:flex;align-items:baseline;gap:.6em;padding:.42em 0;
+     border-bottom:3px solid color-mix(in srgb,var(--ac) 26%,transparent)}
+.row .rl{font-family:'Share Tech Mono',monospace;text-transform:uppercase;letter-spacing:.16em;
+         color:var(--dim);font-size:clamp(16px,2.1vw,40px);white-space:nowrap}
+.row .rd{flex:1;height:0}
+.row .rv{font-family:Anton,Impact,sans-serif;color:#fff;line-height:1;white-space:nowrap;
+         text-align:right;text-shadow:0 0 26px color-mix(in srgb,var(--ac) 60%,transparent);
+         /* Size steps down with the length of the value. A single clamp puts a
+            two-word value straight through the right edge of the frame, which is
+            how the first build lost a row off screen. */
+         font-size:clamp(30px,5.4vw,104px)}
+.row .rv.md{font-size:clamp(24px,3.6vw,68px)}
+.row .rv.sm{font-size:clamp(19px,2.5vw,46px)}
+.row .rv.hi{color:var(--ac)}
+
+/* line: one sentence, condensed, no quotation marks and no attribution, because
+   a wall that invents a pull quote is a wall that puts words in his mouth */
+.line{font-family:'Archivo Black',Anton,sans-serif;text-transform:uppercase;
+      font-size:clamp(34px,6.2vw,120px);line-height:1.04;color:#fff;max-width:20ch;
+      margin:0 auto;text-shadow:0 0 32px color-mix(in srgb,var(--ac) 50%,transparent)}
+.line em{font-style:normal;color:var(--ac)}
+
+/* ---- bottom band: the moving text he actually wants on camera -------------
+   A slow constant scroll, roughly one screen width every 26 seconds. Constant
+   velocity is the safe kind of motion: no acceleration for the shutter to tear,
+   and it reads as a live system rather than a slideshow that stalled. */
+.band{position:fixed;left:0;right:0;bottom:0;height:9vh;z-index:4;display:flex;align-items:center;
+      background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.85) 42%);
+      border-top:3px solid color-mix(in srgb,var(--ac) 40%,transparent);overflow:hidden}
+.tick{display:flex;white-space:nowrap;will-change:transform;animation:tk 64s linear infinite}
+.tick span{font-family:'Share Tech Mono',monospace;text-transform:uppercase;
+           font-size:clamp(14px,1.45vw,28px);letter-spacing:.26em;color:var(--dim);padding:0 2.2em}
+.tick b{color:var(--ac);font-weight:400}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.brand{position:fixed;top:3.4vh;left:0;right:0;z-index:4;text-align:center;
+       font-family:'Share Tech Mono',monospace;letter-spacing:.34em;text-transform:uppercase;
+       font-size:clamp(12px,1.15vw,22px);color:var(--dim)}
+.brand b{color:var(--ac);font-weight:400}
+
+@media (prefers-reduced-motion:reduce){
+  .ln{transition-duration:.01ms}
+  .tick{animation:none}
+}

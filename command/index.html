@@ -4,191 +4,66 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Studio Wall — Command</title>
+<title>Studio Wall · Command</title>
 <!--
   STUDIO WALL, COMBINED LANE — connorwithhonor.com/command/?panel=1
-  Third wall for a third monitor. Twin of the AI wall (connorwithhonor.com/studio/) and
-  the real-estate wall (santaclaritaopenhouses.com/studio/) — SAME camera rules, SAME
-  grid geometry (rows/cols/horizon/perspective curve are copied byte-for-byte from both,
-  just recoloured), so three monitors read as one coordinated wall. This one runs RED.
+  Ported 2026-09-03 onto the shared engine at /wall/wall.js + /wall/wall.css, the same
+  two files behind santaclaritaopenhouses.com/1 through /4. Six walls, one system.
 
-  WHY A THIRD PAGE INSTEAD OF A MODE FLAG ON ONE OF THE OTHER TWO: the other two walls
-  each deliberately argue ONE thing — the AI wall carries zero real-estate figures, the
-  RE wall stays gold and never claims to be an AI system. This wall is the one place that
-  is allowed to say both, on purpose, because it is not standing behind a pitch for a
-  single lane — it is the operator's own wall. Content below is different copy than
-  either source wall, not a re-skin of one.
+  WHY THIS ONE IS ALLOWED TO ARGUE BOTH LANES, when none of the other five are: it is
+  not standing behind a pitch for a single business. It is the operator's own wall, the
+  one that says there are two businesses and one person running both. Every other wall
+  keeps its lanes clean on purpose.
 
-  CAMERA RULES (identical to both source walls, not stylistic):
-   - near-black, never white: a bright monitor behind a face makes the camera stop down
-   - no hairlines, no dense repeating texture: fine detail moires against the sensor
-   - nothing blinks or strobes; slow drift only, rolling shutter tears fast motion
-   - enormous type: background is slightly soft and often watched on a phone
+  IT RUNS RED, same as santaclaritaopenhouses.com/3. Do not put those two on adjacent
+  monitors, or use ?panel= to offset them so they never sit on the same slide.
 
-  NO INVENTED NUMBERS. Every figure below is a fact already verified and dated on one of
-  the two source walls (2026-08-05) or an evergreen brand fact, restated, never a fresh
-  market number typed in cold. If this wall needs its own live figures later, wire an API
-  the way both source walls already do — do not guess one in to fill a slide.
-
-  ?panel=N   offsets the rotation so several monitors read as one wall, not a mirror
-  ?speed=20  seconds per slide (default 18)
+  ?panel=N offsets the rotation. ?speed=20 seconds per slide (default 16). F fullscreens.
 -->
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Inter:wght@600;800&display=swap');
-  :root{ --bg:#0a0405; --ink:#ffeae6; --dim:#a06661; --rd:#ff2d4a; --rd2:#ff8a6e; }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden;background:var(--bg);cursor:none}
-  body.cur-visible{cursor:default}
-  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);
-       display:flex;align-items:center;justify-content:center;position:relative}
-  #grid{position:fixed;inset:0;z-index:0;opacity:.55}
-  .vig{position:fixed;inset:0;z-index:1;pointer-events:none;
-       background:radial-gradient(120% 85% at 50% 44%, rgba(0,0,0,0) 28%, rgba(0,0,0,.76) 100%)}
-  .scan{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.13;
-        background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 3px,rgba(0,0,0,.9) 3px 6px)}
-  .wrap{position:relative;z-index:2;width:100%;padding:0 6vw;text-align:center}
-  .kick{font-family:'Share Tech Mono',monospace;font-size:clamp(15px,1.9vw,36px);
-        letter-spacing:.44em;text-transform:uppercase;color:var(--rd);
-        text-shadow:0 0 26px rgba(255,45,74,.65)}
-  .fig{font-family:Anton,sans-serif;font-size:clamp(84px,16vw,320px);line-height:.9;
-       color:#fff;margin:.07em 0 .05em;letter-spacing:-.005em;
-       text-shadow:0 0 30px rgba(255,45,74,.85),0 0 96px rgba(255,45,74,.42),0 6px 0 rgba(0,0,0,.6)}
-  .lab{font-family:'Share Tech Mono',monospace;font-size:clamp(18px,2.7vw,52px);
-       letter-spacing:.2em;text-transform:uppercase;color:var(--rd2)}
-  .sub{font-size:clamp(15px,1.5vw,28px);color:var(--dim);margin-top:1.15em;letter-spacing:.04em}
-  .brandline{position:fixed;left:0;right:0;bottom:3.2vh;z-index:2;text-align:center;
-       font-family:'Share Tech Mono',monospace;letter-spacing:.24em;text-transform:uppercase;
-       font-size:clamp(12px,1.15vw,22px);color:var(--dim)}
-  .brandline b{color:var(--rd)}
-  .slide{opacity:0;transition:opacity 1.1s ease}
-  .slide.on{opacity:1}
-  .bar{position:fixed;top:0;left:0;height:4px;background:var(--rd);z-index:3;width:0;
-       box-shadow:0 0 14px var(--rd);opacity:.75}
-  .ret{position:fixed;z-index:2;width:5vw;height:5vw;border-color:var(--rd);opacity:.42;
-       filter:drop-shadow(0 0 8px var(--rd))}
-  .r1{top:3vh;left:3vw;border-top:3px solid;border-left:3px solid}
-  .r2{top:3vh;right:3vw;border-top:3px solid;border-right:3px solid}
-  .r3{bottom:3vh;left:3vw;border-bottom:3px solid;border-left:3px solid}
-  .r4{bottom:3vh;right:3vw;border-bottom:3px solid;border-right:3px solid}
-</style>
+<link rel="stylesheet" href="/wall/wall.css">
+<style>:root{--bg:#0a0405;--ink:#ffeae6;--dim:#a06661;--ac:#ff2d4a;--ac2:#ff8a6e}</style>
 </head>
 <body>
-<canvas id="grid"></canvas>
+<canvas id="motif"></canvas>
 <div class="vig"></div><div class="scan"></div>
 <div class="ret r1"></div><div class="ret r2"></div><div class="ret r3"></div><div class="ret r4"></div>
 <div class="bar" id="bar"></div>
-<div class="wrap"><div class="slide on" id="slide"></div></div>
-<div class="brandline" id="brand"></div>
-
+<div class="brand" id="brand"></div>
+<div class="stage"><div class="slide on" id="slide"></div></div>
+<div class="band"><div class="tick" id="tick"></div></div>
 <script>
-const Q=new URLSearchParams(location.search);
-const PANEL=Math.max(1,parseInt(Q.get('panel')||'1',10));
-const SECS=Math.max(6,parseInt(Q.get('speed')||'18',10));
-const el=id=>document.getElementById(id);
-
-// ---------- the grid ----------
-// Identical rows/cols/horizon/curve to both source walls (ROWS=15, COLS=22, hz=.56H,
-// power curve 2.1) so the three walls line up as one system. Colour only.
-(function grid(){
-  const c=el('grid'), x=c.getContext('2d');
-  let W,H,hz,depth,phase=0,last=performance.now();
-  const ROWS=15,COLS=22,A='#ff2d4a';
-  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;hz=H*0.56;depth=H-hz;};
-  addEventListener('resize',resize);resize();
-  const step=t=>{
-    const dt=Math.min(.05,(t-last)/1000);last=t;
-    phase=(phase+dt*0.09)%1;
-    x.clearRect(0,0,W,H);
-    x.lineWidth=2.2;
-    for(let i=0;i<=COLS;i++){
-      const xb=W/2-W*1.5+(W*3*i/COLS);
-      x.globalAlpha=0.30-Math.abs(i/COLS-.5)*.26;
-      x.strokeStyle=A;x.beginPath();x.moveTo(W/2,hz);x.lineTo(xb,H);x.stroke();
-    }
-    for(let i=1;i<=ROWS;i++){
-      const f=(((i+phase-1)%ROWS)+1)/ROWS;
-      const y=hz+depth*Math.pow(f,2.1);
-      x.globalAlpha=0.10+0.42*f;
-      x.strokeStyle=A;x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke();
-    }
-    x.globalAlpha=.85;x.lineWidth=3;x.strokeStyle=A;
-    x.beginPath();x.moveTo(0,hz);x.lineTo(W,hz);x.stroke();x.globalAlpha=1;
-    requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-})();
-
-// ---------- slides ----------
-// Both lanes, on purpose — this is the one wall allowed to say both. Every figure here is
-// a fact already verified and dated on the source walls (2026-08-05) or an evergreen brand
-// claim, restated under a "status/alert" framing instead of duplicated wording. No fresh
-// number is typed in cold on this page.
-const slides=[
-  {kick:'System status',   fig:'LIVE',        lab:'Two businesses, one operator',
-   sub:'AI systems running day and night. Real estate closings that are real, not estimates.'},
-  {kick:'AI alert',        fig:'19',          lab:'Automations running right now, one machine',
-   sub:'Answering, sending, watching, reporting. They do not call in sick.'},
-  {kick:'Market alert',    fig:'SELLERS ONLY', lab:'One side of every deal, never both',
-   sub:'No dual agency, ever. Buyers are referred out.'},
-  {kick:'Response time',   fig:'15 MIN',      lab:'Inbound question to real answer, automatically',
-   sub:'Day or night, with the actual data behind it. No one is typing.'},
-  {kick:'Recorded closings', fig:'REAL',      lab:'Not an online estimate',
-   sub:'Every number comes from what actually closed.'},
-  {kick:'The build',       fig:'BUILT HERE',  lab:'Not a reseller, not a course',
-   sub:'Everything on this wall runs in this room.'},
-  {kick:'Standing watch',  fig:'24/7',        lab:'The system does not take lunch',
-   sub:'Answers the phone, books the job, texts the summary before you wake up.'},
-];
-let idx=(PANEL-1)%slides.length;
-
-function paint(){
-  const s=slides[idx%slides.length], box=el('slide');
-  box.classList.remove('on');
-  setTimeout(()=>{
-    box.innerHTML=`<div class="kick">${s.kick}</div><div class="fig">${s.fig}</div>`
-      +`<div class="lab">${s.lab}</div>`+(s.sub?`<div class="sub">${s.sub}</div>`:'');
-    box.classList.add('on');
-  },1100);
-  idx++;
-}
-// This is the one wall that argues both lanes, so a single bare number is ambiguous
-// by construction: a viewer cannot tell which business it reaches. Both numbers, each
-// labelled. AI/agency 661-476-2217, real estate 661-400-1720, never mixed.
-el('brand').innerHTML='<b>Connor MacIvor</b> &nbsp;&middot;&nbsp; AI 661-476-2217 &nbsp;&middot;&nbsp; REAL ESTATE 661-400-1720';
-
-(function bar(){
-  const t0=performance.now();
-  const tick=t=>{ el('bar').style.width=((((t-t0)/(SECS*1000))%1)*100).toFixed(2)+'%';
-    requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-})();
-paint(); setInterval(paint,SECS*1000);
-
-// ---------- live: the show ----------
-// Same-origin only (connorwithhonor.com), same guard as the AI wall: a fetch failure
-// falls back to the typed slides above rather than showing anything broken on camera.
-(async function live(){
-  try{
-    const v=await fetch('/api/latest-videos').then(r=>r.ok?r.json():null).catch(()=>null);
-    const t=v?.episode?.title || v?.short?.title;
-    if(t){
-      slides.push({kick:'Latest episode', fig:'LIVE', lab:'The Daily Download',
-        sub:t.length>96 ? t.slice(0,93)+'…' : t});
-    }
-  }catch(e){}
-})();
-
-addEventListener('keydown',e=>{ if(e.key.toLowerCase()==='f'){
-  document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen(); }});
-
-// Cursor stays hidden for the camera (wall is a backdrop), but shows on
-// mouse movement so it can be found, then re-hides after 2.5s idle.
-(function cursorReveal(){
-  let hideT;
-  const show=()=>{ document.body.classList.add('cur-visible'); clearTimeout(hideT);
-    hideT=setTimeout(()=>document.body.classList.remove('cur-visible'),2500); };
-  addEventListener('mousemove',show,{passive:true});
-  addEventListener('mousedown',show,{passive:true});
-})();
-</script>
-</body></html>
+window.WALL = {
+  theme : 'red',
+  // The one wall that argues both lanes, so one bare number is ambiguous by
+  // construction: a viewer cannot tell which business it reaches. Both, each labelled.
+  brand : '<b>Connor MacIvor</b> &nbsp;&middot;&nbsp; AI 661-476-2217 &nbsp;&middot;&nbsp; REAL ESTATE 661-400-1720',
+  live  : 'cwh',
+  // NO INVENTED NUMBERS. Every figure here is one already verified and dated on another
+  // wall, restated. If this wall ever needs its own live figures, wire an API the way
+  // wall 3 does. Do not guess one in to fill a slide.
+  slides: [
+    { t:'stack', lines:[{text:'Two businesses.'},{text:'One operator.'},{text:'No excuses.',hi:1}] },
+    { t:'rows', kick:'System status', rows:[
+        ['Automations, one machine','24',1],
+        ['Machines in the workshop','FOUR',0],
+        ['Sides of your deal I take','ONE',0]],
+      // 24 verified on Vincent 2026-09-03. The old slide here read "19 / Automations
+      // running right now", which was a month stale AND overclaimed: 8 of the 24 were
+      // erroring the day they were counted. Registered and enabled is the honest frame.
+      sub:'Registered and enabled. Nobody starts them in the morning.' },
+    { t:'fig', kick:'Real estate', fig:'ONE SIDE', lab:"Seller's Only Agent&trade;",
+      sub:'Sellers only. Never both sides. Buyers referred out to a dedicated agent.' },
+    { t:'line', kick:'The build', text:'Built here. <em>Not resold</em>, not a course, not a pilot.' },
+    { t:'fig', kick:'Standing watch', fig:'24/7', lab:'The system does not take lunch',
+      sub:'It answers while the office is dark, and reports what happened.' },
+    { t:'stack', lines:[{text:'Recorded'},{text:'closings.'},{text:'Not estimates.',hi:1}],
+      sub:'Every real-estate number he quotes comes from what actually closed.' }
+  ],
+  ticker: [
+    '<b>Connor MacIvor</b> &middot; two businesses, one operator',
+    'AI systems built in Santa Clarita &middot; <b>661-476-2217</b>',
+    "Seller's Only Agent&trade; &middot; sellers only, never both sides &middot; <b>661-400-1720</b>",
+    'CalDRE #01238257 &middot; Sync Brokerage &middot; <b>24 automations on one machine</b>'
+  ]
+};
+</script><script src="/wall/wall.js"></script></body></html>

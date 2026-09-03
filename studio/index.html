@@ -4,198 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Studio Wall</title>
+<title>Studio Wall · AI Proof</title>
 <!--
   STUDIO WALL, AI LANE — connorwithhonor.com/studio/?panel=1
-  Twin of the real-estate wall at santaclaritaopenhouses.com/studio/. Same camera rules,
-  different argument.
+  Ported 2026-09-03 onto the shared engine at /wall/wall.js + /wall/wall.css, the same
+  two files behind santaclaritaopenhouses.com/1 through /4. Six walls, one system.
+  Camera rules, slide shapes, the moving band and the live-data guards all live in the
+  engine now; this file is only the argument this monitor makes.
 
-  WHY THIS LIVES ON THIS DOMAIN AND NOT AS A ?mode=ai FLAG ON THE OTHER ONE:
-  the URL is on screen. If a monitor is bookmarked to a real-estate domain while he is
-  talking about AI, the wall quietly contradicts the pitch. Same reason the marks differ.
+  WHY THIS WALL STILL LIVES ON THIS DOMAIN rather than becoming another number on the
+  other one: the URL is on screen whenever the wall is not fullscreen. A monitor
+  bookmarked to a real-estate domain while he is talking about AI quietly contradicts
+  the pitch. Same reason the marks differ.
 
-  WHAT THE AI WALL SAYS THAT A POSTER CANNOT: proof. Everyone in this market says "I use
-  AI." Almost nobody can put a wall behind them listing systems that are actually running
-  with numbers attached. Every figure below is either pulled live or is a real, checkable
-  count of something built. Nothing here is aspirational.
+  KEEP THIS WALL AND santaclaritaopenhouses.com/2 COMPLEMENTARY, NOT DUPLICATED. That
+  one carries the positioning (built here, not a demo, integrations). This one carries
+  the PROOF (counts, machines, uptime, the live episode). If both are on screen they
+  should read as one argument continuing, never as a mirror.
 
-  CAMERA RULES (same as the RE wall, and they are not stylistic):
-   - near-black, never white: a bright monitor behind a face makes the camera stop down
-   - no hairlines, no dense repeating texture: fine detail moires against the sensor
-   - nothing blinks or strobes; slow drift only, because rolling shutter tears fast motion
-   - enormous type, because the background is slightly soft and often watched on a phone
-
-  ?panel=N   offsets the rotation so several monitors read as one wall, not a mirror
-  ?speed=20  seconds per slide (default 18)
+  ?panel=N offsets the rotation so several monitors never sit on the same slide.
+  ?speed=20 seconds per slide (default 16). F toggles fullscreen.
 -->
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Inter:wght@600;800&display=swap');
-  :root{ --bg:#04060c; --ink:#eaf9ff; --dim:#6f93a6; --cy:#00f0ff; --cy2:#7dfcff; }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden;background:var(--bg);cursor:none}
-  body.cur-visible{cursor:default}
-  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);
-       display:flex;align-items:center;justify-content:center;position:relative}
-  #grid{position:fixed;inset:0;z-index:0;opacity:.55}
-  .vig{position:fixed;inset:0;z-index:1;pointer-events:none;
-       background:radial-gradient(120% 85% at 50% 44%, rgba(0,0,0,0) 28%, rgba(0,0,0,.74) 100%)}
-  /* scanline field: coarse on purpose. A 1px scanline strobes on camera; 3px reads clean. */
-  .scan{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.13;
-        background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 3px,rgba(0,0,0,.9) 3px 6px)}
-  .wrap{position:relative;z-index:2;width:100%;padding:0 6vw;text-align:center}
-  .kick{font-family:'Share Tech Mono',monospace;font-size:clamp(15px,1.9vw,36px);
-        letter-spacing:.44em;text-transform:uppercase;color:var(--cy);
-        text-shadow:0 0 26px rgba(0,240,255,.65)}
-  .fig{font-family:Orbitron,sans-serif;font-weight:900;
-       font-size:clamp(76px,15vw,300px);line-height:.92;color:#fff;margin:.07em 0 .05em;
-       text-shadow:0 0 30px rgba(0,240,255,.8),0 0 90px rgba(0,240,255,.4),0 6px 0 rgba(0,0,0,.6)}
-  .lab{font-family:'Share Tech Mono',monospace;font-size:clamp(18px,2.7vw,52px);
-       letter-spacing:.2em;text-transform:uppercase;color:var(--cy2)}
-  .sub{font-size:clamp(15px,1.5vw,28px);color:var(--dim);margin-top:1.15em;letter-spacing:.04em}
-  .brandline{position:fixed;left:0;right:0;bottom:3.2vh;z-index:2;text-align:center;
-       font-family:'Share Tech Mono',monospace;letter-spacing:.3em;text-transform:uppercase;
-       font-size:clamp(13px,1.25vw,24px);color:var(--dim)}
-  .brandline b{color:var(--cy)}
-  .slide{opacity:0;transition:opacity 1.1s ease}
-  .slide.on{opacity:1}
-  .bar{position:fixed;top:0;left:0;height:4px;background:var(--cy);z-index:3;width:0;
-       box-shadow:0 0 14px var(--cy);opacity:.7}
-  /* Battlezone viewfinder corners, thick enough to survive a lens */
-  .ret{position:fixed;z-index:2;width:5vw;height:5vw;border-color:var(--cy);opacity:.4;
-       filter:drop-shadow(0 0 8px var(--cy))}
-  .r1{top:3vh;left:3vw;border-top:3px solid;border-left:3px solid}
-  .r2{top:3vh;right:3vw;border-top:3px solid;border-right:3px solid}
-  .r3{bottom:3vh;left:3vw;border-bottom:3px solid;border-left:3px solid}
-  .r4{bottom:3vh;right:3vw;border-bottom:3px solid;border-right:3px solid}
-</style>
+<link rel="stylesheet" href="/wall/wall.css">
+<style>:root{--bg:#04060c;--ink:#eaf9ff;--dim:#6f93a6;--ac:#00f0ff;--ac2:#7dfcff}</style>
 </head>
 <body>
-<canvas id="grid"></canvas>
+<canvas id="motif"></canvas>
 <div class="vig"></div><div class="scan"></div>
 <div class="ret r1"></div><div class="ret r2"></div><div class="ret r3"></div><div class="ret r4"></div>
 <div class="bar" id="bar"></div>
-<div class="wrap"><div class="slide on" id="slide"></div></div>
-<div class="brandline" id="brand"></div>
-
+<div class="brand" id="brand"></div>
+<div class="stage"><div class="slide on" id="slide"></div></div>
+<div class="band"><div class="tick" id="tick"></div></div>
 <script>
-const Q=new URLSearchParams(location.search);
-const PANEL=Math.max(1,parseInt(Q.get('panel')||'1',10));
-const SECS=Math.max(6,parseInt(Q.get('speed')||'18',10));
-const el=id=>document.getElementById(id);
-
-// ---------- the grid ----------
-(function grid(){
-  const c=el('grid'), x=c.getContext('2d');
-  let W,H,hz,depth,phase=0,last=performance.now();
-  const ROWS=15,COLS=22;
-  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;hz=H*0.56;depth=H-hz;};
-  addEventListener('resize',resize);resize();
-  const step=t=>{
-    const dt=Math.min(.05,(t-last)/1000);last=t;
-    phase=(phase+dt*0.09)%1;                 // ~11s per row: drift, not motion
-    x.clearRect(0,0,W,H);
-    x.lineWidth=2.2;                          // never hairlines
-    for(let i=0;i<=COLS;i++){
-      const xb=W/2-W*1.5+(W*3*i/COLS);
-      x.globalAlpha=0.30-Math.abs(i/COLS-.5)*.26;
-      x.strokeStyle='#00f0ff';x.beginPath();x.moveTo(W/2,hz);x.lineTo(xb,H);x.stroke();
-    }
-    for(let i=1;i<=ROWS;i++){
-      const f=(((i+phase-1)%ROWS)+1)/ROWS;
-      const y=hz+depth*Math.pow(f,2.1);
-      x.globalAlpha=0.10+0.42*f;
-      x.strokeStyle='#00f0ff';x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke();
-    }
-    x.globalAlpha=.85;x.lineWidth=3;x.strokeStyle='#00f0ff';
-    x.beginPath();x.moveTo(0,hz);x.lineTo(W,hz);x.stroke();x.globalAlpha=1;
-    requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-})();
-
-// ---------- slides ----------
-// Positioning first, then proof.
-//
-// THIS WALL CARRIES NO REAL-ESTATE DATA, ON PURPOSE. The first build proved the point by
-// getting it wrong: every "proof" slide was a real-estate outcome (closings analysed,
-// homeowner pages, market answers) wearing an AI label. That is the wrong argument on this
-// domain. It makes him look like a Realtor who dabbles, when the claim is the reverse.
-// The real-estate wall at santaclaritaopenhouses.com/studio/ owns those numbers and keeps
-// the gold treatment. This one owns the BUILDING, and the two never share a figure.
-//
-// Every number below is a count of something that exists and runs, verified 2026-08-05.
-const base=[
-  {kick:'Santa Clarita',   fig:'AI',      lab:'Built here, running here',
-   sub:'Not a course. Not a reseller deck. Systems that run every day without anyone watching.'},
-  {kick:'The question',    fig:'WHO',     lab:'Answers when you cannot',
-   sub:'The call you miss is the job your competitor books.'},
-  {kick:'Ask the guy who', fig:'BUILDS',  lab:'Not the guy who resells',
-   sub:'Everything on this wall was built in this room.'},
-  {kick:'The difference',  fig:'RUNS',    lab:'Not a demo, not a pilot',
-   sub:'Anyone can show you a chatbot. Ask them what of theirs is running tonight.'},
-];
-const proof=[
-  {kick:'Running right now', fig:'19',    lab:'Automations on one machine',
-   sub:'Answering, sending, watching, reporting. They do not call in sick.'},
-  {kick:'The workshop',      fig:'4',     lab:'Machines, one shared memory',
-   sub:'They hand work to each other overnight and pick up where the last one stopped.'},
-  {kick:'Inbound handled',   fig:'15 MIN', lab:'Question to real answer',
-   sub:'Automatically, day or night, with the actual data behind it. No one is typing.'},
-  {kick:'While you sleep',   fig:'24/7',  lab:'The system does not take lunch',
-   sub:'Answers the phone, books the job, texts you the summary before you wake up.'},
-];
-let slides=base.concat(proof);
-let idx=(PANEL-1)%slides.length;
-
-function paint(){
-  const s=slides[idx%slides.length], box=el('slide');
-  box.classList.remove('on');
-  setTimeout(()=>{
-    box.innerHTML=`<div class="kick">${s.kick}</div><div class="fig">${s.fig}</div>`
-      +`<div class="lab">${s.lab}</div>`+(s.sub?`<div class="sub">${s.sub}</div>`:'');
-    box.classList.add('on');
-  },1100);
-  idx++;
-}
-// ONE NUMBER PER ENTITY. 661-476-2217 is the AI/agency line; 661-400-1720 is real
-// estate only. This wall carried the real-estate number until 2026-09-03, which put
-// the wrong lane's phone on camera for the length of every take shot in front of it.
-el('brand').innerHTML='ConnorWithHonor.com &nbsp;·&nbsp; <b>AI Growth Architect</b> &nbsp;·&nbsp; 661-476-2217';
-
-(function bar(){
-  const t0=performance.now();
-  const tick=t=>{ el('bar').style.width=((((t-t0)/(SECS*1000))%1)*100).toFixed(2)+'%';
-    requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-})();
-paint(); setInterval(paint,SECS*1000);
-
-// ---------- live: the show ----------
-// Guarded like the RE wall: a backdrop must fall back to a real slide rather than put a
-// blank or a broken title on camera.
-(async function live(){
-  try{
-    const v=await fetch('/api/latest-videos').then(r=>r.ok?r.json():null).catch(()=>null);
-    const t=v?.episode?.title || v?.short?.title;
-    if(t){
-      slides=slides.concat([{kick:'Latest episode', fig:'LIVE',
-        lab:'The Daily Download',
-        sub:t.length>96 ? t.slice(0,93)+'…' : t}]);
-    }
-  }catch(e){}
-})();
-
-addEventListener('keydown',e=>{ if(e.key.toLowerCase()==='f'){
-  document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen(); }});
-
-// Cursor stays hidden for the camera (wall is a backdrop), but shows on
-// mouse movement so it can be found, then re-hides after 2.5s idle.
-(function cursorReveal(){
-  let hideT;
-  const show=()=>{ document.body.classList.add('cur-visible'); clearTimeout(hideT);
-    hideT=setTimeout(()=>document.body.classList.remove('cur-visible'),2500); };
-  addEventListener('mousemove',show,{passive:true});
-  addEventListener('mousedown',show,{passive:true});
-})();
-</script>
-</body></html>
+window.WALL = {
+  theme : 'cyan',
+  // AI/agency line. This wall carried 661-400-1720, the real-estate number, until
+  // 2026-09-03. One number per entity, never mixed.
+  brand : 'ConnorWithHonor.com &nbsp;&middot;&nbsp; <b>AI Growth Architect</b> &nbsp;&middot;&nbsp; 661-476-2217',
+  live  : 'cwh',   // appends the current Daily Download episode; silent if the fetch fails
+  // NO REAL-ESTATE FIGURES ON THIS WALL. The first build of it proved why by getting it
+  // wrong: every "proof" slide was a real-estate outcome wearing an AI label, which makes
+  // him look like a Realtor who dabbles when the claim is the reverse.
+  slides: [
+    // 24 counted on Vincent 2026-09-03: registered as Connor's own, Ready or Running,
+    // recurring, action path verified. THE KICK IS DELIBERATELY NOT "RUNNING RIGHT NOW":
+    // 8 of the 24 were erroring on a dead HonorElevate token the day it was counted.
+    // Registered and enabled survives an audit. "All running" does not.
+    { t:'fig', kick:'On one machine', fig:'24', lab:'Scheduled automations',
+      sub:'Registered, enabled, firing on their own schedule. Nobody starts them.' },
+    { t:'rows', kick:'The workshop', rows:[
+        ['Machines','FOUR',1],
+        ['Shared memory','ONE',0],
+        ['Hours off','NONE',0]],
+      sub:'They hand work to each other overnight and pick up where the last one stopped.' },
+    { t:'stack', lines:[{text:'They do not'},{text:'call in sick.'},{text:'Ever.',hi:1}],
+      sub:'Answering, sending, watching, reporting, while the office is dark.' },
+    { t:'fig', kick:'Standing watch', fig:'24/7', lab:'It does not take lunch',
+      sub:'Answers, books, and texts you the summary before you wake up.' },
+    { t:'line', kick:'The only question that matters',
+      text:'Anyone can show you a chatbot. Ask them what of <em>theirs</em> is running tonight.' },
+    { t:'stack', lines:[{text:'Built here.'},{text:'Not resold.'},{text:'Not a course.',hi:1}],
+      sub:'Every system on this wall was built in this room and runs from it.' }
+  ],
+  ticker: [
+    '<b>24 scheduled automations</b> on one machine, four machines in the workshop',
+    'Answers the phone &middot; books the job &middot; texts you the summary',
+    'Built in Santa Clarita, running every day, nobody watching it',
+    '<b>Ask the guy who builds it, not the guy who resells it</b>',
+    'ConnorWithHonor.com &middot; <b>661-476-2217</b>'
+  ]
+};
+</script><script src="/wall/wall.js"></script></body></html>

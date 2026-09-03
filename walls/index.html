@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Studio Walls</title>
+<!--
+  THE PICKER — connorwithhonor.com/walls/
+  One page, the four walls stacked one after another. Click a wall and it goes
+  fullscreen on THIS monitor and starts looping. Escape brings the picker back.
+
+  WHY FULLSCREEN AN IFRAME AND NOT JUST NAVIGATE: fullscreen can only be entered
+  from a real user gesture. If the click navigated to /1 and that page then asked
+  for fullscreen on load, every browser refuses it and he ends up looking at a
+  URL bar on camera. Fullscreening a container the click itself touched is the
+  one path that works every time, with no permission prompt and no extra keypress.
+
+  The iframe is built on click and torn down on exit, so four canvas animations
+  are never running behind the picker.
+
+  The plain URL is printed large on every card on purpose: the second, third and
+  fourth monitors are usually driven from a different machine, and typing
+  connorwithhonor.com/studio is faster than finding this page again.
+
+  THE FOUR SANTACLARITAOPENHOUSES WALLS ARE LINKED, NOT EMBEDDED, AND THAT IS NOT
+  LAZINESS. That domain sends `frame-ancestors 'self'` and `X-Frame-Options: SAMEORIGIN`,
+  so a cross-domain iframe of them is refused by the browser. Embedding them here would
+  produce a blank card, and it would produce it on camera. Own-domain walls fullscreen
+  in place; the others open in their own tab, which is what he does with them anyway.
+-->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&family=Inter:wght@600;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050506;color:#e8ecef;font-family:Inter,system-ui,sans-serif}
+header{padding:38px 6vw 20px}
+h1{font-family:Anton,Impact,sans-serif;font-size:clamp(30px,4.6vw,64px);letter-spacing:.01em;text-transform:uppercase}
+.hint{font-family:'Share Tech Mono',monospace;text-transform:uppercase;letter-spacing:.2em;
+      color:#7b848b;font-size:clamp(11px,1.1vw,15px);margin-top:12px;line-height:2}
+.hint b{color:#cfd6db;font-weight:400}
+main{padding:14px 6vw 90px;display:flex;flex-direction:column;gap:22px}
+
+.card{position:relative;border-radius:18px;overflow:hidden;border:3px solid var(--ac);
+      background:var(--bg);min-height:min(56vh,460px);display:flex;flex-direction:column;
+      justify-content:flex-end;padding:34px 38px;cursor:pointer;isolation:isolate;
+      transition:transform .18s ease, box-shadow .18s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 0 3px var(--ac),0 22px 60px rgba(0,0,0,.6)}
+.card::before{content:'';position:absolute;inset:0;z-index:-1;
+      background:radial-gradient(120% 120% at 22% 0%,color-mix(in srgb,var(--ac) 26%,transparent) 0%,transparent 62%)}
+.num{position:absolute;top:-.14em;right:.06em;font-family:Anton,Impact,sans-serif;
+     font-size:min(46vh,340px);line-height:1;color:var(--ac);opacity:.16;pointer-events:none}
+.kick{font-family:'Share Tech Mono',monospace;letter-spacing:.4em;text-transform:uppercase;
+      color:var(--ac);font-size:clamp(11px,1.2vw,17px)}
+.name{font-family:Anton,Impact,sans-serif;text-transform:uppercase;color:#fff;
+      font-size:clamp(30px,5vw,78px);line-height:1;margin:.18em 0 .12em}
+.desc{color:#aeb7bd;max-width:60ch;font-size:clamp(14px,1.4vw,19px);line-height:1.55}
+.foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-top:22px}
+.url{font-family:'Share Tech Mono',monospace;letter-spacing:.12em;color:var(--ac);
+     font-size:clamp(13px,1.5vw,22px);border:2px solid color-mix(in srgb,var(--ac) 45%,transparent);
+     border-radius:9px;padding:8px 14px}
+.go{font-family:'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;
+    background:var(--ac);color:#08080a;font-size:clamp(12px,1.2vw,16px);padding:11px 20px;
+    border-radius:9px;font-weight:700}
+.tab{font-family:'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;
+     color:#8b949b;font-size:clamp(11px,1.1vw,15px);text-decoration:none;border-bottom:2px solid #333a3f}
+.tab:hover{color:#fff;border-color:var(--ac)}
+.card iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;background:#000}
+.card.playing{cursor:default}
+.card.playing .num,.card.playing .kick,.card.playing .name,
+.card.playing .desc,.card.playing .foot{visibility:hidden}
+.other{border:0.5px solid #2a3035;border-radius:18px;padding:22px 26px;display:flex;flex-wrap:wrap;
+       align-items:center;gap:12px 14px}
+.ol{width:100%;font-family:'Share Tech Mono',monospace;letter-spacing:.24em;text-transform:uppercase;
+    color:#7b848b;font-size:clamp(11px,1.1vw,15px)}
+.oa{font-family:'Share Tech Mono',monospace;letter-spacing:.1em;font-size:clamp(12px,1.3vw,17px);
+    color:var(--ac);text-decoration:none;border:2px solid var(--ac);border-radius:9px;padding:9px 15px}
+.oa:hover{background:var(--ac);color:#08080a}
+.on{width:100%;color:#6b747b;font-size:13px;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>Studio walls</h1>
+  <div class="hint">
+    Click a wall &rarr; it fills this screen and loops. <b>Esc</b> comes back here.<br>
+    Other monitors: type the URL straight in, then press <b>F</b> for fullscreen.<br>
+    Add <b>?panel=2</b> (or 3, 4) so two screens showing the same wall never sit on the same slide.
+    <b>?speed=24</b> slows the rotation down.
+  </div>
+</header>
+<main id="list"></main>
+<script>
+// One row per wall. Colors match the wall pages exactly so the picker previews the
+// real thing rather than a guess at it.
+var WALLS = [
+  { n:'studio',  ac:'#00f0ff', bg:'#04060c', kick:'AI lane',       name:'AI Proof',
+    desc:'Counts, machines, uptime, and the current Daily Download episode. The proof wall. Pairs with santaclaritaopenhouses.com/2, which carries the positioning.' },
+  { n:'command', ac:'#ff2d4a', bg:'#0a0405', kick:'Combined lane', name:'Command',
+    desc:'The operator wall, the one place allowed to argue both businesses at once. Runs red, so do not sit it next to wall 3.' }
+];
+// Linked, not embedded: santaclaritaopenhouses.com refuses cross-domain framing.
+var ELSEWHERE = [
+  { u:'https://santaclaritaopenhouses.com/1/', ac:'#7CFF2A', name:"1 · Seller's Only Agent" },
+  { u:'https://santaclaritaopenhouses.com/2/', ac:'#00f0ff', name:'2 · AI Systems' },
+  { u:'https://santaclaritaopenhouses.com/3/', ac:'#ff2d4a', name:'3 · Open Houses' },
+  { u:'https://santaclaritaopenhouses.com/4/', ac:'#ffc400', name:'4 · Connor with Honor' }
+];
+var HOST = location.host;
+
+document.getElementById('list').innerHTML = WALLS.map(function(w){
+  return '<section class="card" data-n="' + w.n + '" style="--ac:' + w.ac + ';--bg:' + w.bg + '">'
+    + '<span class="num">' + w.n + '</span>'
+    + '<div class="kick">' + w.kick + '</div>'
+    + '<div class="name">' + w.name + '</div>'
+    + '<div class="desc">' + w.desc + '</div>'
+    + '<div class="foot"><span class="go">Play fullscreen</span>'
+    + '<span class="url">' + HOST + '/' + w.n + '</span>'
+    + '<a class="tab" href="/' + w.n + '/" target="_blank" rel="noopener">Open in its own tab &#8599;</a></div>'
+    + '</section>';
+}).join('') + '<section class="other"><span class="ol">The other four, on santaclaritaopenhouses.com</span>'
+  + ELSEWHERE.map(function(e){
+      return '<a class="oa" style="--ac:' + e.ac + '" href="' + e.u + '" target="_blank" rel="noopener">' + e.name + ' &#8599;</a>';
+    }).join('')
+  + '<span class="on">They open in their own tab. That domain refuses cross-domain framing, so a card here would come up blank.</span></section>';
+
+document.getElementById('list').addEventListener('click', function(e){
+  if (e.target.closest('a')) return;              // the "own tab" link keeps its normal job
+  var card = e.target.closest('.card');
+  if (!card || card.classList.contains('playing')) return;
+  var url = '/' + card.dataset.n + '/';
+  // If fullscreen is unavailable or refused, GO TO THE WALL instead of leaving a
+  // small one playing inside a card. A denied request used to strand him with a
+  // postage-stamp wall and no obvious way out, which is the worst possible state
+  // to discover with the camera already rolling.
+  if (!card.requestFullscreen) { location.href = url; return; }
+  var f = document.createElement('iframe');
+  f.src = url;
+  f.allow = 'fullscreen';
+  card.appendChild(f);
+  card.classList.add('playing');
+  // Called inside the click, so the gesture is still live and fullscreen is granted.
+  card.requestFullscreen().catch(function(){ location.href = url; });
+});
+
+// Escape (or any other way out of fullscreen) tears the iframe down so nothing
+// keeps animating behind the picker.
+document.addEventListener('fullscreenchange', function(){
+  if (document.fullscreenElement) return;
+  document.querySelectorAll('.card.playing').forEach(function(c){
+    c.classList.remove('playing');
+    var f = c.querySelector('iframe'); if (f) f.remove();
+  });
+});
+</script>
+</body>
+</html>
