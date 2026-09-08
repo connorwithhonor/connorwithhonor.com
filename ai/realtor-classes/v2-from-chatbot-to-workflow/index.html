@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Chatbot to Workflow | SRAR AI Series Rung 2 | Connor MacIvor</title>
+<meta name="description" content="SRAR AI Series rung 2. Move from one-off prompts to a repeatable, human-supervised real estate workflow. The five-part AI Job Card, a live Open House Follow-Up Workstation build, and a seven-day challenge. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:title" content="From Chatbot to Workflow | SRAR AI Series Rung 2 | Connor MacIvor">
+<meta property="og:description" content="SRAR AI Series rung 2. Move from one-off prompts to a repeatable, human-supervised real estate workflow. The five-part AI Job Card, a live Open House Follow-Up Workstation build, and a seven-day challenge. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/realtor-classes/v2-from-chatbot-to-workflow/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/realtor-classes/v2-from-chatbot-to-workflow/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/empire.css">
+
+<style>
+.ladder{display:grid;gap:10px;margin:1.5rem 0 2.5rem}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;padding:18px 20px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.14);border-left:4px solid rgba(0,229,255,0.35);text-decoration:none;color:inherit;transition:all .3s}
+.rung:hover{background:rgba(0,229,255,0.07);border-left-color:#00e5ff}
+.rung.current{border-left-color:#ffc400;background:rgba(255,196,0,0.05)}
+.rung.done{border-left-color:#6a6a7a;opacity:.85}
+.rung .num{font-family:'Oswald',sans-serif;font-size:2rem;line-height:1;color:#00e5ff;font-weight:700}
+.rung.current .num{color:#ffc400}
+.rung .lvl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:4px}
+.rung h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 4px}
+.rung p{font-size:.95rem;color:#a8a8a8;margin:0;line-height:1.6}
+.rung .sub{color:#00e5ff;font-style:italic;font-family:'Source Serif 4',Georgia,serif;font-size:.95rem;margin-bottom:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 2rem}
+.strip a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);color:#9a9aaa;text-decoration:none}
+.strip a.on{border-color:#ffc400;color:#ffc400}
+.strip a:hover{border-color:#00e5ff;color:#00e5ff}
+.outcomes{list-style:none;padding:0;margin:1rem 0 2rem;counter-reset:o}
+.outcomes li{position:relative;padding:12px 0 12px 56px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:1.02rem;color:#eaeaea;line-height:1.7;counter-increment:o}
+.outcomes li::before{content:counter(o,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#ffc400;font-weight:600}
+.bullets{margin:1rem 0 2rem;padding-left:1.2rem}
+.bullets li{margin-bottom:.6rem;color:#d8d8e0;font-size:1.02rem;line-height:1.7}
+.ros{width:100%;border-collapse:collapse;margin:1rem 0 2.5rem;font-size:.95rem}
+.ros th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;text-align:left;padding:10px 10px;border-bottom:1px solid rgba(0,229,255,0.3)}
+.ros td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;color:#c8c8d0;line-height:1.6}
+.ros td.t{font-family:'JetBrains Mono',monospace;color:#ffc400;white-space:nowrap;font-size:.85rem}
+.ros td.s{color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.95rem;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.box{background:#12121e;border:1px solid rgba(255,196,0,0.25);border-left:4px solid #ffc400;padding:1.5rem 1.75rem;margin:1.5rem 0 2.5rem}
+.box h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#ffc400;font-size:1.05rem;margin:0 0 .75rem}
+.box h5{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin:1.2rem 0 .4rem}
+.box ul,.box ol{margin:0 0 .5rem 1.2rem;padding:0}
+.box li{color:#d8d8e0;font-size:.98rem;line-height:1.65;margin-bottom:.4rem}
+.box p{margin-bottom:.6rem;font-size:.98rem}
+.card{font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;background:#0a0a12;border:1px solid rgba(0,229,255,0.2);padding:1.2rem 1.4rem;white-space:pre-wrap;color:#cfe;margin:.8rem 0 1.2rem;overflow-x:auto}
+.kit{display:grid;gap:10px;margin:1rem 0 2.5rem}
+.kit div{padding:12px 16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.12);color:#d8d8e0;font-size:.98rem;line-height:1.6}
+.kit b{color:#00e5ff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:500;display:block;font-size:.85rem;margin-bottom:2px}
+.safe{margin:1rem 0 2.5rem;padding-left:1.2rem}
+.safe li{margin-bottom:.6rem;color:#c8c8d0;font-size:.98rem;line-height:1.65}
+.fmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 2.5rem}
+.fmt div{padding:14px 16px;background:#12121e;border:1px solid rgba(255,255,255,0.08)}
+.fmt b{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:6px}
+.fmt span{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 0}
+.pn a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);color:#00e5ff;text-decoration:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:#9a9aaa;border:1px dashed rgba(255,255,255,0.15);padding:10px 14px;margin:0 0 2rem}
+@media(max-width:600px){.rung{grid-template-columns:44px 1fr;gap:10px;padding:14px}.rung .num{font-size:1.5rem}.ros td.s{white-space:normal}}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "AI for REALTORS®: The Ladder Rung 2: From Chatbot to Workflow", "description": "SRAR AI Series rung 2. Move from one-off prompts to a repeatable, human-supervised real estate workflow. The five-part AI Job Card, a live Open House Follow-Up Workstation build, and a seven-day challenge. 45 minutes on Zoom, free to SRAR members.", "provider": {"@type": "Person", "name": "Connor MacIvor", "url": "https://connorwithhonor.com"}, "isAccessibleForFree": true, "educationalLevel": "Low-Middle", "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M", "instructor": {"@type": "Person", "name": "Connor MacIvor"}}, "audience": {"@type": "Audience", "audienceType": "Real estate agents and brokers"}, "url": "https://connorwithhonor.com/ai/realtor-classes/v2-from-chatbot-to-workflow/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need rung 1 before this class?", "acceptedAnswer": {"@type": "Answer", "text": "It helps. Rung 1 builds the five files this class loads into the workstation. If you missed it, watch the recording on SRAR On Demand and build the files with the resource page. Thirty minutes of homework gets you current."}}, {"@type": "Question", "name": "Which AI platform do I need?", "acceptedAnswer": {"@type": "Answer", "text": "Any major one with a project or workspace feature. ChatGPT, Claude, and Gemini all have one. The class is vendor neutral. Bring whichever your brokerage allows."}}, {"@type": "Question", "name": "Is this the same as CRM automation?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is a workstation you run by hand, on purpose. Automation is rung 4. Running it by hand first is how you learn what to supervise later."}}, {"@type": "Question", "name": "Can I use real open house data in class?", "acceptedAnswer": {"@type": "Answer", "text": "No. The live build uses a fictional sheet. Use fictional data at home until your brokerage has approved the platform and its privacy settings."}}]}</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">SRAR AI Series · Rung 2 of 5 · Low-Middle</div>
+<h1>From Chatbot to <span class="accent">Workflow</span></h1>
+<p class="hero-sub"><em>Stop Prompting. Start Operating.</em><br>The first class gave the AI your identity. This class gives it a job.</p>
+<div class="hero-cta-group">
+<a href="/ai/realtor-classes/" class="btn-secondary">See the Full Ladder</a>
+<a href="mailto:connor@connorwithhonor.com?subject=SRAR%20AI%20Series%20Rung%202" class="btn-primary">Book This Class</a>
+</div>
+</section>
+
+<main>
+<div class="strip"><a href="/ai/realtor-classes/">Series</a><a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener">Rung 1</a><a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/" class="on">Rung 2</a><a href="/ai/realtor-classes/v3-from-workflow-to-system/">Rung 3</a><a href="/ai/realtor-classes/v4-supervised-automation-stack/">Rung 4</a><a href="/ai/realtor-classes/v5-agentic-real-estate/">Rung 5</a></div>
+<p class="note">// Proposed for the SRAR 2027 education calendar. Pending Business Technology Committee approval. 45 minutes on Zoom, recorded, free to members.</p>
+
+<span class="section-label">// Introduction</span>
+<h2>What This Class <span class="accent">Does</span>.</h2>
+<p class="lede">The first course helped real estate professionals onboard an AI platform with their professional background, voice, working style, trusted knowledge, rules, and limitations. This class moves agents from individual prompts and conversations into a repeatable, human-supervised real estate workflow. It is practical and vendor neutral. The same framework runs on ChatGPT, Claude, Gemini, or a comparable platform, and the licensed professional stays responsible for every client-facing result.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Who It Is For</span>
+<h2>Come If <span class="gold">This Is You</span>.</h2>
+<ul class="bullets">
+<li>You attended rung 1 on August 26, 2026, or watched it on SRAR On Demand.</li><li>You have used ChatGPT, Claude, or Gemini more than a handful of times.</li><li>You have at least one process that repeats every week and still runs on memory, sticky notes, and good intentions.</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Outcomes</span>
+<h2>You Leave <span class="accent">Able To</span>.</h2>
+<ol class="outcomes">
+<li>Pick one low-risk, high-repeat workflow using the five audit signals: Repeat, Wait, Search, Rewrite, Handoff.</li><li>Write a five-part AI Job Card for it: outcome, approved inputs, required steps, output format, and stop and approval rules.</li><li>Run the workflow end to end on a fictional data set, break it on purpose, and correct it before it ever touches a real client.</li><li>Tell the difference between a manual AI workflow you run and an automation the CRM runs, and know which one you need right now.</li>
+</ol>
+
+<span class="section-label" style="margin-top:3rem;">// What We Cover</span>
+<h2>The <span class="gold">Eight Points</span>.</h2>
+<ul class="bullets">
+<li>How to move from an AI that knows you to an AI that can perform one clearly defined business process consistently</li><li>How to choose a useful, low-risk real estate workflow instead of chasing additional AI tools</li><li>The five-part AI Job Card: outcome, approved inputs, required steps, output format, and stop and approval rules</li><li>A live build of an Open House Follow-Up Workstation using fictional visitor information</li><li>How to turn notes into personalized follow-up drafts, CRM-ready notes, call preparation, and task recommendations</li><li>How to test and correct the workflow before using it in the real world</li><li>Privacy, factual verification, fair housing, and California licensee-responsibility safeguards</li><li>The difference between a manual AI workflow and later CRM, email, calendar, and automation integrations</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Run of Show</span>
+<h2>Forty-Five Minutes, <span class="accent">Timed</span>.</h2>
+<div class="tablewrap"><table class="ros">
+<thead><tr><th>Clock</th><th>Segment</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td class="t">0:00</td><td class="s">Cold open</td><td>Sunday night. Fourteen sign-in sheets in a car door pocket. Zero follow-up by Wednesday. In 27 years I have watched most open house sheets die exactly there. Name the cost: the visitor who was ready went with the agent who called.</td></tr><tr><td class="t">0:03</td><td class="s">Rung 1 in 90 seconds</td><td>Five files. The briefing prompt. S.A.F.E. Then the shift for today: an AI that knows you versus an AI that does one job the same way every time. Knowing you is the setup. Doing the job is the point.</td></tr><tr><td class="t">0:07</td><td class="s">Pick the workflow</td><td>Five audit signals on screen. Live poll: which one hurts most this month? Apply the low-risk test to the winner: no license required to draft it, no confidential data, a reliable source, a reversible result, a named approver. Open house follow-up passes all five. That is today's build.</td></tr><tr><td class="t">0:13</td><td class="s">The AI Job Card</td><td>Five parts, one slide each, filled in with the open house example. Outcome. Approved inputs. Required steps. Output format. Stop and approval rules. The stop rules do the heavy lifting: never infer a visitor's protected characteristics, never give price advice, never send without review.</td></tr><tr><td class="t">0:20</td><td class="s">Live build</td><td>The Open House Follow-Up Workstation. Fictional sign-in sheet with eight visitors and messy notes. Load the five files and the Job Card into a project workspace. Run it. Out come personalized text and email drafts, a CRM-ready note per visitor, call prep for the two hottest, and dated task recommendations. Show the FACTS TO VERIFY and COMPLIANCE CHECK lists it returns.</td></tr><tr><td class="t">0:33</td><td class="s">Break it on purpose</td><td>Feed it a visitor note with a family-status remark and a made-up line about the seller taking less. Watch it flag or fail. Write the correction as a rule. Re-run. Save the rule to file five. This is the habit: Brief, Draft, Critique, Correct, Save.</td></tr><tr><td class="t">0:38</td><td class="s">Manual versus automated</td><td>This is a workstation you run by hand. Rung 4 is when the CRM runs it on a trigger. The manual version comes first because you cannot supervise what you never ran yourself.</td></tr><tr><td class="t">0:41</td><td class="s">Challenge and Q&A</td><td>The seven-day challenge. Resource page. Questions until time.</td></tr>
+</tbody></table></div>
+
+<span class="section-label" style="margin-top:3rem;">// Live Build</span>
+<h2>Built On Screen, <span class="gold">Not Described</span>.</h2>
+<div class="box">
+<h4>Live build: the Open House Follow-Up Workstation</h4>
+<h5>Inputs</h5>
+<ul><li>The five onboarding files from rung 1 (who I am, how I sound, how I work, what I know, what I will not do)</li><li>A fictional sign-in sheet: eight visitors, names invented, phone numbers formatted as 555, notes in the messy shorthand agents write on a clipboard</li><li>The Open House Follow-Up Job Card (below)</li><li>The listing basics for the fictional property, labeled fictional</li></ul>
+<h5>The card the room sees</h5>
+<div class="card">JOB: Open House Follow-Up
+OUTCOME: Every visitor from today&#x27;s open house gets a personal follow-up draft, a CRM note, and a next step, ready for my review within 20 minutes of closing the door.
+APPROVED INPUTS: My five files. The sign-in sheet I paste in. The listing fact sheet I paste in. Nothing else. If a fact is not in these, label it MISSING.
+REQUIRED STEPS: 1. Summarize each visitor in one line. 2. Rank by buying signals stated in their notes only. 3. Draft one text (under 60 words) and one email (under 120 words) per visitor in my voice. 4. Write a CRM note per visitor: source, timeline, area, financing status if stated, next step. 5. Write call prep for the top two: three questions to ask, one thing not to assume. 6. Recommend tasks with dates.
+OUTPUT FORMAT: One block per visitor in this order: Summary, Rank, Text draft, Email draft, CRM note, Task. Then: Call prep (top two). Then: FACTS TO VERIFY. Then: COMPLIANCE CHECK.
+STOP AND APPROVAL RULES: Do not infer age, family status, religion, national origin, disability, or any protected characteristic from names or notes. Do not mention price flexibility, seller motivation, or offer strategy. Do not promise showings or availability. Do not send anything. I review every draft before it goes out.</div>
+<h5>What comes out</h5>
+<ul><li>Eight visitor blocks, each with a text draft, an email draft, a CRM note, and a dated task</li><li>Call prep for the top two visitors</li><li>A FACTS TO VERIFY list and a COMPLIANCE CHECK list at the end</li><li>After the planted error: a flagged item, a new rule, and a clean re-run</li></ul>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Take-Home Kit</span>
+<h2>What You <span class="accent">Walk Out With</span>.</h2>
+<div class="kit">
+<div><b>Blank AI Job Card</b>One page. Five parts. Print it or copy it into a document.</div><div><b>Open House Follow-Up Job Card</b>The filled-in card from the live build, ready to paste into any AI workspace.</div><div><b>Fictional practice sign-in sheet</b>Eight invented visitors so you can practice without touching real client data.</div><div><b>Seven-day challenge</b>Day 1 pick the workflow. Day 2 write the Job Card. Day 3 build the workspace. Day 4 run it on fictional data. Day 5 break it and correct it. Day 6 save the rules. Day 7 first real run, with your review on every draft.</div><div><b>Resource page</b>SantaClaritaArtificialIntelligence.com, same format as the rung 1 page, posted the day of class.</div>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Safeguards</span>
+<h2>The Rules That <span class="red">Do Not Move</span>.</h2>
+<ul class="safe">
+<li>Privacy: real visitor names, phone numbers, and notes do not go into a public consumer AI until your brokerage approves the platform and its settings. Practice on the fictional sheet.</li><li>Fair housing: the Job Card forbids inferring protected characteristics and forbids steering language. The critique step checks for both. HUD advertising guidance is the word list.</li><li>Verification: every draft returns a FACTS TO VERIFY list. You confirm property facts against the MLS, tax record, or seller disclosure, not the model.</li><li>Licensee responsibility: the licensed professional is responsible for every word a client receives. The AI drafts. You approve. Nothing sends itself in this class.</li><li>California DRE AI Advisory: supervision, advertising, privacy, fair housing, altered images, and legal interpretation. The class maps each stop rule to the advisory.</li>
+</ul>
+<p>Every rung of the series runs the S.A.F.E. gate before anything leaves the office. Sensitive information removed. Accuracy confirmed through reliable sources. Fair housing and fiduciary responsibilities protected. Everything properly disclosed and approved.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Format</span>
+<h2>For The <span class="gold">Committee</span>.</h2>
+<div class="fmt">
+<div><b>Format</b><span>Zoom webinar</span></div>
+<div><b>Duration</b><span>45 minutes</span></div>
+<div><b>Member cost</b><span>Free</span></div>
+<div><b>Recording</b><span>Yes, for SRAR On Demand</span></div>
+<div><b>CE status</b><span>Non-CE</span></div>
+<div><b>Best slots</b><span>Tue to Thu, 9 or 10 AM</span></div>
+</div>
+<p>Instructor: Connor <span class="macivor">MacIvor</span>, REALTOR®, CalDRE #01238257, SYNC Brokerage. 27+ years in Santa Clarita Valley real estate. 43+ years writing code. 1,000+ brokers and agents trained in AI. Former SRAR board member.</p>
+
+<span class="section-label" style="margin-top:3rem;">// FAQ</span>
+<h2>Questions Agents <span class="accent">Ask</span>.</h2>
+<div class="faq">
+<div class="faq-item"><h4>Do I need rung 1 before this class?</h4><p>It helps. Rung 1 builds the five files this class loads into the workstation. If you missed it, watch the recording on SRAR On Demand and build the files with the resource page. Thirty minutes of homework gets you current.</p></div><div class="faq-item"><h4>Which AI platform do I need?</h4><p>Any major one with a project or workspace feature. ChatGPT, Claude, and Gemini all have one. The class is vendor neutral. Bring whichever your brokerage allows.</p></div><div class="faq-item"><h4>Is this the same as CRM automation?</h4><p>No. This is a workstation you run by hand, on purpose. Automation is rung 4. Running it by hand first is how you learn what to supervise later.</p></div><div class="faq-item"><h4>Can I use real open house data in class?</h4><p>No. The live build uses a fictional sheet. Use fictional data at home until your brokerage has approved the platform and its privacy settings.</p></div>
+</div>
+
+<div class="cta-block">
+<h3>Bring The Whole Ladder To Your Association.</h3>
+<p>Five rungs. One 45-minute class each. Built for association education calendars and brokerage training days. Email for dates.</p>
+<a href="mailto:connor@connorwithhonor.com?subject=AI%20for%20REALTORS%20Series" class="btn-primary">connor@connorwithhonor.com</a>
+</div>
+
+<div class="pn">
+<a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener">Rung 1: The AI Reality Check for Real Estate Agents</a>
+<a href="/ai/realtor-classes/v3-from-workflow-to-system/">Rung 3: From Workflow to System</a>
+</div>
+</main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+</body>
+</html>

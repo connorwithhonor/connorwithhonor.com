@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for REALTORS®: The Ladder | SRAR AI Series | Connor MacIvor</title>
+<meta name="description" content="A five-rung AI training ladder for real estate agents, built for the Southland Regional Association of REALTORS®. Rung 1 delivered August 26, 2026. Rungs 2 through 5 proposed for 2027: From Chatbot to Workflow, From Workflow to System, The Supervised Automation Stack, Agentic Real Estate. 45 minutes each, Zoom, free to members.">
+<meta property="og:title" content="AI for REALTORS®: The Ladder | SRAR AI Series | Connor MacIvor">
+<meta property="og:description" content="A five-rung AI training ladder for real estate agents, built for the Southland Regional Association of REALTORS®. Rung 1 delivered August 26, 2026. Rungs 2 through 5 proposed for 2027: From Chatbot to Workflow, From Workflow to System, The Supervised Automation Stack, Agentic Real Estate. 45 minutes each, Zoom, free to members.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/realtor-classes/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/realtor-classes/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/empire.css">
+
+<style>
+.ladder{display:grid;gap:10px;margin:1.5rem 0 2.5rem}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;padding:18px 20px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.14);border-left:4px solid rgba(0,229,255,0.35);text-decoration:none;color:inherit;transition:all .3s}
+.rung:hover{background:rgba(0,229,255,0.07);border-left-color:#00e5ff}
+.rung.current{border-left-color:#ffc400;background:rgba(255,196,0,0.05)}
+.rung.done{border-left-color:#6a6a7a;opacity:.85}
+.rung .num{font-family:'Oswald',sans-serif;font-size:2rem;line-height:1;color:#00e5ff;font-weight:700}
+.rung.current .num{color:#ffc400}
+.rung .lvl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:4px}
+.rung h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 4px}
+.rung p{font-size:.95rem;color:#a8a8a8;margin:0;line-height:1.6}
+.rung .sub{color:#00e5ff;font-style:italic;font-family:'Source Serif 4',Georgia,serif;font-size:.95rem;margin-bottom:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 2rem}
+.strip a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);color:#9a9aaa;text-decoration:none}
+.strip a.on{border-color:#ffc400;color:#ffc400}
+.strip a:hover{border-color:#00e5ff;color:#00e5ff}
+.outcomes{list-style:none;padding:0;margin:1rem 0 2rem;counter-reset:o}
+.outcomes li{position:relative;padding:12px 0 12px 56px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:1.02rem;color:#eaeaea;line-height:1.7;counter-increment:o}
+.outcomes li::before{content:counter(o,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#ffc400;font-weight:600}
+.bullets{margin:1rem 0 2rem;padding-left:1.2rem}
+.bullets li{margin-bottom:.6rem;color:#d8d8e0;font-size:1.02rem;line-height:1.7}
+.ros{width:100%;border-collapse:collapse;margin:1rem 0 2.5rem;font-size:.95rem}
+.ros th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;text-align:left;padding:10px 10px;border-bottom:1px solid rgba(0,229,255,0.3)}
+.ros td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;color:#c8c8d0;line-height:1.6}
+.ros td.t{font-family:'JetBrains Mono',monospace;color:#ffc400;white-space:nowrap;font-size:.85rem}
+.ros td.s{color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.95rem;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.box{background:#12121e;border:1px solid rgba(255,196,0,0.25);border-left:4px solid #ffc400;padding:1.5rem 1.75rem;margin:1.5rem 0 2.5rem}
+.box h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#ffc400;font-size:1.05rem;margin:0 0 .75rem}
+.box h5{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin:1.2rem 0 .4rem}
+.box ul,.box ol{margin:0 0 .5rem 1.2rem;padding:0}
+.box li{color:#d8d8e0;font-size:.98rem;line-height:1.65;margin-bottom:.4rem}
+.box p{margin-bottom:.6rem;font-size:.98rem}
+.card{font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;background:#0a0a12;border:1px solid rgba(0,229,255,0.2);padding:1.2rem 1.4rem;white-space:pre-wrap;color:#cfe;margin:.8rem 0 1.2rem;overflow-x:auto}
+.kit{display:grid;gap:10px;margin:1rem 0 2.5rem}
+.kit div{padding:12px 16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.12);color:#d8d8e0;font-size:.98rem;line-height:1.6}
+.kit b{color:#00e5ff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:500;display:block;font-size:.85rem;margin-bottom:2px}
+.safe{margin:1rem 0 2.5rem;padding-left:1.2rem}
+.safe li{margin-bottom:.6rem;color:#c8c8d0;font-size:.98rem;line-height:1.65}
+.fmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 2.5rem}
+.fmt div{padding:14px 16px;background:#12121e;border:1px solid rgba(255,255,255,0.08)}
+.fmt b{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:6px}
+.fmt span{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 0}
+.pn a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);color:#00e5ff;text-decoration:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:#9a9aaa;border:1px dashed rgba(255,255,255,0.15);padding:10px 14px;margin:0 0 2rem}
+@media(max-width:600px){.rung{grid-template-columns:44px 1fr;gap:10px;padding:14px}.rung .num{font-size:1.5rem}.ros td.s{white-space:normal}}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "AI for REALTORS®: The Ladder", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Rung 1: The AI Reality Check for Real Estate Agents", "url": "https://santaclaritaartificialintelligence.com/SRAR0826/"}, {"@type": "ListItem", "position": 2, "name": "Rung 2: From Chatbot to Workflow", "url": "https://connorwithhonor.com/ai/realtor-classes/v2-from-chatbot-to-workflow/"}, {"@type": "ListItem", "position": 3, "name": "Rung 3: From Workflow to System", "url": "https://connorwithhonor.com/ai/realtor-classes/v3-from-workflow-to-system/"}, {"@type": "ListItem", "position": 4, "name": "Rung 4: The Supervised Automation Stack", "url": "https://connorwithhonor.com/ai/realtor-classes/v4-supervised-automation-stack/"}, {"@type": "ListItem", "position": 5, "name": "Rung 5: Agentic Real Estate", "url": "https://connorwithhonor.com/ai/realtor-classes/v5-agentic-real-estate/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I have to take the classes in order?", "acceptedAnswer": {"@type": "Answer", "text": "It is built as a ladder, and each class loads what the one before it built. But every class is recorded for SRAR On Demand, and every resource page has the homework to catch up. Miss a rung, watch it, do the seven-day challenge, and you are current."}}, {"@type": "Question", "name": "Which AI platform does the series use?", "acceptedAnswer": {"@type": "Answer", "text": "Whichever your brokerage allows. The frameworks (five files, Job Cards, fact sheets, the supervised loop, the permission ladder) are the same on ChatGPT, Claude, Gemini, and the AI layers now built into most real estate CRMs. Each class shows one and names the equivalents."}}, {"@type": "Question", "name": "Is the series CE-eligible?", "acceptedAnswer": {"@type": "Answer", "text": "No. Non-CE. The series has not been submitted to the DRE for continuing education approval."}}, {"@type": "Question", "name": "What does it cost SRAR members?", "acceptedAnswer": {"@type": "Answer", "text": "Nothing. Every class is free to members, on Zoom, 45 minutes including questions."}}, {"@type": "Question", "name": "Can a brokerage or another association book the series?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The same five rungs run as a brokerage training track or as another association's education calendar. Email connor@connorwithhonor.com with the group size and the dates you have in mind."}}, {"@type": "Question", "name": "Does the instructor sell software in the class?", "acceptedAnswer": {"@type": "Answer", "text": "No. The classes are vendor neutral by design. Resource pages list the instructor's contact information and a free 15 to 30 minute architecture conversation for anyone who wants help after class. That is the whole pitch."}}]}</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">SRAR AI Series · 2026 to 2027</div>
+<h1>AI For REALTORS®.<br><span class="accent">Five Rungs</span>. One Ladder.</h1>
+<p class="hero-sub">One 45-minute class per rung. Zoom. Recorded. Free to Southland Regional Association of REALTORS® members. Rung 1 ran August 26, 2026. Rungs 2 through 5 are proposed for the 2027 calendar. Every class builds on the one before it, and every attendee leaves with a kit they can run the next morning.</p>
+<div class="hero-cta-group">
+<a href="#ladder" class="btn-primary">See the Ladder</a>
+<a href="#committee" class="btn-secondary">Committee Details</a>
+</div>
+</section>
+
+<main>
+<span class="section-label">// The Premise</span>
+<h2>Tools Change Every 90 Days. <span class="accent">Skills Compound</span>.</h2>
+<p class="lede">Most agents attend one AI class, leave with 30 prompts, and are back where they started in a month because the tools moved. This ladder teaches the layer underneath the tools: onboard the AI, give it a job, connect the jobs, put them on a trigger, then let an agent act under a permission ladder. Each rung is vendor neutral. The same framework runs on ChatGPT, Claude, Gemini, or whatever the brokerage approves.</p>
+<p>Each class is one live build on screen, not a tour of features. Each ends with a seven-day challenge so the skill gets used before it fades. Each is recorded, so a member who missed a rung can catch up on SRAR On Demand and still climb.</p>
+
+<span class="section-label" id="ladder" style="margin-top:3rem;">// The Ladder</span>
+<h2>Five Rungs. <span class="gold">One Per Quarter</span>.</h2>
+<div class="ladder">
+<a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener" class="rung done">
+<div class="num">1</div>
+<div><div class="lvl">Foundation · Delivered Aug 26, 2026</div><h4>The AI Reality Check for Real Estate Agents</h4><div class="sub">The AI is educated. It is not onboarded.</div><p>Five-file onboarding kit (who I am, how I sound, how I work, what I know, what I will not do). The briefing prompt. Train through correction. The S.A.F.E. publication gate. The seven-step visibility chain so AI systems recognize you as a credible professional.</p></div>
+</a>
+<a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/" class="rung">
+<div class="num">2</div>
+<div><div class="lvl">Low-Middle · Proposed 2027</div><h4>From Chatbot to Workflow</h4><div class="sub">Stop Prompting. Start Operating.</div><p>The first class gave the AI your identity. This class gives it a job.</p></div>
+</a>
+<a href="/ai/realtor-classes/v3-from-workflow-to-system/" class="rung">
+<div class="num">3</div>
+<div><div class="lvl">Middle · Proposed 2027</div><h4>From Workflow to System</h4><div class="sub">One Listing. Ten Outputs. Zero Retyping.</div><p>Rung 2 built one job. Rung 3 connects the jobs so one verified fact sheet feeds everything a listing needs.</p></div>
+</a>
+<a href="/ai/realtor-classes/v4-supervised-automation-stack/" class="rung">
+<div class="num">4</div>
+<div><div class="lvl">Middle-High · Proposed 2027</div><h4>The Supervised Automation Stack</h4><div class="sub">Missed Calls, Follow-Up, and Lead Response That Run While You Show Property.</div><p>Rungs 2 and 3 built systems you run. Rung 4 lets the system run on a trigger, with you as the gate.</p></div>
+</a>
+<a href="/ai/realtor-classes/v5-agentic-real-estate/" class="rung">
+<div class="num">5</div>
+<div><div class="lvl">High · Proposed 2027</div><h4>Agentic Real Estate</h4><div class="sub">From Assistant to Operator. And How to Stay in Command.</div><p>Chatbots write. Agents act. Rung 5 shows what an AI agent can do inside a real estate practice, and the permission ladder that keeps the licensee in charge.</p></div>
+</a>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Why A Ladder</span>
+<h2>Why Not A <span class="accent">Menu</span>.</h2>
+<p>A menu of AI classes produces tourists. A ladder produces operators. The rungs follow the way skills are actually built: know the tool, apply it to one job, analyze how jobs connect, evaluate what should run without you, then create something new with it in command. Each class assumes the one before it and loads what it built. That is why an agent who climbs all five in a year is running a different business than one who attended five unrelated webinars.</p>
+<p>The homework matters as much as the hour. Every rung ends with a seven-day challenge and a resource page. The challenge is small, one workflow, one fact sheet, one automation, one permission rung, and it is designed to be finished, not admired.</p>
+
+<span class="section-label" style="margin-top:3rem;">// The Kit</span>
+<h2>What Every Attendee <span class="gold">Walks Out With</span>.</h2>
+<div class="kit">
+<div><b>Rung 1</b>Five-file onboarding kit, the briefing prompt, the S.A.F.E. gate, the seven-step visibility chain.</div>
+<div><b>Rung 2</b>Blank AI Job Card, the Open House Follow-Up card, a fictional practice sheet, the seven-day challenge.</div>
+<div><b>Rung 3</b>Property Fact Sheet template, ten Job Cards, the Critique Job, a workspace setup checklist.</div>
+<div><b>Rung 4</b>Automation Approval Checklist, the 10-question red-team script, disclosure language templates, a measurement sheet.</div>
+<div><b>Rung 5</b>Permission Ladder card, vendor questions checklist, the Transaction Desk card and practice file, a monthly audit template, a 12-month operating plan.</div>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Safeguards</span>
+<h2>The Rules That Run Through <span class="red">All Five</span>.</h2>
+<ul class="safe">
+<li>The S.A.F.E. gate before anything leaves the office: Sensitive information removed, Accuracy confirmed through reliable sources, Fair housing and fiduciary responsibilities protected, Everything properly disclosed and approved.</li>
+<li>No contracts, offers, credit reports, bank statements, private client communications, or access information in a public consumer AI. Practice on fictional data. Real data goes only where the brokerage has approved the platform and its settings.</li>
+<li>Verification outside the model for every property fact, legal claim, and market statistic.</li>
+<li>Fair housing in every output, checked by a rule list, not by hope.</li>
+<li>Disclosure when an AI communicates with a consumer, and consent before any marketing text.</li>
+<li>Broker supervision does not change because software drafted or sent the message. The licensee is responsible for every client-facing word.</li>
+<li>The California DRE AI Advisory (supervision, advertising, privacy, fair housing, altered images, legal interpretation) is mapped to a stop rule in every class.</li>
+</ul>
+
+<span class="section-label" id="committee" style="margin-top:3rem;">// For The Committee</span>
+<h2>Format, Cadence, <span class="accent">Instructor</span>.</h2>
+<div class="fmt">
+<div><b>Format</b><span>Zoom webinar</span></div>
+<div><b>Duration</b><span>45 min each</span></div>
+<div><b>Member cost</b><span>Free</span></div>
+<div><b>Recording</b><span>Yes, SRAR On Demand</span></div>
+<div><b>CE status</b><span>Non-CE</span></div>
+<div><b>Cadence</b><span>1 per quarter, 2027</span></div>
+</div>
+<p>Suggested scheduling: one class per quarter in 2027, Tuesday through Thursday mornings at 9 or 10 AM, which is when SRAR classes draw best. If the committee prefers two classes per year, the series runs through 2028. The rungs can be approved as a package or one at a time. Rung 2 was submitted September 1, 2026. Rungs 3 through 5 are submitted with it as the full picture.</p>
+<p>Instructor: Connor <span class="macivor">MacIvor</span>, REALTOR®, CalDRE #01238257, SYNC Brokerage. 27+ years in Santa Clarita Valley real estate. 43+ years writing code. 1,000+ brokers and agents trained in AI. Former SRAR board member. Delivered rung 1 to SRAR members on August 26, 2026.</p>
+
+<span class="section-label" style="margin-top:3rem;">// FAQ</span>
+<h2>Questions The Committee And Members <span class="gold">Ask</span>.</h2>
+<div class="faq">
+<div class="faq-item"><h4>Do I have to take the classes in order?</h4><p>It is built as a ladder, and each class loads what the one before it built. But every class is recorded for SRAR On Demand, and every resource page has the homework to catch up. Miss a rung, watch it, do the seven-day challenge, and you are current.</p></div><div class="faq-item"><h4>Which AI platform does the series use?</h4><p>Whichever your brokerage allows. The frameworks (five files, Job Cards, fact sheets, the supervised loop, the permission ladder) are the same on ChatGPT, Claude, Gemini, and the AI layers now built into most real estate CRMs. Each class shows one and names the equivalents.</p></div><div class="faq-item"><h4>Is the series CE-eligible?</h4><p>No. Non-CE. The series has not been submitted to the DRE for continuing education approval.</p></div><div class="faq-item"><h4>What does it cost SRAR members?</h4><p>Nothing. Every class is free to members, on Zoom, 45 minutes including questions.</p></div><div class="faq-item"><h4>Can a brokerage or another association book the series?</h4><p>Yes. The same five rungs run as a brokerage training track or as another association's education calendar. Email connor@connorwithhonor.com with the group size and the dates you have in mind.</p></div><div class="faq-item"><h4>Does the instructor sell software in the class?</h4><p>No. The classes are vendor neutral by design. Resource pages list the instructor's contact information and a free 15 to 30 minute architecture conversation for anyone who wants help after class. That is the whole pitch.</p></div>
+</div>
+
+<div class="cta-block">
+<h3>Bring The Ladder To Your Association Or Brokerage.</h3>
+<p>Five rungs, one 45-minute class each, built for education calendars and training days. Email with your group size and the dates you have in mind.</p>
+<a href="mailto:connor@connorwithhonor.com?subject=AI%20for%20REALTORS%20Series" class="btn-primary">connor@connorwithhonor.com</a>
+<p style="margin-top:1rem;"><a href="tel:6614001720" class="inline" style="color:#00e5ff;">661-400-1720</a> · <a href="/ai/for-real-estate" style="color:#00e5ff;">AI for Real Estate Agents</a> · <a href="/speaking" style="color:#00e5ff;">Speaking</a></p>
+</div>
+</main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+</body>
+</html>

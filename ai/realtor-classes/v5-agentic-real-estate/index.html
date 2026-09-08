@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Real Estate | SRAR AI Series Rung 5 | Connor MacIvor</title>
+<meta name="description" content="SRAR AI Series rung 5. AI agents that read files, browse, and act across email, calendar, and CRM under a four-rung permission ladder. Build a private brokerage intelligence layer, run the Transaction Desk live build, and leave with a monthly AI audit and a 12-month operating plan. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:title" content="Agentic Real Estate | SRAR AI Series Rung 5 | Connor MacIvor">
+<meta property="og:description" content="SRAR AI Series rung 5. AI agents that read files, browse, and act across email, calendar, and CRM under a four-rung permission ladder. Build a private brokerage intelligence layer, run the Transaction Desk live build, and leave with a monthly AI audit and a 12-month operating plan. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/realtor-classes/v5-agentic-real-estate/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/realtor-classes/v5-agentic-real-estate/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/empire.css">
+
+<style>
+.ladder{display:grid;gap:10px;margin:1.5rem 0 2.5rem}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;padding:18px 20px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.14);border-left:4px solid rgba(0,229,255,0.35);text-decoration:none;color:inherit;transition:all .3s}
+.rung:hover{background:rgba(0,229,255,0.07);border-left-color:#00e5ff}
+.rung.current{border-left-color:#ffc400;background:rgba(255,196,0,0.05)}
+.rung.done{border-left-color:#6a6a7a;opacity:.85}
+.rung .num{font-family:'Oswald',sans-serif;font-size:2rem;line-height:1;color:#00e5ff;font-weight:700}
+.rung.current .num{color:#ffc400}
+.rung .lvl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:4px}
+.rung h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 4px}
+.rung p{font-size:.95rem;color:#a8a8a8;margin:0;line-height:1.6}
+.rung .sub{color:#00e5ff;font-style:italic;font-family:'Source Serif 4',Georgia,serif;font-size:.95rem;margin-bottom:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 2rem}
+.strip a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);color:#9a9aaa;text-decoration:none}
+.strip a.on{border-color:#ffc400;color:#ffc400}
+.strip a:hover{border-color:#00e5ff;color:#00e5ff}
+.outcomes{list-style:none;padding:0;margin:1rem 0 2rem;counter-reset:o}
+.outcomes li{position:relative;padding:12px 0 12px 56px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:1.02rem;color:#eaeaea;line-height:1.7;counter-increment:o}
+.outcomes li::before{content:counter(o,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#ffc400;font-weight:600}
+.bullets{margin:1rem 0 2rem;padding-left:1.2rem}
+.bullets li{margin-bottom:.6rem;color:#d8d8e0;font-size:1.02rem;line-height:1.7}
+.ros{width:100%;border-collapse:collapse;margin:1rem 0 2.5rem;font-size:.95rem}
+.ros th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;text-align:left;padding:10px 10px;border-bottom:1px solid rgba(0,229,255,0.3)}
+.ros td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;color:#c8c8d0;line-height:1.6}
+.ros td.t{font-family:'JetBrains Mono',monospace;color:#ffc400;white-space:nowrap;font-size:.85rem}
+.ros td.s{color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.95rem;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.box{background:#12121e;border:1px solid rgba(255,196,0,0.25);border-left:4px solid #ffc400;padding:1.5rem 1.75rem;margin:1.5rem 0 2.5rem}
+.box h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#ffc400;font-size:1.05rem;margin:0 0 .75rem}
+.box h5{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin:1.2rem 0 .4rem}
+.box ul,.box ol{margin:0 0 .5rem 1.2rem;padding:0}
+.box li{color:#d8d8e0;font-size:.98rem;line-height:1.65;margin-bottom:.4rem}
+.box p{margin-bottom:.6rem;font-size:.98rem}
+.card{font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;background:#0a0a12;border:1px solid rgba(0,229,255,0.2);padding:1.2rem 1.4rem;white-space:pre-wrap;color:#cfe;margin:.8rem 0 1.2rem;overflow-x:auto}
+.kit{display:grid;gap:10px;margin:1rem 0 2.5rem}
+.kit div{padding:12px 16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.12);color:#d8d8e0;font-size:.98rem;line-height:1.6}
+.kit b{color:#00e5ff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:500;display:block;font-size:.85rem;margin-bottom:2px}
+.safe{margin:1rem 0 2.5rem;padding-left:1.2rem}
+.safe li{margin-bottom:.6rem;color:#c8c8d0;font-size:.98rem;line-height:1.65}
+.fmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 2.5rem}
+.fmt div{padding:14px 16px;background:#12121e;border:1px solid rgba(255,255,255,0.08)}
+.fmt b{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:6px}
+.fmt span{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 0}
+.pn a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);color:#00e5ff;text-decoration:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:#9a9aaa;border:1px dashed rgba(255,255,255,0.15);padding:10px 14px;margin:0 0 2rem}
+@media(max-width:600px){.rung{grid-template-columns:44px 1fr;gap:10px;padding:14px}.rung .num{font-size:1.5rem}.ros td.s{white-space:normal}}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "AI for REALTORS®: The Ladder Rung 5: Agentic Real Estate", "description": "SRAR AI Series rung 5. AI agents that read files, browse, and act across email, calendar, and CRM under a four-rung permission ladder. Build a private brokerage intelligence layer, run the Transaction Desk live build, and leave with a monthly AI audit and a 12-month operating plan. 45 minutes on Zoom, free to SRAR members.", "provider": {"@type": "Person", "name": "Connor MacIvor", "url": "https://connorwithhonor.com"}, "isAccessibleForFree": true, "educationalLevel": "High", "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M", "instructor": {"@type": "Person", "name": "Connor MacIvor"}}, "audience": {"@type": "Audience", "audienceType": "Real estate agents and brokers"}, "url": "https://connorwithhonor.com/ai/realtor-classes/v5-agentic-real-estate/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this safe for a small brokerage?", "acceptedAnswer": {"@type": "Answer", "text": "Safer than what most small brokerages do now, which is agents pasting client data into free chat tools. The private layer, the permission ladder, and the audit log give the broker visibility they do not have today."}}, {"@type": "Question", "name": "Do I need to be technical?", "acceptedAnswer": {"@type": "Answer", "text": "No. The class runs the build on screen with plain-language cards. If you can set up a shared drive folder, you can do this."}}, {"@type": "Question", "name": "What does an agent cost to run?", "acceptedAnswer": {"@type": "Answer", "text": "Enterprise and team tiers on the major platforms are priced per seat per month. The class does not sell a platform. It gives you the six vendor questions and the permission ladder so the choice is yours."}}, {"@type": "Question", "name": "How long until the agent runs on its own?", "acceptedAnswer": {"@type": "Answer", "text": "It does not. Act-within-limits is the ceiling, and it is earned one low-risk task at a time after a clean month of approvals. The licensee stays in command. That is the design, not a limitation."}}]}</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">SRAR AI Series · Rung 5 of 5 · High</div>
+<h1><span class="accent">Agentic</span> Real Estate</h1>
+<p class="hero-sub"><em>From Assistant to Operator. And How to Stay in Command.</em><br>Chatbots write. Agents act. Rung 5 shows what an AI agent can do inside a real estate practice, and the permission ladder that keeps the licensee in charge.</p>
+<div class="hero-cta-group">
+<a href="/ai/realtor-classes/" class="btn-secondary">See the Full Ladder</a>
+<a href="mailto:connor@connorwithhonor.com?subject=SRAR%20AI%20Series%20Rung%205" class="btn-primary">Book This Class</a>
+</div>
+</section>
+
+<main>
+<div class="strip"><a href="/ai/realtor-classes/">Series</a><a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener">Rung 1</a><a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/">Rung 2</a><a href="/ai/realtor-classes/v3-from-workflow-to-system/">Rung 3</a><a href="/ai/realtor-classes/v4-supervised-automation-stack/">Rung 4</a><a href="/ai/realtor-classes/v5-agentic-real-estate/" class="on">Rung 5</a></div>
+<p class="note">// Proposed for the SRAR 2027 education calendar. Pending Business Technology Committee approval. 45 minutes on Zoom, recorded, free to members.</p>
+
+<span class="section-label">// Introduction</span>
+<h2>What This Class <span class="accent">Does</span>.</h2>
+<p class="lede">The first four rungs taught agents to onboard an AI, give it a job, connect the jobs, and put them on a trigger. This class covers the layer that arrived in force in 2025 and 2026: AI agents that do not just write, they act. They read a folder, browse for a source, draft across email and calendar, and run a multi-step task. Attendees learn the four-rung Permission Ladder that decides what an agent may do on its own, build a private brokerage intelligence layer, and watch a fictional escrow file become a task list, a seller update, a deadline flag, and calendar reminders, with approval at every act. Then they leave with a monthly audit and a 12-month plan for a solo agent, a team, and a brokerage.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Who It Is For</span>
+<h2>Come If <span class="gold">This Is You</span>.</h2>
+<ul class="bullets">
+<li>You completed rungs 2 and 4, or you run an approval-gated automation today.</li><li>You are comfortable with a CRM and a shared drive.</li><li>You lead a team, manage an office, or carry enough volume that a transaction desk would change your week.</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Outcomes</span>
+<h2>You Leave <span class="accent">Able To</span>.</h2>
+<ol class="outcomes">
+<li>Explain what an AI agent is (it uses tools: reads files, browses, drafts across apps, runs multi-step tasks) and how that changes the risk compared to a chatbot.</li><li>Apply the Permission Ladder: read-only, draft-only, act-with-approval, act-within-limits. Place any real estate task on the right rung.</li><li>Build a private brokerage intelligence layer: policies, forms guidance, local knowledge, approved sources, and prohibited items, in a workspace with training disabled and retention set.</li><li>Run the Transaction Desk: a fictional escrow file becomes a task list, a seller update, a contingency deadline flag, and calendar reminders, with approval at each act.</li><li>Audit it monthly (hours recovered, errors caught, permissions reviewed) and build a 12-month AI operating plan.</li>
+</ol>
+
+<span class="section-label" style="margin-top:3rem;">// What We Cover</span>
+<h2>The <span class="gold">Eight Points</span>.</h2>
+<ul class="bullets">
+<li>Chatbot versus agent: the moment AI stops writing and starts doing</li><li>The Permission Ladder: read-only, draft-only, act-with-approval, act-within-limits. Nothing client-facing runs unsupervised</li><li>Building the brokerage intelligence layer: policies, forms guidance, local knowledge, and approved sources in a private workspace</li><li>Live build: the Transaction Desk. A fictional escrow file becomes a task list, a seller update, a contingency deadline flag, and calendar reminders, with approval at each step</li><li>Connecting the agent to email, calendar, and files, and what you switch off before you do</li><li>Team and brokerage deployment: roles, retention settings, training disabled, audit logs, broker supervision</li><li>The monthly AI audit: hours recovered, errors caught, permissions reviewed</li><li>The 12-month AI operating plan for a solo agent, a team, and a brokerage</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Run of Show</span>
+<h2>Forty-Five Minutes, <span class="accent">Timed</span>.</h2>
+<div class="tablewrap"><table class="ros">
+<thead><tr><th>Clock</th><th>Segment</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td class="t">0:00</td><td class="s">Cold open</td><td>Watch this. The agent opens a fictional escrow folder, reads the purchase agreement summary and the last six emails, and produces the task list with dates. Ninety seconds. Now the important part: what it was allowed to do, and what it was not.</td></tr><tr><td class="t">0:03</td><td class="s">Chatbot versus agent</td><td>A chatbot returns text. An agent uses tools: it reads files, browses for a source, drafts across email and calendar, and runs a multi-step task. Every major platform ships an agent mode now. That is why the risk changed: an agent can send, book, and move files. Hence the ladder.</td></tr><tr><td class="t">0:08</td><td class="s">The Permission Ladder</td><td>Four rungs with real estate examples. Read-only: summarize the escrow folder. Draft-only: write the seller update. Act-with-approval: put the contingency deadline on the calendar, you click yes. Act-within-limits: send the Monday showing report to the seller if nothing changed and the checklist passed. Never: sign, send offers, give legal or tax advice, contact a party about money.</td></tr><tr><td class="t">0:15</td><td class="s">The brokerage intelligence layer</td><td>What goes in: office policies, forms guidance, local knowledge with sources (HOAs, special assessment districts, school boundaries), the approved sources list, the prohibited list. Where it lives: a private workspace with training disabled and retention set. The six questions to ask any vendor: encryption, retention, training, admin controls, audit logs, data location.</td></tr><tr><td class="t">0:21</td><td class="s">Live build</td><td>The Transaction Desk. A fictional escrow with invented parties and a Sample Street address. The agent reads the folder (read-only), builds the task list keyed to the acceptance date, drafts the seller update (draft-only), flags the inspection contingency date and asks to add it to the calendar (act-with-approval), and sets the reminder. Show the log of every action it took and every approval it waited for.</td></tr><tr><td class="t">0:34</td><td class="s">Team deployment</td><td>Roles: who may run what rung. Retention and training settings. Audit log review. Broker supervision: the broker remains responsible for supervising licensed activity, and an agent running under your login is your activity. Onboarding a new agent to the same layer in one afternoon.</td></tr><tr><td class="t">0:38</td><td class="s">Audit and plan</td><td>Hours recovered times your hourly value is the number to watch. The error log. The permission review. Then the 12-month plan: Q1 rungs 1 and 2 for every agent. Q2 the listing system. Q3 one automation live with the gate on. Q4 an agent on read-only and draft-only, with one act-with-approval task earned.</td></tr><tr><td class="t">0:42</td><td class="s">Challenge and Q&A</td><td>Bring the workflow. Leave with the first move. Resource page. Questions until time.</td></tr>
+</tbody></table></div>
+
+<span class="section-label" style="margin-top:3rem;">// Live Build</span>
+<h2>Built On Screen, <span class="gold">Not Described</span>.</h2>
+<div class="box">
+<h4>Live build: the Transaction Desk</h4>
+<h5>Inputs</h5>
+<ul><li>The five onboarding files from rung 1 and the brokerage intelligence layer built in this class</li><li>A fictional escrow folder: purchase agreement summary, six invented emails, an inspection report cover page, and the acceptance date, all labeled fictional</li><li>The Transaction Desk Job Card (below), with the permission rung stated for every step</li><li>A connected calendar in a test account</li></ul>
+<h5>The card the room sees</h5>
+<div class="card">AGENT JOB: Transaction Desk
+PERMISSIONS: Read-only on the escrow folder. Draft-only for any message. Act-with-approval for calendar entries and reminders. No sending. No signing. No contact with any party.
+STEP 1 (read-only): Read the folder. Summarize the transaction in ten lines: parties by role only, acceptance date, price as stated, contingencies and their day counts, open items.
+STEP 2 (read-only): Build the task list keyed to the acceptance date. One row per deadline: task, due date, who owns it, source document.
+STEP 3 (draft-only): Draft the seller update in my voice using only the folder. Label anything not in the folder MISSING.
+STEP 4 (act-with-approval): Propose calendar entries for each contingency deadline with a reminder two business days prior. Ask me to approve each one. Add only what I approve.
+STEP 5 (log): List every file you read, every draft you produced, every action you proposed, and every approval you received.
+NEVER: Give legal or tax advice. Interpret contract language beyond quoting it. Contact any party. Move, delete, or share any file. Act on anything outside this folder.</div>
+<h5>What comes out</h5>
+<ul><li>A ten-line transaction summary and a dated task list, produced read-only</li><li>A seller update draft with MISSING labels where the folder was silent</li><li>Calendar proposals for each contingency deadline, approved one at a time on screen</li><li>The action log: files read, drafts produced, actions proposed, approvals received</li></ul>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Take-Home Kit</span>
+<h2>What You <span class="accent">Walk Out With</span>.</h2>
+<div class="kit">
+<div><b>Permission Ladder card</b>Four rungs, real estate examples on each, and the never list. Print it and put it next to the monitor.</div><div><b>Vendor questions checklist</b>Encryption, retention, training, admin controls, audit logs, data location. Six questions to ask before any brokerage data goes in.</div><div><b>Transaction Desk Job Card and practice file</b>The card from the live build plus the fictional escrow folder so you can run it at home without real client data.</div><div><b>Monthly AI audit template</b>Hours recovered, errors caught, permissions reviewed, one page, 15 minutes a month.</div><div><b>12-month AI operating plan</b>Three versions: solo agent, team, brokerage. Quarter by quarter, rung by rung.</div>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Safeguards</span>
+<h2>The Rules That <span class="red">Do Not Move</span>.</h2>
+<ul class="safe">
+<li>Confidentiality: escrow files contain protected information. They go only into an approved private workspace with training disabled and retention set, never into a public consumer AI.</li><li>Permissions: nothing client-facing runs unsupervised. Act-within-limits is earned after a documented month of act-with-approval with no errors, and only for low-risk sends.</li><li>No unauthorized practice of law: the agent quotes contract language and dates. It does not interpret. Legal questions go to the broker or counsel.</li><li>Broker supervision: an agent running under a licensee's login is that licensee's activity and the broker's supervisory responsibility. Audit logs exist so supervision is possible.</li><li>California DRE AI Advisory: supervision, advertising, privacy, fair housing, altered images, and legal interpretation. The Permission Ladder maps to each.</li><li>Access hygiene: before connecting an agent to email or calendar, switch off what it does not need, use a dedicated account where possible, and review the log weekly for the first month.</li>
+</ul>
+<p>Every rung of the series runs the S.A.F.E. gate before anything leaves the office. Sensitive information removed. Accuracy confirmed through reliable sources. Fair housing and fiduciary responsibilities protected. Everything properly disclosed and approved.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Format</span>
+<h2>For The <span class="gold">Committee</span>.</h2>
+<div class="fmt">
+<div><b>Format</b><span>Zoom webinar</span></div>
+<div><b>Duration</b><span>45 minutes</span></div>
+<div><b>Member cost</b><span>Free</span></div>
+<div><b>Recording</b><span>Yes, for SRAR On Demand</span></div>
+<div><b>CE status</b><span>Non-CE</span></div>
+<div><b>Best slots</b><span>Tue to Thu, 9 or 10 AM</span></div>
+</div>
+<p>Instructor: Connor <span class="macivor">MacIvor</span>, REALTOR®, CalDRE #01238257, SYNC Brokerage. 27+ years in Santa Clarita Valley real estate. 43+ years writing code. 1,000+ brokers and agents trained in AI. Former SRAR board member.</p>
+
+<span class="section-label" style="margin-top:3rem;">// FAQ</span>
+<h2>Questions Agents <span class="accent">Ask</span>.</h2>
+<div class="faq">
+<div class="faq-item"><h4>Is this safe for a small brokerage?</h4><p>Safer than what most small brokerages do now, which is agents pasting client data into free chat tools. The private layer, the permission ladder, and the audit log give the broker visibility they do not have today.</p></div><div class="faq-item"><h4>Do I need to be technical?</h4><p>No. The class runs the build on screen with plain-language cards. If you can set up a shared drive folder, you can do this.</p></div><div class="faq-item"><h4>What does an agent cost to run?</h4><p>Enterprise and team tiers on the major platforms are priced per seat per month. The class does not sell a platform. It gives you the six vendor questions and the permission ladder so the choice is yours.</p></div><div class="faq-item"><h4>How long until the agent runs on its own?</h4><p>It does not. Act-within-limits is the ceiling, and it is earned one low-risk task at a time after a clean month of approvals. The licensee stays in command. That is the design, not a limitation.</p></div>
+</div>
+
+<div class="cta-block">
+<h3>Bring The Whole Ladder To Your Association.</h3>
+<p>Five rungs. One 45-minute class each. Built for association education calendars and brokerage training days. Email for dates.</p>
+<a href="mailto:connor@connorwithhonor.com?subject=AI%20for%20REALTORS%20Series" class="btn-primary">connor@connorwithhonor.com</a>
+</div>
+
+<div class="pn">
+<a href="/ai/realtor-classes/v4-supervised-automation-stack/">Rung 4: The Supervised Automation Stack</a>
+<a href="/ai/realtor-classes/">Back to the Series</a>
+</div>
+</main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+</body>
+</html>
