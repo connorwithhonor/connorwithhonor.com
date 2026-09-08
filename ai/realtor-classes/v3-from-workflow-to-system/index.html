@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Workflow to System | SRAR AI Series Rung 3 | Connor MacIvor</title>
+<meta name="description" content="SRAR AI Series rung 3. Chain AI Job Cards into a Listing Launch System: one verified Property Fact Sheet produces MLS remarks, social captions, sphere email, open house plan, and more, with a fair housing critique pass before anything publishes. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:title" content="From Workflow to System | SRAR AI Series Rung 3 | Connor MacIvor">
+<meta property="og:description" content="SRAR AI Series rung 3. Chain AI Job Cards into a Listing Launch System: one verified Property Fact Sheet produces MLS remarks, social captions, sphere email, open house plan, and more, with a fair housing critique pass before anything publishes. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/realtor-classes/v3-from-workflow-to-system/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/realtor-classes/v3-from-workflow-to-system/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/empire.css">
+
+<style>
+.ladder{display:grid;gap:10px;margin:1.5rem 0 2.5rem}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;padding:18px 20px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.14);border-left:4px solid rgba(0,229,255,0.35);text-decoration:none;color:inherit;transition:all .3s}
+.rung:hover{background:rgba(0,229,255,0.07);border-left-color:#00e5ff}
+.rung.current{border-left-color:#ffc400;background:rgba(255,196,0,0.05)}
+.rung.done{border-left-color:#6a6a7a;opacity:.85}
+.rung .num{font-family:'Oswald',sans-serif;font-size:2rem;line-height:1;color:#00e5ff;font-weight:700}
+.rung.current .num{color:#ffc400}
+.rung .lvl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:4px}
+.rung h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 4px}
+.rung p{font-size:.95rem;color:#a8a8a8;margin:0;line-height:1.6}
+.rung .sub{color:#00e5ff;font-style:italic;font-family:'Source Serif 4',Georgia,serif;font-size:.95rem;margin-bottom:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 2rem}
+.strip a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);color:#9a9aaa;text-decoration:none}
+.strip a.on{border-color:#ffc400;color:#ffc400}
+.strip a:hover{border-color:#00e5ff;color:#00e5ff}
+.outcomes{list-style:none;padding:0;margin:1rem 0 2rem;counter-reset:o}
+.outcomes li{position:relative;padding:12px 0 12px 56px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:1.02rem;color:#eaeaea;line-height:1.7;counter-increment:o}
+.outcomes li::before{content:counter(o,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#ffc400;font-weight:600}
+.bullets{margin:1rem 0 2rem;padding-left:1.2rem}
+.bullets li{margin-bottom:.6rem;color:#d8d8e0;font-size:1.02rem;line-height:1.7}
+.ros{width:100%;border-collapse:collapse;margin:1rem 0 2.5rem;font-size:.95rem}
+.ros th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;text-align:left;padding:10px 10px;border-bottom:1px solid rgba(0,229,255,0.3)}
+.ros td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;color:#c8c8d0;line-height:1.6}
+.ros td.t{font-family:'JetBrains Mono',monospace;color:#ffc400;white-space:nowrap;font-size:.85rem}
+.ros td.s{color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.95rem;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.box{background:#12121e;border:1px solid rgba(255,196,0,0.25);border-left:4px solid #ffc400;padding:1.5rem 1.75rem;margin:1.5rem 0 2.5rem}
+.box h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#ffc400;font-size:1.05rem;margin:0 0 .75rem}
+.box h5{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin:1.2rem 0 .4rem}
+.box ul,.box ol{margin:0 0 .5rem 1.2rem;padding:0}
+.box li{color:#d8d8e0;font-size:.98rem;line-height:1.65;margin-bottom:.4rem}
+.box p{margin-bottom:.6rem;font-size:.98rem}
+.card{font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;background:#0a0a12;border:1px solid rgba(0,229,255,0.2);padding:1.2rem 1.4rem;white-space:pre-wrap;color:#cfe;margin:.8rem 0 1.2rem;overflow-x:auto}
+.kit{display:grid;gap:10px;margin:1rem 0 2.5rem}
+.kit div{padding:12px 16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.12);color:#d8d8e0;font-size:.98rem;line-height:1.6}
+.kit b{color:#00e5ff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:500;display:block;font-size:.85rem;margin-bottom:2px}
+.safe{margin:1rem 0 2.5rem;padding-left:1.2rem}
+.safe li{margin-bottom:.6rem;color:#c8c8d0;font-size:.98rem;line-height:1.65}
+.fmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 2.5rem}
+.fmt div{padding:14px 16px;background:#12121e;border:1px solid rgba(255,255,255,0.08)}
+.fmt b{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:6px}
+.fmt span{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 0}
+.pn a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);color:#00e5ff;text-decoration:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:#9a9aaa;border:1px dashed rgba(255,255,255,0.15);padding:10px 14px;margin:0 0 2rem}
+@media(max-width:600px){.rung{grid-template-columns:44px 1fr;gap:10px;padding:14px}.rung .num{font-size:1.5rem}.ros td.s{white-space:normal}}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "AI for REALTORS®: The Ladder Rung 3: From Workflow to System", "description": "SRAR AI Series rung 3. Chain AI Job Cards into a Listing Launch System: one verified Property Fact Sheet produces MLS remarks, social captions, sphere email, open house plan, and more, with a fair housing critique pass before anything publishes. 45 minutes on Zoom, free to SRAR members.", "provider": {"@type": "Person", "name": "Connor MacIvor", "url": "https://connorwithhonor.com"}, "isAccessibleForFree": true, "educationalLevel": "Middle", "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M", "instructor": {"@type": "Person", "name": "Connor MacIvor"}}, "audience": {"@type": "Audience", "audienceType": "Real estate agents and brokers"}, "url": "https://connorwithhonor.com/ai/realtor-classes/v3-from-workflow-to-system/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "I do not take many listings. Is this still useful?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The same pattern runs a buyer tour packet, a rental listing, or a team's weekly market update. The listing launch is the teaching example because every agent understands it."}}, {"@type": "Question", "name": "What if my brokerage supplies the marketing?", "acceptedAnswer": {"@type": "Answer", "text": "Bring the brokerage's templates. The system feeds them. The fact sheet still saves the retyping and the critique still catches the fair housing miss before it ships."}}, {"@type": "Question", "name": "Does this replace my marketing person?", "acceptedAnswer": {"@type": "Answer", "text": "No. It gives your marketing person a verified sheet and ten clean first drafts instead of a text message with three facts and a typo."}}, {"@type": "Question", "name": "Which platform runs the chain best?", "acceptedAnswer": {"@type": "Answer", "text": "Any platform with a project or workspace feature runs it. The class shows one and names the equivalents on the others."}}]}</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">SRAR AI Series · Rung 3 of 5 · Middle</div>
+<h1>From Workflow to <span class="accent">System</span></h1>
+<p class="hero-sub"><em>One Listing. Ten Outputs. Zero Retyping.</em><br>Rung 2 built one job. Rung 3 connects the jobs so one verified fact sheet feeds everything a listing needs.</p>
+<div class="hero-cta-group">
+<a href="/ai/realtor-classes/" class="btn-secondary">See the Full Ladder</a>
+<a href="mailto:connor@connorwithhonor.com?subject=SRAR%20AI%20Series%20Rung%203" class="btn-primary">Book This Class</a>
+</div>
+</section>
+
+<main>
+<div class="strip"><a href="/ai/realtor-classes/">Series</a><a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener">Rung 1</a><a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/">Rung 2</a><a href="/ai/realtor-classes/v3-from-workflow-to-system/" class="on">Rung 3</a><a href="/ai/realtor-classes/v4-supervised-automation-stack/">Rung 4</a><a href="/ai/realtor-classes/v5-agentic-real-estate/">Rung 5</a></div>
+<p class="note">// Proposed for the SRAR 2027 education calendar. Pending Business Technology Committee approval. 45 minutes on Zoom, recorded, free to members.</p>
+
+<span class="section-label">// Introduction</span>
+<h2>What This Class <span class="accent">Does</span>.</h2>
+<p class="lede">Rung 2 taught agents to give the AI one job. This class connects the jobs. Attendees build a Property Fact Sheet, the single verified source of truth for a listing, then chain Job Cards so that one sheet produces every output a listing launch needs. A separate critique job checks the outputs for fair housing and accuracy before anything is published. Change one fact, re-run, and every output updates. No retyping, no drift.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Who It Is For</span>
+<h2>Come If <span class="gold">This Is You</span>.</h2>
+<ul class="bullets">
+<li>You completed rung 2, or you have built and run at least one AI Job Card on your own.</li><li>You take listings, or you support an agent who does (transaction coordinators and marketing assistants welcome).</li><li>You have retyped the same square footage into five places and gotten it wrong once.</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Outcomes</span>
+<h2>You Leave <span class="accent">Able To</span>.</h2>
+<ol class="outcomes">
+<li>Build a Property Fact Sheet: one verified source for a listing with facts, sources, approved photos, disclosure status, and an explicit UNKNOWN list.</li><li>Chain Job Cards into a Listing Launch System that produces ten outputs from that one sheet.</li><li>Run a fair housing and accuracy critique as its own job, before anything is published.</li><li>Change one fact and regenerate every output in minutes, without retyping.</li><li>Store the system in a workspace so it runs the same way for the next listing and the next person on your team.</li>
+</ol>
+
+<span class="section-label" style="margin-top:3rem;">// What We Cover</span>
+<h2>The <span class="gold">Eight Points</span>.</h2>
+<ul class="bullets">
+<li>Why one prompt at a time breaks the moment a second listing comes in: drift, retyping, and the wrong fact in the wrong place</li><li>The Property Fact Sheet: the single verified source every output must cite, with a source next to every fact</li><li>Chaining Job Cards: MLS remarks, public remarks, three social captions, sphere email, just-listed text, open house plan, buyer-agent FAQ, and a neighborhood one-pager</li><li>Live build: fact sheet in, ten outputs out, in under 15 minutes</li><li>The Critique Job: the AI checks its own outputs against a fair housing and accuracy rule list</li><li>Version control for humans: change the fact sheet, re-run, every output updates</li><li>Photos, virtual staging, and altered images: what must be disclosed and how to label it</li><li>Storing the system so it survives to the next listing and the next agent on your team</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Run of Show</span>
+<h2>Forty-Five Minutes, <span class="accent">Timed</span>.</h2>
+<div class="tablewrap"><table class="ros">
+<thead><tr><th>Clock</th><th>Segment</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td class="t">0:00</td><td class="s">Cold open</td><td>Second listing of the month. You typed the square footage five times. Four were right. The one that was wrong went on the flyer. Prompt-at-a-time has a failure mode and its name is drift.</td></tr><tr><td class="t">0:03</td><td class="s">Rung 2 in 60 seconds</td><td>One Job Card, one job. Today: many cards, one source. The source is the whole idea.</td></tr><tr><td class="t">0:07</td><td class="s">The Property Fact Sheet</td><td>Sections: verified facts with a source next to each (tax record, MLS, seller disclosure, measurement), approved photos with alteration status, disclosure status, seller-approved talking points, and the UNKNOWN list. The rule: an output may only use what is on the sheet. Missing means the word MISSING, not a guess.</td></tr><tr><td class="t">0:14</td><td class="s">The chain</td><td>One diagram: fact sheet, ten Job Cards, ten outputs, the Critique Job, the S.A.F.E. gate, publish. Every card inherits the five files from rung 1 and the stop rules from rung 2. Nothing is retyped. Everything cites the sheet.</td></tr><tr><td class="t">0:19</td><td class="s">Live build</td><td>A fictional Valencia listing, labeled fictional on every slide. Fact sheet in. Ten outputs out: MLS remarks, public remarks, three social captions, sphere email, just-listed text, open house plan, buyer-agent FAQ, neighborhood one-pager. Side by side on screen. Point at the same fact appearing identically in all ten.</td></tr><tr><td class="t">0:33</td><td class="s">The Critique Job</td><td>Run the ten outputs through a rule list: fair housing terms and steering, unsupported superlatives, facts not on the sheet, missing brokerage identification. Watch it catch the planted line: walking distance to the best schools. Steering and unsupported in one sentence. Fix the sheet, not the output.</td></tr><tr><td class="t">0:38</td><td class="s">Change one fact</td><td>The appraiser's square footage comes in. Change one number on the sheet. Re-run. All ten update. Then the workspace: where the system lives so the next listing starts at minute zero.</td></tr><tr><td class="t">0:41</td><td class="s">Challenge and Q&A</td><td>Seven-day challenge. Resource page. Questions until time.</td></tr>
+</tbody></table></div>
+
+<span class="section-label" style="margin-top:3rem;">// Live Build</span>
+<h2>Built On Screen, <span class="gold">Not Described</span>.</h2>
+<div class="box">
+<h4>Live build: the Listing Launch System</h4>
+<h5>Inputs</h5>
+<ul><li>The five onboarding files from rung 1</li><li>A fictional Property Fact Sheet: a Valencia single-family home with invented facts (4 bed, 2.5 bath, 2,140 square feet per fictional tax record, built 1998, HOA and Mello-Roos status listed with fictional sources), a photo list with alteration status, disclosure status, and an UNKNOWN list</li><li>Ten Job Cards, one per output, each inheriting the stop rules from rung 2</li><li>The Critique Job Card with its rule list</li></ul>
+<h5>The card the room sees</h5>
+<div class="card">JOB: Listing Launch (chain)
+SOURCE OF TRUTH: The Property Fact Sheet pasted below. No output may state a fact that is not on the sheet. If a fact is missing, write MISSING.
+OUTPUTS, IN ORDER: 1. MLS remarks (per my MLS&#x27;s remark rules, no contact info, no offers of compensation). 2. Public remarks. 3. Three social captions (short, medium, long). 4. Sphere email. 5. Just-listed text under 60 words. 6. Open house plan with a visitor question list. 7. Buyer-agent FAQ (showing instructions, offer logistics, HOA and disclosure availability). 8. Neighborhood one-pager using only sheet facts and sourced links. 9. Seller weekly update template. 10. Photo caption set with alteration labels where the sheet says altered or virtually staged.
+THEN RUN: Critique Job on all ten. Return a table: output number, issue, rule broken, suggested fix.
+STOP RULES: No superlatives without a sheet fact behind them. No school quality claims. No neighborhood demographic language. No price or motivation commentary. Brokerage name and license identification appear where my advertising rules require it. Nothing publishes without my review.</div>
+<h5>What comes out</h5>
+<ul><li>Ten outputs, generated in sequence, all citing the same sheet</li><li>A critique table with the planted steering line caught and the fix pointed at the sheet</li><li>A second full run after one fact changes, showing all ten outputs updated</li><li>The workspace layout: files, fact sheet, cards, and a naming convention for the next listing</li></ul>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Take-Home Kit</span>
+<h2>What You <span class="accent">Walk Out With</span>.</h2>
+<div class="kit">
+<div><b>Property Fact Sheet template</b>Facts with sources, photos with alteration status, disclosure status, seller-approved talking points, UNKNOWN list.</div><div><b>Ten Job Cards</b>One per output, pre-written to inherit your five files and the rung 2 stop rules.</div><div><b>Critique Job Card</b>The fair housing and accuracy rule list, ready to run against any listing output.</div><div><b>Workspace setup checklist</b>How to store the system in a project or custom assistant on any major platform so the next listing starts at minute zero.</div><div><b>Seven-day challenge</b>Day 1 build the fact sheet for a past listing. Day 2 write three cards. Day 3 run them. Day 4 add the rest. Day 5 run the Critique Job. Day 6 change a fact and re-run. Day 7 store the system and document it for one other person.</div>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Safeguards</span>
+<h2>The Rules That <span class="red">Do Not Move</span>.</h2>
+<ul class="safe">
+<li>MLS remark rules: public remarks follow your MLS's rules on contact information, compensation, and prohibited content. The Job Card carries the rule and the critique checks it.</li><li>Fair housing advertising: no steering, no protected-class language, no school quality claims dressed up as amenities. HUD advertising guidance is the word list the Critique Job uses.</li><li>Altered images: virtual staging, sky replacement, and object removal are labeled on the fact sheet and disclosed in the caption set. The DRE AI Advisory covers altered images. Your MLS may have its own rule.</li><li>Copyright: listing photos belong to the photographer unless the license says otherwise. The sheet records the license.</li><li>Advertising identification: brokerage name and license identification appear where California advertising rules require them, including first point of contact materials.</li><li>Confidentiality: the seller's disclosures and private communications do not go into a public consumer AI. The fact sheet carries what the seller approved for marketing, nothing else.</li>
+</ul>
+<p>Every rung of the series runs the S.A.F.E. gate before anything leaves the office. Sensitive information removed. Accuracy confirmed through reliable sources. Fair housing and fiduciary responsibilities protected. Everything properly disclosed and approved.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Format</span>
+<h2>For The <span class="gold">Committee</span>.</h2>
+<div class="fmt">
+<div><b>Format</b><span>Zoom webinar</span></div>
+<div><b>Duration</b><span>45 minutes</span></div>
+<div><b>Member cost</b><span>Free</span></div>
+<div><b>Recording</b><span>Yes, for SRAR On Demand</span></div>
+<div><b>CE status</b><span>Non-CE</span></div>
+<div><b>Best slots</b><span>Tue to Thu, 9 or 10 AM</span></div>
+</div>
+<p>Instructor: Connor <span class="macivor">MacIvor</span>, REALTOR®, CalDRE #01238257, SYNC Brokerage. 27+ years in Santa Clarita Valley real estate. 43+ years writing code. 1,000+ brokers and agents trained in AI. Former SRAR board member.</p>
+
+<span class="section-label" style="margin-top:3rem;">// FAQ</span>
+<h2>Questions Agents <span class="accent">Ask</span>.</h2>
+<div class="faq">
+<div class="faq-item"><h4>I do not take many listings. Is this still useful?</h4><p>Yes. The same pattern runs a buyer tour packet, a rental listing, or a team's weekly market update. The listing launch is the teaching example because every agent understands it.</p></div><div class="faq-item"><h4>What if my brokerage supplies the marketing?</h4><p>Bring the brokerage's templates. The system feeds them. The fact sheet still saves the retyping and the critique still catches the fair housing miss before it ships.</p></div><div class="faq-item"><h4>Does this replace my marketing person?</h4><p>No. It gives your marketing person a verified sheet and ten clean first drafts instead of a text message with three facts and a typo.</p></div><div class="faq-item"><h4>Which platform runs the chain best?</h4><p>Any platform with a project or workspace feature runs it. The class shows one and names the equivalents on the others.</p></div>
+</div>
+
+<div class="cta-block">
+<h3>Bring The Whole Ladder To Your Association.</h3>
+<p>Five rungs. One 45-minute class each. Built for association education calendars and brokerage training days. Email for dates.</p>
+<a href="mailto:connor@connorwithhonor.com?subject=AI%20for%20REALTORS%20Series" class="btn-primary">connor@connorwithhonor.com</a>
+</div>
+
+<div class="pn">
+<a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/">Rung 2: From Chatbot to Workflow</a>
+<a href="/ai/realtor-classes/v4-supervised-automation-stack/">Rung 4: The Supervised Automation Stack</a>
+</div>
+</main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+</body>
+</html>

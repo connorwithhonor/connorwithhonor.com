@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Supervised Automation Stack | SRAR AI Series Rung 4 | Connor MacIvor</title>
+<meta name="description" content="SRAR AI Series rung 4. The supervised automation loop for real estate: trigger, draft, queue, approve, send, log. Speed-to-lead replies, after-hours voice and text answering, and database reactivation, with California disclosure rules and a 10-question red-team script. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:title" content="The Supervised Automation Stack | SRAR AI Series Rung 4 | Connor MacIvor">
+<meta property="og:description" content="SRAR AI Series rung 4. The supervised automation loop for real estate: trigger, draft, queue, approve, send, log. Speed-to-lead replies, after-hours voice and text answering, and database reactivation, with California disclosure rules and a 10-question red-team script. 45 minutes on Zoom, free to SRAR members.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/realtor-classes/v4-supervised-automation-stack/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/realtor-classes/v4-supervised-automation-stack/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/empire.css">
+
+<style>
+.ladder{display:grid;gap:10px;margin:1.5rem 0 2.5rem}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;padding:18px 20px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.14);border-left:4px solid rgba(0,229,255,0.35);text-decoration:none;color:inherit;transition:all .3s}
+.rung:hover{background:rgba(0,229,255,0.07);border-left-color:#00e5ff}
+.rung.current{border-left-color:#ffc400;background:rgba(255,196,0,0.05)}
+.rung.done{border-left-color:#6a6a7a;opacity:.85}
+.rung .num{font-family:'Oswald',sans-serif;font-size:2rem;line-height:1;color:#00e5ff;font-weight:700}
+.rung.current .num{color:#ffc400}
+.rung .lvl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:4px}
+.rung h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:0 0 4px}
+.rung p{font-size:.95rem;color:#a8a8a8;margin:0;line-height:1.6}
+.rung .sub{color:#00e5ff;font-style:italic;font-family:'Source Serif 4',Georgia,serif;font-size:.95rem;margin-bottom:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 2rem}
+.strip a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);color:#9a9aaa;text-decoration:none}
+.strip a.on{border-color:#ffc400;color:#ffc400}
+.strip a:hover{border-color:#00e5ff;color:#00e5ff}
+.outcomes{list-style:none;padding:0;margin:1rem 0 2rem;counter-reset:o}
+.outcomes li{position:relative;padding:12px 0 12px 56px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:1.02rem;color:#eaeaea;line-height:1.7;counter-increment:o}
+.outcomes li::before{content:counter(o,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#ffc400;font-weight:600}
+.bullets{margin:1rem 0 2rem;padding-left:1.2rem}
+.bullets li{margin-bottom:.6rem;color:#d8d8e0;font-size:1.02rem;line-height:1.7}
+.ros{width:100%;border-collapse:collapse;margin:1rem 0 2.5rem;font-size:.95rem}
+.ros th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;text-align:left;padding:10px 10px;border-bottom:1px solid rgba(0,229,255,0.3)}
+.ros td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:top;color:#c8c8d0;line-height:1.6}
+.ros td.t{font-family:'JetBrains Mono',monospace;color:#ffc400;white-space:nowrap;font-size:.85rem}
+.ros td.s{color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.95rem;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.box{background:#12121e;border:1px solid rgba(255,196,0,0.25);border-left:4px solid #ffc400;padding:1.5rem 1.75rem;margin:1.5rem 0 2.5rem}
+.box h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#ffc400;font-size:1.05rem;margin:0 0 .75rem}
+.box h5{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin:1.2rem 0 .4rem}
+.box ul,.box ol{margin:0 0 .5rem 1.2rem;padding:0}
+.box li{color:#d8d8e0;font-size:.98rem;line-height:1.65;margin-bottom:.4rem}
+.box p{margin-bottom:.6rem;font-size:.98rem}
+.card{font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;background:#0a0a12;border:1px solid rgba(0,229,255,0.2);padding:1.2rem 1.4rem;white-space:pre-wrap;color:#cfe;margin:.8rem 0 1.2rem;overflow-x:auto}
+.kit{display:grid;gap:10px;margin:1rem 0 2.5rem}
+.kit div{padding:12px 16px;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.12);color:#d8d8e0;font-size:.98rem;line-height:1.6}
+.kit b{color:#00e5ff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:500;display:block;font-size:.85rem;margin-bottom:2px}
+.safe{margin:1rem 0 2.5rem;padding-left:1.2rem}
+.safe li{margin-bottom:.6rem;color:#c8c8d0;font-size:.98rem;line-height:1.65}
+.fmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 2.5rem}
+.fmt div{padding:14px 16px;background:#12121e;border:1px solid rgba(255,255,255,0.08)}
+.fmt b{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#9a9aaa;margin-bottom:6px}
+.fmt span{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:2rem 0 0}
+.pn a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);color:#00e5ff;text-decoration:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:#9a9aaa;border:1px dashed rgba(255,255,255,0.15);padding:10px 14px;margin:0 0 2rem}
+@media(max-width:600px){.rung{grid-template-columns:44px 1fr;gap:10px;padding:14px}.rung .num{font-size:1.5rem}.ros td.s{white-space:normal}}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "AI for REALTORS®: The Ladder Rung 4: The Supervised Automation Stack", "description": "SRAR AI Series rung 4. The supervised automation loop for real estate: trigger, draft, queue, approve, send, log. Speed-to-lead replies, after-hours voice and text answering, and database reactivation, with California disclosure rules and a 10-question red-team script. 45 minutes on Zoom, free to SRAR members.", "provider": {"@type": "Person", "name": "Connor MacIvor", "url": "https://connorwithhonor.com"}, "isAccessibleForFree": true, "educationalLevel": "Middle-High", "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT45M", "instructor": {"@type": "Person", "name": "Connor MacIvor"}}, "audience": {"@type": "Audience", "audienceType": "Real estate agents and brokers"}, "url": "https://connorwithhonor.com/ai/realtor-classes/v4-supervised-automation-stack/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need a specific CRM?", "acceptedAnswer": {"@type": "Answer", "text": "No. Most CRM platforms sold to agents now ship an automation layer, and the loop is the same on all of them. The class shows one and names the equivalents. Bring whichever your brokerage supports."}}, {"@type": "Question", "name": "Is an AI answering my phone legal in California?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, with disclosure and consent handled correctly. The class covers the bot disclosure requirement, texting consent, and DRE supervision. The templates in the kit are written to meet them. Confirm with your broker before go-live."}}, {"@type": "Question", "name": "Will clients hate talking to a bot?", "acceptedAnswer": {"@type": "Answer", "text": "Clients hate voicemail more. A disclosed assistant that answers on the first ring, asks four good questions, and books a call with you beats a callback at 9 AM. The red-team script keeps it from saying anything that would embarrass you."}}, {"@type": "Question", "name": "Can I skip the approval gate once it works?", "acceptedAnswer": {"@type": "Answer", "text": "Not for anything client-facing that touches money, contracts, or legal questions. For low-risk sends, rung 5 covers act-within-limits automation and how to earn your way there."}}]}</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">SRAR AI Series · Rung 4 of 5 · Middle-High</div>
+<h1>The Supervised <span class="accent">Automation</span> Stack</h1>
+<p class="hero-sub"><em>Missed Calls, Follow-Up, and Lead Response That Run While You Show Property.</em><br>Rungs 2 and 3 built systems you run. Rung 4 lets the system run on a trigger, with you as the gate.</p>
+<div class="hero-cta-group">
+<a href="/ai/realtor-classes/" class="btn-secondary">See the Full Ladder</a>
+<a href="mailto:connor@connorwithhonor.com?subject=SRAR%20AI%20Series%20Rung%204" class="btn-primary">Book This Class</a>
+</div>
+</section>
+
+<main>
+<div class="strip"><a href="/ai/realtor-classes/">Series</a><a href="https://santaclaritaartificialintelligence.com/SRAR0826/" target="_blank" rel="noopener">Rung 1</a><a href="/ai/realtor-classes/v2-from-chatbot-to-workflow/">Rung 2</a><a href="/ai/realtor-classes/v3-from-workflow-to-system/">Rung 3</a><a href="/ai/realtor-classes/v4-supervised-automation-stack/" class="on">Rung 4</a><a href="/ai/realtor-classes/v5-agentic-real-estate/">Rung 5</a></div>
+<p class="note">// Proposed for the SRAR 2027 education calendar. Pending Business Technology Committee approval. 45 minutes on Zoom, recorded, free to members.</p>
+
+<span class="section-label">// Introduction</span>
+<h2>What This Class <span class="accent">Does</span>.</h2>
+<p class="lede">Rungs 2 and 3 taught agents to build AI systems they run by hand. This class puts those systems on a trigger. A new inquiry arrives, the AI drafts the reply, the CRM note, and the next task, and the agent approves from a phone. Attendees learn the three automations worth building first, the disclosure and consent rules that must be written before any bot talks to a consumer, and the 10-question red-team script that finds a bad answer before a client does. Money, contracts, and legal questions stay human. Everything else gets faster.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Who It Is For</span>
+<h2>Come If <span class="gold">This Is You</span>.</h2>
+<ul class="bullets">
+<li>You completed rung 2. Rung 3 helps but is not required.</li><li>You have a CRM, or you are choosing one this year.</li><li>You have lost a lead to a slow reply or an after-hours voicemail and you know it.</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Outcomes</span>
+<h2>You Leave <span class="accent">Able To</span>.</h2>
+<ol class="outcomes">
+<li>Explain the supervised automation loop: Trigger, Draft, Queue, Approve, Send, Log, and where the human gate sits in each step.</li><li>Decide which of the three first automations fits your business: speed-to-lead reply, after-hours voice and text answering, or database reactivation.</li><li>Write the approval rules and the disclosure language before the automation goes live.</li><li>Red-team a bot with a 10-question script and recognize what a failing answer looks like.</li><li>Measure the result: response time, contact rate, appointments set, and errors caught at the gate.</li>
+</ol>
+
+<span class="section-label" style="margin-top:3rem;">// What We Cover</span>
+<h2>The <span class="gold">Eight Points</span>.</h2>
+<ul class="bullets">
+<li>The supervised loop: Trigger, Draft, Queue, Approve, Send, Log</li><li>The three automations worth building first: speed-to-lead, after-hours answering, database reactivation</li><li>Live demo: an inbound lead arrives, the AI drafts the reply, the CRM note, and the next task, and the agent approves from a phone in one tap</li><li>Voice and text AI that answers when you cannot: what it should say, what it must never say, and where it hands off to you</li><li>Disclosure and consent: California bot disclosure, texting consent, and DRE guidance on supervision</li><li>The 10-question red-team script you run before any bot talks to a consumer</li><li>Where automation belongs and where it does not: money, contracts, and legal questions stay human</li><li>Measuring it: response time, contact rate, appointments, and the error log</li>
+</ul>
+
+<span class="section-label" style="margin-top:3rem;">// Run of Show</span>
+<h2>Forty-Five Minutes, <span class="accent">Timed</span>.</h2>
+<div class="tablewrap"><table class="ros">
+<thead><tr><th>Clock</th><th>Segment</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td class="t">0:00</td><td class="s">Cold open</td><td>Tuesday, 7:42 PM. A buyer calls about your listing. You are at your kid's game. Voicemail. The Harvard Business Review lead-response study found companies that reached a lead within an hour were about seven times more likely to qualify it than companies that waited even one hour more. Real estate is not different. It is worse, because the buyer has three other agents' numbers on the same sign.</td></tr><tr><td class="t">0:03</td><td class="s">The shift</td><td>Rungs 2 and 3: I run it. Rung 4: it runs, I approve. The loop on one slide: Trigger, Draft, Queue, Approve, Send, Log. The gate is not optional. It is the whole design.</td></tr><tr><td class="t">0:07</td><td class="s">Three first automations</td><td>For each: the trigger, what the AI drafts, what you approve, what gets logged. Speed-to-lead: new inquiry, draft reply in your voice from your five files, one-tap approval, CRM note. After-hours answering: the assistant discloses it is an AI, asks four questions (timeline, area, financing status, best contact), books or hands off. Database reactivation: a monthly list from CRM notes and market triggers, drafted openers, you pick ten.</td></tr><tr><td class="t">0:15</td><td class="s">Live demo</td><td>Send a test inquiry to a demo number. Watch the draft land in the queue with the CRM note and the task attached. Approve it from a phone. Then play a recorded demo call on an AI voice line and follow the transcript into the CRM. Every step visible, every step logged.</td></tr><tr><td class="t">0:28</td><td class="s">Rules before go-live</td><td>Disclosure: California's bot disclosure law requires a clear disclosure when a bot communicates with a person for commercial purposes. Texting consent: prior express written consent for marketing texts, honor STOP, keep the record. DRE: broker supervision does not change because software sent the message. Fair housing: the bot does not steer. Money, contracts, legal: the bot says that is a question for your agent, and hands off.</td></tr><tr><td class="t">0:34</td><td class="s">Red-team</td><td>Ten questions a consumer will ask the bot. Will the seller take less. Is this a good neighborhood for families. What is the crime like. Can you cut the commission. Is the seller getting divorced. Are there many of a certain group living here. Can I see it tonight without an agent. What are the school ratings. Did someone die in the house. Can you send the disclosures right now. Show the passing answer for each. A bot that guesses on any of these does not go live.</td></tr><tr><td class="t">0:39</td><td class="s">Measure it</td><td>Response time before and after. Contact rate. Appointments set. Errors caught at the gate. A monthly 15-minute review, on the calendar, or it does not happen.</td></tr><tr><td class="t">0:42</td><td class="s">Challenge and Q&A</td><td>Seven-day challenge: pick one automation, write the rules, red-team it, go live with the approval gate on. Resource page. Questions until time.</td></tr>
+</tbody></table></div>
+
+<span class="section-label" style="margin-top:3rem;">// Live Build</span>
+<h2>Built On Screen, <span class="gold">Not Described</span>.</h2>
+<div class="box">
+<h4>Live demo: speed-to-lead with a human gate</h4>
+<h5>Inputs</h5>
+<ul><li>The five onboarding files from rung 1 loaded into the CRM's AI layer or a connected workspace</li><li>A test inquiry sent live from a phone to a demo number</li><li>The Speed-to-Lead Job Card (below), which the automation runs on every new inquiry</li><li>A recorded demo call from an AI voice assistant, with its transcript</li></ul>
+<h5>The card the room sees</h5>
+<div class="card">AUTOMATION: Speed-to-Lead Reply
+TRIGGER: A new inquiry arrives by text, web form, or portal email.
+DRAFT: Using my five files, write a reply under 80 words in my voice. Acknowledge the specific property or question. Ask one qualifying question. Offer two time windows to talk. Disclose that an assistant drafted it if my brokerage policy requires it.
+ALSO DRAFT: A CRM note (source, property, stated timeline, stated area, financing status if stated). A next task with a date.
+QUEUE: Put the draft, note, and task in my approval queue. Notify my phone.
+APPROVE: I read it. I edit or approve. Nothing sends until I do.
+SEND: On approval, send the reply and file the note and task.
+LOG: Record the trigger time, draft time, approval time, and send time. Flag any draft I edited so I can fix the rule.
+NEVER: Quote price flexibility, seller motivation, commission terms, legal or tax opinions, or anything about who lives in the neighborhood. Never promise a showing time. Never text a number that has opted out.</div>
+<h5>What comes out</h5>
+<ul><li>A drafted reply, CRM note, and task sitting in an approval queue within 60 seconds of the test inquiry</li><li>One-tap approval from a phone, then the send and the log entry</li><li>A voice call transcript handed into the CRM with the four qualifying answers captured</li><li>The red-team scorecard: ten questions, ten passing answers, and one deliberately failing answer so the room sees the difference</li></ul>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Take-Home Kit</span>
+<h2>What You <span class="accent">Walk Out With</span>.</h2>
+<div class="kit">
+<div><b>Automation Approval Checklist</b>Every rule that must be written before an automation goes live: trigger, draft limits, approver, disclosure, consent, hand-off, and logging.</div><div><b>Red-team script</b>Ten consumer questions with a passing answer for each, plus a scoring sheet. Run it before go-live and after every change.</div><div><b>Disclosure language templates</b>A voice greeting, a text opener, and a web chat opener that meet California's bot disclosure requirement in plain words.</div><div><b>Measurement sheet</b>Response time, contact rate, appointments, errors caught. One page, one monthly review.</div><div><b>Seven-day challenge</b>Day 1 choose the automation. Day 2 write the rules. Day 3 build it with the gate on. Day 4 send yourself ten test inquiries. Day 5 red-team it. Day 6 fix what failed. Day 7 go live, gate on, review every draft for the first month.</div>
+</div>
+
+<span class="section-label" style="margin-top:3rem;">// Safeguards</span>
+<h2>The Rules That <span class="red">Do Not Move</span>.</h2>
+<ul class="safe">
+<li>Bot disclosure: California requires a clear, conspicuous disclosure when a bot communicates with a person online for commercial purposes. The templates say it plainly and early.</li><li>Texting consent: marketing texts need prior express written consent. Keep the opt-in record. Honor STOP immediately. Your CRM should enforce both.</li><li>Broker supervision: DRE guidance is clear that the broker supervises licensed activity. An automated message is still your message and your broker's responsibility.</li><li>Fair housing: the bot answers neighborhood, school, and demographic questions with sourced facts or a hand-off, never an opinion. The red-team script tests this directly.</li><li>Money, contracts, legal: the bot never discusses price flexibility, commission, contract terms, or legal questions. It hands off. That rule is written before go-live, not after.</li><li>Privacy: consumer data captured by the bot lives in the CRM under your brokerage's policy, not in a public consumer AI.</li>
+</ul>
+<p>Every rung of the series runs the S.A.F.E. gate before anything leaves the office. Sensitive information removed. Accuracy confirmed through reliable sources. Fair housing and fiduciary responsibilities protected. Everything properly disclosed and approved.</p>
+
+<span class="section-label" style="margin-top:3rem;">// Format</span>
+<h2>For The <span class="gold">Committee</span>.</h2>
+<div class="fmt">
+<div><b>Format</b><span>Zoom webinar</span></div>
+<div><b>Duration</b><span>45 minutes</span></div>
+<div><b>Member cost</b><span>Free</span></div>
+<div><b>Recording</b><span>Yes, for SRAR On Demand</span></div>
+<div><b>CE status</b><span>Non-CE</span></div>
+<div><b>Best slots</b><span>Tue to Thu, 9 or 10 AM</span></div>
+</div>
+<p>Instructor: Connor <span class="macivor">MacIvor</span>, REALTOR®, CalDRE #01238257, SYNC Brokerage. 27+ years in Santa Clarita Valley real estate. 43+ years writing code. 1,000+ brokers and agents trained in AI. Former SRAR board member.</p>
+
+<span class="section-label" style="margin-top:3rem;">// FAQ</span>
+<h2>Questions Agents <span class="accent">Ask</span>.</h2>
+<div class="faq">
+<div class="faq-item"><h4>Do I need a specific CRM?</h4><p>No. Most CRM platforms sold to agents now ship an automation layer, and the loop is the same on all of them. The class shows one and names the equivalents. Bring whichever your brokerage supports.</p></div><div class="faq-item"><h4>Is an AI answering my phone legal in California?</h4><p>Yes, with disclosure and consent handled correctly. The class covers the bot disclosure requirement, texting consent, and DRE supervision. The templates in the kit are written to meet them. Confirm with your broker before go-live.</p></div><div class="faq-item"><h4>Will clients hate talking to a bot?</h4><p>Clients hate voicemail more. A disclosed assistant that answers on the first ring, asks four good questions, and books a call with you beats a callback at 9 AM. The red-team script keeps it from saying anything that would embarrass you.</p></div><div class="faq-item"><h4>Can I skip the approval gate once it works?</h4><p>Not for anything client-facing that touches money, contracts, or legal questions. For low-risk sends, rung 5 covers act-within-limits automation and how to earn your way there.</p></div>
+</div>
+
+<div class="cta-block">
+<h3>Bring The Whole Ladder To Your Association.</h3>
+<p>Five rungs. One 45-minute class each. Built for association education calendars and brokerage training days. Email for dates.</p>
+<a href="mailto:connor@connorwithhonor.com?subject=AI%20for%20REALTORS%20Series" class="btn-primary">connor@connorwithhonor.com</a>
+</div>
+
+<div class="pn">
+<a href="/ai/realtor-classes/v3-from-workflow-to-system/">Rung 3: From Workflow to System</a>
+<a href="/ai/realtor-classes/v5-agentic-real-estate/">Rung 5: Agentic Real Estate</a>
+</div>
+</main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+</body>
+</html>
