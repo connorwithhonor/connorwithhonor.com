@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Architect for Business Owners | Connor MacIvor</title>
+  <meta name="description" content="Find the business workflow leaking time or revenue. Connor MacIvor maps the problem, designs the AI system, and scopes a practical first build for qualified business owners.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://connorwithhonor.com/ai-architect/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Architect for Business Owners | Connor MacIvor">
+  <meta property="og:description" content="Bring the workflow that keeps breaking. Leave with a practical AI system plan and a clear first build.">
+  <meta property="og:url" content="https://connorwithhonor.com/ai-architect/">
+  <meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Architecture Assessment for Business Owners",
+    "serviceType": "Business AI architecture and implementation planning",
+    "description": "Connor MacIvor maps a business workflow, identifies where time or revenue is being lost, and designs a practical AI implementation plan with human controls and measurable outcomes.",
+    "url": "https://connorwithhonor.com/ai-architect/",
+    "provider": {
+      "@type": "Person",
+      "name": "Connor MacIvor",
+      "url": "https://connorwithhonor.com/",
+      "jobTitle": "AI Growth Architect"
+    },
+    "areaServed": ["Santa Clarita", "Los Angeles County", "California", "United States"],
+    "audience": {
+      "@type": "BusinessAudience",
+      "audienceType": "Business owners and operational leaders"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does an AI architect do for a business?",
+        "acceptedAnswer": {"@type": "Answer", "text": "An AI architect maps how work moves through the business, identifies the costly failure point, selects the right automation and AI tools, defines human oversight, and turns the plan into a build sequence."}
+      },
+      {
+        "@type": "Question",
+        "name": "Do I have to replace my current software?",
+        "acceptedAnswer": {"@type": "Answer", "text": "No. The first question is whether the tools you already pay for can be connected and used better. Replacement is recommended only when the current stack blocks the result."}
+      },
+      {
+        "@type": "Question",
+        "name": "What happens after I submit the business brief?",
+        "acceptedAnswer": {"@type": "Answer", "text": "The system reviews decision authority, timing, readiness, and email permission. Qualified requests receive Connor's private scheduling link by email. Other requests are kept out of the appointment calendar."}
+      },
+      {
+        "@type": "Question",
+        "name": "How is an AI architecture project priced?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Each project is scoped after the business brief and architecture conversation. The written scope defines the problem, first build, responsibilities, safeguards, and agreed service fee before implementation begins."}
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root{
+      --ink:#102238;
+      --ink-soft:#42536a;
+      --navy:#102f50;
+      --navy-deep:#0a223b;
+      --gold:#b47712;
+      --gold-light:#f6e5be;
+      --cream:#f8f5ef;
+      --paper:#ffffff;
+      --line:#dce3e9;
+      --green:#1f6b4f;
+      --shadow:0 18px 55px rgba(16,34,56,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{color:inherit}
+    button,a{touch-action:manipulation}
+    .skip-link{position:absolute;left:12px;top:-80px;background:var(--navy);color:#fff;padding:12px 18px;z-index:1000;border-radius:8px}
+    .skip-link:focus{top:12px}
+    .wrap{width:min(1160px,calc(100% - 40px));margin-inline:auto}
+    .site-nav{position:relative;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+    .nav-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:850;letter-spacing:-.03em}
+    .brand img{width:38px;height:38px;object-fit:contain}
+    .brand span{color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:26px}
+    .nav-links a{text-decoration:none;font-size:.91rem;font-weight:700;color:var(--ink-soft)}
+    .nav-links a:hover,.nav-links a:focus-visible{color:var(--navy)}
+    .nav-links .nav-cta{padding:11px 18px;border-radius:999px;background:var(--navy);color:#fff}
+    .menu-button{display:none;width:48px;height:48px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:1.35rem}
+    .hero{background:linear-gradient(135deg,#fff 0%,#fff 57%,var(--cream) 57%,#f0e7d7 100%);overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);gap:70px;align-items:center;min-height:690px;padding:76px 0 64px}
+    .hero-grid>*{min-width:0}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.76rem;line-height:1.2;text-transform:uppercase;letter-spacing:.14em;font-weight:850;color:var(--navy);margin-bottom:20px}
+    .eyebrow::before{content:"";width:28px;height:3px;background:var(--gold)}
+    h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.08;margin:0;color:var(--navy-deep)}
+    h1{font-size:clamp(3rem,6.3vw,5.9rem);letter-spacing:-.055em;max-width:820px}
+    h1 strong{color:var(--gold);font-weight:inherit}
+    .hero-copy{font-size:clamp(1.07rem,1.6vw,1.28rem);max-width:690px;color:var(--ink-soft);margin:24px 0 0}
+    .hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:32px}
+    .button{display:inline-flex;min-height:52px;align-items:center;justify-content:center;padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:850;border:2px solid transparent;transition:transform .15s ease,background .15s ease}
+    .button:hover{transform:translateY(-2px)}
+    .button-primary{background:var(--gold);color:#171008;box-shadow:0 10px 24px rgba(180,119,18,.22)}
+    .button-primary:hover,.button-primary:focus-visible{background:#c4861d}
+    .button-secondary{border-color:var(--navy);color:var(--navy);background:#fff}
+    .hero-note{display:flex;gap:10px;align-items:flex-start;margin:20px 0 0;color:#526276;font-size:.9rem}
+    .hero-note svg{flex:0 0 18px;color:var(--green);margin-top:3px}
+    .portrait-card{position:relative;align-self:end;min-height:500px;display:flex;align-items:flex-end;justify-content:center}
+    .portrait-card::before{content:"";position:absolute;inset:50px 4% 0;background:var(--navy);border-radius:160px 160px 24px 24px;box-shadow:var(--shadow)}
+    .portrait-card::after{content:"AI ARCHITECTURE";position:absolute;right:-15px;top:130px;writing-mode:vertical-rl;font-size:.64rem;letter-spacing:.25em;font-weight:900;color:#fff9}
+    .portrait-card img{position:relative;z-index:1;width:min(410px,100%);filter:drop-shadow(0 18px 22px rgba(0,0,0,.22))}
+    .proof{background:var(--navy-deep);color:#fff}
+    .proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+    .proof-item{padding:25px 26px;border-right:1px solid rgba(255,255,255,.16)}
+    .proof-item:last-child{border-right:0}
+    .proof-number{font-family:Georgia,"Times New Roman",serif;font-size:1.75rem;color:#f3c76f;font-weight:800;display:block}
+    .proof-label{display:block;color:#d6e0ea;font-size:.82rem;margin-top:3px}
+    .section{padding:92px 0}
+    .section-tint{background:var(--cream)}
+    .section-head{max-width:760px;margin-bottom:42px}
+    h2{font-size:clamp(2.25rem,4.3vw,4rem);letter-spacing:-.04em}
+    .section-head p{font-size:1.08rem;color:var(--ink-soft);margin:18px 0 0}
+    .pain-grid,.system-grid,.deliver-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:0 8px 24px rgba(16,34,56,.05)}
+    .card-kicker{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;background:var(--gold-light);color:#704605;font-weight:900;margin-bottom:20px}
+    h3{font-size:1.48rem;letter-spacing:-.025em}
+    .card p{color:var(--ink-soft);margin:12px 0 0;font-size:.97rem}
+    .system-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:start}
+    .plain-language{position:sticky;top:28px}
+    .plain-language p{font-size:1.1rem;color:var(--ink-soft)}
+    .plain-language strong{color:var(--navy)}
+    .system-list{display:grid;gap:14px}
+    .system-row{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:22px;background:#fff;border:1px solid var(--line);border-radius:14px}
+    .system-row svg{width:28px;color:var(--gold);margin-top:2px}
+    .system-row h3{font-size:1.2rem}
+    .system-row p{margin:7px 0 0;color:var(--ink-soft);font-size:.94rem}
+    .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+    .process-card{position:relative;padding:32px 28px;border-top:4px solid var(--gold);background:#fff;border-radius:0 0 var(--radius) var(--radius);box-shadow:var(--shadow)}
+    .step{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--gold);display:block;margin-bottom:15px}
+    .process-card p{margin:13px 0 0;color:var(--ink-soft)}
+    .deliver-grid{grid-template-columns:repeat(4,1fr)}
+    .deliver{border-left:4px solid var(--gold);padding:22px 22px 22px 20px;background:#fff;border-radius:0 12px 12px 0}
+    .deliver strong{display:block;color:var(--navy);margin-bottom:6px}
+    .deliver span{font-size:.9rem;color:var(--ink-soft)}
+    .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .fit-card{padding:34px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+    .fit-card.good{border-top:5px solid var(--green)}
+    .fit-card.stop{border-top:5px solid #975047}
+    .fit-card ul{padding:0;margin:22px 0 0;list-style:none;display:grid;gap:13px}
+    .fit-card li{position:relative;padding-left:27px;color:var(--ink-soft)}
+    .fit-card.good li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+    .fit-card.stop li::before{content:"×";position:absolute;left:1px;color:#975047;font-weight:900;font-size:1.2rem;line-height:1.2}
+    .brief-section{background:var(--navy-deep);color:#fff;padding:92px 0}
+    .brief-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:48px;align-items:start}
+    .brief-copy{position:sticky;top:28px}
+    .brief-copy .eyebrow{color:#f3c76f}
+    .brief-copy h2{color:#fff}
+    .brief-copy p{color:#cbd7e2;font-size:1.04rem}
+    .brief-steps{margin:30px 0 0;display:grid;gap:17px}
+    .brief-step{display:grid;grid-template-columns:32px 1fr;gap:13px;color:#e8eef4;font-size:.93rem}
+    .brief-step span{width:28px;height:28px;display:grid;place-items:center;border:1px solid #f3c76f;border-radius:50%;color:#f3c76f;font-weight:900}
+    .form-shell{background:#fff;border-radius:20px;padding:15px;box-shadow:0 24px 70px rgba(0,0,0,.28);min-height:1220px}
+    .form-shell iframe{display:block;width:100%;min-height:1180px;border:0;border-radius:12px;background:#fff}
+    .privacy-note{color:#9fb0c1;font-size:.78rem;margin:14px 8px 0;text-align:center}
+    .faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    details{border:1px solid var(--line);border-radius:13px;background:#fff;padding:20px 22px}
+    summary{cursor:pointer;font-weight:850;color:var(--navy);list-style:none;padding-right:28px;position:relative}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";position:absolute;right:0;top:-4px;font-size:1.5rem;color:var(--gold)}
+    details[open] summary::after{content:"−"}
+    details p{color:var(--ink-soft);margin:14px 0 0}
+    .final-cta{background:var(--gold-light);padding:54px 0}
+    .final-inner{display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .final-inner h2{font-size:clamp(2rem,4vw,3.25rem);max-width:700px}
+    footer{background:#071a2c;color:#bdcad6;padding:50px 0 34px}
+    .footer-grid{display:flex;justify-content:space-between;gap:34px;align-items:flex-start}
+    .footer-brand{color:#fff}
+    .footer-copy{max-width:590px;font-size:.86rem;margin:13px 0 0}
+    .footer-links{display:flex;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+    .footer-links a{color:#dfe7ee;text-decoration:none;font-size:.86rem}
+    .footer-meta{border-top:1px solid #ffffff1f;margin-top:30px;padding-top:22px;font-size:.76rem;color:#8fa2b4}
+    :focus-visible{outline:3px solid #f0ae35;outline-offset:3px}
+    @media(max-width:900px){
+      .hero-grid,.system-layout,.brief-grid{grid-template-columns:minmax(0,1fr)}
+      .hero-grid{gap:26px;min-height:auto;padding-top:58px}
+      .portrait-card{min-height:390px;width:min(460px,100%);margin-inline:auto}
+      .portrait-card::before{inset:40px 7% 0}
+      .plain-language,.brief-copy{position:static}
+      .pain-grid,.process-grid{grid-template-columns:1fr 1fr}
+      .deliver-grid{grid-template-columns:1fr 1fr}
+      .proof-grid{grid-template-columns:1fr 1fr}
+      .proof-item:nth-child(2){border-right:0}
+      .proof-item:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.16)}
+      .faq-list{grid-template-columns:1fr}
+      .form-shell{min-height:1380px}
+      .form-shell iframe{min-height:1340px}
+    }
+    @media(max-width:700px){
+      .wrap{width:min(calc(100% - 28px),1160px)}
+      .nav-inner{min-height:68px}
+      .menu-button{display:block}
+      .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:18px 20px;box-shadow:0 14px 25px rgba(16,34,56,.12);flex-direction:column;align-items:stretch;gap:0}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:13px 4px}
+      .nav-links .nav-cta{text-align:center;margin-top:8px}
+      .hero{background:linear-gradient(160deg,#fff 0%,#fff 67%,var(--cream) 67%)}
+      .hero-grid{padding:48px 0 0}
+      h1{font-size:clamp(2.7rem,14vw,4.25rem)}
+      h1{overflow-wrap:break-word}
+      .hero-actions{flex-direction:column}
+      .button{width:100%;white-space:normal;text-align:center}
+      .portrait-card{min-height:340px}
+      .portrait-card img{width:310px}
+      .portrait-card::after{display:none}
+      .section,.brief-section{padding:68px 0}
+      .pain-grid,.process-grid,.deliver-grid,.fit-grid{grid-template-columns:1fr}
+      .proof-item{padding:21px 16px}
+      .proof-number{font-size:1.45rem}
+      .proof-label{font-size:.74rem}
+      .final-inner,.footer-grid{flex-direction:column;align-items:flex-start}
+      .footer-links{justify-content:flex-start}
+      .form-shell{padding:7px;min-height:1460px}
+      .form-shell iframe{min-height:1430px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{transition:none!important}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="wrap nav-inner">
+      <a href="/" class="brand"><img src="/favicon-shield.svg" width="38" height="38" alt="">Connor <span>with Honor</span></a>
+      <button class="menu-button" id="menuButton" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/ai/">AI</a>
+        <a href="/blog/">Daily Download</a>
+        <a href="/story/">Connor's Story</a>
+        <a href="#brief" class="nav-cta">Start the Brief</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">AI architecture for business owners</span>
+          <h1>Find the leak. Design the system. <strong>Put AI to work.</strong></h1>
+          <p class="hero-copy">Bring the part of your business that keeps breaking. Missed calls. Slow follow-up. Repetitive work. Disconnected software. Connor maps the workflow, finds where time or revenue falls out, and designs the first practical build.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#brief">Start the 3-minute business brief</a>
+            <a class="button button-secondary" href="#process">See how it works</a>
+          </div>
+          <p class="hero-note">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 4 4L19 6"/></svg>
+            <span>Qualified requests receive Connor's private calendar link by email after the business brief is reviewed.</span>
+          </p>
+        </div>
+        <div class="portrait-card" aria-label="Connor MacIvor, AI Growth Architect">
+          <img src="/img/connor-portrait.webp" srcset="/img/connor-portrait-400.webp 400w, /img/connor-portrait.webp 800w" sizes="(max-width:700px) 310px, 410px" width="800" height="600" alt="Connor MacIvor">
+        </div>
+      </div>
+    </header>
+
+    <section class="proof" aria-label="Connor's operating background">
+      <div class="wrap proof-grid">
+        <div class="proof-item"><span class="proof-number">1,000+</span><span class="proof-label">Brokers and agents trained in AI</span></div>
+        <div class="proof-item"><span class="proof-number">1983</span><span class="proof-label">Building with computers since</span></div>
+        <div class="proof-item"><span class="proof-number">23 years</span><span class="proof-label">Law-enforcement discipline</span></div>
+        <div class="proof-item"><span class="proof-number">27+ years</span><span class="proof-label">Inside a working real-estate business</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="problems">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Start with the business problem</span>
+          <h2>AI is useful when it fixes a leak you can name.</h2>
+          <p>The target is a measurable failure point that costs time, money, leads, or consistency.</p>
+        </div>
+        <div class="pain-grid">
+          <article class="card"><span class="card-kicker">01</span><h3>Leads arrive and wait</h3><p>Calls go unanswered. Forms sit overnight. Follow-up depends on someone remembering what to do next.</p></article>
+          <article class="card"><span class="card-kicker">02</span><h3>Work lives in one person's head</h3><p>The business slows down when the owner is unavailable because the process was never captured or routed.</p></article>
+          <article class="card"><span class="card-kicker">03</span><h3>Software does not talk</h3><p>The CRM, calendar, inbox, phone, forms, and reporting tools each work, but the handoffs between them fail.</p></article>
+          <article class="card"><span class="card-kicker">04</span><h3>Good prospects waste the calendar</h3><p>Unqualified calls take the same appointment slots as owners who are ready, funded, and able to decide.</p></article>
+          <article class="card"><span class="card-kicker">05</span><h3>Content disappears after posting</h3><p>One useful idea becomes one post instead of a searchable authority asset that keeps producing attention.</p></article>
+          <article class="card"><span class="card-kicker">06</span><h3>Automation has no brakes</h3><p>Tools send, publish, or change records without clear approval gates, measurement, or a human recovery path.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint">
+      <div class="wrap system-layout">
+        <div class="plain-language">
+          <span class="eyebrow">What an AI architect does</span>
+          <h2>One useful system. Clear ownership. A human can stop it.</h2>
+          <p><strong>Architecture is the map before the machinery.</strong> It shows what triggers the work, which data is trusted, what the AI may decide, where a person takes control, and how the result is measured.</p>
+          <p>The smallest system should fix the most expensive failure and fit the tools already in the business.</p>
+        </div>
+        <div class="system-list">
+          <article class="system-row">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
+            <div><h3>Map the current workflow</h3><p>People, tools, handoffs, delays, data sources, and the exact place the process fails today.</p></div>
+          </article>
+          <article class="system-row">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M5 5l14 14M19 5 5 19"/></svg>
+            <div><h3>Choose the smallest first build</h3><p>Lead response, voice qualification, follow-up, internal knowledge, content production, reporting, or another defined lane.</p></div>
+          </article>
+          <article class="system-row">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7zM9 12l2 2 4-5"/></svg>
+            <div><h3>Set permissions and safeguards</h3><p>Define what the system may do alone, what needs approval, how errors surface, and how a human takes over.</p></div>
+          </article>
+          <article class="system-row">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+            <div><h3>Measure the business outcome</h3><p>Track response time, qualified appointments, hours saved, errors prevented, revenue created, or another agreed result.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">The path to Connor's calendar</span>
+          <h2>Three steps. The system handles the gate.</h2>
+          <p>The brief protects the calendar and gives Connor enough context to make the first conversation useful.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-card"><span class="step">Step 1</span><h3>Submit the brief</h3><p>Describe the business, the broken workflow, decision authority, timeline, and readiness for paid implementation.</p></article>
+          <article class="process-card"><span class="step">Step 2</span><h3>Qualification runs</h3><p>The system routes the request, creates the opportunity, and keeps non-fit submissions out of the appointment calendar.</p></article>
+          <article class="process-card"><span class="step">Step 3</span><h3>Qualified owners schedule</h3><p>If the request fits, the private booking link arrives by email. Choose a time and bring the real workflow to the call.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">What the first engagement defines</span>
+          <h2>A buildable plan for the first system.</h2>
+        </div>
+        <div class="deliver-grid">
+          <div class="deliver"><strong>Current-state map</strong><span>Where the work starts, stalls, changes hands, and loses value.</span></div>
+          <div class="deliver"><strong>First-build decision</strong><span>The smallest practical system with the clearest business return.</span></div>
+          <div class="deliver"><strong>Human-control plan</strong><span>Approvals, permissions, escalation, recovery, and ownership.</span></div>
+          <div class="deliver"><strong>Measurement contract</strong><span>The numbers that decide whether the build stays, changes, or stops.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Fit matters</span>
+          <h2>The right owner, the right problem, the right time.</h2>
+        </div>
+        <div class="fit-grid">
+          <div class="fit-card good">
+            <h3>This fits when you</h3>
+            <ul>
+              <li>Own or lead the business, or can approve the project</li>
+              <li>Can name the workflow that is losing time or revenue</li>
+              <li>Want a working system with clear human control</li>
+              <li>Plan to start within 90 days</li>
+              <li>Are ready to discuss paid implementation</li>
+            </ul>
+          </div>
+          <div class="fit-card stop">
+            <h3>This does not fit when you</h3>
+            <ul>
+              <li>Want a general AI tutorial with no business problem attached</li>
+              <li>Want to remove every human decision from the operation</li>
+              <li>Cannot give the project owner access to the real workflow</li>
+              <li>Need the build to start before the scope is defined</li>
+              <li>Are collecting free proposals with no intent to act</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brief-section" id="brief">
+      <div class="wrap brief-grid">
+        <div class="brief-copy">
+          <span class="eyebrow">Start here</span>
+          <h2>Bring the problem you want fixed.</h2>
+          <p>This brief takes about 3 minutes. The useful answer is specific: what breaks, who owns it, and what happens when it fails.</p>
+          <div class="brief-steps" aria-label="What happens after submission">
+            <div class="brief-step"><span>1</span><div>Your request enters the AI Architecture pipeline.</div></div>
+            <div class="brief-step"><span>2</span><div>The system checks authority, timing, readiness, and permission.</div></div>
+            <div class="brief-step"><span>3</span><div>Qualified requests receive Connor's scheduling link by email.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="form-shell">
+            <iframe
+              id="inline-Fk2o0MdVSXDndh32lhS8"
+              src="https://api.honorelevate.com/widget/form/Fk2o0MdVSXDndh32lhS8"
+              title="AI Architecture Business Brief"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-form-name="AI Architecture Business Brief"
+              scrolling="no"
+              allow="clipboard-write"
+            ></iframe>
+          </div>
+          <p class="privacy-note">Your information is used to evaluate this request and respond under the permission you select in the brief.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="questions">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Questions before the brief</span>
+          <h2>Know what happens before you submit.</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>What does an AI architect do for a business?</summary><p>Maps how work moves, identifies the costly failure point, selects the right automation and AI tools, defines human oversight, and turns the plan into a build sequence.</p></details>
+          <details><summary>Do I have to replace my current software?</summary><p>No. The first question is whether the tools you already pay for can be connected and used better. Replacement is recommended only when the current stack blocks the result.</p></details>
+          <details><summary>Does this replace my employees?</summary><p>The goal is to remove delays, repetition, and dropped handoffs. People keep judgment, relationships, approvals, and the ability to stop the system.</p></details>
+          <details><summary>What happens after I submit?</summary><p>The system reviews authority, timing, readiness, and email permission. Qualified requests receive Connor's scheduling link. Other requests do not consume appointment slots.</p></details>
+          <details><summary>How is the work priced?</summary><p>Each project is scoped after the brief and architecture conversation. The written scope defines the problem, first build, responsibilities, safeguards, and agreed service fee before implementation begins.</p></details>
+          <details><summary>Where does Connor work?</summary><p>Connor is based in Santa Clarita and serves business owners across Los Angeles County, California, and the United States when the system can be designed and delivered remotely.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="wrap final-inner">
+        <h2>The next useful AI system starts with one broken workflow.</h2>
+        <a class="button button-primary" href="#brief">Start the business brief</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a href="/" class="brand footer-brand"><img src="/favicon-shield.svg" width="38" height="38" alt="">Connor <span>with Honor</span></a>
+          <p class="footer-copy">Connor MacIvor. AI Growth Architect, former LAPD motor officer, active California real-estate licensee, and operator of HonorElevate and HireAIVoice.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/ai/">AI</a>
+          <a href="/blog/">Daily Download</a>
+          <a href="/story/">Story</a>
+          <a href="/work-with-me/">Work With Me</a>
+          <a href="mailto:connor@connorwithhonor.com">Email</a>
+        </div>
+      </div>
+      <div class="footer-meta">Connor T. MacIvor, CalDRE #01238257. Sync Brokerage, Inc., DRE #02031490. Santa Clarita, California.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton=document.getElementById('menuButton');
+    const navLinks=document.getElementById('navLinks');
+    menuButton.addEventListener('click',()=>{
+      const open=navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded',String(open));
+      menuButton.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+    });
+    navLinks.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+      navLinks.classList.remove('open');
+      menuButton.setAttribute('aria-expanded','false');
+      menuButton.setAttribute('aria-label','Open navigation');
+    }));
+
+    const formFrame=document.getElementById('inline-Fk2o0MdVSXDndh32lhS8');
+    const pageParams=new URLSearchParams(window.location.search);
+    const formUrl=new URL(formFrame.src);
+    let hasTrackingParams=false;
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'].forEach(key=>{
+      if(pageParams.has(key)){
+        formUrl.searchParams.set(key,pageParams.get(key));
+        hasTrackingParams=true;
+      }
+    });
+    if(hasTrackingParams) formFrame.src=formUrl.toString();
+  </script>
+  <script src="https://api.honorelevate.com/js/form_embed.js" type="text/javascript"></script>
+</body>
+</html>
