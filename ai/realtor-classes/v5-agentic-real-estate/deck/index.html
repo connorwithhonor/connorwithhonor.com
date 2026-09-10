@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Real Estate | SRAR AI Series Rung 5 Deck | Connor MacIvor</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<style>
+:root{--bg:#0b0b0f;--bg2:#14141a;--ink:#f4f1ea;--dim:#a8a59c;--gold:#c9a84c;--gold2:#e8c062;--rule:#2a2a33;--serif:'Times New Roman',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:100%;overflow:hidden}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;font-weight:500}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.4rem);line-height:1.02;font-weight:400;margin-bottom:1.2rem}
+h1 em,h2 em{font-style:italic;color:var(--gold)}
+h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.8rem);line-height:1.08;font-weight:400;margin-bottom:1.6rem;max-width:22ch}
+p{font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.5;max-width:58ch;color:var(--ink)}
+p.dim{color:var(--dim)}
+p.huge{font-family:var(--serif);font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.18;max-width:28ch}
+p.sub{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.3rem,2.4vw,2rem);margin-bottom:1rem}
+ul.big{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem;max-width:60ch}
+ul.big li{font-size:clamp(1.1rem,2.1vw,1.75rem);line-height:1.35;padding-left:2.2rem;position:relative}
+ul.big li::before{content:'';position:absolute;left:0;top:.65em;width:1.2rem;height:2px;background:var(--gold)}
+ol.num{list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1rem;max-width:62ch}
+ol.num li{counter-increment:n;font-size:clamp(1.1rem,2.1vw,1.7rem);line-height:1.35;padding-left:3.4rem;position:relative}
+ol.num li::before{content:counter(n);position:absolute;left:0;top:-.15em;font-family:var(--serif);font-size:1.7em;color:var(--gold)}
+ol.num li b{color:var(--gold2);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;margin-top:.5rem}
+.grid2 h3{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:.6rem}
+.grid2 p{font-size:clamp(1rem,1.7vw,1.35rem)}
+.card{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(.8rem,1.35vw,1.1rem);line-height:1.55;background:var(--bg2);border-left:3px solid var(--gold);padding:1.2rem 1.5rem;white-space:pre-wrap;max-width:80ch;max-height:70vh;overflow:auto;color:#e8e4da}
+.ladder{list-style:none;display:flex;flex-direction:column;gap:.7rem;max-width:60ch}
+.ladder li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;font-size:clamp(1.05rem,1.9vw,1.55rem);color:var(--dim);padding:.5rem 0;border-bottom:1px solid var(--rule)}
+.ladder li .n{font-family:var(--serif);font-size:1.6em;color:var(--rule)}
+.ladder li.on{color:var(--ink)}
+.ladder li.on .n{color:var(--gold)}
+.ladder li.done{color:var(--dim)}
+.ladder li.done .n{color:var(--dim)}
+.ladder li small{display:block;font-size:.72em;color:var(--dim);font-style:italic;font-family:var(--serif)}
+.pull{border-left:3px solid var(--gold);padding-left:1.5rem;font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.3;max-width:44ch;margin-top:1.5rem}
+.sig{margin-top:2.5rem;font-family:var(--serif);font-style:italic;color:var(--dim);font-size:clamp(1rem,1.6vw,1.3rem)}
+.sig .mac{font-family:var(--serif)}
+.hud{position:fixed;top:1rem;right:1.25rem;font-size:.8rem;letter-spacing:.12em;color:var(--dim);z-index:60;display:flex;gap:1rem;align-items:center}
+.hud button{background:transparent;border:1px solid var(--rule);color:var(--dim);padding:.35rem .7rem;font-size:.75rem;letter-spacing:.1em;cursor:pointer}
+.hud button:hover{border-color:var(--gold);color:var(--gold)}
+.prog{position:fixed;left:0;bottom:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .3s}
+.zone{position:fixed;top:0;bottom:0;width:50%;z-index:50;background:transparent;border:0;cursor:pointer}
+.zone.l{left:0}.zone.r{right:0}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#000;color:#d8d4ca;border-top:2px solid var(--gold);padding:1rem 2rem 1.2rem;font-size:1rem;line-height:1.55;z-index:70;display:none;font-family:var(--sans)}
+.notes.show{display:block}
+.notes b{color:var(--gold)}
+.notes .tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.foot{position:fixed;left:1.25rem;bottom:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rule);z-index:60}
+.help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000;border:1px solid var(--gold);padding:1.5rem 2rem;z-index:80;display:none;font-size:.95rem;line-height:1.7;color:var(--ink)}
+.help.show{display:block}
+@media(max-width:700px){.grid2{grid-template-columns:1fr;gap:1.2rem}.slide{padding:10vh 6vw 8vh}}
+@media print{html,body{overflow:visible;height:auto;background:#fff;color:#000}.slide{position:relative;opacity:1;page-break-after:always;height:100vh;color:#000}.hud,.prog,.zone,.foot,.help{display:none}.notes{display:block;position:relative;max-height:none;color:#000;background:#fff;border-top:1px solid #000}h1,h2,p,li{color:#000}.card{color:#000;background:#f3f3f3}}
+</style>
+</head>
+<body>
+<div class="hud"><span id="cnt"></span><button id="bp">BACK</button><button id="bx">NEXT</button><button id="bn">NOTES (N)</button></div>
+<div class="prog" id="prog"></div>
+<button class="zone l" id="zl" aria-label="Previous"></button><button class="zone r" id="zr" aria-label="Next"></button>
+<div class="deck">
+<section class="slide" data-notes="Housekeeping in 20 seconds, then straight into the screen. This deck opens with a demo, not a story."><div class="eyebrow">AI for REALTORS® · Rung 5 of 5 · Southland Regional Association of REALTORS®</div><h1><em>Agentic</em> Real Estate</h1><p class="sub">From Assistant to Operator. And How to Stay in Command.</p><p class="dim">45 minutes. Recorded. The kit is posted the moment we finish.</p><div class="sig">Connor <span class="mac">MacIvor</span> · REALTOR®, CalDRE #01238257 · SYNC Brokerage · Former SRAR board member</div></section>
+<section class="slide" data-notes="Screen share immediately. Run the read-only step of the Transaction Desk on the fictional folder. Let the task list appear. Do not explain yet. When it lands, say: that took ninety seconds and it was not allowed to send, sign, move a file, or contact anyone. Now let us talk about why that last sentence is the whole class."><div class="eyebrow">Watch this</div><p class="huge">A fictional escrow folder.<br>Six emails. One contract summary.<br><em>Ninety seconds.</em></p><p class="dim" style="margin-top:1.5rem">The agent reads it and hands back a dated task list. Then the important part: what it was allowed to do, and what it was not.</p></section>
+<section class="slide" data-notes="Recap the ladder in one breath each. Then: rungs 1 through 4 were about AI that writes. Rung 5 is about AI that does. Different capability, different risk, so a different set of rules."><div class="eyebrow">Where we are</div><h2>Rung 5 of five. <em>Let it act, under a ladder.</em></h2><ul class="ladder"><li class="done"><span class="n">1</span><span>The AI Reality Check<small>Onboard the AI</small></span></li><li class="done"><span class="n">2</span><span>From Chatbot to Workflow<small>Give it a job</small></span></li><li class="done"><span class="n">3</span><span>From Workflow to System<small>Connect the jobs</small></span></li><li class="done"><span class="n">4</span><span>The Supervised Automation Stack<small>Put them on a trigger</small></span></li><li class="on"><span class="n">5</span><span>Agentic Real Estate<small>Let an agent act, under a ladder</small></span></li></ul></section>
+<section class="slide" data-notes="Vendor neutral. Do not name a platform as best. Say: the capability is everywhere now, so the question is not whether, it is under what rules."><div class="eyebrow">Chatbot versus agent</div><h2>The moment AI stops <em>writing</em> and starts <em>doing</em>.</h2><div class="grid2"><div><h3>A chatbot</h3><p>Returns text. You copy it somewhere. Nothing happens until you act.</p></div><div><h3>An agent</h3><p>Uses tools. Reads a folder. Browses for a source. Drafts across email and calendar. Runs a multi-step task. Can send, book, and move files.</p></div><div><h3>Where it exists today</h3><p>Every major AI platform ships an agent mode: file reading, browsing, connectors to mail, calendar, and drive, and computer-use modes.</p></div><div><h3>Why the risk changed</h3><p>A wrong paragraph is a bad draft. A wrong action is a sent email, a moved file, a booked appointment. So we ladder the permissions.</p></div></div></section>
+<section class="slide" data-notes="Real estate example on every rung. Then the never list on the next slide. Say: every task you give an agent gets placed on a rung before it runs. The kit has the card."><div class="eyebrow">The Permission Ladder</div><h2>Four rungs. <em>Nothing client-facing runs unsupervised.</em></h2><ol class="num"><li><b>Read-only.</b> Summarize the escrow folder. Find the deadline. Compare two documents.</li><li><b>Draft-only.</b> Write the seller update. Write the repair response for my review.</li><li><b>Act-with-approval.</b> Put the contingency deadline on the calendar. I click yes.</li><li><b>Act-within-limits.</b> Send the Monday showing report to the seller if nothing changed and the checklist passed. Earned after a clean month.</li></ol></section>
+<section class="slide" data-notes="These are not settings. They are the never list in every agent job card, and the broker should be able to read them in the log."><div class="eyebrow">Never</div><h2>No rung <em>reaches</em> these.</h2><ul class="big"><li>Sign anything</li><li>Send an offer, a counter, or a contract document</li><li>Give legal or tax advice, or interpret contract language beyond quoting it</li><li>Contact any party about money</li><li>Move, delete, or share a client file outside the approved workspace</li></ul></section>
+<section class="slide" data-notes="This is the brokerage version of the five files. The six vendor questions are in the kit with what a good answer sounds like. If a vendor cannot answer all six in writing, the escrow folder does not go in."><div class="eyebrow">The brokerage intelligence layer</div><h2>A private place the agent <em>reads from</em>.</h2><div class="grid2"><div><h3>What goes in</h3><p>Office policies. Forms guidance: how your brokerage fills what. Local knowledge with sources: HOAs, assessment districts, school boundaries. The approved sources list. The prohibited list.</p></div><div><h3>Where it lives</h3><p>A private workspace with model training on your data switched off and retention set per brokerage policy. Not a public consumer chat.</p></div><div><h3>Six questions for any vendor</h3><p>Encryption. Retention. Training on our data. Admin controls. Audit logs. Data location.</p></div><div><h3>Who maintains it</h3><p>One owner. A monthly review. New agents onboard to the same layer in an afternoon.</p></div></div></section>
+<section class="slide" data-notes="Read PERMISSIONS and NEVER out loud. Point at the rung label on each step. Point at STEP 5: the log is not optional. It is what makes broker supervision possible."><div class="eyebrow">The card the room sees</div><h2>Transaction Desk, <em>with the rung on every step</em>.</h2><div class="card">AGENT JOB: Transaction Desk
+PERMISSIONS: Read-only on the escrow folder. Draft-only for any message. Act-with-approval for calendar entries and reminders. No sending. No signing. No contact with any party.
+STEP 1 (read-only): Read the folder. Summarize the transaction in ten lines: parties by role only, acceptance date, price as stated, contingencies and their day counts, open items.
+STEP 2 (read-only): Build the task list keyed to the acceptance date. One row per deadline: task, due date, who owns it, source document.
+STEP 3 (draft-only): Draft the seller update in my voice using only the folder. Label anything not in the folder MISSING.
+STEP 4 (act-with-approval): Propose calendar entries for each contingency deadline with a reminder two business days prior. Ask me to approve each one. Add only what I approve.
+STEP 5 (log): List every file you read, every draft you produced, every action you proposed, and every approval you received.
+NEVER: Give legal or tax advice. Interpret contract language beyond quoting it. Contact any party. Move, delete, or share any file. Act on anything outside this folder.</div></section>
+<section class="slide" data-notes="Screen share. Run steps 3 through 5 now (step 1 and 2 ran at the cold open). Approve the inspection deadline entry. Reject the appraisal entry on purpose and show that nothing was added. Then show the log. Time box: 13 minutes."><div class="eyebrow">Live build</div><h2>Back to the folder. <em>Watch for four things.</em></h2><ul class="big"><li>Read-only: the ten-line summary and the task list keyed to Day 0.</li><li>Draft-only: the seller update, with MISSING where the folder is silent.</li><li>Act-with-approval: it proposes the inspection contingency on the calendar and waits. I approve one. I reject one.</li><li>The log: every file read, every draft, every proposal, every approval.</li></ul></section>
+<section class="slide" data-notes="If there are brokers or managers in the room, this is their slide. The log and the permission ladder give them visibility they do not have today over agents pasting client data into free chat tools."><div class="eyebrow">Team and brokerage deployment</div><h2>Roles, retention, <em>supervision</em>.</h2><div class="grid2"><div><h3>Roles</h3><p>Who may run which rung. Assistants and coordinators on read-only and draft-only. Agents on act-with-approval. Act-within-limits by written exception.</p></div><div><h3>Settings</h3><p>Training off. Retention per policy. Audit logs on. A dedicated account for the agent where possible.</p></div><div><h3>Broker supervision</h3><p>An agent running under a licensee's login is that licensee's activity. The broker reviews the log the way they review a file.</p></div><div><h3>Onboarding</h3><p>A new agent gets the five files template, the brokerage layer, and the permission card. One afternoon.</p></div></div></section>
+<section class="slide" data-notes="The kit has this as a one-page template. Say: put it on the calendar on the same day each month or it will not happen."><div class="eyebrow">The monthly audit</div><h2>Fifteen minutes. <em>Three numbers and a review.</em></h2><div class="grid2"><div><h3>Hours recovered</h3><p>Estimate per task, times runs. Times your hourly value. That is the number to watch.</p></div><div><h3>Errors caught</h3><p>Drafts rejected, proposals rejected, and why. Each one becomes a rule.</p></div><div><h3>Permissions reviewed</h3><p>Did any task earn a rung? Did any lose one?</p></div><div><h3>Access hygiene</h3><p>What is connected. What was switched off. Who has the login.</p></div></div></section>
+<section class="slide" data-notes="Three versions in the kit: solo agent, team, brokerage. The pace is the same. The scope grows."><div class="eyebrow">The 12-month plan</div><h2>One year. <em>Rung by rung.</em></h2><ol class="num"><li><b>Q1.</b> Rungs 1 and 2 for every agent. Five files and one Job Card each.</li><li><b>Q2.</b> The listing system. One fact sheet per listing, the chain, the critique.</li><li><b>Q3.</b> One automation live with the gate on. Red-teamed. Measured.</li><li><b>Q4.</b> An agent on read-only and draft-only. One act-with-approval task earned.</li></ol></section>
+<section class="slide" data-notes="Walk it fast. Each day is under 30 minutes. The point is that the skill gets used before it fades. The kit has this as a checklist. Ask them to text me the word DONE on day seven. I will actually answer."><div class="eyebrow">The seven-day challenge</div><h2>One week. <em>One thing a day.</em></h2><ol class="num"><li>Place five tasks you do every week on the Permission Ladder.</li><li>Ask your platform vendor the six questions. In writing.</li><li>Build the brokerage layer starter: policies, one forms guide, one local knowledge page with sources.</li><li>Run the Transaction Desk on the fictional escrow folder, read-only.</li><li>Run the draft-only step. Read every MISSING.</li><li>Run act-with-approval on a test calendar. Approve one. Reject one. Read the log.</li><li>Write your 12-month plan. Put the monthly audit on the calendar.</li></ol></section>
+<section class="slide" data-notes="Say this once, calmly. No pitch. The page has everything. The conversation is free and it is for people who want help after class, not for people who need selling. Then open the floor."><div class="eyebrow">Before you go</div><h2>Everything from today, <em>in one place</em>.</h2><div class="grid2"><div><h3>The resource page</h3><p>SantaClaritaArtificialIntelligence.com. The kit, the cards, the practice data, and the seven-day challenge. Posted today.</p></div><div><h3>The whole ladder</h3><p>connorwithhonor.com/ai/realtor-classes. All five rungs, timed, with what each one hands you.</p></div><div><h3>A free 15 to 30 minute conversation</h3><p>BookWithHonor.com. Bring the workflow. Leave with the first move.</p></div><div><h3>Text</h3><p>AI to 661-476-2217. One word, and I will send the page.</p></div></div></section>
+<section class="slide" data-notes="Take questions in the order they came in chat. If a question is about a specific tool, answer in principles and point at the kit. If a question is about a real client situation, answer the principle and say: that one is a conversation, book it. Thank Carrie and SRAR by name at the end."><div class="eyebrow">Questions</div><p class="huge">Questions until time.<br><em>Bring the workflow you actually run.</em></p></section>
+</div>
+<div class="notes" id="notes"></div>
+<div class="help" id="help">Space, Enter, Right: next<br>Left, Backspace: back<br>Home, End: first, last<br>N: speaker notes<br>?: this help<br>Print: File, Print (notes print under each slide)</div>
+<div class="foot">AI for REALTORS® · Rung 5 of 5 · Connor MacIvor · SantaClaritaArtificialIntelligence.com</div>
+<script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,notes=document.getElementById('notes'),cnt=document.getElementById('cnt'),prog=document.getElementById('prog'),help=document.getElementById('help');
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});cnt.textContent=(i+1)+' / '+slides.length;prog.style.width=((i+1)/slides.length*100)+'%';var nt=slides[i].getAttribute('data-notes')||'';notes.innerHTML='<div class="tag">Speaker notes · slide '+(i+1)+'</div>'+nt;try{location.hash='s'+(i+1)}catch(e){}}
+function next(){show(i+1)}function prev(){show(i-1)}
+document.addEventListener('keydown',function(e){var k=e.key;if(k===' '||k==='ArrowRight'||k==='PageDown'||k==='Enter'){e.preventDefault();next()}else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}else if(k==='Home'){show(0)}else if(k==='End'){show(slides.length-1)}else if(k==='n'||k==='N'){notes.classList.toggle('show')}else if(k==='?'||k==='h'||k==='H'){help.classList.toggle('show')}else if(k==='Escape'){help.classList.remove('show')}});
+document.getElementById('zl').addEventListener('click',prev);document.getElementById('zr').addEventListener('click',next);
+document.getElementById('bn').addEventListener('click',function(){notes.classList.toggle('show')});
+document.getElementById('bp').addEventListener('click',prev);document.getElementById('bx').addEventListener('click',next);
+var m=(location.hash||'').match(/s(\d+)/);show(m?parseInt(m[1],10)-1:0);
+})();
+</script>
+</body>
+</html>
