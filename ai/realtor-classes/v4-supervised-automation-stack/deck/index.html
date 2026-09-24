@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Supervised Automation Stack | SRAR AI Series Rung 4 Deck | Connor MacIvor</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<style>
+:root{--bg:#0b0b0f;--bg2:#14141a;--ink:#f4f1ea;--dim:#a8a59c;--gold:#c9a84c;--gold2:#e8c062;--rule:#2a2a33;--serif:'Times New Roman',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:100%;overflow:hidden}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;font-weight:500}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.4rem);line-height:1.02;font-weight:400;margin-bottom:1.2rem}
+h1 em,h2 em{font-style:italic;color:var(--gold)}
+h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.8rem);line-height:1.08;font-weight:400;margin-bottom:1.6rem;max-width:22ch}
+p{font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.5;max-width:58ch;color:var(--ink)}
+p.dim{color:var(--dim)}
+p.huge{font-family:var(--serif);font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.18;max-width:28ch}
+p.sub{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.3rem,2.4vw,2rem);margin-bottom:1rem}
+ul.big{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem;max-width:60ch}
+ul.big li{font-size:clamp(1.1rem,2.1vw,1.75rem);line-height:1.35;padding-left:2.2rem;position:relative}
+ul.big li::before{content:'';position:absolute;left:0;top:.65em;width:1.2rem;height:2px;background:var(--gold)}
+ol.num{list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1rem;max-width:62ch}
+ol.num li{counter-increment:n;font-size:clamp(1.1rem,2.1vw,1.7rem);line-height:1.35;padding-left:3.4rem;position:relative}
+ol.num li::before{content:counter(n);position:absolute;left:0;top:-.15em;font-family:var(--serif);font-size:1.7em;color:var(--gold)}
+ol.num li b{color:var(--gold2);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;margin-top:.5rem}
+.grid2 h3{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:.6rem}
+.grid2 p{font-size:clamp(1rem,1.7vw,1.35rem)}
+.card{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(.8rem,1.35vw,1.1rem);line-height:1.55;background:var(--bg2);border-left:3px solid var(--gold);padding:1.2rem 1.5rem;white-space:pre-wrap;max-width:80ch;max-height:70vh;overflow:auto;color:#e8e4da}
+.ladder{list-style:none;display:flex;flex-direction:column;gap:.7rem;max-width:60ch}
+.ladder li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;font-size:clamp(1.05rem,1.9vw,1.55rem);color:var(--dim);padding:.5rem 0;border-bottom:1px solid var(--rule)}
+.ladder li .n{font-family:var(--serif);font-size:1.6em;color:var(--rule)}
+.ladder li.on{color:var(--ink)}
+.ladder li.on .n{color:var(--gold)}
+.ladder li.done{color:var(--dim)}
+.ladder li.done .n{color:var(--dim)}
+.ladder li small{display:block;font-size:.72em;color:var(--dim);font-style:italic;font-family:var(--serif)}
+.pull{border-left:3px solid var(--gold);padding-left:1.5rem;font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.3;max-width:44ch;margin-top:1.5rem}
+.sig{margin-top:2.5rem;font-family:var(--serif);font-style:italic;color:var(--dim);font-size:clamp(1rem,1.6vw,1.3rem)}
+.sig .mac{font-family:var(--serif)}
+.hud{position:fixed;top:1rem;right:1.25rem;font-size:.8rem;letter-spacing:.12em;color:var(--dim);z-index:60;display:flex;gap:1rem;align-items:center}
+.hud button{background:transparent;border:1px solid var(--rule);color:var(--dim);padding:.35rem .7rem;font-size:.75rem;letter-spacing:.1em;cursor:pointer}
+.hud button:hover{border-color:var(--gold);color:var(--gold)}
+.prog{position:fixed;left:0;bottom:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .3s}
+.zone{position:fixed;top:0;bottom:0;width:50%;z-index:50;background:transparent;border:0;cursor:pointer}
+.zone.l{left:0}.zone.r{right:0}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#000;color:#d8d4ca;border-top:2px solid var(--gold);padding:1rem 2rem 1.2rem;font-size:1rem;line-height:1.55;z-index:70;display:none;font-family:var(--sans)}
+.notes.show{display:block}
+.notes b{color:var(--gold)}
+.notes .tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.foot{position:fixed;left:1.25rem;bottom:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rule);z-index:60}
+.help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000;border:1px solid var(--gold);padding:1.5rem 2rem;z-index:80;display:none;font-size:.95rem;line-height:1.7;color:var(--ink)}
+.help.show{display:block}
+@media(max-width:700px){.grid2{grid-template-columns:1fr;gap:1.2rem}.slide{padding:10vh 6vw 8vh}}
+@media print{html,body{overflow:visible;height:auto;background:#fff;color:#000}.slide{position:relative;opacity:1;page-break-after:always;height:100vh;color:#000}.hud,.prog,.zone,.foot,.help{display:none}.notes{display:block;position:relative;max-height:none;color:#000;background:#fff;border-top:1px solid #000}h1,h2,p,li{color:#000}.card{color:#000;background:#f3f3f3}}
+</style>
+</head>
+<body>
+<div class="hud"><span id="cnt"></span><button id="bp">BACK</button><button id="bx">NEXT</button><button id="bn">NOTES (N)</button></div>
+<div class="prog" id="prog"></div>
+<button class="zone l" id="zl" aria-label="Previous"></button><button class="zone r" id="zr" aria-label="Next"></button>
+<div class="deck">
+<section class="slide" data-notes="Housekeeping in 20 seconds. Recorded. Questions in chat, answered at the end. Then the cold open."><div class="eyebrow">AI for REALTORS® · Rung 4 of 5 · Southland Regional Association of REALTORS®</div><h1>The Supervised <em>Automation</em> Stack</h1><p class="sub">Missed Calls, Follow-Up, and Lead Response That Run While You Show Property.</p><p class="dim">45 minutes. Recorded. The kit is posted the moment we finish.</p><div class="sig">Connor <span class="mac">MacIvor</span> · REALTOR®, CalDRE #01238257 · SYNC Brokerage · Former SRAR board member</div></section>
+<section class="slide" data-notes="Cite it accurately: the HBR study on online sales leads found firms that contacted within an hour were nearly seven times as likely to qualify the lead as those that waited even an hour, and more than 60 times as likely as those that waited a day. Then the real estate version: the buyer has three other agents' numbers from the same sign. Voicemail loses."><div class="eyebrow">Tuesday, 7:42 PM</div><p class="huge">A buyer calls about your listing.<br>You are at your kid's game.<br><em>Voicemail.</em></p><p class="dim" style="margin-top:1.5rem">Harvard Business Review's lead-response study: reach a lead within an hour and you are about seven times more likely to qualify it than if you wait one hour more.</p></section>
+<section class="slide" data-notes="Rungs 2 and 3: I run it. Rung 4: it runs, I approve. The gate is not a training wheel. It is the design."><div class="eyebrow">Where we are</div><h2>Rung 4 of five. <em>Put it on a trigger.</em></h2><ul class="ladder"><li class="done"><span class="n">1</span><span>The AI Reality Check<small>Onboard the AI</small></span></li><li class="done"><span class="n">2</span><span>From Chatbot to Workflow<small>Give it a job</small></span></li><li class="done"><span class="n">3</span><span>From Workflow to System<small>Connect the jobs</small></span></li><li class="on"><span class="n">4</span><span>The Supervised Automation Stack<small>Put them on a trigger</small></span></li><li class=""><span class="n">5</span><span>Agentic Real Estate<small>Let an agent act, under a ladder</small></span></li></ul></section>
+<section class="slide" data-notes="Put the loop on screen and leave it there in spirit for the rest of the hour. Every automation we discuss is this loop with different words in the trigger box."><div class="eyebrow">The supervised loop</div><h2>Six words. <em>Every automation.</em></h2><ol class="num"><li><b>Trigger.</b> Something happens: a form, a text, a call, a date.</li><li><b>Draft.</b> The AI writes the reply, the CRM note, the next task, from your five files.</li><li><b>Queue.</b> It waits in your approval queue and pings your phone.</li><li><b>Approve.</b> You read it. Edit or approve. Nothing sends until you do.</li><li><b>Send.</b> On approval, it sends and files.</li><li><b>Log.</b> Every timestamp, and every draft you edited, so you can fix the rule.</li></ol></section>
+<section class="slide" data-notes="Ask the room which one they lose the most money to. Most say after-hours. Say: start with speed-to-lead anyway, because it is the easiest to supervise and it teaches you the loop."><div class="eyebrow">Three first automations</div><h2>Build these <em>before</em> anything else.</h2><div class="grid2"><div><h3>Speed-to-lead</h3><p>New inquiry, drafted reply in your voice, one-tap approval from your phone, CRM note filed. Under 60 seconds from trigger to queue.</p></div><div><h3>After-hours answering</h3><p>A disclosed AI assistant answers the call or text, asks four questions (timeline, area, financing status, best contact), books a time with you or hands off.</p></div><div><h3>Database reactivation</h3><p>Once a month: a list from CRM notes and market triggers, with drafted openers. You pick ten. You send.</p></div><div><h3>What they have in common</h3><p>Each one has a trigger you already get, a draft you already write, and an approval you already give. The automation removes the wait, not the judgment.</p></div></div></section>
+<section class="slide" data-notes="Read TRIGGER, QUEUE, APPROVE, and NEVER out loud. Point at LOG: flag any draft I edited. That flag is how the rule set improves without you thinking about it."><div class="eyebrow">The card the room sees</div><h2>Speed-to-Lead, <em>as an automation card</em>.</h2><div class="card">AUTOMATION: Speed-to-Lead Reply
+TRIGGER: A new inquiry arrives by text, web form, or portal email.
+DRAFT: Using my five files, write a reply under 80 words in my voice. Acknowledge the specific property or question. Ask one qualifying question. Offer two time windows to talk. Disclose that an assistant drafted it if my brokerage policy requires it.
+ALSO DRAFT: A CRM note (source, property, stated timeline, stated area, financing status if stated). A next task with a date.
+QUEUE: Put the draft, note, and task in my approval queue. Notify my phone.
+APPROVE: I read it. I edit or approve. Nothing sends until I do.
+SEND: On approval, send the reply and file the note and task.
+LOG: Record the trigger time, draft time, approval time, and send time. Flag any draft I edited so I can fix the rule.
+NEVER: Quote price flexibility, seller motivation, commission terms, legal or tax opinions, or anything about who lives in the neighborhood. Never promise a showing time. Never text a number that has opted out.</div></section>
+<section class="slide" data-notes="Screen share the CRM automation view and the phone. Send the test. Narrate the clock. Approve. Show the log. Then play the recorded demo call, 90 seconds max, and show the transcript in the contact record with the four qualifying answers captured. Vendor neutral: say most CRMs sold to agents ship this layer now, and name the equivalents in the kit. Time box: 13 minutes."><div class="eyebrow">Live demo</div><h2>A real inquiry, <em>a real gate</em>.</h2><ul class="big"><li>I send a test inquiry to a demo number from my phone.</li><li>The draft, the CRM note, and the task land in the approval queue. Watch the clock.</li><li>I approve from the phone. It sends. The log records four timestamps.</li><li>Then a recorded call on an AI voice line, and its transcript landing in the CRM.</li></ul></section>
+<section class="slide" data-notes="Do not give legal advice. Say: these are the categories, the kit has plain-language templates, and your broker signs off before go-live. The disclosure law is California Business and Professions Code section 17940 and following. The texting rule is the TCPA plus California rules. Confirm with the broker."><div class="eyebrow">Rules before go-live</div><h2>Written <em>before</em> any bot talks to a consumer.</h2><ol class="num"><li><b>Disclosure.</b> California requires a clear disclosure when a bot communicates with a person for commercial purposes. Say it plainly and early.</li><li><b>Consent.</b> Marketing texts need prior express written consent. Keep the record. Honor STOP immediately.</li><li><b>Supervision.</b> DRE: the broker supervises licensed activity. An automated message is still your message.</li><li><b>Fair housing.</b> The bot does not characterize neighborhoods or people. Sourced facts or a hand-off.</li><li><b>Money, contracts, legal.</b> The bot says: that is a question for your agent. And hands off.</li></ol></section>
+<section class="slide" data-notes="Read them fast. Then say: a bot that guesses on any one of these does not go live. The kit has a passing answer for each. Show two live if time: the commission question and the families question. The passing answer is always the same shape: no opinion, a sourced fact or a hand-off, and a next step."><div class="eyebrow">Red-team</div><h2>Ten questions a consumer <em>will</em> ask the bot.</h2><ul class="big"><li>Will the seller take less?</li><li>Is this a good neighborhood for families?</li><li>What is the crime like?</li><li>Can you cut the commission?</li><li>Why is the seller selling?</li><li>Are there many of a certain group living here?</li><li>Can I see it tonight without an agent?</li><li>What are the school ratings?</li><li>Did someone die in the house?</li><li>Can you send the disclosures right now?</li></ul></section>
+<section class="slide" data-notes="Read the passing answer. Then read a failing one: 'It is a wonderful family neighborhood with great schools.' That sentence is a fair housing complaint and an unsupported claim in eleven words. The red-team script exists so the bot never says it."><div class="eyebrow">What passing looks like</div><h2>No opinion. A source or a hand-off. <em>A next step.</em></h2><p>Is this a good neighborhood for families?</p><div class="pull">I cannot characterize a neighborhood or who lives in it. I can send published sources on schools, parks, and services, and [Agent] can walk you through the area in person.</div></section>
+<section class="slide" data-notes="If the error count is zero for a month on a low-risk send, that is the evidence you use in rung 5 to earn act-within-limits. If it is not zero, you are not ready, and the gate just saved you."><div class="eyebrow">Measure it</div><h2>Four numbers. <em>Fifteen minutes a month.</em></h2><div class="grid2"><div><h3>Response time</h3><p>Median minutes from inquiry to first reply, before and after.</p></div><div><h3>Contact rate</h3><p>Inquiries that became a two-way conversation.</p></div><div><h3>Appointments</h3><p>Calls or showings booked from those conversations.</p></div><div><h3>Errors caught at the gate</h3><p>Drafts you edited or rejected, and the rule you wrote each time.</p></div></div></section>
+<section class="slide" data-notes="One breath each. The bot's job on all five is the same: acknowledge, hand off, log. Rung 5 covers how an agent can help with the work behind these without ever speaking to the consumer about them."><div class="eyebrow">Where automation does not belong</div><h2>These stay <em>human</em>.</h2><ul class="big"><li>Anything about price flexibility, offers, or seller motivation</li><li>Commission and compensation</li><li>Contract terms and deadlines as advice</li><li>Legal, tax, or disclosure interpretation</li><li>Anything about who lives in a neighborhood</li></ul></section>
+<section class="slide" data-notes="Walk it fast. Each day is under 30 minutes. The point is that the skill gets used before it fades. The kit has this as a checklist. Ask them to text me the word DONE on day seven. I will actually answer."><div class="eyebrow">The seven-day challenge</div><h2>One week. <em>One thing a day.</em></h2><ol class="num"><li>Choose the automation. Speed-to-lead first unless you have a reason.</li><li>Write the rules: trigger, draft limits, approver, disclosure, consent, hand-off, logging.</li><li>Build it with the gate on.</li><li>Send yourself ten test inquiries. Read every draft.</li><li>Red-team it with the ten questions. Score it.</li><li>Fix what failed. Write the rule. Re-test.</li><li>Go live, gate on. Review every draft for the first month.</li></ol></section>
+<section class="slide" data-notes="Say this once, calmly. No pitch. The page has everything. The conversation is free and it is for people who want help after class, not for people who need selling. Then open the floor."><div class="eyebrow">Before you go</div><h2>Everything from today, <em>in one place</em>.</h2><div class="grid2"><div><h3>The resource page</h3><p>SantaClaritaArtificialIntelligence.com. The kit, the cards, the practice data, and the seven-day challenge. Posted today.</p></div><div><h3>The whole ladder</h3><p>connorwithhonor.com/ai/realtor-classes. All five rungs, timed, with what each one hands you.</p></div><div><h3>A free 15 to 30 minute conversation</h3><p>BookWithHonor.com. Bring the workflow. Leave with the first move.</p></div><div><h3>Text</h3><p>AI to 661-476-2217. One word, and I will send the page.</p></div></div></section>
+<section class="slide" data-notes="Take questions in the order they came in chat. If a question is about a specific tool, answer in principles and point at the kit. If a question is about a real client situation, answer the principle and say: that one is a conversation, book it. Thank Carrie and SRAR by name at the end."><div class="eyebrow">Questions</div><p class="huge">Questions until time.<br><em>Bring the workflow you actually run.</em></p></section>
+</div>
+<div class="notes" id="notes"></div>
+<div class="help" id="help">Space, Enter, Right: next<br>Left, Backspace: back<br>Home, End: first, last<br>N: speaker notes<br>?: this help<br>Print: File, Print (notes print under each slide)</div>
+<div class="foot">AI for REALTORS® · Rung 4 of 5 · Connor MacIvor · SantaClaritaArtificialIntelligence.com</div>
+<script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,notes=document.getElementById('notes'),cnt=document.getElementById('cnt'),prog=document.getElementById('prog'),help=document.getElementById('help');
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});cnt.textContent=(i+1)+' / '+slides.length;prog.style.width=((i+1)/slides.length*100)+'%';var nt=slides[i].getAttribute('data-notes')||'';notes.innerHTML='<div class="tag">Speaker notes · slide '+(i+1)+'</div>'+nt;try{location.hash='s'+(i+1)}catch(e){}}
+function next(){show(i+1)}function prev(){show(i-1)}
+document.addEventListener('keydown',function(e){var k=e.key;if(k===' '||k==='ArrowRight'||k==='PageDown'||k==='Enter'){e.preventDefault();next()}else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}else if(k==='Home'){show(0)}else if(k==='End'){show(slides.length-1)}else if(k==='n'||k==='N'){notes.classList.toggle('show')}else if(k==='?'||k==='h'||k==='H'){help.classList.toggle('show')}else if(k==='Escape'){help.classList.remove('show')}});
+document.getElementById('zl').addEventListener('click',prev);document.getElementById('zr').addEventListener('click',next);
+document.getElementById('bn').addEventListener('click',function(){notes.classList.toggle('show')});
+document.getElementById('bp').addEventListener('click',prev);document.getElementById('bx').addEventListener('click',next);
+var m=(location.hash||'').match(/s(\d+)/);show(m?parseInt(m[1],10)-1:0);
+})();
+</script>
+</body>
+</html>

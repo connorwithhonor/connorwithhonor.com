@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Workflow to System | SRAR AI Series Rung 3 Deck | Connor MacIvor</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<style>
+:root{--bg:#0b0b0f;--bg2:#14141a;--ink:#f4f1ea;--dim:#a8a59c;--gold:#c9a84c;--gold2:#e8c062;--rule:#2a2a33;--serif:'Times New Roman',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:100%;overflow:hidden}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;font-weight:500}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.4rem);line-height:1.02;font-weight:400;margin-bottom:1.2rem}
+h1 em,h2 em{font-style:italic;color:var(--gold)}
+h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.8rem);line-height:1.08;font-weight:400;margin-bottom:1.6rem;max-width:22ch}
+p{font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.5;max-width:58ch;color:var(--ink)}
+p.dim{color:var(--dim)}
+p.huge{font-family:var(--serif);font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.18;max-width:28ch}
+p.sub{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.3rem,2.4vw,2rem);margin-bottom:1rem}
+ul.big{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem;max-width:60ch}
+ul.big li{font-size:clamp(1.1rem,2.1vw,1.75rem);line-height:1.35;padding-left:2.2rem;position:relative}
+ul.big li::before{content:'';position:absolute;left:0;top:.65em;width:1.2rem;height:2px;background:var(--gold)}
+ol.num{list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1rem;max-width:62ch}
+ol.num li{counter-increment:n;font-size:clamp(1.1rem,2.1vw,1.7rem);line-height:1.35;padding-left:3.4rem;position:relative}
+ol.num li::before{content:counter(n);position:absolute;left:0;top:-.15em;font-family:var(--serif);font-size:1.7em;color:var(--gold)}
+ol.num li b{color:var(--gold2);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;margin-top:.5rem}
+.grid2 h3{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:.6rem}
+.grid2 p{font-size:clamp(1rem,1.7vw,1.35rem)}
+.card{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(.8rem,1.35vw,1.1rem);line-height:1.55;background:var(--bg2);border-left:3px solid var(--gold);padding:1.2rem 1.5rem;white-space:pre-wrap;max-width:80ch;max-height:70vh;overflow:auto;color:#e8e4da}
+.ladder{list-style:none;display:flex;flex-direction:column;gap:.7rem;max-width:60ch}
+.ladder li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;font-size:clamp(1.05rem,1.9vw,1.55rem);color:var(--dim);padding:.5rem 0;border-bottom:1px solid var(--rule)}
+.ladder li .n{font-family:var(--serif);font-size:1.6em;color:var(--rule)}
+.ladder li.on{color:var(--ink)}
+.ladder li.on .n{color:var(--gold)}
+.ladder li.done{color:var(--dim)}
+.ladder li.done .n{color:var(--dim)}
+.ladder li small{display:block;font-size:.72em;color:var(--dim);font-style:italic;font-family:var(--serif)}
+.pull{border-left:3px solid var(--gold);padding-left:1.5rem;font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.3;max-width:44ch;margin-top:1.5rem}
+.sig{margin-top:2.5rem;font-family:var(--serif);font-style:italic;color:var(--dim);font-size:clamp(1rem,1.6vw,1.3rem)}
+.sig .mac{font-family:var(--serif)}
+.hud{position:fixed;top:1rem;right:1.25rem;font-size:.8rem;letter-spacing:.12em;color:var(--dim);z-index:60;display:flex;gap:1rem;align-items:center}
+.hud button{background:transparent;border:1px solid var(--rule);color:var(--dim);padding:.35rem .7rem;font-size:.75rem;letter-spacing:.1em;cursor:pointer}
+.hud button:hover{border-color:var(--gold);color:var(--gold)}
+.prog{position:fixed;left:0;bottom:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .3s}
+.zone{position:fixed;top:0;bottom:0;width:50%;z-index:50;background:transparent;border:0;cursor:pointer}
+.zone.l{left:0}.zone.r{right:0}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#000;color:#d8d4ca;border-top:2px solid var(--gold);padding:1rem 2rem 1.2rem;font-size:1rem;line-height:1.55;z-index:70;display:none;font-family:var(--sans)}
+.notes.show{display:block}
+.notes b{color:var(--gold)}
+.notes .tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.foot{position:fixed;left:1.25rem;bottom:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rule);z-index:60}
+.help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000;border:1px solid var(--gold);padding:1.5rem 2rem;z-index:80;display:none;font-size:.95rem;line-height:1.7;color:var(--ink)}
+.help.show{display:block}
+@media(max-width:700px){.grid2{grid-template-columns:1fr;gap:1.2rem}.slide{padding:10vh 6vw 8vh}}
+@media print{html,body{overflow:visible;height:auto;background:#fff;color:#000}.slide{position:relative;opacity:1;page-break-after:always;height:100vh;color:#000}.hud,.prog,.zone,.foot,.help{display:none}.notes{display:block;position:relative;max-height:none;color:#000;background:#fff;border-top:1px solid #000}h1,h2,p,li{color:#000}.card{color:#000;background:#f3f3f3}}
+</style>
+</head>
+<body>
+<div class="hud"><span id="cnt"></span><button id="bp">BACK</button><button id="bx">NEXT</button><button id="bn">NOTES (N)</button></div>
+<div class="prog" id="prog"></div>
+<button class="zone l" id="zl" aria-label="Previous"></button><button class="zone r" id="zr" aria-label="Next"></button>
+<div class="deck">
+<section class="slide" data-notes="Housekeeping in 20 seconds. Recorded. Questions in chat, answered at the end. Everything in the kit. Then the cold open."><div class="eyebrow">AI for REALTORS® · Rung 3 of 5 · Southland Regional Association of REALTORS®</div><h1>From Workflow to <em>System</em></h1><p class="sub">One Listing. Ten Outputs. Zero Retyping.</p><p class="dim">45 minutes. Recorded. The kit is posted the moment we finish.</p><div class="sig">Connor <span class="mac">MacIvor</span> · REALTOR®, CalDRE #01238257 · SYNC Brokerage · Former SRAR board member</div></section>
+<section class="slide" data-notes="Everyone in the room has done this. The MLS, the flyer, the social post, the email, the sign rider. Five places, typed by hand, one wrong. Prompt-at-a-time AI makes this worse, not better, because now you are pasting facts into five different chats. The failure mode has a name: drift. Today we kill drift with one sheet."><div class="eyebrow">Second listing of the month</div><p class="huge">You typed the square footage <em>five times</em>.<br>Four were right.</p><p class="dim" style="margin-top:1.5rem">The wrong one went on the flyer.</p></section>
+<section class="slide" data-notes="Rung 2 gave the AI one job with a Job Card. Today: many cards, one source of truth. If someone skipped rung 2, the Job Card is in that kit and takes ten minutes to learn."><div class="eyebrow">Where we are</div><h2>Rung 3 of five. <em>Connect the jobs.</em></h2><ul class="ladder"><li class="done"><span class="n">1</span><span>The AI Reality Check<small>Onboard the AI</small></span></li><li class="done"><span class="n">2</span><span>From Chatbot to Workflow<small>Give it a job</small></span></li><li class="on"><span class="n">3</span><span>From Workflow to System<small>Connect the jobs</small></span></li><li class=""><span class="n">4</span><span>The Supervised Automation Stack<small>Put them on a trigger</small></span></li><li class=""><span class="n">5</span><span>Agentic Real Estate<small>Let an agent act, under a ladder</small></span></li></ul></section>
+<section class="slide" data-notes="One sentence. The system is not ten prompts. It is one verified sheet that ten cards are forbidden to contradict."><div class="eyebrow">The shift</div><p class="huge">Many cards. <em>One source.</em><br>The source is the whole idea.</p></section>
+<section class="slide" data-notes="Show the fictional Valencia sheet from the kit. Point at the source column. Point at MISSING next to solar. Say: the sheet is the only thing the AI is allowed to know about this house. If it is not on the sheet, it does not exist."><div class="eyebrow">The Property Fact Sheet</div><h2>One page. <em>A source next to every fact.</em></h2><ol class="num"><li><b>Verified facts</b> with the source named: tax record, MLS, seller disclosure, measurement.</li><li><b>Photos</b> with alteration status: virtual staging, sky replacement, object removal.</li><li><b>Disclosure status</b>: what is received, what is ordered, what is missing.</li><li><b>Seller-approved talking points</b>, in writing.</li><li><b>UNKNOWN list</b>. The AI writes MISSING, never a guess.</li></ol></section>
+<section class="slide" data-notes="Draw it as a line, left to right. The critique step is separate on purpose: the model that wrote the copy is not the model you trust to grade it. Same card, different job."><div class="eyebrow">The chain</div><h2>Sheet in. Ten outputs out. <em>Critique. Gate. Publish.</em></h2><div class="grid2"><div><h3>1. Fact sheet</h3><p>Verified, sourced, seller-approved.</p></div><div><h3>2. Ten Job Cards</h3><p>Each inherits your five files and the rung 2 stop rules. Each cites the sheet.</p></div><div><h3>3. Critique Job</h3><p>A separate card that reads the ten outputs against a rule list and reports. It does not rewrite.</p></div><div><h3>4. S.A.F.E. gate, then publish</h3><p>You review. Then it goes out. Change a fact on the sheet and every output re-runs.</p></div></div></section>
+<section class="slide" data-notes="Ten is not a magic number. It is what a real launch needs. Anyone can add an eleventh card. The rule is the same: it cites the sheet."><div class="eyebrow">The ten outputs</div><h2>Everything a listing launch needs, <em>from one sheet</em>.</h2><ul class="big"><li>MLS remarks and public remarks</li><li>Three social captions: short, medium, long</li><li>Sphere email and a just-listed text</li><li>Open house plan with a visitor question list</li><li>Buyer-agent FAQ: showings, offers, HOA, disclosures</li><li>Neighborhood one-pager, sheet facts and sourced links only</li><li>Seller weekly update template</li><li>Photo caption set with alteration labels</li></ul></section>
+<section class="slide" data-notes="Read SOURCE OF TRUTH and STOP RULES out loud. Skim the ten. Point at output 10: alteration labels are not optional. Point at THEN RUN: the critique is part of the job, not a favor you do when you have time."><div class="eyebrow">The card the room sees</div><h2>Listing Launch, <em>the chain card</em>.</h2><div class="card">JOB: Listing Launch (chain)
+SOURCE OF TRUTH: The Property Fact Sheet pasted below. No output may state a fact that is not on the sheet. If a fact is missing, write MISSING.
+OUTPUTS, IN ORDER: 1. MLS remarks (per my MLS's remark rules, no contact info, no offers of compensation). 2. Public remarks. 3. Three social captions (short, medium, long). 4. Sphere email. 5. Just-listed text under 60 words. 6. Open house plan with a visitor question list. 7. Buyer-agent FAQ (showing instructions, offer logistics, HOA and disclosure availability). 8. Neighborhood one-pager using only sheet facts and sourced links. 9. Seller weekly update template. 10. Photo caption set with alteration labels where the sheet says altered or virtually staged.
+THEN RUN: Critique Job on all ten. Return a table: output number, issue, rule broken, suggested fix.
+STOP RULES: No superlatives without a sheet fact behind them. No school quality claims. No neighborhood demographic language. No price or motivation commentary. Brokerage name and license identification appear where my advertising rules require it. Nothing publishes without my review.</div></section>
+<section class="slide" data-notes="Screen share. Workspace already has the five files and the chain card. Paste the fictional sheet. Run. While it generates, tell them the square footage is 2,140 on the sheet and ask them to find it in the MLS remarks, the sphere email, and the one-pager as they scroll. Then the critique table. Time box: 14 minutes."><div class="eyebrow">Live build</div><h2>Switching to the workspace. <em>Watch for three things.</em></h2><ul class="big"><li>The same fact, the same number, in all ten outputs. Read the square footage in three of them.</li><li>MISSING where the sheet is silent. Solar. The assessment amount.</li><li>The critique table at the end, and what it catches.</li></ul></section>
+<section class="slide" data-notes="Show the critique row that catches it. Rule broken: school quality claim, unsupported superlative. Suggested fix: FIX THE SHEET. Then fix the sheet: replace with the sourced distance to the named school and nothing about quality. Re-run. The line is gone from all ten outputs at once. That is the system."><div class="eyebrow">The critique job</div><h2>The AI grades <em>its own work</em>, against a rule list.</h2><p>Planted in the fictional talking points: walking distance to the best schools.</p><div class="pull">Steering and unsupported in one sentence. The fix goes on the sheet, not in the output.</div></section>
+<section class="slide" data-notes="Do this live if time allows. It is 90 seconds and it is the moment people get it. If short on time, show the before and after side by side from a prepared run."><div class="eyebrow">Version control for humans</div><p class="huge">Change <em>one fact</em>.<br>Every output updates.</p><p class="dim" style="margin-top:1.5rem">The appraiser measures 2,096. One edit on the sheet. Re-run. Ten outputs, all correct.</p></section>
+<section class="slide" data-notes="Hit altered images hardest. Virtual staging is everywhere now and the disclosure habit is not. The sheet makes it impossible to forget because the caption card reads the alteration column."><div class="eyebrow">Rules that do not move</div><h2>The safeguards, <em>every listing</em>.</h2><ul class="big"><li>MLS remark rules: contact info, compensation, prohibited content. The card carries the rule. The critique checks it.</li><li>Fair housing advertising: no steering, no protected-class language, no school quality dressed as an amenity.</li><li>Altered images labeled on the sheet and disclosed in captions. DRE AI Advisory covers altered images. Your MLS may have its own rule.</li><li>Copyright: the photographer's license is recorded on the sheet.</li><li>Brokerage identification where California advertising rules require it.</li><li>Confidentiality: the seller's private disclosures stay in the transaction file. The sheet carries what the seller approved for marketing.</li></ul></section>
+<section class="slide" data-notes="Do not name a favorite platform. Say: whichever your brokerage allows has a projects or custom assistant feature. The kit has a setup checklist for each."><div class="eyebrow">Where the system lives</div><h2>A workspace that survives to the <em>next listing</em>.</h2><div class="grid2"><div><h3>What goes in</h3><p>Five files. Ten cards. The critique card. A blank fact sheet template.</p></div><div><h3>How it is named</h3><p>One project per listing, cloned from a template project. Address in the name.</p></div><div><h3>Who else can run it</h3><p>Your assistant, your transaction coordinator, the next agent on the team. Same cards, same sheet, same result.</p></div><div><h3>Vendor neutral</h3><p>Projects, custom assistants, and shared instructions exist on every major platform. The kit names the equivalents.</p></div></div></section>
+<section class="slide" data-notes="Walk it fast. Each day is under 30 minutes. The point is that the skill gets used before it fades. The kit has this as a checklist. Ask them to text me the word DONE on day seven. I will actually answer."><div class="eyebrow">The seven-day challenge</div><h2>One week. <em>One thing a day.</em></h2><ol class="num"><li>Build the fact sheet for a past listing, with sources.</li><li>Write three cards: MLS remarks, sphere email, just-listed text.</li><li>Run them. Check the same fact in all three.</li><li>Add the remaining seven cards.</li><li>Run the Critique Job. Fix the sheet, not the outputs.</li><li>Change one fact. Re-run. Confirm every output updated.</li><li>Store the system as a template. Document it for one other person.</li></ol></section>
+<section class="slide" data-notes="Say this once, calmly. No pitch. The page has everything. The conversation is free and it is for people who want help after class, not for people who need selling. Then open the floor."><div class="eyebrow">Before you go</div><h2>Everything from today, <em>in one place</em>.</h2><div class="grid2"><div><h3>The resource page</h3><p>SantaClaritaArtificialIntelligence.com. The kit, the cards, the practice data, and the seven-day challenge. Posted today.</p></div><div><h3>The whole ladder</h3><p>connorwithhonor.com/ai/realtor-classes. All five rungs, timed, with what each one hands you.</p></div><div><h3>A free 15 to 30 minute conversation</h3><p>BookWithHonor.com. Bring the workflow. Leave with the first move.</p></div><div><h3>Text</h3><p>AI to 661-476-2217. One word, and I will send the page.</p></div></div></section>
+<section class="slide" data-notes="Take questions in the order they came in chat. If a question is about a specific tool, answer in principles and point at the kit. If a question is about a real client situation, answer the principle and say: that one is a conversation, book it. Thank Carrie and SRAR by name at the end."><div class="eyebrow">Questions</div><p class="huge">Questions until time.<br><em>Bring the workflow you actually run.</em></p></section>
+</div>
+<div class="notes" id="notes"></div>
+<div class="help" id="help">Space, Enter, Right: next<br>Left, Backspace: back<br>Home, End: first, last<br>N: speaker notes<br>?: this help<br>Print: File, Print (notes print under each slide)</div>
+<div class="foot">AI for REALTORS® · Rung 3 of 5 · Connor MacIvor · SantaClaritaArtificialIntelligence.com</div>
+<script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,notes=document.getElementById('notes'),cnt=document.getElementById('cnt'),prog=document.getElementById('prog'),help=document.getElementById('help');
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});cnt.textContent=(i+1)+' / '+slides.length;prog.style.width=((i+1)/slides.length*100)+'%';var nt=slides[i].getAttribute('data-notes')||'';notes.innerHTML='<div class="tag">Speaker notes · slide '+(i+1)+'</div>'+nt;try{location.hash='s'+(i+1)}catch(e){}}
+function next(){show(i+1)}function prev(){show(i-1)}
+document.addEventListener('keydown',function(e){var k=e.key;if(k===' '||k==='ArrowRight'||k==='PageDown'||k==='Enter'){e.preventDefault();next()}else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}else if(k==='Home'){show(0)}else if(k==='End'){show(slides.length-1)}else if(k==='n'||k==='N'){notes.classList.toggle('show')}else if(k==='?'||k==='h'||k==='H'){help.classList.toggle('show')}else if(k==='Escape'){help.classList.remove('show')}});
+document.getElementById('zl').addEventListener('click',prev);document.getElementById('zr').addEventListener('click',next);
+document.getElementById('bn').addEventListener('click',function(){notes.classList.toggle('show')});
+document.getElementById('bp').addEventListener('click',prev);document.getElementById('bx').addEventListener('click',next);
+var m=(location.hash||'').match(/s(\d+)/);show(m?parseInt(m[1],10)-1:0);
+})();
+</script>
+</body>
+</html>
