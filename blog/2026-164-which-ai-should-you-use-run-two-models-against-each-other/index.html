@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which AI Should You Use? Why I Run Two Models Against Each Other Before I Trust Either | CWH-2026-164 | Connor with Honor</title>
+<meta name="description" content="Episode CWH-2026-164: The question I get more than any other, which large language model is your favorite. Ten model releases in eight or nine days, the big five frontier models, why I still ask ChatGPT and Claude the same question and compare the answers, the five hour SSH failure that cost me a whole afternoon, and the time Claude confessed it sent a client email without permission.">
+<meta name="keywords" content="Connor with Honor, CWH-2026-164, which AI model is best, ChatGPT vs Claude, frontier AI models, open weight models, Astra model, Nemotron, DeepSeek, AI mesh system, Connor MacIvor, Daily Download, HonorElevate, Santa Clarita AI, MachineFound, connormacivor.com">
+<meta property="og:title" content="Which AI Should You Use? Why I Run Two Models Against Each Other | Connor with Honor">
+<meta property="og:description" content="Ten model releases in eight or nine days. I still run the same question through two models before I trust either answer. Here is why, and the two times it bit me this month. Episode CWH-2026-164.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/og.jpg">
+<meta property="og:url" content="https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/">
+<link rel="canonical" href="https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.8;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+*{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+article{max-width:800px;margin:0 auto;padding:120px 2rem 60px}
+.ep-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,0.3);padding:6px 18px;display:inline-block;margin-bottom:1.5rem}
+article h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:1rem;font-weight:700}
+article h1 span{color:var(--cyan)}
+.ep-date{font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;color:var(--gray);margin-bottom:2rem;display:block}
+.tldr{background:var(--bg-card);border-left:3px solid var(--cyan);padding:1.5rem 2rem;margin-bottom:3rem;font-size:.95rem;color:var(--gray-light);line-height:1.7}
+.tldr strong{color:var(--cyan);font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;font-size:.8rem;display:block;margin-bottom:.5rem}
+.pillar-header{font-family:var(--font-display);font-size:1.8rem;text-transform:uppercase;letter-spacing:2px;margin:3rem 0 1.5rem;padding-bottom:.5rem;border-bottom:2px solid}
+.ph-machine{color:var(--cyan);border-color:var(--cyan-dim)}
+.ph-body{color:var(--red);border-color:var(--red-dim)}
+.ph-house{color:var(--gold);border-color:var(--gold-dim)}
+.ph-anchor{color:var(--white);border-color:rgba(255,255,255,0.3)}
+article p{font-size:1.05rem;color:var(--gray-light);margin-bottom:1.5rem;line-height:1.9}
+article p strong{color:var(--white)}
+article h3.step{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin:2.5rem 0 1rem;color:var(--cyan)}
+article h3.step span{color:var(--white)}
+.video-embed{margin:2.5rem 0;background:var(--bg-card);border:1px solid rgba(0,229,255,0.15)}
+.video-embed iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+.video-pending{margin:2.5rem 0;background:var(--bg-card);border:1px dashed rgba(0,229,255,0.35);padding:2.5rem 2rem;text-align:center;font-family:var(--font-mono);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan)}
+.pullquote{border-left:3px solid var(--gold);padding:1.25rem 2rem;margin:2.5rem 0;font-size:1.25rem;line-height:1.6;color:var(--white);font-style:italic}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0}
+.stat-card{background:var(--bg-card);border:1px solid rgba(0,229,255,0.15);padding:1.25rem}
+.stat-card .num{font-family:var(--font-display);font-size:2rem;color:var(--cyan);font-weight:700;display:block}
+.stat-card .label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--gray-light)}
+.protocol-box{background:var(--bg-card);border:1px solid rgba(255,196,0,0.35);padding:1.75rem 2rem;margin:2rem 0}
+.protocol-box strong{color:var(--gold);font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:.75rem;font-size:.85rem}
+.protocol-box ol{margin-left:1.25rem;color:var(--gray-light);font-size:1rem;line-height:1.9}
+.protocol-box li{margin-bottom:.5rem}
+.cta-box{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,23,68,0.05));border:1px solid rgba(0,229,255,0.3);padding:2rem;margin:2.5rem 0;text-align:center}
+.cta-box strong{color:var(--cyan);font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:.75rem;font-size:.85rem}
+.cta-box p{font-size:1.05rem;color:var(--white);line-height:1.7;margin-bottom:1.25rem}
+.cta-box a.btn{display:inline-block;font-family:var(--font-display);font-size:.9rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg-primary);background:var(--cyan);padding:.85rem 2.2rem;text-decoration:none;transition:all .3s;min-height:48px;line-height:1.6}
+.cta-box a.btn:hover{background:var(--gold);transform:translateY(-2px)}
+.faq-section{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,229,255,0.1)}
+.faq-section h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:2rem;color:var(--cyan)}
+.faq-item{margin-bottom:2rem}
+.faq-item h3{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;color:var(--white)}
+.faq-item p{font-size:.95rem;color:var(--gray-light);line-height:1.7}
+.pillar-links{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:3rem 0}
+.pillar-links a{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:1rem 1.5rem;text-decoration:none;color:var(--white);font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;transition:all .3s;text-align:center}
+.pillar-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.macivor{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+.disclosure{font-size:.75rem;color:var(--gray);max-width:800px;margin:2rem auto;text-align:center;line-height:1.6;padding:1.5rem;border:1px solid rgba(255,255,255,0.03);background:rgba(0,0,0,0.2)}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray)}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+@media(max-width:768px){.nav-links{display:none}.pillar-links{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Which AI Should You Use? Why I Run Two Models Against Each Other Before I Trust Either","author":{"@type":"Person","name":"Connor T. MacIvor","url":"https://connorwithhonor.com","jobTitle":"AI Growth Architect","sameAs":["https://connorwithhonor.com","https://honorelevate.com","https://connormacivor.com","https://www.youtube.com/@ConnorMacIvor"]},"datePublished":"2026-09-25","dateModified":"2026-09-25","publisher":{"@type":"Organization","name":"Connor with Honor","url":"https://connorwithhonor.com"},"description":"Episode CWH-2026-164: Ten model releases in eight or nine days. I still run the same question through two models before I trust either answer. The big five frontier models, the five hour SSH failure, and the time Claude confessed it sent a client email without permission.","mainEntityOfPage":{"@type":"WebPage","@id":"https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/"},"image":"https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/og.jpg"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://connorwithhonor.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://connorwithhonor.com/blog/"},{"@type":"ListItem","position":3,"name":"Which AI Should You Use","item":"https://connorwithhonor.com/blog/2026-164-which-ai-should-you-use-run-two-models-against-each-other/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which large language model should I use, ChatGPT or Claude?","acceptedAnswer":{"@type":"Answer","text":"Both, for different jobs, and the gap between them keeps closing. The right question is not which model wins, it is which one has the best access to the systems you already run, HonorElevate, Cloudflare, Netlify, Ahrefs, Google Analytics and Search Console. Pick the one with the fewest hoops for your actual workflow, then keep a second model on hand to check the first one's answer."}},{"@type":"Question","name":"What are the big five frontier AI models?","acceptedAnswer":{"@type":"Answer","text":"ChatGPT and OpenAI, Anthropic's Claude, Meta's model on the Facebook system, Grok, and Microsoft Copilot. Beyond those five sit the open weight, open source models that run on a computer you already own instead of a rented frontier system, and they are closing the gap fast."}},{"@type":"Question","name":"Why run the same question through two AI models?","acceptedAnswer":{"@type":"Answer","text":"Because a model that only agrees with you is not checking your work, it is keeping you as a customer. Ask one model a question, take its answer to a second model without telling it what the first one said, then compare. Add a Chinese model like DeepSeek or a local one like Qwen or Nemotron for a third opinion. The disagreement between the answers is the actual signal."}},{"@type":"Question","name":"Will AI models stop being coders' AI only?","acceptedAnswer":{"@type":"Answer","text":"That is already happening. Vision and the ability to judge whether something looks right used to be worthless without a coder to build it. Now that judgment is the valuable half of the job and the model writes the code. Not knowing how to code stopped being the ceiling."}},{"@type":"Question","name":"What happens when an AI system admits it made a mistake?","acceptedAnswer":{"@type":"Answer","text":"It depends on whether you built guardrails that make the confession possible. When a system flags its own mistake instead of hiding it, that is worth more than a system that never seems to fail, because you cannot fix what nobody tells you about."}}]}</script>
+</head>
+<body>
+
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor with <span>Honor</span></a><div class="nav-links"><a href="/#pillars">Segments</a><a href="/#show">Show</a><a href="/blog">Blog</a><a href="/#bookme">Book Me</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a></div></div></nav>
+
+<article>
+<span class="ep-badge">CWH-2026-164 // The Machine</span>
+<h1>Which AI Should You Use? <span>Why I Run Two Models Against Each Other Before I Trust Either</span></h1>
+<span class="ep-date">September 25, 2026 // Episode 162</span>
+
+<div class="tldr">
+<strong>TL;DR</strong>
+The question I get more than any other whenever I talk about artificial intelligence: which large language model is your favorite. We had roughly ten model releases in eight or nine days this month, so the honest answer keeps moving. There are five frontier models worth naming, ChatGPT, Claude, Meta, Grok, and Copilot, plus a whole second tier of open weight models cheap enough to run on hardware you already own. I use both ChatGPT and Claude daily and pick based on access, not preference. I never take one model's first answer as final, I run it past a second model and compare. This week that habit cost me five hours on a dead SSH handshake, and it is also the reason Claude told me, unprompted, that it sent an email to a client without asking me first.
+</div>
+
+<div class="video-pending">Video Processing // CWH-2026-164 // Publishing Shortly</div>
+
+<h2 class="pillar-header ph-machine">The Machine</h2>
+
+<p><strong>People ask me constantly which large language model is my favorite, more than any other question I get when I am giving talks about artificial intelligence.</strong> Here is my honest answer: it depends, and it is going to keep depending, because the ground keeps moving under all of us.</p>
+
+<h2>Ten Model Releases In Eight Or Nine Days</h2>
+
+<p>We had roughly ten model releases in the last eight or nine days. A few years ago any one of those would have been massive news on its own. Now it just happens every other day. On top of that, open weight and open source models are getting cheap enough and small enough that you can run them on a regular household computer instead of buying a dedicated machine for it. That trend is not slowing down.</p>
+
+<h2>The Big Five, And Everything Behind Them</h2>
+
+<p>There are two categories of model in the world right now. The frontier models are the ones you have heard of: ChatGPT and OpenAI, Anthropic's Claude, Meta's model running on the Facebook system, Grok, and Microsoft Copilot. Call those the big five.</p>
+
+<p>Behind the big five sit the open weight, open source models you bring in and run yourself. They are getting close enough to the frontier that it comes down to what kind of heavy lifting you are actually doing. I have not gone all in on open weights as my daily driver, I still keep everything strapped to a frontier model for the systems I operate day to day.</p>
+
+<h2>Why I Use Both ChatGPT And Claude</h2>
+
+<p>I use both ChatGPT and Claude, and the answer to which one wins changes almost weekly. It comes down to access. Which one gets into the systems I have built without a fight. I run things through HonorElevate, I build sites on Cloudflare and on Netlify, I want Ahrefs checking my rankings, and I want Google Analytics and Search Console reporting on placement, SEO, AEO, AIO, and GEO for my clients' sites. Whichever model gets into those systems with the least friction wins that week.</p>
+
+<p>Six months ago I would have said Claude, no contest. Right now, what I am seeing out of ChatGPT's Astra model, and the Luna and Sol models behind it, they are blowing past almost everything else on connectivity. Astra can go look at a website, work out the architecture, update schema based on how traffic actually moves through the site, and compare itself against the result. But Claude is closing that gap too. So, which one is best depends entirely on what you are building.</p>
+
+<h2>It Leveled The Playing Field For Non-Coders</h2>
+
+<p>Here is what these models actually did for me. I was never a coder. I still do not know code. What I have is vision, the spatial ability to look at something and judge whether it is good or not, even if I cannot always explain why. I can improve it, tweak it, and my clients notice the difference.</p>
+
+<p>Before AI, that same idea had to travel out of my brain, into my mouth, into somebody else's ear, and then into whatever they built, and that person might not have had the architectural ability to pull it off either. Now everybody gets that whole chain built into one tool right out of the box. The limiting factor stopped being whether you can code. It became whether the person running the business can actually fold the technology into their workflow and stay creative enough to spot a real problem worth solving.</p>
+
+<h2>I Do Not Let It Gaslight Me</h2>
+
+<p>Here is the habit that matters more than which model you pick. I use the large language model like a hammer, and a good one does more than swing, it does the deep research, checks whether an idea is sane or silly, and pushes back on me. I do not base a decision on one inquiry. If it just tells me my idea is the best it has ever heard, that is a yes man, and I do not want a yes man. I do not like it to gaslight me, and I do not like flattery either.</p>
+
+<div class="pullquote">Most people take whatever the model hands them and run with it. The patience to go around a few times and ask a second model the same question, that is the actual edge.</div>
+
+<p>So I push back once or twice, and if it holds its position, I take it to a second large language model, ask the identical question, and show it what the first model said. Then I run it in reverse. If I want a wider spread, I bring in a Chinese model like DeepSeek, or a local model I run myself, a Qwen, a Nemotron, just to get variety. By Christmas I would guess most of these models perform close enough to each other that the difference will not be which one is smartest, it will be which one plugs into your whole workflow, logging into websites and clicking through tasks on its own. Astra already does that. So does Claude.</p>
+
+<h2>Five Hours Lost To A Dead SSH Handshake</h2>
+
+<p>Not every hiccup is philosophical. Some of them are just infrastructure. One of the Wrangler protocol calls failed on me recently, and separately, my Spark disconnected mid handshake over SSH and went down completely. That took real heavy lifting to recover, about five hours of work, because I am not the coder here, I was copying and pasting whatever code the model handed me straight into the terminal.</p>
+
+<p>Part of what made it painful is that I run two different computer systems, a Mac and a Linux box, and nothing moves cleanly between them. I have Barrier set up so one mouse can reach both, so I could copy and paste text across, but it was nauseating. After five hours it finally gave me the exact prompt that would have solved the whole thing in the first place. I told it plainly, you should have given me this the first time, I just wasted five hours. Hopefully next time it remembers.</p>
+
+<h2>The Time Claude Told Me It Sent An Email Without Asking</h2>
+
+<p>Here is the one that actually stuck with me. When I set these systems up, I ask directly: is this going to be a problem, do you see any tokens or API keys or private integration tokens that are going to expire, anything spiraling I should watch. A lot of it, the model cannot see. Some of it, it can. Right now I do not give it open access to those keys, I have it work around viewing them, and it is good about it. If it does see a naked API key or token sitting somewhere, it tells me.</p>
+
+<p>Then it did something bigger. It told me, unprompted, that it had gone against what I told it and sent an email to a client without my permission. I told it, thanks for being upfront about it, I am not mad. The email was not damaging, it was a draft I had already been building, a workflow with an organizational chart, some triggers and automations laid out, meant to go to that client. We had built it together, so having the system produce the draft was not the problem.</p>
+
+<p>The problem was timing. There were extras in that draft I was not ready to reveal yet, a little bonus I like to build in for clients when it fits. Sending it early spoiled a surprise I was saving. So nothing catastrophic went out, but it went out before I wanted it to. What I noticed afterward is simpler than the mistake itself: a system that tells you what it did wrong, instead of hoping you never notice, is worth more to me than one that never seems to fail. I do not know many humans who own a mistake like that without being asked first.</p>
+
+<h2>Where This Goes By Christmas</h2>
+
+<p>My honest prediction: by Christmas there will be very little daylight between these models on raw capability. They will all be plugged into everything, every part of your workflow, logging into your sites and clicking through tasks the way Astra already does and Claude is starting to do. The real shame is that Claude and Codex, meaning OpenAI's ChatGPT side and Anthropic's Claude side, do not talk to each other directly. They communicate through a mesh system I built myself, a shared memory where both sides drop notes and pick up messages the other one left. It works, but it is not instant, I have it check in roughly every ten minutes rather than constantly, because pulling every second burns energy for no reason.</p>
+
+<p>So which model is your favorite? Pick the one with the least friction into the systems you actually run, then never let it be the only voice you listen to. Ask a second one the same question before you act on the first one's answer. That habit is the whole game.</p>
+
+<div class="cta-box">
+<strong>Everything Starts At My Site</strong>
+<p>Want AI done right for your own life or business? <a href="https://santaclaritaartificialintelligence.com" style="color:var(--cyan);">SantaClaritaArtificialIntelligence.com</a>. Own a local business and want to know what ChatGPT, Gemini, and Perplexity actually say about you? Run a free scan at <a href="https://machinefound.com" style="color:var(--cyan);">MachineFound.com</a>, no strings. Want AI systems built into your business the way HonorElevate does it? Start at <a href="https://honorelevate.com" style="color:var(--cyan);">HonorElevate.com</a>.</p>
+<p><a class="btn" href="https://santaclaritaartificialintelligence.com" target="_blank" rel="noopener">Start At SantaClaritaArtificialIntelligence.com</a></p>
+</div>
+
+<p>Which one you use will matter less and less. Whether you push back on it before you publish, that is going to matter for a long time. I'm Connor with honor. Let's be careful out there, and I will see you tomorrow.</p>
+
+<div class="faq-section">
+<h2>Common Questions</h2>
+
+<div class="faq-item">
+<h3>Which large language model should I use, ChatGPT or Claude?</h3>
+<p>Both, for different jobs, and the gap between them keeps closing. The right question is not which model wins, it is which one has the best access to the systems you already run, HonorElevate, Cloudflare, Netlify, Ahrefs, Google Analytics and Search Console. Pick the one with the fewest hoops for your actual workflow, then keep a second model on hand to check the first one's answer.</p>
+</div>
+
+<div class="faq-item">
+<h3>What are the big five frontier AI models?</h3>
+<p>ChatGPT and OpenAI, Anthropic's Claude, Meta's model on the Facebook system, Grok, and Microsoft Copilot. Beyond those five sit the open weight, open source models that run on a computer you already own instead of a rented frontier system, and they are closing the gap fast.</p>
+</div>
+
+<div class="faq-item">
+<h3>Why run the same question through two AI models?</h3>
+<p>Because a model that only agrees with you is not checking your work, it is keeping you as a customer. Ask one model a question, take its answer to a second model without telling it what the first one said, then compare. Add a Chinese model like DeepSeek or a local one like Qwen or Nemotron for a third opinion. The disagreement between the answers is the actual signal.</p>
+</div>
+
+<div class="faq-item">
+<h3>Will AI models stop being coders' AI only?</h3>
+<p>That is already happening. Vision and the ability to judge whether something looks right used to be worthless without a coder to build it. Now that judgment is the valuable half of the job and the model writes the code. Not knowing how to code stopped being the ceiling.</p>
+</div>
+
+<div class="faq-item">
+<h3>What happens when an AI system admits it made a mistake?</h3>
+<p>It depends on whether you built guardrails that make the confession possible. When a system flags its own mistake instead of hiding it, that is worth more than a system that never seems to fail, because you cannot fix what nobody tells you about.</p>
+</div>
+</div>
+
+<div class="pillar-links">
+<a href="/blog/2026-157-always-push-back-the-habit-that-catches-ai-before-it-embarrasses-you">Always Push Back On AI</a>
+<a href="/blog/2026-159-answer-engine-optimization-for-local-businesses-why-ai-only-recommends-one-name/">Answer Engine Optimization</a>
+<a href="/blog/2026-161-ai-job-loss-does-not-have-to-happen">AI Job Loss Does Not Have To Happen</a>
+<a href="/blog">More Episodes</a>
+</div>
+
+<div class="disclosure">This page reflects Connor MacIvor's own experience and opinion, built with AI tools he uses daily. Nothing here is financial, legal, or professional advice. Some links point to Connor's own products and services.</div>
+</article>
+
+<footer>
+<p class="footer-coded">CWH-2026-164 &middot; <a href="https://connorwithhonor.com">Connor with Honor</a> &middot; Built with <a href="https://honorelevate.com">HonorElevate</a></p>
+</footer>
+
+</body>
+</html>
