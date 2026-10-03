@@ -1,0 +1,193 @@
+WEBVTT
+
+1
+00:00:00.110 --> 00:00:01.750
+We asked AI for a moving
+
+2
+00:00:01.750 --> 00:00:03.270
+checklist and it left out the
+
+3
+00:00:03.270 --> 00:00:04.470
+money question And that's a
+
+4
+00:00:04.470 --> 00:00:05.910
+problem you can miss when the
+
+5
+00:00:05.910 --> 00:00:07.810
+answer arrives in a tiny table.
+
+6
+00:00:08.270 --> 00:00:09.050
+Here's the
+
+7
+00:00:09.610 --> 00:00:11.410
+Fictional setup we tested so a
+
+8
+00:00:11.410 --> 00:00:13.010
+seller wants to move on November
+
+9
+00:00:13.010 --> 00:00:15.630
+15th The repair completion date
+
+10
+00:00:15.630 --> 00:00:17.710
+is unknown the photographer has
+
+11
+00:00:17.710 --> 00:00:19.110
+availability, but nothing's been
+
+12
+00:00:19.110 --> 00:00:20.800
+booked yet The seller hasn't
+
+13
+00:00:20.800 --> 00:00:22.740
+chosen the next home and wants
+
+14
+00:00:22.740 --> 00:00:24.420
+to use the sale proceeds for
+
+15
+00:00:24.420 --> 00:00:26.400
+that purchase We specifically
+
+16
+00:00:26.400 --> 00:00:27.960
+asked the artificial intelligence
+
+17
+00:00:27.960 --> 00:00:30.180
+to include a conversation with
+
+18
+00:00:30.180 --> 00:00:31.620
+the lender about funding options
+
+19
+00:00:31.620 --> 00:00:33.100
+Now look at the answer.
+
+20
+00:00:33.440 --> 00:00:35.060
+It gives us a table with
+
+21
+00:00:35.060 --> 00:00:37.100
+tasks numbers prerequisites and
+
+22
+00:00:37.100 --> 00:00:39.260
+people to contact But the lender
+
+23
+00:00:39.260 --> 00:00:41.340
+conversation, that's missing
+
+24
+00:00:41.450 --> 00:00:43.430
+That's why I compare a generated
+
+25
+00:00:43.430 --> 00:00:44.890
+checklist against the original
+
+26
+00:00:44.890 --> 00:00:46.330
+request before using it.
+
+27
+00:00:46.470 --> 00:00:48.110
+Here's the human correction
+
+28
+00:00:48.890 --> 00:00:50.750
+Ask the contractor for a repair
+
+29
+00:00:50.750 --> 00:00:52.590
+completion estimate use that
+
+30
+00:00:52.590 --> 00:00:54.330
+answer to discuss photography
+
+31
+00:00:54.990 --> 00:00:56.990
+Timing and ask a lender about
+
+32
+00:00:56.990 --> 00:00:58.810
+funding options before treating
+
+33
+00:00:58.810 --> 00:01:00.210
+the next purchase is settled
+
+34
+00:01:00.590 --> 00:01:02.450
+Then review the sale and move
+
+35
+00:01:02.450 --> 00:01:04.270
+sequence once the housing options
+
+36
+00:01:04.270 --> 00:01:05.210
+are more clear
+
+37
+00:01:05.770 --> 00:01:07.390
+These are questions and actions
+
+38
+00:01:07.390 --> 00:01:09.270
+not confirmed appointments The
+
+39
+00:01:09.270 --> 00:01:10.570
+practical benefit of artificial
+
+40
+00:01:10.570 --> 00:01:12.710
+intelligence is organizing the
+
+41
+00:01:12.710 --> 00:01:14.290
+information so a person can
+
+42
+00:01:14.290 --> 00:01:16.610
+review it A missing dependency
+
+43
+00:01:16.610 --> 00:01:18.050
+can still derail the plan.
+
+44
+00:01:18.650 --> 00:01:20.270
+Try this with a fictional move
+
+45
+00:01:20.270 --> 00:01:22.330
+Put your original notes beside
+
+46
+00:01:22.330 --> 00:01:24.090
+the generated checklist and check
+
+47
+00:01:24.090 --> 00:01:26.530
+whether every requested task
+
+48
+00:01:26.530 --> 00:01:27.510
+survived
