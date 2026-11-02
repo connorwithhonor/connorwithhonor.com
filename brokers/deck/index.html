@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leading Your Office Into AI | SRAR Broker Owner Manager Deck | Connor MacIvor</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<style>
+:root{--bg:#0b0b0f;--bg2:#14141a;--ink:#f4f1ea;--dim:#a8a59c;--gold:#c9a84c;--gold2:#e8c062;--rule:#2a2a33;--serif:'Times New Roman',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:100%;overflow:hidden}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;font-weight:500}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.4rem);line-height:1.02;font-weight:400;margin-bottom:1.2rem}
+h1 em,h2 em{font-style:italic;color:var(--gold)}
+h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.8rem);line-height:1.08;font-weight:400;margin-bottom:1.6rem;max-width:22ch}
+p{font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.5;max-width:58ch;color:var(--ink)}
+p.dim{color:var(--dim)}
+p.huge{font-family:var(--serif);font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.18;max-width:28ch}
+p.sub{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.3rem,2.4vw,2rem);margin-bottom:1rem}
+ul.big{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem;max-width:60ch}
+ul.big li{font-size:clamp(1.1rem,2.1vw,1.75rem);line-height:1.35;padding-left:2.2rem;position:relative}
+ul.big li::before{content:'';position:absolute;left:0;top:.65em;width:1.2rem;height:2px;background:var(--gold)}
+ol.num{list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1rem;max-width:62ch}
+ol.num li{counter-increment:n;font-size:clamp(1.1rem,2.1vw,1.7rem);line-height:1.35;padding-left:3.4rem;position:relative}
+ol.num li::before{content:counter(n);position:absolute;left:0;top:-.15em;font-family:var(--serif);font-size:1.7em;color:var(--gold)}
+ol.num li b{color:var(--gold2);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;margin-top:.5rem}
+.grid2 h3{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:.6rem}
+.grid2 p{font-size:clamp(1rem,1.7vw,1.35rem)}
+.card{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(.8rem,1.35vw,1.1rem);line-height:1.55;background:var(--bg2);border-left:3px solid var(--gold);padding:1.2rem 1.5rem;white-space:pre-wrap;max-width:80ch;max-height:70vh;overflow:auto;color:#e8e4da}
+.ladder{list-style:none;display:flex;flex-direction:column;gap:.7rem;max-width:60ch}
+.ladder li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;font-size:clamp(1.05rem,1.9vw,1.55rem);color:var(--dim);padding:.5rem 0;border-bottom:1px solid var(--rule)}
+.ladder li .n{font-family:var(--serif);font-size:1.6em;color:var(--rule)}
+.ladder li.on{color:var(--ink)}
+.ladder li.on .n{color:var(--gold)}
+.ladder li.done{color:var(--dim)}
+.ladder li.done .n{color:var(--dim)}
+.ladder li small{display:block;font-size:.72em;color:var(--dim);font-style:italic;font-family:var(--serif)}
+.pull{border-left:3px solid var(--gold);padding-left:1.5rem;font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.3;max-width:44ch;margin-top:1.5rem}
+.sig{margin-top:2.5rem;font-family:var(--serif);font-style:italic;color:var(--dim);font-size:clamp(1rem,1.6vw,1.3rem)}
+.sig .mac{font-family:var(--serif)}
+.hud{position:fixed;top:1rem;right:1.25rem;font-size:.8rem;letter-spacing:.12em;color:var(--dim);z-index:60;display:flex;gap:1rem;align-items:center}
+.hud button{background:transparent;border:1px solid var(--rule);color:var(--dim);padding:.35rem .7rem;font-size:.75rem;letter-spacing:.1em;cursor:pointer}
+.hud button:hover{border-color:var(--gold);color:var(--gold)}
+.prog{position:fixed;left:0;bottom:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .3s}
+.zone{position:fixed;top:0;bottom:0;width:50%;z-index:50;background:transparent;border:0;cursor:pointer}
+.zone.l{left:0}.zone.r{right:0}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#000;color:#d8d4ca;border-top:2px solid var(--gold);padding:1rem 2rem 1.2rem;font-size:1rem;line-height:1.55;z-index:70;display:none;font-family:var(--sans)}
+.notes.show{display:block}
+.notes b{color:var(--gold)}
+.notes .tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.foot{position:fixed;left:1.25rem;bottom:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rule);z-index:60}
+.help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000;border:1px solid var(--gold);padding:1.5rem 2rem;z-index:80;display:none;font-size:.95rem;line-height:1.7;color:var(--ink)}
+.help.show{display:block}
+@media(max-width:700px){.grid2{grid-template-columns:1fr;gap:1.2rem}.slide{padding:10vh 6vw 8vh}}
+@media print{html,body{overflow:visible;height:auto;background:#fff;color:#000}.slide{position:relative;opacity:1;page-break-after:always;height:100vh;color:#000}.hud,.prog,.zone,.foot,.help{display:none}.notes{display:block;position:relative;max-height:none;color:#000;background:#fff;border-top:1px solid #000}h1,h2,p,li{color:#000}.card{color:#000;background:#f3f3f3}}
+.qr-corner{position:fixed;right:1.25rem;bottom:1.6rem;z-index:55;background:#fff;padding:6px 6px 4px;text-align:center;text-decoration:none;border:1px solid var(--gold)}.qr-corner img{display:block;width:clamp(72px,8vw,112px);height:auto}.qr-corner span{display:block;font-size:.55rem;letter-spacing:.04em;color:#111;margin-top:3px}.qr-corner.off{display:none}.qr-big{background:#fff;padding:10px;display:inline-block;margin-top:1.4rem}.qr-big img{display:block;width:clamp(150px,18vw,230px);height:auto}@media print{.qr-corner{display:none}}</style>
+</head>
+<body>
+<div class="hud"><span id="cnt"></span><button id="bp">BACK</button><button id="bx">NEXT</button><button id="bn">NOTES (N)</button></div>
+<div class="prog" id="prog"></div>
+<button class="zone l" id="zl" aria-label="Previous"></button><button class="zone r" id="zr" aria-label="Next"></button>
+<div class="deck">
+<section class="slide" data-notes="Thank Cristina and SRAR by name. Housekeeping in 20 seconds: everything on the screen today is on one free page at the end, no email needed, so nobody has to take notes. Then go straight to slide 2."><div class="eyebrow">Broker Owner Manager Meeting · Southland Regional Association of REALTORS®</div><h1>Leading Your Office <em>Into AI</em></h1><p class="sub">What to Automate, What to Protect, and How to Find Tomorrow's Sellers.</p><p class="dim">Everything on these slides is free at connorwithhonor.com/brokers. No email required.</p><div class="sig">Connor <span class="mac">MacIvor</span> · REALTOR® since 1998, CalDRE #01238257 · SYNC Brokerage</div></section>
+
+<section class="slide" data-notes="Money first. Set the frame: this is not a tech talk. Every slide answers one of three questions. Point at each line as you say it."><div class="eyebrow">Money first</div><h2>AI is not a tech project. <em>It is a margin project.</em></h2><ol class="num"><li><b>What to automate</b> so your agents get hours back.</li><li><b>What to protect</b> so nobody in your office ends up in front of a regulator.</li><li><b>How to find tomorrow's sellers</b> in the database you already own.</li></ol></section>
+
+<section class="slide" data-notes="1998 story. Pager, fax, the MLS book. The agents who won called the most people and remembered them. That has not changed. What changed is the cost of remembering."><div class="eyebrow">1998 versus today</div><div class="grid2"><div><h3>1998</h3><p>A pager. A fax machine. The MLS book. Index cards. The agent who won called the most people and remembered every one of them.</p></div><div><h3>Today</h3><p>A phone that writes, reads a 40-page disclosure packet, and remembers every client conversation. Same winning move. <em style="color:var(--gold)">The cost of remembering just dropped close to zero.</em></p></div></div></section>
+
+<section class="slide" data-notes="Ask the room in chat: who still carries listings? Two kinds of broker in this room. Both win with AI, in different places."><div class="eyebrow">Two kinds of broker</div><div class="grid2"><div><h3>The selling broker</h3><p>Still carries listings. AI buys back hours: follow-up, listing prep, market updates, deadline tracking. The win is more appointments per week without more staff.</p></div><div><h3>The non-producing owner or manager</h3><p>Runs the people. AI is a supervision and recruiting tool: consistent training, a written policy, cleaner files, and a recruiting pitch that says this office knows how to use it safely.</p></div></div></section>
+
+<section class="slide" data-notes="The task list method. Have every agent write down what they actually do all week, with hours. Not what they think they do. The list is the AI plan. Nothing gets automated that is not on it."><div class="eyebrow">What to automate · The task-list method</div><p class="huge">Before anyone buys a tool, every agent writes down <em>what they actually do all week.</em> With hours.</p><p class="dim" style="margin-top:1.5rem">The list is the AI plan. Nothing gets automated that is not on it.</p></section>
+
+<section class="slide" data-notes="Walk the three buckets. Keep human is the one brokers care about. Read the keep-human list slowly."><div class="eyebrow">Three buckets</div><div class="grid2" style="grid-template-columns:1fr 1fr 1fr"><div><h3>Automate</h3><p>AI does it, a human checks it. Follow-up drafts, market summaries, first-draft listing copy, meeting notes, checklists.</p></div><div><h3>Assist</h3><p>AI helps, a human drives. Pricing prep, objection practice, CMA narrative, social calendars, appointment research.</p></div><div><h3>Keep human</h3><p>No machine, ever. Negotiation. Fiduciary advice. Anything signed. Money talk with a client. Fair housing judgment calls.</p></div></div></section>
+
+<section class="slide" data-notes="The manager's move. Collect every list. Find the five tasks on almost every list. Build office templates for those five first. That is next quarter's training calendar, done."><div class="eyebrow">The manager's move</div><h2>Collect the lists. Find the <em>five tasks</em> on almost every one.</h2><ul class="big"><li>Build an office template for each of the five.</li><li>Train one per meeting.</li><li>That is your next quarter's training calendar, already written.</li></ul></section>
+
+<section class="slide" data-notes="Tools converge. Do not pick a winner. Claude, ChatGPT, Gemini, plus Copilot if the office lives in Microsoft. They do most of the same things now and leapfrog each other every few months. Policy should not depend on a logo."><div class="eyebrow">Picking tools</div><h2>The big tools are converging. <em>Pick by the task, not the logo.</em></h2><ul class="big"><li>Claude, ChatGPT and Gemini all write, read documents, search, remember instructions and work in projects.</li><li>If the office lives in Google Workspace or Microsoft 365, the built-in assistant may be the cheapest win.</li><li>Client data only on a business or team plan with training off and an admin in control.</li></ul></section>
+
+<section class="slide" data-notes="Six questions, in writing, before client files go in. If a vendor cannot answer all six, the files do not go in."><div class="eyebrow">What to protect · Six vendor questions</div><ol class="num"><li><b>Encryption</b> in transit and at rest?</li><li><b>Retention</b> we control, delete on demand?</li><li><b>Training</b> on our data: off, in writing?</li><li><b>Admin</b> can add and remove users in one step?</li><li><b>Audit logs</b> the broker can read?</li><li><b>Location</b> of the data, and which jurisdiction?</li></ol></section>
+
+<section class="slide" data-notes="The Platinum Card rule. You would never hand a brand new agent your Platinum card on day one. You give a little access, watch, then give more. AI gets the same treatment, especially anything connected to email, calendar, CRM or files."><div class="eyebrow">The Platinum Card rule</div><p class="huge">You would not hand a new hire your Platinum card on day one. <em>Do not hand it to an AI either.</em></p></section>
+
+<section class="slide" data-notes="The ladder. A task moves up one rung after a clean month, with written sign-off. It drops a rung the day it makes a mistake."><div class="eyebrow">Access in steps</div><ul class="ladder"><li class="on"><span class="n">1</span><span>Read only<small>Reads and summarizes. Changes nothing.</small></span></li><li class="on"><span class="n">2</span><span>Draft only<small>Writes. A human sends. Every time.</small></span></li><li class="on"><span class="n">3</span><span>Act with approval<small>Proposes a calendar entry or CRM task, waits for a click.</small></span></li><li class="on"><span class="n">4</span><span>Act within limits<small>Low-risk sends only, by written exception from the broker.</small></span></li></ul><p class="dim" style="margin-top:1.2rem">Never, at any level: signing, sending offers or contracts, legal or tax advice, money talk with a client, moving client files outside approved systems.</p></section>
+
+<section class="slide" data-notes="Custom instructions. Ten minutes per agent. Show where each one lives. Claude: Settings, Profile, plus Projects. ChatGPT: Settings, Personalization, Custom instructions, plus Projects. Gemini: Saved info, plus skills. Google starts converting Gems to skills on personal accounts November 17, 2026; Workspace in 2027. Do not demo Gemini 4 Carbon, it is limited access. If you can, screen share your own setup here."><div class="eyebrow">Custom instructions · Ten minutes per agent</div><div class="grid2" style="grid-template-columns:1fr 1fr 1fr"><div><h3>Claude</h3><p>Settings, Profile. For a team or a listing: a Project with its own instructions and files.</p></div><div><h3>ChatGPT</h3><p>Settings, Personalization, Custom instructions. For a team or a listing: a Project.</p></div><div><h3>Gemini</h3><p>Settings, Saved info. For a repeatable job: a skill (Gems become skills starting November 17).</p></div></div></section>
+
+<section class="slide" data-notes="Read the NEVER line out loud. That one line is a fair housing training in itself. The full template is on the page with a copy button."><div class="eyebrow">The template · copy it from connorwithhonor.com/brokers</div><div class="card">WHO I AM: Licensed California agent with [BROKERAGE], DRE #[NUMBER], working in [CITIES].
+HOW I WRITE: Short sentences. Plain English. No hype words. No em dashes.
+WHAT I WANT: Ask one clarifying question first. Label anything uncertain UNVERIFIED.
+NEVER: Legal or tax advice. Describe a neighborhood by who lives there. Invent property facts. Promise a price.
+ALWAYS: Remind me to check the MLS, the disclosures and my broker before anything goes to a client.</div></section>
+
+<section class="slide" data-notes="Who to call next. Average agent has a few hundred names. A busy one has 2,000. Most have not heard from that agent in a year. Cheapest lead source in the business."><div class="eyebrow">How to find tomorrow's sellers</div><p class="huge">Tomorrow's sellers are already in your database. <em>Most of them have not heard from you in a year.</em></p></section>
+
+<section class="slide" data-notes="Walk the five steps. Stress step 4: property, never person."><div class="eyebrow">Who to call next · five steps</div><ol class="num"><li><b>Clean the list.</b> Duplicates, missing fields, no contact in 12 months.</li><li><b>Add public records.</b> Years owned, owner-occupied or not, property type.</li><li><b>Add market context.</b> What their neighborhood did this year.</li><li><b>Score by property, never by person.</b></li><li><b>Resurrect it.</b> A real note. AI drafts, the agent edits and sends.</li></ol></section>
+
+<section class="slide" data-notes="MLS data. Read your MLS rules and data license before anything leaves the MLS system. Aggregate stats and your own listings are the safe start. Ask CRMLS before uploading an export into an outside AI tool. CRMLS Rule 12.11 per fact-check: MLS data is for marketing listings and valuations; no expired or canceled solicitation lists. Exact current PDF wording unverified, so do not quote the rule text."><div class="eyebrow">MLS data · inside the rules</div><div class="grid2"><div><h3>Safe start</h3><p>Aggregate market statistics, your own listings and sales, public county records.</p></div><div><h3>Off limits without asking</h3><p>Solicitation lists built from MLS data, including expired and canceled listings. MLS data pasted into public AI tools. Ask CRMLS first.</p></div></div></section>
+
+<section class="slide" data-notes="The big one. AI voice cold calling. The FCC ruled in February 2024 that AI-generated voices are artificial voices under the TCPA. Calls to cell phones with an artificial voice need prior express consent, and for marketing, prior express written consent. Damages run $500 to $1,500 per call, and these are class actions. Humans dial. Scrub Do Not Call."><div class="eyebrow">What to protect · AI dialing</div><h2>An AI voice is an <em>artificial voice</em> under the TCPA.</h2><ul class="big"><li>FCC ruling, February 2024.</li><li>Marketing calls with an artificial voice need prior express written consent.</li><li>$500 to $1,500 per call. Class actions multiply it.</li><li>Humans dial. Scrub the Do Not Call list.</li></ul></section>
+
+<section class="slide" data-notes="Fair housing. Filter by property facts. Keep ad audiences broad. If an AI suggests targeting by who lives somewhere, the answer is no, and the custom instruction already says so."><div class="eyebrow">Fair housing</div><h2>Target the <em>property</em>. Never the people.</h2><div class="grid2"><div><h3>Yes</h3><p>Years owned. Estimated equity. Property type. Past relationship. Your own sold history.</p></div><div><h3>No</h3><p>Age, family status, race, religion, national origin, disability, or any guess about them. Not in a list, not in an ad audience, not in a neighborhood description.</p></div></div></section>
+
+<section class="slide" data-notes="Local marketing intel. Three quick wins. Your own social insights show when followers in each area are online. Local groups: follow the rules, be useful first. AI builds a monthly local events list."><div class="eyebrow">Local marketing intel</div><ol class="num"><li><b>Timing by area.</b> Your own insights show when each town is online. AI turns the export into a posting calendar.</li><li><b>Where people talk.</b> Local groups, parent groups, HOA newsletters. Follow their rules. Be useful first.</li><li><b>Local vendors and events.</b> A monthly list of markets, fundraisers and openings. Show up. Feature local businesses.</li></ol></section>
+
+<section class="slide" data-notes="Reviews. Featuring great reviews is fine. Hiding bad ones is not. FTC Consumer Reviews rule, 2024. Civil penalty is $53,088 per violation (2026). Google bans review gating outright. Safe version: label a featured selection and link to the full profile right beside it. Ask every client the same way."><div class="eyebrow">Reviews · the safe way to show your best</div><div class="grid2"><div><h3>Do</h3><p>Show a labeled "Featured reviews" selection with a link to your complete Google or Zillow profile right beside it.</p></div><div><h3>Don't</h3><p>Hide negative reviews and imply the page shows them all. Survey first and send only happy clients to Google. Google bans that outright.</p></div></div></section>
+
+<section class="slide" data-notes="Title partners. They can teach a class, sponsor an event, give standard property profiles. RESPA Section 8 risk shows up when a title company does work an agent would otherwise pay for, like building the database, running the marketing or setting up the AI, with an expectation of referrals. If it saves money and comes with an expectation, ask the broker or counsel first."><div class="eyebrow">Title and escrow partners</div><h2>Free help is not always free. <em>RESPA Section 8.</em></h2><div class="grid2"><div><h3>Generally fine</h3><p>Educational classes. Event sponsorship. Standard property profiles.</p></div><div><h3>Ask counsel first</h3><p>A title company building your database, running your marketing, or setting up your AI, in exchange for an expectation of business.</p></div></div></section>
+
+<section class="slide" data-notes="Two California rules. Altered listing photos: disclose, and give access to the original. Bots that influence a sale online disclose they are bots. AB 723, Chapter 497 of 2025, B&P 10140.8, effective January 1, 2026. Bot disclosure is SB 1001, B&P 17940."><div class="eyebrow">Two California rules</div><div class="grid2"><div><h3>Altered listing photos</h3><p>Since January 1 (AB 723): disclose on or next to the image, and link to the original. Virtual staging included.</p></div><div><h3>Bots say they are bots</h3><p>A bot used online to influence a sale has to disclose that it is a bot.</p></div></div></section>
+
+<section class="slide" data-notes="Private and local models. Free open models run on a good desktop. Ollama, LM Studio. Nothing leaves the machine. Good for database cleanup and internal docs. The office pattern: public info anywhere, client info only on the business plan or the local machine."><div class="eyebrow">Private and local models</div><h2>Some work should <em>never leave your building.</em></h2><ul class="big"><li>Free open models run on a good desktop. Ollama and LM Studio install them in minutes.</li><li>Nothing typed leaves the machine. No monthly bill.</li><li>The office pattern: public information anywhere. Client information on the business plan with training off, or on the local machine.</li></ul></section>
+
+<section class="slide" data-notes="The one-page policy. Ten lines. Read the headers only. It is on the page with a copy button. Put your name on it, have counsel review it, have every agent sign it, revisit it every quarter."><div class="eyebrow">The one-page office AI policy</div><div class="grid2"><ol class="num"><li>Approved tools only</li><li>Human review, always</li><li>Access in steps</li><li>The never list</li><li>Fair housing</li></ol><ol class="num" style="counter-reset:n 5"><li>Advertising and reviews</li><li>Calls and texts</li><li>MLS data</li><li>Six vendor questions</li><li>Same-day incident report</li></ol></div></section>
+
+<section class="slide" data-notes="Close. Everything is at connorwithhonor.com/brokers, free, no email. Point at the QR: scan it from your phone right now. Two offers at no cost: I will speak at your office, and I will sit with your agents and set this up on their own phones. If you want more, my calendar is on the page. Do not pitch past that."><div class="eyebrow">Everything from today</div><div class="grid2" style="align-items:center;grid-template-columns:1.4fr 1fr"><div><h1 style="font-size:clamp(2rem,4.6vw,3.8rem)">connorwithhonor.com<em>/brokers</em></h1><p class="sub">Free. Ungated. The worksheet, the template, the policy.</p><p>At no cost: I will speak at your office, and set this up with your agents on their own phones. Book on my calendar from the page, or text <b style="color:var(--gold2)">661-476-2217</b>.</p></div><div style="text-align:center"><div class="qr-big"><img src="/brokers/qr-brokers.png" alt="QR code to connorwithhonor.com/brokers"></div><p class="dim" style="font-size:1rem;margin:.6rem auto 0">Scan with your phone camera</p></div></div></section>
+
+<section class="slide" data-notes="Questions in the order they came in chat. Specific tool question: answer in principles, point at the page. Specific client situation: answer the principle, then say that one is a conversation, text me. Thank Cristina and SRAR by name at the end."><div class="eyebrow">Questions</div><p class="huge">Questions until time.<br><em>Bring the workflow your office actually runs.</em></p></section>
+
+</div>
+<a class="qr-corner" href="/brokers/" aria-label="Open connorwithhonor.com/brokers"><img src="/brokers/qr-brokers.png" alt="QR code to connorwithhonor.com/brokers"><span>connorwithhonor.com/brokers</span></a><script>(function(){var q=document.querySelector(".qr-corner");function u(){var a=document.querySelector(".slide.active");q.classList.toggle("off",!!(a&&a.querySelector(".qr-big")))}new MutationObserver(u).observe(document.querySelector(".deck"),{subtree:true,attributes:true,attributeFilter:["class"]});u()})();</script><div class="notes" id="notes"></div>
+<div class="help" id="help">Space, Enter, Right: next<br>Left, Backspace: back<br>Home, End: first, last<br>N: speaker notes<br>?: this help<br>Print: File, Print (notes print under each slide)</div>
+<div class="foot">SRAR Broker Owner Manager · November 9, 2026 · Connor MacIvor · connorwithhonor.com/brokers</div>
+<script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,notes=document.getElementById('notes'),cnt=document.getElementById('cnt'),prog=document.getElementById('prog'),help=document.getElementById('help');
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});cnt.textContent=(i+1)+' / '+slides.length;prog.style.width=((i+1)/slides.length*100)+'%';var nt=slides[i].getAttribute('data-notes')||'';notes.innerHTML='<div class="tag">Speaker notes · slide '+(i+1)+'</div>'+nt;try{location.hash='s'+(i+1)}catch(e){}}
+function next(){show(i+1)}function prev(){show(i-1)}
+document.addEventListener('keydown',function(e){var k=e.key;if(k===' '||k==='ArrowRight'||k==='PageDown'||k==='Enter'){e.preventDefault();next()}else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}else if(k==='Home'){show(0)}else if(k==='End'){show(slides.length-1)}else if(k==='n'||k==='N'){notes.classList.toggle('show')}else if(k==='?'||k==='h'||k==='H'){help.classList.toggle('show')}else if(k==='Escape'){help.classList.remove('show')}});
+document.getElementById('zl').addEventListener('click',prev);document.getElementById('zr').addEventListener('click',next);
+document.getElementById('bn').addEventListener('click',function(){notes.classList.toggle('show')});
+document.getElementById('bp').addEventListener('click',prev);document.getElementById('bx').addEventListener('click',next);
+var m=(location.hash||'').match(/s(\d+)/);show(m?parseInt(m[1],10)-1:0);
+})();
+</script>
+</body>
+</html>

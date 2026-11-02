@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leading Your Office Into AI | Free Broker Resource | Connor MacIvor</title>
+<meta name="description" content="A free, ungated AI playbook for broker-owners and managers: the task-list method, the gradual-access rule, custom instructions for Claude, ChatGPT and Gemini, a one-page office AI policy, and a compliant way to find tomorrow's sellers.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://connorwithhonor.com/brokers/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leading Your Office Into AI | Free Broker Resource">
+<meta property="og:description" content="What to automate, what to protect, and how to find tomorrow's sellers. Free and ungated, from Connor MacIvor's SRAR Broker Owner Manager talk.">
+<meta property="og:url" content="https://connorwithhonor.com/brokers/">
+<link rel="icon" href="/favicon-shield.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"Leading Your Office Into AI: What to Automate, What to Protect, and How to Find Tomorrow's Sellers","url":"https://connorwithhonor.com/brokers/","datePublished":"2026-11-09","dateModified":"2026-11-09","inLanguage":"en-US","author":{"@id":"https://connorwithhonor.com/#connor"},"about":["AI for real estate brokerages","Office AI policy","Real estate prospecting compliance"]},
+{"@type":"Person","@id":"https://connorwithhonor.com/#connor","name":"Connor MacIvor","url":"https://connorwithhonor.com/","jobTitle":"REALTOR and AI trainer","telephone":"+1-661-476-2217","affiliation":{"@type":"Organization","name":"SYNC Brokerage"},"hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"license","name":"California DRE 01238257"}}
+]}
+</script>
+<style>
+:root{
+  --paper:#fdfcf9; --panel:#ffffff; --ink:#211c15; --body:#4a4438; --muted:#7a7263;
+  --line:#ece5d8; --gold:#e8a838; --gold-deep:#8a6310; --gold-soft:#faf3e0;
+  --red:#a8402f; --red-soft:#fbeeea; --green:#2f6b45; --green-soft:#eaf4ed;
+  --shadow:0 10px 30px rgba(40,30,10,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Source Serif 4',Georgia,serif;color:var(--ink);line-height:1.12;letter-spacing:-.01em;font-weight:600}
+a{color:var(--gold-deep)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-weight:700;font-size:1rem;padding:.85rem 1.4rem;border-radius:12px;text-decoration:none;border:0;cursor:pointer;transition:.18s}
+.btn-gold{background:var(--gold);color:#2a1d00;box-shadow:0 6px 18px rgba(232,168,56,.35)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-deep)}
+.hero{padding:3.6rem 0 2.4rem}
+.eyebrow{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);font-weight:700;font-size:.78rem;letter-spacing:.06em;padding:.4rem .9rem;border-radius:999px;border:1px solid #f0e2bd;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem);max-width:20ch;margin-bottom:1rem}
+.hero h1 em{font-style:normal;color:var(--gold-deep)}
+.lead{font-size:1.16rem;max-width:60ch;margin-bottom:1.6rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem}
+.toc{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.toc a{font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.45rem .85rem;min-height:36px;display:inline-flex;align-items:center}
+.toc a:hover{border-color:var(--gold);color:var(--gold-deep)}
+section{padding:2.8rem 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:.8rem;max-width:26ch}
+section h3{font-size:1.25rem;margin:1.6rem 0 .5rem}
+section p{max-width:68ch;margin-bottom:.9rem;font-size:1.04rem}
+.num{font-family:'Oswald',sans-serif;color:var(--gold-deep);font-weight:700;font-size:.95rem;letter-spacing:.04em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+ul.list,ol.list{margin:.4rem 0 1rem 1.3rem;max-width:68ch}
+ul.list li,ol.list li{margin:.4rem 0;font-size:1.02rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;box-shadow:var(--shadow)}
+.card h4{font-size:1.08rem;margin-bottom:.4rem}
+.card p{font-size:.97rem;margin:0}
+.card.do{border-top:4px solid var(--green)}
+.card.dont{border-top:4px solid var(--red)}
+.card .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.35rem}
+.card.do .tag{color:var(--green)}
+.card.dont .tag{color:var(--red)}
+.callout{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:10px;padding:1.1rem 1.3rem;margin:1.2rem 0;max-width:72ch}
+.callout.warn{background:var(--red-soft);border-left-color:var(--red)}
+.callout p{margin:0}
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1rem 0}
+.ladder div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem}
+.ladder b{font-family:'Oswald',sans-serif;font-size:1.6rem;color:var(--gold-deep);display:block;line-height:1}
+.ladder strong{display:block;color:var(--ink);margin:.3rem 0 .2rem}
+.ladder span{font-size:.92rem}
+.tpl{position:relative;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:10px;padding:1.2rem 1.2rem 1.2rem;margin:1rem 0;white-space:pre-wrap;font:0.92rem/1.6 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);max-width:80ch;overflow-x:auto}
+.tpl-wrap{position:relative;max-width:80ch}
+.copy{position:absolute;top:10px;right:10px;z-index:2;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:.5rem .8rem;font:700 .8rem Inter,sans-serif;cursor:pointer;min-height:36px}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 .2rem}
+.tabs button{font:600 .92rem Inter,sans-serif;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:.5rem 1rem;cursor:pointer;min-height:44px;color:var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tabpanel[hidden]{display:none}
+.ws{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.95rem}
+.ws th{background:var(--gold-soft);color:var(--gold-deep);text-align:left;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:.6rem .5rem}
+.ws td{border-top:1px solid var(--line);padding:.35rem .4rem;vertical-align:middle}
+.ws input,.ws select{width:100%;font:inherit;border:1px solid transparent;background:transparent;padding:.45rem .4rem;border-radius:6px;min-height:40px;color:var(--ink)}
+.ws input:focus,.ws select:focus{border-color:var(--gold);outline:none;background:#fffdf6}
+.ws td.n{width:2.2rem;color:var(--muted);text-align:center;font-weight:700}
+.ws-tools{display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0;align-items:center}
+.ws-total{font-weight:700;color:var(--ink)}
+.ws-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ws-scroll table{min-width:640px}
+.contact{background:linear-gradient(160deg,#241f18,#37301f);color:#f4efe4;border-radius:20px;padding:2.4rem 1.8rem;margin:2.4rem 0 1rem}
+.contact h2{color:#fff}
+.contact p{color:#d8cfbc}
+.contact .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.qr-card{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem;margin-top:1.6rem;max-width:460px;box-shadow:var(--shadow)}
+.qr-card img{width:96px;height:96px;flex:0 0 auto}
+.qr-card p{margin:0;font-size:.95rem}
+.contact .qr-card{background:#fff;color:var(--ink);border:0;margin-top:1.4rem}
+.contact .qr-card p{color:var(--body)}
+.btn-cal{background:#fff;color:#2a1d00;border:2px solid var(--gold)}
+.btn-cal:hover{background:var(--gold-soft)}
+a.btn:focus-visible,button:focus-visible{outline:3px solid var(--gold-deep);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.btn,.btn-gold:hover{transition:none;transform:none}}
+.fine{font-size:.85rem;color:var(--muted);max-width:80ch}
+
+body>nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 20px}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:#fff;text-decoration:none}
+.nav-brand span{color:#00e5ff}
+.nav-links{display:flex;gap:1.6rem;align-items:center}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:#c8c8d0;text-decoration:none}
+.nav-links a:hover{color:#00e5ff}
+.nav-cta{background:#e8213f;color:#fff!important;padding:8px 16px}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:10px;min-height:44px;justify-content:center}
+.nav-hamburger span{width:28px;height:2px;background:#00e5ff}
+@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:flex}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.98);padding:1.4rem;gap:1.1rem}}
+footer{background:#0a0a0f;color:#9a9aa6;padding:2.6rem 20px 2rem;margin-top:2rem;text-align:center;font-size:.9rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-links{display:flex;gap:1.2rem 2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.6rem}
+.footer-links a{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:#9a9aa6;text-decoration:none}
+.footer-legal{font-size:.82rem;line-height:1.8}
+.footer-legal a,.footer-coded a{color:#7fd7e3;text-decoration:none}
+.footer-coded{font-size:.66rem;letter-spacing:2px;margin-top:1.2rem}
+.macivor{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+@media(max-width:640px){.hero{padding:2.4rem 0 1.6rem}.cta-row .btn{width:100%}.contact{padding:1.8rem 1.2rem;border-radius:14px}}
+@media print{nav,.toc,.cta-row,.copy,.tabs,.ws-tools,.contact .cta-row,footer{display:none!important}.tabpanel[hidden]{display:block!important}body{background:#fff}section{padding:1.2rem 0;break-inside:avoid-page}.card,.tpl{box-shadow:none}}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<main>
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">SRAR Broker Owner Manager meeting &middot; November 9, 2026</span>
+    <h1>Leading Your Office Into AI: <em>what to automate, what to protect,</em> and how to find tomorrow's sellers.</h1>
+    <p class="lead">Everything from the talk, free, no email required. Copy the templates, print the worksheet, hand the policy to your managers. If you want help putting it in front of your agents, I will come to your office and speak at no cost.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="#worksheet">Start with the worksheet</a>
+      <a class="btn btn-ghost" href="#policy">Get the office AI policy</a>
+    </div>
+    <div class="qr-card">
+      <img src="/brokers/qr-brokers.png" alt="QR code that opens connorwithhonor.com/brokers" width="96" height="96">
+      <p><b>On a computer?</b> Scan this to open the page on your phone, or share it with your managers.</p>
+    </div>
+    <nav class="toc" aria-label="On this page">
+      <a href="#money">1. Money first</a>
+      <a href="#worksheet">2. Task-list worksheet</a>
+      <a href="#tools">3. Picking tools</a>
+      <a href="#access">4. The Platinum Card rule</a>
+      <a href="#instructions">5. Custom instructions</a>
+      <a href="#sellers">6. Who to call next</a>
+      <a href="#marketing">7. Local marketing intel</a>
+      <a href="#guardrails">8. Guardrails</a>
+      <a href="#private">9. Private and local models</a>
+      <a href="#policy">10. Office AI policy</a>
+      <a href="#contact">Free office visit</a>
+    </nav>
+  </div>
+</div>
+
+<section id="money">
+  <div class="wrap">
+    <span class="num">01 &middot; Money first</span>
+    <h2>AI is not a tech project. It is a margin project.</h2>
+    <p>In 1998 the edge was a pager, a fax machine and a thick MLS book. The agents who won were the ones who called the most people and remembered them. That has not changed. What changed is the cost of remembering, following up and showing up prepared. It just dropped close to zero.</p>
+    <p>So the question for a broker is not which AI tool to buy. It is which hours in your office produce money, which hours only support the money, and which hours are pure admin that a machine should carry. Start there and every tool decision gets easy.</p>
+    <div class="grid">
+      <div class="card"><h4>The selling broker</h4><p>You still carry listings. AI buys you back hours: follow-up, listing prep, market updates, transaction tracking. Your win is more appointments per week without more staff.</p></div>
+      <div class="card"><h4>The non-producing owner or manager</h4><p>You run the people. AI is a supervision and recruiting tool: consistent training, a written policy, cleaner files, and a pitch that says your office is the one that knows how to use this safely.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="worksheet">
+  <div class="wrap">
+    <span class="num">02 &middot; The task-list method</span>
+    <h2>Have every agent write down what they actually do all week.</h2>
+    <p>Not what they think they do. A real list, with hours. Then sort each task into one of three buckets. The list is the AI plan. Nothing gets automated that is not on it.</p>
+    <div class="grid">
+      <div class="card do"><span class="tag">Automate</span><h4>AI does it, a human checks it</h4><p>Drafting follow-up, market summaries, listing description first drafts, meeting notes, transaction checklists.</p></div>
+      <div class="card"><span class="tag" style="color:var(--gold-deep)">Assist</span><h4>AI helps, a human drives</h4><p>Pricing prep, objection practice, CMA narrative, social calendars, research before a listing appointment.</p></div>
+      <div class="card dont"><span class="tag">Keep human</span><h4>No machine, ever</h4><p>Negotiation, fiduciary advice, anything you sign, anything about money with a client, fair housing judgment calls.</p></div>
+    </div>
+    <h3>Worksheet</h3>
+    <p>Fill it in here or print it. It saves in your own browser only. Nothing is sent anywhere.</p>
+    <div class="ws-scroll">
+      <table class="ws" id="ws">
+        <thead><tr><th>#</th><th>Task (be specific)</th><th>Hours / week</th><th>Makes money?</th><th>Bucket</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="ws-tools">
+      <button class="btn btn-ghost" type="button" id="ws-add">Add a row</button>
+      <button class="btn btn-ghost" type="button" onclick="window.print()">Print this page</button>
+      <button class="btn btn-ghost" type="button" id="ws-clear">Clear</button>
+      <span class="ws-total" id="ws-total" aria-live="polite"></span>
+    </div>
+    <div class="callout"><p><b>The manager's version:</b> collect the lists from every agent, find the five tasks that show up on almost all of them, and build your office templates for those five first. That is your training calendar for the next quarter.</p></div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <span class="num">03 &middot; Picking tools</span>
+    <h2>The big tools are converging. Pick by the task, not the logo.</h2>
+    <p>Claude, ChatGPT and Gemini now do most of the same things: write, read documents, search the web, remember instructions, and work inside projects. The differences are real but small, and they change every few months. Do not make your office policy depend on one brand.</p>
+    <ul class="list">
+      <li><b>Writing in your voice and reading long documents:</b> test all three on the same disclosure packet or listing and keep the one your agents like.</li>
+      <li><b>Already living in Google Workspace or Microsoft 365:</b> the built-in assistant (Gemini or Copilot) may be the cheapest win, because it is already where your files are.</li>
+      <li><b>Client data of any kind:</b> only on a business or team plan where training on your data is off and an admin controls the accounts. Free personal accounts are for public information only.</li>
+    </ul>
+    <p>Six questions to ask any vendor, in writing, before client files go in: Is data encrypted? Can we set retention and delete on demand? Is our data used for training? Can an admin manage and remove users? Are actions logged? Where is the data stored?</p>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap">
+    <span class="num">04 &middot; The Platinum Card rule</span>
+    <h2>You would not hand a new hire your Platinum card on day one. Do not hand it to an AI either.</h2>
+    <p>Access is earned in steps. A new tool, or an AI that can connect to email, calendar, CRM or files, starts at the bottom and moves up only after a clean month.</p>
+    <div class="ladder">
+      <div><b>1</b><strong>Read only</strong><span>It can read and summarize. It cannot change or send anything.</span></div>
+      <div><b>2</b><strong>Draft only</strong><span>It writes. A human sends. Every time.</span></div>
+      <div><b>3</b><strong>Act with approval</strong><span>It proposes an action and waits for a click: a calendar entry, a CRM task.</span></div>
+      <div><b>4</b><strong>Act within limits</strong><span>Low-risk sends only, inside written limits, by written exception from the broker.</span></div>
+    </div>
+    <div class="callout warn"><p><b>Never, at any level:</b> signing, sending contracts or offers, giving legal or tax advice, talking to a client about money, or moving client files outside the approved workspace.</p></div>
+  </div>
+</section>
+
+<section id="instructions">
+  <div class="wrap">
+    <span class="num">05 &middot; Custom instructions</span>
+    <h2>Ten minutes of setup that makes every answer better.</h2>
+    <p>Every major assistant lets you save standing instructions so you stop repeating yourself. Set it once per agent, and the AI shows up knowing who it works for, what market it is in, and what it is never allowed to do.</p>
+    <div class="tabs" role="tablist" aria-label="Where to set it">
+      <button role="tab" aria-selected="true" aria-controls="t-claude" id="b-claude">Claude</button>
+      <button role="tab" aria-selected="false" aria-controls="t-chatgpt" id="b-chatgpt">ChatGPT</button>
+      <button role="tab" aria-selected="false" aria-controls="t-gemini" id="b-gemini">Gemini</button>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="t-claude" aria-labelledby="b-claude">
+      <p><b>Where:</b> Settings, then Profile, and the box that asks what Claude should consider in its responses. For a team or one listing, create a Project and paste the instructions into the project instructions, then add your reference files to that project.</p>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="t-chatgpt" aria-labelledby="b-chatgpt" hidden>
+      <p><b>Where:</b> Settings, then Personalization, then Custom instructions. For a team or one listing, create a Project and add the instructions and files there. On a Team or Enterprise plan, an admin can confirm training on your data is off.</p>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="t-gemini" aria-labelledby="b-gemini" hidden>
+      <p><b>Where:</b> Settings, then Saved info, for standing facts about you. For a repeatable job, build a skill (Google is turning Gems into skills, starting November 17, 2026 on personal accounts and in 2027 on Workspace). In Google Workspace, check with your admin which data settings apply to your domain.</p>
+    </div>
+    <div class="tpl-wrap">
+      <button class="copy" type="button" data-copy="tpl-ci">Copy</button>
+      <div class="tpl" id="tpl-ci">WHO I AM: I am a licensed California real estate agent with [BROKERAGE NAME], DRE #[NUMBER], working mainly in [CITIES / ZIP CODES].
+WHO I SERVE: [sellers / buyers / both], mostly [describe your typical client].
+HOW I WRITE: Short sentences. Plain English. Warm and direct. No hype words like "stunning" or "dream home." No em dashes.
+WHAT I WANT FROM YOU: Ask me one clarifying question before long work. Give me a draft, then three ways to make it better. Label anything you are not sure is true as UNVERIFIED.
+NEVER: Give legal or tax advice. Describe a neighborhood by who lives there (race, religion, national origin, family status, disability, or any protected class). Invent facts about a property. Promise a price or a result.
+ALWAYS: Remind me to check the MLS, the disclosures and my broker before anything goes to a client. Keep client names and personal details out unless I am in my brokerage's approved workspace.</div>
+    </div>
+  </div>
+</section>
+
+<section id="sellers">
+  <div class="wrap">
+    <span class="num">06 &middot; Who to call next</span>
+    <h2>Tomorrow's sellers are already in your database. AI helps you find them first.</h2>
+    <p>The average agent has a few hundred names. A busy one has 2,000. Most of those people have not heard from the agent in a year. That is the cheapest lead source in the business, and it is the one AI is best at working.</p>
+    <ol class="list">
+      <li><b>Clean the list.</b> Export your CRM. Have AI find duplicates, missing fields, and past clients with no contact in 12 months. Do this inside an approved business workspace, not a free account.</li>
+      <li><b>Add public records.</b> County assessor and recorder data is public: years owned, owner-occupied or not, property type. Long ownership plus life change is where listings come from.</li>
+      <li><b>Add market context.</b> Use your MLS's market statistics and your own sold history to tell each owner what their neighborhood did this year. That is a reason to call, not a pitch.</li>
+      <li><b>Score by property, never by person.</b> Rank by years owned, estimated equity, property type and past relationship. Never by age, family, ethnicity, religion or any protected characteristic, and never by guesses about those.</li>
+      <li><b>Run a resurrection campaign.</b> A real, personal note to people who have not heard from you: what their home did, what you are seeing, an offer to help. AI drafts it. The agent edits it and sends it.</li>
+    </ol>
+    <div class="grid">
+      <div class="card do"><span class="tag">Do</span><h4>Use MLS data the way your MLS allows</h4><p>CRMLS rules limit MLS data to marketing listings and valuations, and restrict using it to build solicitation lists, including from expired and canceled listings. Aggregate market stats, your own listings and public records are the safe start. Ask CRMLS before uploading MLS data into an outside AI tool.</p></div>
+      <div class="card dont"><span class="tag">Don't</span><h4>Let an AI voice make cold calls</h4><p>The FCC has ruled that AI-generated voices count as artificial voices under the TCPA. Robocalls or texts to cell phones without the right written consent can cost $500 to $1,500 per call. Humans dial. Scrub the Do Not Call list.</p></div>
+      <div class="card dont"><span class="tag">Don't</span><h4>Target people instead of properties</h4><p>Fair housing law covers who sees your marketing. Filter lists by property facts, not by who you think lives there, and keep ad audiences broad.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="marketing">
+  <div class="wrap">
+    <span class="num">07 &middot; Local marketing intel</span>
+    <h2>Post when your town is actually looking.</h2>
+    <ul class="list">
+      <li><b>Timing by area:</b> your own social insights show when your followers in each area are online. Ask AI to read that export and build a posting calendar around it.</li>
+      <li><b>Where people talk:</b> local Facebook groups, Nextdoor, school and sports parent groups, HOA newsletters. Follow each group's rules. Be useful first.</li>
+      <li><b>Local vendors and events:</b> AI can build a monthly list of farmers markets, fundraisers and grand openings in your zip codes. Show up, sponsor, or feature local businesses. Relationships beat ads.</li>
+    </ul>
+    <h3>Reviews: the safe way to show your best</h3>
+    <p>Featuring great reviews in your marketing is fine. Hiding bad ones is not. Under the FTC's 2024 rule on consumer reviews, a reviews page cannot suppress negative reviews while implying it shows them all, and civil penalties run above $50,000 per violation. Google bans review gating outright: you may not discourage negative reviews or selectively ask for positive ones.</p>
+    <div class="grid">
+      <div class="card do"><span class="tag">Do</span><h4>"Featured reviews" with a link to all of them</h4><p>Label a curated selection as featured and link to your complete Google or Zillow profile right next to it.</p></div>
+      <div class="card dont"><span class="tag">Don't</span><h4>Review gating</h4><p>Do not survey clients first and send only the happy ones to Google. Ask every client the same way.</p></div>
+    </div>
+    <h3>Title and escrow partners: keep it clean</h3>
+    <p>Title companies can still teach a class, sponsor an event, or give you standard property profiles. What creates RESPA Section 8 risk is a title company doing work an agent would otherwise pay for, like building your database, running your marketing, or setting up your AI, in exchange for referrals. Paying an expense the agent would otherwise carry is a thing of value under Regulation X, and violations can bring fines, jail time and triple damages. If it saves you money and comes with an expectation of business, ask your broker or counsel first.</p>
+  </div>
+</section>
+
+<section id="guardrails">
+  <div class="wrap">
+    <span class="num">08 &middot; Guardrails</span>
+    <h2>The rules that do not move.</h2>
+    <ul class="list">
+      <li><b>Altered listing photos:</b> since January 1, 2026 (AB 723), a digitally altered listing photo needs a disclosure on or next to the image and a link or access to the original. Virtual staging and AI edits included.</li>
+      <li><b>Bots tell people they are bots:</b> California law requires disclosure when a bot is used to influence a sale online.</li>
+      <li><b>Fair housing:</b> HUD withdrew its 2024 guidance on digital ads in 2025, but the Fair Housing Act and California's broader FEHA did not change. No neighborhood descriptions based on who lives there, and no ad targeting by protected class, even when an AI suggested it.</li>
+      <li><b>Confidentiality:</b> client information goes only into an approved business workspace with training off.</li>
+      <li><b>Supervision:</b> what an AI produces under an agent's name is that agent's work and the broker's responsibility. A human reads it before it goes out.</li>
+    </ul>
+    <p class="fine">This page is general education, not legal advice. Check current rules with your broker, your MLS and your counsel before you act.</p>
+  </div>
+</section>
+
+<section id="private">
+  <div class="wrap">
+    <span class="num">09 &middot; Private and local models</span>
+    <h2>Some work should never leave your building.</h2>
+    <p>Free, open AI models now run on a good desktop or a small office server. Tools like Ollama and LM Studio install them in minutes. Nothing you type leaves the machine, and there is no monthly bill.</p>
+    <ul class="list">
+      <li><b>Good fits:</b> cleaning up a database export, summarizing internal training notes, sorting old files, first drafts of internal documents.</li>
+      <li><b>Still use the big business plans for:</b> the best writing quality, web research, and anything your agents need on their phones.</li>
+      <li><b>The office pattern:</b> public information can go anywhere. Client information goes to the business plan with training off, or stays on the local machine.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="policy">
+  <div class="wrap">
+    <span class="num">10 &middot; Office AI policy</span>
+    <h2>A one-page policy your agents will actually read.</h2>
+    <p>Copy it, put your office name on it, have counsel review it, and have every agent sign it. Revisit it every quarter. It is a starting point, not legal advice.</p>
+    <div class="tpl-wrap">
+      <button class="copy" type="button" data-copy="tpl-policy">Copy</button>
+      <div class="tpl" id="tpl-policy">[OFFICE NAME] ARTIFICIAL INTELLIGENCE USE POLICY
+Effective [DATE]. Applies to every licensee, assistant and staff member.
+
+1. APPROVED TOOLS. Use only the AI tools on the office approved list: [LIST]. Client information goes only into approved business accounts with training on our data turned off. Personal and free accounts are for public information only.
+
+2. HUMAN REVIEW. A licensee reads, verifies and approves every AI output before it reaches a client, the public or another agent. You are responsible for what goes out under your name.
+
+3. ACCESS IN STEPS. AI tools connected to email, calendar, CRM or files start read-only. Moving to draft, act-with-approval or act-within-limits requires written approval from [BROKER / MANAGER].
+
+4. NEVER. No AI may sign documents, send offers or contracts, give legal or tax advice, discuss money terms with a client, or move client files outside approved systems.
+
+5. FAIR HOUSING. No content or targeting based on race, color, religion, sex, gender identity, sexual orientation, national origin, ancestry, familial status, disability, marital status, source of income or any other protected class. Describe property, never people.
+
+6. ADVERTISING. Digitally altered listing photos are disclosed, with access to the original. Reviews are never suppressed or selectively solicited. Featured reviews link to the full profile.
+
+7. CALLS AND TEXTS. No AI-generated or prerecorded voice calls, and no automated texts, without the legally required prior written consent. Scrub Do Not Call lists. When in doubt, a human dials.
+
+8. MLS DATA. MLS data is used only as our MLS rules and data license allow. Ask [BROKER / MANAGER] before uploading MLS data into any outside tool.
+
+9. VENDORS. New AI vendors answer six questions in writing before approval: encryption, retention, training on our data, admin controls, audit logs, data location.
+
+10. INCIDENTS. Report any AI mistake that reached a client, or any client data entered into an unapproved tool, to [BROKER / MANAGER] the same day.
+
+Agent name: ____________________  Signature: ____________________  Date: ________</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="contact" id="contact">
+    <span class="eyebrow">Free, no strings</span>
+    <h2>Want this in front of your agents? I will come to your office.</h2>
+    <p>Two things I am happy to do at no cost. A talk at your sales meeting, built for your office. And a hands-on session where we set up the custom instructions on your agents' own phones and walk through the policy. Santa Clarita Valley and the SRAR footprint. Nothing to buy.</p>
+    <p>If you want to go further, pick a time on my calendar.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="https://bookwithhonor.com" target="_blank" rel="noopener">Get on Connor's Calendar</a>
+      <a class="btn btn-ghost" href="sms:+16614762217?&body=BROKER%20office%20visit">Text 661-476-2217</a>
+      <a class="btn btn-ghost" href="mailto:connor@connorwithhonor.com?subject=Broker%20office%20visit">Email Connor</a>
+    </div>
+    <div class="qr-card">
+      <img src="/brokers/qr-brokers.png" alt="QR code that opens connorwithhonor.com/brokers" width="96" height="96">
+      <p><b>Share this page.</b> Scan to open connorwithhonor.com/brokers on any phone.</p>
+    </div>
+    <p style="margin-top:1.2rem;font-size:.92rem">Connor MacIvor &middot; REALTOR&reg; since 1998 &middot; CA DRE #01238257 &middot; SYNC Brokerage</p>
+  </div>
+</div>
+</main>
+
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-legal" style="margin-top:.8rem">General education for real estate professionals. Not legal advice. Equal Housing Opportunity.</p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+
+<script>
+(function(){
+  // tabs
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(o){var on=o===t;o.setAttribute('aria-selected',on);document.getElementById(o.getAttribute('aria-controls')).hidden=!on})})});
+  // copy buttons
+  [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(b){b.addEventListener('click',function(){var txt=document.getElementById(b.getAttribute('data-copy')).innerText;var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)};if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done,function(){})}else{var r=document.createRange();r.selectNodeContents(document.getElementById(b.getAttribute('data-copy')));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');done()}})});
+  // worksheet
+  var KEY='brokers-ws-v1',body=document.querySelector('#ws tbody'),total=document.getElementById('ws-total');
+  var seed=[['Follow-up texts and emails to past clients','',''],['Writing listing descriptions','',''],['Market updates for sellers','',''],['Transaction deadline tracking','',''],['Social media posts','',''],['Listing appointments','','']];
+  function load(){try{var v=JSON.parse(localStorage.getItem(KEY));if(v&&v.length)return v}catch(e){}return seed.map(function(r){return [r[0],'','','']})}
+  function save(){var rows=[].slice.call(body.rows).map(function(tr){return [].slice.call(tr.querySelectorAll('input,select')).map(function(i){return i.value})});try{localStorage.setItem(KEY,JSON.stringify(rows))}catch(e){}sum()}
+  function sum(){var h=0;[].slice.call(body.querySelectorAll('input[type=number]')).forEach(function(i){h+=parseFloat(i.value)||0});total.textContent=h?('Total: '+h+' hours a week'):''}
+  function sel(opts,v,label){var s=document.createElement('select');s.setAttribute('aria-label',label);opts.forEach(function(o){var op=document.createElement('option');op.value=o;op.textContent=o||'Choose';if(o===v)op.selected=true;s.appendChild(op)});return s}
+  function row(r){var tr=document.createElement('tr');var n=document.createElement('td');n.className='n';tr.appendChild(n);
+    var a=document.createElement('input');a.type='text';a.value=r[0]||'';a.setAttribute('aria-label','Task');var b=document.createElement('input');b.type='number';b.min='0';b.step='0.5';b.inputMode='decimal';b.value=r[1]||'';b.setAttribute('aria-label','Hours per week');
+    [a,b,sel(['','Yes, directly','Supports it','No, admin'],r[2],'Makes money'),sel(['','Automate','Assist','Keep human'],r[3],'Bucket')].forEach(function(el){var td=document.createElement('td');td.appendChild(el);tr.appendChild(td)});body.appendChild(tr);num()}
+  function num(){[].slice.call(body.rows).forEach(function(tr,k){tr.cells[0].textContent=k+1})}
+  load().forEach(row);sum();
+  body.addEventListener('input',save);body.addEventListener('change',save);
+  document.getElementById('ws-add').addEventListener('click',function(){row(['','','','']);save()});
+  document.getElementById('ws-clear').addEventListener('click',function(){body.innerHTML='';for(var k=0;k<6;k++)row(['','','','']);save()});
+})();
+</script>
+</body>
+</html>
