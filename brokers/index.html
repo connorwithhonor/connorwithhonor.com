@@ -94,6 +94,15 @@ ul.list li,ol.list li{margin:.4rem 0;font-size:1.02rem}
 .contact h2{color:#fff}
 .contact p{color:#d8cfbc}
 .contact .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.qr-card{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem;margin-top:1.6rem;max-width:460px;box-shadow:var(--shadow)}
+.qr-card img{width:96px;height:96px;flex:0 0 auto}
+.qr-card p{margin:0;font-size:.95rem}
+.contact .qr-card{background:#fff;color:var(--ink);border:0;margin-top:1.4rem}
+.contact .qr-card p{color:var(--body)}
+.btn-cal{background:#fff;color:#2a1d00;border:2px solid var(--gold)}
+.btn-cal:hover{background:var(--gold-soft)}
+a.btn:focus-visible,button:focus-visible{outline:3px solid var(--gold-deep);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.btn,.btn-gold:hover{transition:none;transform:none}}
 .fine{font-size:.85rem;color:var(--muted);max-width:80ch}
 
 body>nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 20px}
@@ -127,10 +136,14 @@ footer{background:#0a0a0f;color:#9a9aa6;padding:2.6rem 20px 2rem;margin-top:2rem
   <div class="wrap">
     <span class="eyebrow">SRAR Broker Owner Manager meeting &middot; November 9, 2026</span>
     <h1>Leading Your Office Into AI: <em>what to automate, what to protect,</em> and how to find tomorrow's sellers.</h1>
-    <p class="lead">Everything from the talk, free, no email required. Copy the templates, print the worksheet, hand the policy to your managers. If you want help putting it in front of your agents, I will come to your office at no cost.</p>
+    <p class="lead">Everything from the talk, free, no email required. Copy the templates, print the worksheet, hand the policy to your managers. If you want help putting it in front of your agents, I will come to your office and speak at no cost.</p>
     <div class="cta-row">
       <a class="btn btn-gold" href="#worksheet">Start with the worksheet</a>
       <a class="btn btn-ghost" href="#policy">Get the office AI policy</a>
+    </div>
+    <div class="qr-card">
+      <img src="/brokers/qr-brokers.png" alt="QR code that opens connorwithhonor.com/brokers" width="96" height="96">
+      <p><b>On a computer?</b> Scan this to open the page on your phone, or share it with your managers.</p>
     </div>
     <nav class="toc" aria-label="On this page">
       <a href="#money">1. Money first</a>
@@ -356,11 +369,16 @@ Agent name: ____________________  Signature: ____________________  Date: _______
   <div class="contact" id="contact">
     <span class="eyebrow">Free, no strings</span>
     <h2>Want this in front of your agents? I will come to your office.</h2>
-    <p>A free in-office session for your team: the task-list method, the policy, and a live walk-through of the custom instructions on their own phones. Santa Clarita Valley and the SRAR footprint. No software to buy.</p>
+    <p>Two things I am happy to do at no cost. A talk at your sales meeting, built for your office. And a hands-on session where we set up the custom instructions on your agents' own phones and walk through the policy. Santa Clarita Valley and the SRAR footprint. Nothing to buy.</p>
+    <p>If you want to go further, pick a time on my calendar.</p>
     <div class="cta-row">
-      <a class="btn btn-gold" href="sms:+16614762217?&body=BROKER%20office%20visit">Text 661-476-2217</a>
-      <a class="btn btn-ghost" href="https://BookWithHonor.com" target="_blank" rel="noopener">Book a time</a>
+      <a class="btn btn-gold" href="https://bookwithhonor.com" target="_blank" rel="noopener">Get on Connor's Calendar</a>
+      <a class="btn btn-ghost" href="sms:+16614762217?&body=BROKER%20office%20visit">Text 661-476-2217</a>
       <a class="btn btn-ghost" href="mailto:connor@connorwithhonor.com?subject=Broker%20office%20visit">Email Connor</a>
+    </div>
+    <div class="qr-card">
+      <img src="/brokers/qr-brokers.png" alt="QR code that opens connorwithhonor.com/brokers" width="96" height="96">
+      <p><b>Share this page.</b> Scan to open connorwithhonor.com/brokers on any phone.</p>
     </div>
     <p style="margin-top:1.2rem;font-size:.92rem">Connor MacIvor &middot; REALTOR&reg; since 1998 &middot; CA DRE #01238257 &middot; SYNC Brokerage</p>
   </div>
