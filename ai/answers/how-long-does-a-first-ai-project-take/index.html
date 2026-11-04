@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Long Does a First AI Project Take?</title>
+<meta name="description" content="I explain what controls an AI project timeline, from access and scope to testing, staff review, and a usable handoff.">
+<meta property="og:title" content="How Long Does a First AI Project Take?">
+<meta property="og:description" content="I explain what controls an AI project timeline, from access and scope to testing, staff review, and a usable handoff.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/answers/how-long-does-a-first-ai-project-take/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/answers/how-long-does-a-first-ai-project-take/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--bg-card-hover:#181828;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,0.04) 0%,transparent 55%);pointer-events:none;z-index:0}
+.tron-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.tron-grid{position:absolute;top:55%;left:-50%;width:200%;height:200%;background-image:linear-gradient(rgba(0,229,255,0.10) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.10) 1px,transparent 1px);background-size:80px 80px;transform:perspective(600px) rotateX(75deg);transform-origin:center top;animation:flyThrough 4s linear infinite;box-shadow:inset 0 0 400px var(--bg-primary)}
+.tron-horizon{position:absolute;top:55%;left:0;width:100%;height:2px;background:var(--cyan);box-shadow:0 0 60px 20px rgba(0,229,255,0.15);opacity:.3}
+@keyframes flyThrough{0%{background-position-y:0}100%{background-position-y:80px}}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+.scan-line{position:fixed;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);opacity:.12;animation:scanDown 8s linear infinite;z-index:3;pointer-events:none}
+@keyframes scanDown{0%{top:-2px}100%{top:100vh}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 15px rgba(0,229,255,0.06)}50%{box-shadow:0 0 35px rgba(0,229,255,0.15)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes borderGlow{0%,100%{border-color:rgba(0,229,255,0.15)}50%{border-color:rgba(0,229,255,0.4)}}
+section,nav,footer,main{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:8px 20px!important;font-size:.8rem!important;letter-spacing:2px;border:none;cursor:pointer;transition:all .3s!important}
+.nav-cta:hover{background:#ff3d5a!important;transform:scale(1.05)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px}
+.nav-hamburger span{width:28px;height:2px;background:var(--cyan)}
+.hero{min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,255,0.08) 0%,rgba(255,23,68,0.03) 40%,transparent 70%);pointer-events:none}
+.hero-badge{font-family:var(--font-mono);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,0.3);padding:8px 24px;margin-bottom:2.5rem;display:inline-block;animation:glowPulse 4s ease-in-out infinite}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,6rem);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-2px;margin-bottom:1.5rem;color:var(--white)}
+.hero h1 .accent{color:var(--cyan)}
+.hero-sub{font-family:var(--font-body);font-size:1.2rem;color:var(--gray-light);max-width:720px;margin-bottom:2.5rem;line-height:1.9}
+.hero-cta-group{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-primary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:var(--red);color:var(--white);text-decoration:none;border:none;cursor:pointer;transition:all .3s}
+.btn-primary:hover{background:#ff3d5a;transform:translateY(-2px)}
+.btn-secondary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:transparent;color:var(--cyan);border:1px solid var(--cyan-dim);text-decoration:none;cursor:pointer;transition:all .3s}
+.btn-secondary:hover{background:rgba(0,229,255,0.1);transform:translateY(-2px)}
+main{max-width:820px;margin:0 auto;padding:60px 2rem 80px}
+.section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
+.section-label::before{content:'';width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0}
+h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin:3rem 0 1.5rem;line-height:1.15}
+h2 .accent{color:var(--cyan)}
+h2 .gold{color:var(--gold)}
+h2 .red{color:var(--red)}
+h3{font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:2.5rem 0 1rem;color:var(--cyan)}
+p{font-size:1.08rem;color:var(--gray-light);line-height:1.85;margin-bottom:1.25rem}
+p.lede{font-size:1.25rem;color:var(--white);font-weight:400;line-height:1.8;margin-bottom:2rem;border-left:3px solid var(--cyan);padding-left:1.5rem}
+strong{color:var(--white);font-weight:600}
+em{color:var(--cyan);font-style:italic}
+a.inline{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,229,255,0.3)}
+a.inline:hover{border-bottom-color:var(--cyan)}
+.pull-quote{font-family:var(--font-display);font-size:1.4rem;line-height:1.4;color:var(--white);text-align:center;letter-spacing:1px;padding:2.5rem 1rem;margin:3rem 0;border-top:1px solid rgba(0,229,255,0.2);border-bottom:1px solid rgba(0,229,255,0.2);text-transform:uppercase;font-weight:600}
+.pull-quote span{color:var(--cyan)}
+.show-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2.5rem 0}
+.show-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;text-decoration:none;color:var(--white);transition:all .3s;display:block;border-left:3px solid var(--cyan)}
+.show-card:hover{transform:translateY(-4px);background:var(--bg-card-hover);box-shadow:0 8px 30px rgba(0,229,255,0.1)}
+.show-card h4{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem;color:var(--cyan)}
+.show-card p{font-size:.95rem;margin:0;color:var(--gray-light)}
+.vertical-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2.5rem 0}
+.vertical-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;text-decoration:none;color:var(--white);transition:all .3s;display:block;border-top:3px solid var(--gold)}
+.vertical-card:hover{transform:translateY(-4px);background:var(--bg-card-hover);box-shadow:0 8px 30px rgba(255,196,0,0.1)}
+.vertical-card h4{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem;color:var(--gold)}
+.vertical-card p{font-size:.95rem;margin:0;color:var(--gray-light)}
+.faq{margin:3rem 0}
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.05);padding:1.5rem 0}
+.faq-item h4{font-family:var(--font-display);font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:.75rem}
+.faq-item p{margin:0;font-size:1rem}
+.cta-block{background:var(--bg-secondary);border:1px solid rgba(0,229,255,0.15);padding:3rem 2rem;text-align:center;margin:4rem 0 2rem;animation:borderGlow 5s ease-in-out infinite}
+.cta-block h3{color:var(--white);margin-top:0;font-size:1.6rem}
+.cta-block p{margin-bottom:1.5rem;max-width:560px;margin-left:auto;margin-right:auto}
+.stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:2rem 0}
+.stack-item{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:1.5rem;border-left:3px solid var(--cyan)}
+.stack-item h4{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.5rem;color:var(--cyan)}
+.stack-item p{font-size:.9rem;margin:0;color:var(--gray-light)}
+.stack-item .price{font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;color:var(--gold);margin-top:.75rem;display:block}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center;margin-top:4rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.footer-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-legal{font-size:.8rem;color:var(--gray);line-height:1.8}
+.footer-legal a{color:var(--cyan-dim);text-decoration:none}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);margin-top:1.5rem}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+.macivor{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;font-weight:600}
+@media(max-width:1024px){.show-grid,.vertical-grid,.stack-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:flex}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:rgba(10,10,15,0.98);padding:2rem;border-bottom:1px solid rgba(0,229,255,0.1)}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can you tell me the duration without seeing my workflow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I can explain the stages, but I would not treat an estimate as reliable until the task and dependencies are clear. Access, source quality, and required actions all affect the schedule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a fast demo mean the project is nearly complete?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. I still need evidence about connections, permissions, exception handling, and staff use. A prototype can answer a design question while substantial operating work remains unfinished."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I have an event or deadline approaching?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tell me the date and what must work by then. I would assess a narrower deliverable and its dependencies. I would not assume the full original idea fits simply because the date is fixed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who should approve the finished work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I want a named business owner to accept it against agreed criteria, with input from the people using it. The builder should provide evidence rather than declare completion based only on installation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should maintenance appear in the project schedule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The handoff should identify who handles maintenance and checks after launch. I would separate that continuing responsibility from initial construction so the business understands what follows acceptance."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/ai/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/ai/">AI</a><a href="/ai/answers/">Answers</a><a href="tel:+16614762217" class="nav-cta">(661) 476-2217</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">AI Answers</div>
+<h1>How long does a first AI project take?</h1>
+<p class="hero-sub direct-answer">A first AI project&#x27;s timeline depends on the task, the condition of your information, required connections, and how quickly decisions and testing happen. I would estimate it after reviewing those dependencies. A demonstration can appear before the business is ready to rely on it, so the schedule must include review and handoff.</p>
+<div class="cta-block">
+<p><a class="btn-primary" style="display:inline-block;max-width:100%;letter-spacing:1px;padding:14px 20px" href="https://bookwithhonor.com/?utm_source=connorwithhonor&amp;utm_medium=site&amp;utm_campaign=how-long-does-a-first-ai-project-take">Book a 30-minute AI call with Connor</a></p>
+<p>Or call <a class="inline" href="tel:+16614762217">(661) 476-2217</a></p>
+</div>
+</section>
+<main><article>
+<section><h2>Why would I avoid giving you a deadline immediately?</h2>
+<p>The same project name can describe very different work. An internal assistant that drafts a response from an approved document has a different scope from a process that updates records and sends messages. Before estimating, I need to know what the system may do and what your team expects to receive.</p>
+<p>Imagine a Santa Clarita service business asking for help with appointment requests. Are we preparing a summary for staff, suggesting an available slot, or changing a live calendar? Does the information already exist in a reliable place? Who approves the result? Those answers change the build and the tests. I would rather put a date against an understood task than give you a number that ignores the work needed to make it usable.</p>
+</section>
+<section><h2>What needs to happen before building can begin?</h2>
+<p>Discovery should settle the workflow, the source material, the permissions, and the acceptance criteria. The owner needs to describe the current process and show representative examples. The builder needs to confirm whether the proposed connections are available. If either side is guessing about a dependency, the schedule should show that uncertainty.</p>
+<p>Access can be a separate milestone. A project may be ready to build but unable to connect because the right administrator has not approved access. Information cleanup can also take its own work. I would separate those items from construction so a delay has a visible cause and owner. Your employees should know when they will be needed for questions and review. Their participation belongs in the plan from the start.</p>
+</section>
+<section><h2>How is a prototype different from a finished workflow?</h2>
+<p>A prototype shows whether an approach is worth pursuing. It may use fictional messages and a controlled source document. That can help everyone see the proposed behavior before making live connections. I would label it clearly so a convincing demonstration does not become an accidental launch decision.</p>
+<p>A usable workflow needs more evidence. The input must reach the right destination. Permissions must fit the task. Staff must recognize exceptions and know when to intervene. The process must respond sensibly when a required connection is unavailable. Documentation and training also need to reflect what was actually built. I would include these items in the schedule even if the first draft appears quickly. The useful finish line is an accepted operating process with an owner.</p>
+</section>
+<section><h2>What tends to move the schedule after work starts?</h2>
+<p>Changes in scope can move it. A request to draft an internal reply may grow into automatic customer communication. That adds decisions and tests. I would record the new request, explain its effect, and agree on whether it belongs in this project. Quietly adding it makes the original estimate difficult to interpret.</p>
+<p>Other delays can come from conflicting source material, unavailable reviewers, or a connection that does not behave as expected. The response should be specific: what failed, who owns the next action, and what work can continue. A status message saying only that the project is progressing does not help you plan. Ask for completed evidence and remaining dependencies. You should be able to distinguish work that is built from work that has been checked and accepted.</p>
+</section>
+<section><h2>How can I help keep a first project manageable?</h2>
+<p>Choose a contained workflow and name a decision maker. Gather the current instructions and remove outdated versions from the test set. Provide examples that include difficult cases, with private details removed. Make review time available for the employees who will use the result. Those actions reduce avoidable uncertainty without pretending every technical problem can be predicted.</p>
+<p>I would organize the plan around visible milestones: agreed scope, working prototype, reviewed tests, staff practice, and accepted handoff. A milestone should have evidence you can inspect. Ask how a proposed delivery date depends on access and review, and how changes will be communicated. Bring the task and any real deadline to our conversation. I can help distinguish what must be included from what can wait for a later project, then frame an estimate around that boundary.</p>
+</section>
+<section class="faq"><h2>What timing questions should I settle before starting?</h2>
+<div class="faq-item"><h3>Can you tell me the duration without seeing my workflow?</h3><p>I can explain the stages, but I would not treat an estimate as reliable until the task and dependencies are clear. Access, source quality, and required actions all affect the schedule.</p></div>
+<div class="faq-item"><h3>Does a fast demo mean the project is nearly complete?</h3><p>Not necessarily. I still need evidence about connections, permissions, exception handling, and staff use. A prototype can answer a design question while substantial operating work remains unfinished.</p></div>
+<div class="faq-item"><h3>What if I have an event or deadline approaching?</h3><p>Tell me the date and what must work by then. I would assess a narrower deliverable and its dependencies. I would not assume the full original idea fits simply because the date is fixed.</p></div>
+<div class="faq-item"><h3>Who should approve the finished work?</h3><p>I want a named business owner to accept it against agreed criteria, with input from the people using it. The builder should provide evidence rather than declare completion based only on installation.</p></div>
+<div class="faq-item"><h3>Should maintenance appear in the project schedule?</h3><p>The handoff should identify who handles maintenance and checks after launch. I would separate that continuing responsibility from initial construction so the business understands what follows acceptance.</p></div>
+</section>
+<aside class="related"><h2>What should I settle before requesting an estimate?</h2><ul>
+<li><a class="inline" href="/ai/answers/what-does-an-ai-implementation-consultant-do/">Define what the consultant delivers</a></li>
+<li><a class="inline" href="/ai/answers/is-my-business-ready-for-ai/">Prepare information and ownership</a></li>
+<li><a class="inline" href="/ai/answers/questions-to-ask-an-ai-consultant/">Ask about acceptance and support</a></li>
+</ul></aside>
+<div class="cta-block">
+<p><a class="btn-primary" style="display:inline-block;max-width:100%;letter-spacing:1px;padding:14px 20px" href="https://bookwithhonor.com/?utm_source=connorwithhonor&amp;utm_medium=site&amp;utm_campaign=how-long-does-a-first-ai-project-take">Book a 30-minute AI call with Connor</a></p>
+<p>Or call <a class="inline" href="tel:+16614762217">(661) 476-2217</a></p>
+</div>
+</article></main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/ai/">AI with Connor</a><a href="/ai/answers/">AI Answers</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · SYNC Brokerage · DRE #02031490<br>Santa Clarita, California | connor@connorwithhonor.com</p><p class="footer-coded"><a href="https://connorwithhonor.com/ai/" target="_blank" rel="noopener noreferrer">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer>
+<script>
+document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});
+</script>
+</body>
+</html>
