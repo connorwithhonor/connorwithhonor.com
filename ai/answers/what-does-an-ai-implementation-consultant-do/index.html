@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Does an AI Implementation Consultant Do?</title>
+<meta name="description" content="I explain what an AI implementation consultant builds, how to judge the work, and what your business should receive before handoff.">
+<meta property="og:title" content="What Does an AI Implementation Consultant Do?">
+<meta property="og:description" content="I explain what an AI implementation consultant builds, how to judge the work, and what your business should receive before handoff.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://connorwithhonor.com/ai/answers/what-does-an-ai-implementation-consultant-do/">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://connorwithhonor.com/og-image.png">
+<link rel="canonical" href="https://connorwithhonor.com/ai/answers/what-does-an-ai-implementation-consultant-do/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a0a0f;--bg-secondary:#0f0f18;--bg-card:#12121e;--bg-card-hover:#181828;--cyan:#00e5ff;--cyan-dim:#00a0b3;--red:#ff1744;--red-dim:#b3102f;--gold:#ffc400;--gold-dim:#b38900;--white:#eaeaea;--gray:#6a6a7a;--gray-light:#9a9aaa;--font-display:'Oswald',sans-serif;--font-body:'Source Serif 4',Georgia,serif;--font-mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--white);font-family:var(--font-body);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,0.04) 0%,transparent 55%);pointer-events:none;z-index:0}
+.tron-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.tron-grid{position:absolute;top:55%;left:-50%;width:200%;height:200%;background-image:linear-gradient(rgba(0,229,255,0.10) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.10) 1px,transparent 1px);background-size:80px 80px;transform:perspective(600px) rotateX(75deg);transform-origin:center top;animation:flyThrough 4s linear infinite;box-shadow:inset 0 0 400px var(--bg-primary)}
+.tron-horizon{position:absolute;top:55%;left:0;width:100%;height:2px;background:var(--cyan);box-shadow:0 0 60px 20px rgba(0,229,255,0.15);opacity:.3}
+@keyframes flyThrough{0%{background-position-y:0}100%{background-position-y:80px}}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1}
+.scan-line{position:fixed;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);opacity:.12;animation:scanDown 8s linear infinite;z-index:3;pointer-events:none}
+@keyframes scanDown{0%{top:-2px}100%{top:100vh}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 15px rgba(0,229,255,0.06)}50%{box-shadow:0 0 35px rgba(0,229,255,0.15)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes borderGlow{0%,100%{border-color:rgba(0,229,255,0.15)}50%{border-color:rgba(0,229,255,0.4)}}
+section,nav,footer,main{position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-family:var(--font-display);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--gray-light);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:8px 20px!important;font-size:.8rem!important;letter-spacing:2px;border:none;cursor:pointer;transition:all .3s!important}
+.nav-cta:hover{background:#ff3d5a!important;transform:scale(1.05)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px}
+.nav-hamburger span{width:28px;height:2px;background:var(--cyan)}
+.hero{min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,255,0.08) 0%,rgba(255,23,68,0.03) 40%,transparent 70%);pointer-events:none}
+.hero-badge{font-family:var(--font-mono);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,0.3);padding:8px 24px;margin-bottom:2.5rem;display:inline-block;animation:glowPulse 4s ease-in-out infinite}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,6rem);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-2px;margin-bottom:1.5rem;color:var(--white)}
+.hero h1 .accent{color:var(--cyan)}
+.hero-sub{font-family:var(--font-body);font-size:1.2rem;color:var(--gray-light);max-width:720px;margin-bottom:2.5rem;line-height:1.9}
+.hero-cta-group{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-primary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:var(--red);color:var(--white);text-decoration:none;border:none;cursor:pointer;transition:all .3s}
+.btn-primary:hover{background:#ff3d5a;transform:translateY(-2px)}
+.btn-secondary{font-family:var(--font-display);font-size:.9rem;text-transform:uppercase;letter-spacing:3px;padding:14px 36px;background:transparent;color:var(--cyan);border:1px solid var(--cyan-dim);text-decoration:none;cursor:pointer;transition:all .3s}
+.btn-secondary:hover{background:rgba(0,229,255,0.1);transform:translateY(-2px)}
+main{max-width:820px;margin:0 auto;padding:60px 2rem 80px}
+.section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
+.section-label::before{content:'';width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0}
+h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin:3rem 0 1.5rem;line-height:1.15}
+h2 .accent{color:var(--cyan)}
+h2 .gold{color:var(--gold)}
+h2 .red{color:var(--red)}
+h3{font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:2.5rem 0 1rem;color:var(--cyan)}
+p{font-size:1.08rem;color:var(--gray-light);line-height:1.85;margin-bottom:1.25rem}
+p.lede{font-size:1.25rem;color:var(--white);font-weight:400;line-height:1.8;margin-bottom:2rem;border-left:3px solid var(--cyan);padding-left:1.5rem}
+strong{color:var(--white);font-weight:600}
+em{color:var(--cyan);font-style:italic}
+a.inline{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,229,255,0.3)}
+a.inline:hover{border-bottom-color:var(--cyan)}
+.pull-quote{font-family:var(--font-display);font-size:1.4rem;line-height:1.4;color:var(--white);text-align:center;letter-spacing:1px;padding:2.5rem 1rem;margin:3rem 0;border-top:1px solid rgba(0,229,255,0.2);border-bottom:1px solid rgba(0,229,255,0.2);text-transform:uppercase;font-weight:600}
+.pull-quote span{color:var(--cyan)}
+.show-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2.5rem 0}
+.show-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;text-decoration:none;color:var(--white);transition:all .3s;display:block;border-left:3px solid var(--cyan)}
+.show-card:hover{transform:translateY(-4px);background:var(--bg-card-hover);box-shadow:0 8px 30px rgba(0,229,255,0.1)}
+.show-card h4{font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem;color:var(--cyan)}
+.show-card p{font-size:.95rem;margin:0;color:var(--gray-light)}
+.vertical-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2.5rem 0}
+.vertical-card{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:2rem;text-decoration:none;color:var(--white);transition:all .3s;display:block;border-top:3px solid var(--gold)}
+.vertical-card:hover{transform:translateY(-4px);background:var(--bg-card-hover);box-shadow:0 8px 30px rgba(255,196,0,0.1)}
+.vertical-card h4{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:.75rem;color:var(--gold)}
+.vertical-card p{font-size:.95rem;margin:0;color:var(--gray-light)}
+.faq{margin:3rem 0}
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.05);padding:1.5rem 0}
+.faq-item h4{font-family:var(--font-display);font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:.75rem}
+.faq-item p{margin:0;font-size:1rem}
+.cta-block{background:var(--bg-secondary);border:1px solid rgba(0,229,255,0.15);padding:3rem 2rem;text-align:center;margin:4rem 0 2rem;animation:borderGlow 5s ease-in-out infinite}
+.cta-block h3{color:var(--white);margin-top:0;font-size:1.6rem}
+.cta-block p{margin-bottom:1.5rem;max-width:560px;margin-left:auto;margin-right:auto}
+.stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:2rem 0}
+.stack-item{background:var(--bg-card);border:1px solid rgba(255,255,255,0.05);padding:1.5rem;border-left:3px solid var(--cyan)}
+.stack-item h4{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.5rem;color:var(--cyan)}
+.stack-item p{font-size:.9rem;margin:0;color:var(--gray-light)}
+.stack-item .price{font-family:var(--font-mono);font-size:.75rem;letter-spacing:2px;color:var(--gold);margin-top:.75rem;display:block}
+footer{padding:3rem 2rem;border-top:1px solid rgba(0,229,255,0.08);text-align:center;margin-top:4rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.footer-links a{font-family:var(--font-mono);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-legal{font-size:.8rem;color:var(--gray);line-height:1.8}
+.footer-legal a{color:var(--cyan-dim);text-decoration:none}
+.footer-coded{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2px;color:var(--gray);margin-top:1.5rem}
+.footer-coded a{color:var(--cyan-dim);text-decoration:none}
+.macivor{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;font-weight:600}
+@media(max-width:1024px){.show-grid,.vertical-grid,.stack-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:flex}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:rgba(10,10,15,0.98);padding:2rem;border-bottom:1px solid rgba(0,229,255,0.1)}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is an AI consultant the same as a software developer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The roles can overlap. I use consulting to define the problem and implementation to build the approved process. Ask who handles each part, including testing, staff instruction, and ongoing maintenance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will implementation require replacing my current software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I would inspect what you already use before recommending a replacement. An existing feature or a small connection may handle the task. A replacement needs a specific reason tied to your workflow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should the consultant have access to every account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I would give access only to what the agreed work requires. Your business should retain account ownership. Define who grants access, what it permits, and how it gets removed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a working demonstration enough to accept the project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I would also require tests of missing information, failed connections, and human handoff. Your staff should demonstrate the daily procedure, including pausing the process and finding work that needs attention."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I bring to an implementation conversation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bring a description of the repeated task, a redacted example, and the name of its owner. Tell me where work stalls and what a completed result should look like."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="tron-wrapper"><div class="tron-grid"></div><div class="tron-horizon"></div></div>
+<nav><div class="nav-inner"><a href="/ai/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/ai/">AI</a><a href="/ai/answers/">Answers</a><a href="tel:+16614762217" class="nav-cta">(661) 476-2217</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="hero">
+<div class="hero-badge">AI Answers</div>
+<h1>What does an AI implementation consultant actually do?</h1>
+<p class="hero-sub direct-answer">An AI implementation consultant turns a business problem into a working process that people can use and check. I start with the task, connect the necessary tools, set limits, test the results, and explain who owns the work afterward. The deliverable should include a usable system and a clear handoff.</p>
+<div class="cta-block">
+<p><a class="btn-primary" style="display:inline-block;max-width:100%;letter-spacing:1px;padding:14px 20px" href="https://bookwithhonor.com/?utm_source=connorwithhonor&amp;utm_medium=site&amp;utm_campaign=what-does-an-ai-implementation-consultant-do">Book a 30-minute AI call with Connor</a></p>
+<p>Or call <a class="inline" href="tel:+16614762217">(661) 476-2217</a></p>
+</div>
+</section>
+<main><article>
+<section><h2>What work am I actually hiring someone to do?</h2>
+<p>You are hiring someone to follow a piece of work from arrival to completion. That might be a service request coming into a Santa Clarita repair shop. Someone reads it, decides where it belongs, asks for missing details, and passes it to the person who can help. I want to understand that route before discussing software.</p>
+<p>The consulting work is deciding what should change. Implementation is making the approved change function in your business. That can include configuring an existing tool, connecting records, writing instructions for an AI assistant, and creating a review step. Sometimes the right answer is a basic routing rule. I would not add AI to a job that a clear form and a reliable notification can handle.</p>
+</section>
+<section><h2>What should happen before anything gets connected?</h2>
+<p>I need an example of the current task, the person responsible for it, and a definition of a useful result. A request marked complete is not useful if the customer still has no answer. The result must describe what happened for the business or customer, not just what the software displayed.</p>
+<p>I also need to know the boundaries. Which information can enter the tool? Who can approve a reply? What may the assistant change? A draft-writing assistant needs different access from something that updates appointments. Those decisions belong in the scope before accounts are connected. If staff disagree about the process, I would settle that disagreement first. Otherwise, the software becomes a fast way to repeat an unresolved argument.</p>
+</section>
+<section><h2>What does the building and testing involve?</h2>
+<p>Consider a hypothetical Canyon Country service desk receiving messy descriptions of repair problems. I might design a process that reads the message, proposes a category, and prepares a short summary. The employee sees the original message beside that summary. They can correct it before it reaches the technician. The example is a proposed workflow, not a claim about a client result.</p>
+<p>Testing means trying ordinary requests and awkward ones. A message may name the wrong product, omit a callback method, or ask for something the business does not provide. I want to see whether the system pauses, asks for help, or makes something up. I also check the destination. A good summary sitting in the wrong inbox has not solved the problem. Evidence includes the original input, the resulting record, and the review decision.</p>
+</section>
+<section><h2>What should I receive when the work is finished?</h2>
+<p>Ask for a plain description of the finished workflow. It should show where information enters, where it goes, and where a person takes control. You should also know which accounts your business owns, which connections the process needs, and how to remove the consultant&#x27;s access when appropriate.</p>
+<p>The handoff should explain how to pause the automation and how staff handle incoming work while it is paused. I would include examples of accepted outputs and reasons to reject an output. Training needs to use the actual screen employees will open. A recording of a polished presentation is less useful than a written procedure someone can follow during a busy shift. Support responsibilities should be clear before the builder leaves the project.</p>
+</section>
+<section><h2>How can I tell whether the project worked?</h2>
+<p>Start with the original problem. If requests were getting lost, check whether requests now reach the right person and remain visible until resolved. If staff were retyping details, compare the complete task, including corrections and review. I would not call a project successful just because an AI response sounds polished.</p>
+<p>Ask the consultant to demonstrate the workflow with an unfamiliar example. Then ask an employee to use it without the consultant driving. That exposes confusing steps and missing instructions. I build and test AI systems for businesses in Santa Clarita Valley and Los Angeles County. My preference is work that can be inspected: a clear starting point, a visible result, and a person accountable when the result is wrong. Bring the task you want improved to the conversation.</p>
+</section>
+<section class="faq"><h2>What else should I clarify about implementation?</h2>
+<div class="faq-item"><h3>Is an AI consultant the same as a software developer?</h3><p>The roles can overlap. I use consulting to define the problem and implementation to build the approved process. Ask who handles each part, including testing, staff instruction, and ongoing maintenance.</p></div>
+<div class="faq-item"><h3>Will implementation require replacing my current software?</h3><p>I would inspect what you already use before recommending a replacement. An existing feature or a small connection may handle the task. A replacement needs a specific reason tied to your workflow.</p></div>
+<div class="faq-item"><h3>Should the consultant have access to every account?</h3><p>I would give access only to what the agreed work requires. Your business should retain account ownership. Define who grants access, what it permits, and how it gets removed.</p></div>
+<div class="faq-item"><h3>Is a working demonstration enough to accept the project?</h3><p>I would also require tests of missing information, failed connections, and human handoff. Your staff should demonstrate the daily procedure, including pausing the process and finding work that needs attention.</p></div>
+<div class="faq-item"><h3>What should I bring to an implementation conversation?</h3><p>Bring a description of the repeated task, a redacted example, and the name of its owner. Tell me where work stalls and what a completed result should look like.</p></div>
+</section>
+<aside class="related"><h2>What should I consider before commissioning a build?</h2><ul>
+<li><a class="inline" href="/ai/answers/is-my-business-ready-for-ai/">Check readiness for implementation</a></li>
+<li><a class="inline" href="/ai/answers/questions-to-ask-an-ai-consultant/">Prepare your consultant interview</a></li>
+<li><a class="inline" href="/ai/answers/ai-tool-vs-ai-system/">Understand the surrounding system</a></li>
+</ul></aside>
+<div class="cta-block">
+<p><a class="btn-primary" style="display:inline-block;max-width:100%;letter-spacing:1px;padding:14px 20px" href="https://bookwithhonor.com/?utm_source=connorwithhonor&amp;utm_medium=site&amp;utm_campaign=what-does-an-ai-implementation-consultant-do">Book a 30-minute AI call with Connor</a></p>
+<p>Or call <a class="inline" href="tel:+16614762217">(661) 476-2217</a></p>
+</div>
+</article></main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="/ai/">AI with Connor</a><a href="/ai/answers/">AI Answers</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · SYNC Brokerage · DRE #02031490<br>Santa Clarita, California | connor@connorwithhonor.com</p><p class="footer-coded"><a href="https://connorwithhonor.com/ai/" target="_blank" rel="noopener noreferrer">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer>
+<script>
+document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});
+</script>
+</body>
+</html>
