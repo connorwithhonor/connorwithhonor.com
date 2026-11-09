@@ -7,3 +7,7 @@
 # Public URL is only a signpost: the target resolves ONLY inside the tailnet,
 # so anyone else who clicks gets a connection failure, never data.
 /mcp         https://frank.tail70d4c1.ts.net/  302
+/ai-talk /brokers/deck/ 302
+/ai-talk/ /brokers/deck/ 302
+/srar /brokers/deck/ 302
+/srar/ /brokers/deck/ 302
