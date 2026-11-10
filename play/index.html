@@ -119,6 +119,24 @@ select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--gold-b
 .near a{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;color:var(--cream);background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-weight:600;font-size:15px}
 .near a:hover{border-color:var(--line)}
 .near a span{color:var(--muted);font-weight:500;font-size:13px}
+.trap{border:1px solid rgba(255,116,97,.35);border-radius:16px;padding:14px 15px;background:linear-gradient(180deg,rgba(255,116,97,.07),rgba(255,116,97,.02))}
+.trap .via{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.trap .via i{width:8px;height:8px;border-radius:50%;background:var(--bad);animation:blink 1.1s infinite}
+@keyframes blink{50%{opacity:.25}}
+.trap .from{font-weight:700;margin-top:8px}
+.trap .msg{margin-top:6px;background:var(--ink-3);border-radius:4px 14px 14px 14px;padding:11px 13px;font-size:15.5px}
+.trap .hint{margin-top:9px;font-size:13px;color:var(--gold-bright)}
+.habit{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(232,168,56,.07);font-size:15px}
+.habit b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.guide{margin-top:18px;border-top:1px solid var(--line-soft);padding-top:14px}
+.guide summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary span{color:var(--gold-bright);font-variant-numeric:tabular-nums}
+.gitem{border:1px solid var(--line-soft);border-radius:12px;padding:10px 13px;margin-top:8px;font-size:14px;color:var(--muted)}
+.gitem b{display:block;color:var(--cream);font-size:14.5px}
+.gitem.lock{opacity:.5;border-style:dashed}
+.gitem em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;float:right}
+.gitem em.s{color:var(--good)}.gitem em.c{color:var(--bad)}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .badge{font-size:12px;font-weight:700;border:1px solid var(--line-soft);border-radius:99px;padding:4px 10px;color:var(--dim)}
 .badge.on{color:var(--gold-bright);border-color:var(--line)}
@@ -205,7 +223,7 @@ footer a{color:var(--dim)}
 
   <section class="about" id="about">
     <h2>What the game is teaching</h2>
-    <p>Escrow Run is seven decisions because a real sale turns on about seven. Miss one and you feel it at the closing table.</p>
+    <p>Escrow Run is seven decisions because a real sale turns on about seven. Miss one and you feel it at the closing table. It also has one job above the rest: to show you the traps before a real one finds you.</p>
     <ol>
       <li><b>Who you hire.</b> It changes every decision after it. Watch an agent work before you sign with one.</li>
       <li><b>Preparation.</b> Small fixes show up in the photos. Big remodels rarely pay themselves back.</li>
@@ -213,6 +231,7 @@ footer a{color:var(--dim)}
       <li><b>Exposure.</b> More qualified eyes on a home means more offers. Buyers learn a market fastest by walking it.</li>
       <li><b>The offer.</b> The highest number is not always the strongest offer. The one that closes is.</li>
       <li><b>Inspection and repairs.</b> Get a real bid before agreeing to any number. Skipping the inspection is a bet.</li>
+      <li><b>The trap.</b> Every run hides one real way people lose money in a home sale. It never announces itself. Spot it and it goes in your field guide.</li>
       <li><b>The curveball.</b> Appraisals, insurance, liens and cold feet show up late. Good preparation shows up early.</li>
     </ol>
     <h3>How long does it take to play?</h3>
@@ -461,6 +480,80 @@ var BUYER_CURVES = [
     ], a: function () { return ask(function () { return out("good", "They add a one-page rent-back with a daily rate, a deposit and an insurance line. Signed that night. The seller is grateful and it shows at the walkthrough.", 6, 11, 5); }, "Have them paper it properly."); } }
 ];
 
+/* ---------- the traps ----------
+   The point of the whole game. Every run hides one of these: a real way people lose
+   money or leverage in a home sale, dressed up as a convenience. It arrives as an
+   interruption, at a random moment, the way it does in life. r is how it went:
+   "spotted" (you protected yourself), "close" (you got lucky), "caught".
+   Each one carries a habit, and the habit is the lesson. Nobody is quizzed on it. */
+var TRAPS = {
+  buyer: [
+    { id: "wire", name: "The changed wiring instructions", via: "Email", from: "Escrow Dept <closing@escrow-secure-docs.co>",
+      msg: "Our bank details were updated this morning. Please use the attached wiring instructions for your closing funds today to avoid a delay.",
+      habit: "Wiring instructions that arrive or change by email are fake until you call a number you already had.",
+      c: [ { b: "Wire it now. Closing is in two days.", i: "You do not want to be the reason it is late.", r: "caught", fatal: "You wired your down payment to a stranger.", t: "The email was not from escrow. Someone had been reading the real thread for weeks and waited for the one day you were rushed. The money leaves the country before lunch.", m: -100 },
+           { b: "Reply and ask if this is real", i: "Quick check. Same thread.", r: "close", t: "Your reply goes to the same stranger. \u201cYes, confirmed.\u201d You are opening your banking app when your phone rings about something else, and you mention it. That call saved you. The reply did not.", m: -4, c: -14 },
+           { b: "Call escrow at the number on the card from day one", i: "Costs you ten minutes on hold.", r: "spotted", t: "The escrow officer has never changed wiring instructions by email and never will. She reports the fake. You just kept your down payment.", d: 5, c: 4 } ] },
+    { id: "holding", name: "The holding deposit", via: "Text", from: "Unknown number",
+      msg: "Hi, I am the seller's cousin helping with the sale. Another buyer is circling. Send a holding deposit by payment app tonight and I will make sure the house is yours.",
+      habit: "Your deposit goes to a licensed escrow or title company. Never to a person, never by app.",
+      c: [ { b: "Send it. You cannot lose this house.", i: "It is refundable. He said so.", r: "caught", t: "He was not the seller's cousin. He was not the seller's anything. The number is disconnected by morning.", m: -26, c: -12 },
+           { b: "Send half now, half when you meet", i: "Hedge your bet.", r: "caught", t: "You lost half as much to the same stranger. That is the entire benefit of the hedge.", m: -13, c: -8 },
+           { b: "\u201cDeposits go to escrow. Send me the escrow number.\u201d", i: "If the deal is real, this costs nothing.", r: "spotted", t: "No reply. Ever. The real seller has never heard of him.", d: 4, c: 5 } ] },
+    { id: "dual", name: "The agent for both sides", via: "In person", from: "The listing agent, at the open house",
+      msg: "No agent yet? I can write your offer too. One less person in the middle. The seller will like how simple it is.",
+      habit: "One agent can represent both sides in California if you agree in writing. Ask who is pushing for your number.",
+      c: [ { b: "Sure. Saves everybody time.", i: "They know the house better than anyone.", r: "caught", t: "It is allowed, with your written consent. But the same person now needs the price high for the seller and low for you, and the seller hired them first. You never find out what a push would have saved.", m: -14, d: 4 },
+           { b: "Ask what they could and could not do for you", i: "Hear them out.", r: "close", t: "A straight answer: they could not tell you the seller's bottom line or advise you on price. You thank them and decide you want someone who can.", c: -2 },
+           { b: "\u201cThanks. I will bring my own agent.\u201d", i: "It adds a day.", r: "spotted", t: "Your own agent finds two things the listing sheet left out and writes them into the offer.", m: 5, d: 4, days: 1 } ] },
+    { id: "handshake", name: "The handshake promise", via: "In person", from: "The seller, in the driveway",
+      msg: "The washer, the dryer, that patio set? All yours. And I will have the back gate fixed before you move in. You have my word.",
+      habit: "If it is not in the signed contract, it is not part of the deal.",
+      c: [ { b: "Shake on it", i: "Seems like a decent person.", r: "caught", t: "Moving day. No washer, no dryer, no patio set, and the gate still drags. The seller remembers the conversation differently. The contract remembers nothing.", m: -9, c: -10 },
+           { b: "Text them later to confirm", i: "Get it in writing, sort of.", r: "close", t: "A text thread is better than a memory and worse than a contract. You get the washer and dryer. The patio set becomes a dispute nobody wins.", m: -3, c: -5 },
+           { b: "\u201cGreat. Let's add it to the contract tonight.\u201d", i: "One short addendum.", r: "spotted", t: "They sign it without blinking. People who mean it do not mind writing it down.", m: 4, d: 4 } ] },
+    { id: "papers", name: "The numbers that moved", via: "Email", from: "Your lender's assistant",
+      msg: "Final loan documents attached. The rate ticked up a little from your quote and there are two small fees you may not recognize. All standard. Sign today and we close on time.",
+      habit: "You get your final loan numbers before closing for a reason. Put them next to the first estimate, line by line.",
+      c: [ { b: "Sign. You are too close to argue.", i: "It is only a little.", r: "caught", t: "A little, every month, for as long as you have the loan. Nobody was required to point it out and nobody did.", m: -17 },
+           { b: "Ask the assistant to explain the fees", i: "Fair question.", r: "close", t: "One fee gets waived the moment you ask. The rate change gets a long explanation and stays.", m: -8, c: -3 },
+           { b: "Compare every line to your first estimate before signing", i: "Twenty minutes with two documents.", r: "spotted", t: "Two lines do not match. You send both pages to the loan officer with the lines circled. Both are corrected by the afternoon.", m: 6, d: 2 } ] }
+  ],
+  seller: [
+    { id: "cash", name: "The offer that expires tonight", via: "Text", from: "\u201cLocal Home Buyers\u201d",
+      msg: "We buy houses. All cash, close in a week, no repairs, no showings. This offer is good until 5 p.m. today.",
+      habit: "An offer that expires tonight is built to stop you from comparing. Real buyers survive a second opinion.",
+      c: [ { b: "Sign today. Cash is cash.", i: "No strangers in your house. Done by Friday.", r: "caught", t: "You sold without one other buyer ever seeing it. You will never know what it would have brought on the open market, and they were counting on that.", m: -28, c: 4 },
+           { b: "Counter higher, still by five", i: "Make them pay for the speed.", r: "caught", t: "They come up a little, fast. Too fast. You are still negotiating against nobody, on their clock.", m: -15 },
+           { b: "\u201cNo deadline that short is real. I will list it first.\u201d", i: "It means showings after all.", r: "spotted", t: "The same company writes again nine days later, higher, with no deadline. By then it is one offer of four.", m: 8, d: 5 } ] },
+    { id: "early", name: "The early move-in", via: "Text", from: "The buyers",
+      msg: "Any chance we could bring a few things over this weekend, before closing? Just boxes in the garage. Maybe the kids' beds.",
+      habit: "Nobody moves in before closing without a signed agreement. Until it closes, it is your house and your liability.",
+      c: [ { b: "Of course. They are practically the owners.", i: "Be the easy seller.", r: "caught", t: "By Sunday they are sleeping there. On Tuesday their loan hits a snag. You now have a family living in a house you still own, on your insurance, with no agreement that says when they leave.", d: -16, c: -14, m: -6 },
+           { b: "Only the garage", i: "Split the difference.", r: "close", t: "The boxes are fine. The dented water heater is a conversation. Nothing was in writing, so nobody is sure who pays.", m: -5, c: -5 },
+           { b: "\u201cAfter closing. Or with a written agreement and proof of insurance.\u201d", i: "Feels a little cold.", r: "spotted", t: "Their agent sends a one-page early occupancy agreement that evening. Everyone knows the rules, and they are in by Saturday anyway.", d: 6, c: 3 } ] },
+    { id: "stain", name: "The stain on the ceiling", via: "In person", from: "Your handyman",
+      msg: "That water stain in the hall? I can paint over it this afternoon. Nobody will ever know it was there.",
+      habit: "Disclose what you know, in writing. A disclosed problem is a negotiation. A hidden one is a lawsuit.",
+      c: [ { b: "Paint it. Say nothing.", i: "It has not leaked in months.", r: "caught", t: "The buyer's inspector finds the leak above it in ten minutes. Now it is not a repair. It is something you hid, and every other line on your disclosure gets read twice.", m: -20, d: -12, c: -8 },
+           { b: "Paint it, and mention it if anyone asks", i: "Not lying, exactly.", r: "caught", t: "Nobody asks. The first big rain does the asking, after closing, and the buyer has your disclosure form in a folder.", m: -12, c: -8 },
+           { b: "Fix the leak and write it on the disclosure", i: "Costs money now.", r: "spotted", t: "It is one line on a form: found, fixed, receipt attached. The buyer reads it and moves on. Buyers forgive problems. They do not forgive surprises.", m: -4, d: 9, c: 4 } ] },
+    { id: "roofer", name: "The cash roofer", via: "In person", from: "A roofer who knocked on the door",
+      msg: "I can start Monday if you pay the whole job in cash today. No paperwork, no tax, and I pass the savings to you.",
+      habit: "Check a contractor's license with the state board and get it in writing. California limits what they can take up front.",
+      c: [ { b: "Pay him. The buyer wants it fixed.", i: "Monday is perfect timing.", r: "caught", t: "Monday comes. The roofer does not. The phone number belongs to someone else now.", m: -24, c: -12 },
+           { b: "Half today, half when it is done", i: "Protect yourself a little.", r: "caught", t: "He does half the job, badly, and asks for the rest to finish. Without a contract or a license number there is nobody to complain to.", m: -14, c: -8 },
+           { b: "Look up the license first. Then a written contract.", i: "Two minutes on the state board's site.", r: "spotted", t: "No license under that name. A licensed roofer you find the same afternoon does it for less, with a warranty the buyer can keep.", m: 3, d: 6 } ] },
+    { id: "payout", name: "The payout link", via: "Email", from: "Escrow Team <payouts@escrow-docs-portal.co>",
+      msg: "Congratulations on your closing. To speed up your proceeds, confirm your bank account details at the secure link below within 24 hours.",
+      habit: "Escrow does not collect your bank details through a link in an email. Call the number you already have.",
+      c: [ { b: "Click it and fill it in", i: "You want your money.", r: "caught", t: "The form looked exactly right. Your proceeds are sent to an account that is not yours, and it takes a week of phone calls to learn whether any of it is coming back.", m: -32, c: -16 },
+           { b: "Reply asking if it is legitimate", i: "Quick check.", r: "close", t: "\u201cYes, this is our new portal.\u201d Of course it is. You hesitate long enough for your real escrow officer to call about something else.", c: -12, m: -3 },
+           { b: "Call your escrow officer directly", i: "Her card is on the fridge.", r: "spotted", t: "There is no portal. She takes your account details in person, on paper, the way she always has. She thanks you for calling.", d: 5, c: 5 } ] }
+  ]
+};
+var ALLTRAPS = TRAPS.buyer.concat(TRAPS.seller);
+
 /* ---------- drawing ---------- */
 var $ = function (id) { return document.getElementById(id); };
 function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -513,7 +606,7 @@ function title() {
   var c = el("div", "card");
   c.innerHTML = '<div class="kicker">Daily deal #' + dailyNumber() + ' · Southern California</div>' +
     '<h1>Thirty days. One house. Seven decisions.</h1>' +
-    '<p class="lead">Buy or sell a home somewhere between Castaic and Costa Mesa. Every choice moves your money, your deal and your nerve. Most people do not get an A.</p>' +
+    '<p class="lead">Buy or sell a home somewhere between Castaic and Costa Mesa. Every choice moves your money, your deal and your nerve. Somewhere in every deal there is a trap. Most people do not see it coming.</p>' +
     '<div class="pick"><button class="choice" data-role="seller"><b>Sell a home</b><i>Today’s seller deal</i></button><button class="choice" data-role="buyer"><b>Buy a home</b><i>Today’s buyer deal</i></button></div>' +
     (played ? '<p class="fine">You played today’s deal as a ' + esc(played.role) + ' and got ' + esc(played.grade) + '. The other side is still open.</p>' : '<p class="fine">Everyone gets the same deal today. New one at midnight.</p>') +
     '<label class="f" for="city">Or pick your own city and play it fresh</label><select id="city"><option value="">Choose a city</option></select>' +
@@ -527,6 +620,7 @@ function title() {
     if (b.dataset.role) start(b.dataset.role, true);
     if (b.dataset.free) { if (!sel.value) { sel.focus(); return; } store.set("city", sel.value); start(b.dataset.free, false, sel.value); }
   });
+  c.appendChild(guideBox());
   show(c); badges(c.querySelector("#badges"));
 }
 
@@ -542,10 +636,49 @@ function start(role, daily, city, forced, target) {
   g.found = pick(FOUND);
   g.stages = role === "seller" ? SELLER : BUYER;
   g.curve = pick(role === "seller" ? SELLER_CURVES : BUYER_CURVES);
+  g.trap = pick(TRAPS[role]); g.trapAt = 2 + Math.floor(rng() * 4); g.trapSeen = false; g.trapResult = null;
   $("hud").hidden = false; $("where").hidden = false; $("where").textContent = place.city;
   stage();
 }
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(g.rng() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+/* The interruption. It is not one of the seven decisions and it is never announced. */
+function trapCard() {
+  var t = g.trap; g.trapSeen = true; meters();
+  var c = el("div", "card");
+  c.appendChild(el("div", "kicker", "Day " + g.day + " \u00b7 Your phone buzzes"));
+  var box = el("div", "trap");
+  box.appendChild(el("div", "via", "<i></i>" + esc(t.via)));
+  box.appendChild(el("div", "from", esc(t.from)));
+  box.appendChild(el("div", "msg", esc(t.msg)));
+  // A good agent does not make this choice for you. They did warn you it was coming.
+  if (g.agent.skill >= 3) box.appendChild(el("div", "hint", "Something about this rings a bell. Your agent's day one checklist had a line about it."));
+  c.appendChild(box);
+  var list = el("div", "choices");
+  shuffle(t.c.slice()).forEach(function (o, n) {
+    var b = el("button", "choice", "<b>" + esc(o.b) + "</b><i>" + esc(o.i) + "</i>");
+    b.addEventListener("click", function () { resolveTrap(o); }); b.dataset.n = n + 1; list.appendChild(b);
+  });
+  c.appendChild(list); show(c);
+}
+function resolveTrap(o) {
+  var t = g.trap, prev = { money: g.money, deal: g.deal, calm: g.calm };
+  g.money += o.m || 0; g.deal += o.d || 0; g.calm += o.c || 0; g.day += o.days || 0; g.trapResult = o.r;
+  if (o.fatal) g.fatal = o.fatal;
+  var guide = store.get("guide", {}); if (guide[t.id] !== "spotted") guide[t.id] = o.r === "spotted" ? "spotted" : "caught"; store.set("guide", guide);
+  track(o.r === "spotted" ? "trap-spotted" : "trap-caught");
+  var dead = g.deal <= 0 ? "deal" : g.calm <= 0 ? "calm" : g.money <= 0 ? "money" : null;
+  meters(prev);
+  var c = el("div", "card");
+  c.appendChild(el("div", "kicker", o.r === "spotted" ? "Trap spotted" : o.r === "close" ? "That was close" : "It was a trap"));
+  c.appendChild(el("h2", "", esc(t.name)));
+  c.appendChild(el("div", "result " + (o.r === "spotted" ? "good" : o.r === "close" ? "ok" : "bad"), esc(o.t)));
+  c.appendChild(el("div", "habit", "<b>What protects you</b>" + esc(t.habit)));
+  var b = el("button", "btn", dead ? "See how it ends" : "Back to the deal");
+  b.addEventListener("click", function () { if (dead) finish(dead); else stage(); });
+  c.appendChild(b); show(c); b.focus({ preventScroll: true });
+}
 function stage() {
+  if (g.step === g.trapAt && !g.trapSeen) return trapCard();
   var s = g.stages[g.step], src = s.curve ? g.curve : s;
   scene(g.step, s.sign); meters();
   var c = el("div", "card");
@@ -559,7 +692,8 @@ function stage() {
     for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(g.rng() * (i + 1)), t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
     ids.forEach(function (id) { var a = AGENTS[id]; opts.push({ b: a.pick, i: a.sub, fx: function () { return hire(id); } }); });
   } else {
-    opts = src.c.slice();
+    // Shuffled, so the safe looking middle choice is not always in the middle.
+    opts = shuffle(src.c.slice());
     if (src.a) opts.push(src.a());
   }
   opts.forEach(function (o, n) {
@@ -607,7 +741,7 @@ function finish(dead) {
   score = Math.max(0, Math.min(100, score));
   var grade = !closed ? "F" : score >= 95 ? "S" : score >= 74 ? "A" : score >= 60 ? "B" : score >= 46 ? "C" : "D";
   var seller = g.role === "seller";
-  var head = !closed ? (dead === "deal" ? (seller ? "Escrow cancelled. Back on the market." : "The deal fell apart.") : dead === "calm" ? "You walked away from your own deal." : "You ran out of money before closing.")
+  var head = !closed && g.fatal ? g.fatal : !closed ? (dead === "deal" ? (seller ? "Escrow cancelled. Back on the market." : "The deal fell apart.") : dead === "calm" ? "You walked away from your own deal." : "You ran out of money before closing.")
     : grade === "S" ? "Closed. Clean. People will ask how you did it." : grade === "A" ? (seller ? "Sold, and you slept fine." : "Keys in hand, nerves intact.") : grade === "B" ? "Closed. A few scars." : grade === "C" ? "It closed. You will be telling this story for years." : "It closed. Barely. Do not do it this way again.";
   track("finish-" + g.role + "-" + grade.toLowerCase());
   scene(7, closed ? (seller ? "SOLD" : "YOURS") : (seller ? "BACK ON MARKET" : "STILL LOOKING")); meters();
@@ -621,6 +755,9 @@ function finish(dead) {
   if (g.agent.id === "open" && closed) award("sight");
   if (g.agent.id === "none" && closed) award("solo");
   if (have.sold && have.bought) award("both");
+  var gd = store.get("guide", {}), nSpot = 0; for (var gk in gd) if (gd[gk] === "spotted") nSpot++;
+  if (nSpot >= 5) award("guard");
+  if (nSpot >= ALLTRAPS.length) award("warden");
   var best = store.get("best", 0); if (closed && score > best) store.set("best", score);
   if (g.daily) {
     var k = "daily:" + todayKey();
@@ -639,6 +776,7 @@ function finish(dead) {
   card.appendChild(el("div", "grade", '<div class="letter ' + grade + '">' + grade + '</div><div><h2>' + esc(head) + '</h2><p>Score ' + score + ' · ' + (closed ? "closed on day " + g.day : "ended on day " + g.day) + (best && closed && score > best ? " · new best" : "") + '</p></div>'));
   if (g.target != null) card.appendChild(el("div", "vs", score > g.target ? "You " + score + ", your friend " + g.target + ". You win. Send it back." : score === g.target ? "You " + score + ", your friend " + g.target + ". Dead even." : "You " + score + ", your friend " + g.target + ". They got you. Run it again."));
   var L = el("div", "lessons");
+  if (g.trapResult) L.appendChild(el("div", "lesson", "<b>" + (g.trapResult === "spotted" ? "The trap you spotted" : g.trapResult === "close" ? "The trap that nearly got you" : "The trap that got you") + "</b>" + esc(g.trap.name) + ". " + esc(g.trap.habit)));
   L.appendChild(el("div", "lesson", "<b>Who you hired</b>" + esc(HIRED[g.agent.id])));
   var quote = function (t) { return "\u201c" + esc(t) + (/[.?!]$/.test(t) ? "" : ".") + "\u201d"; };
   if (g.worst && g.worst.swing < 0) L.appendChild(el("div", "lesson", "<b>What cost you most</b>" + esc(g.worst.k) + ": " + quote(g.worst.b)));
@@ -647,7 +785,7 @@ function finish(dead) {
 
   var share = el("button", "btn", "Share your result");
   var text = "Escrow Run" + (g.daily ? " #" + dailyNumber() : "") + "\n" + (seller ? "Seller" : "Buyer") + " in " + g.place.city + " · Grade " + grade + " (" + score + ")\n" +
-    g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (closed ? " 🔑" : " 🚫") + "\nhttps://openhousegame.com";
+    g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (g.trapResult === "spotted" ? " 🛡️" : g.trapResult ? " 🪤" : "") + (closed ? " 🔑" : " 🚫") + "\nhttps://openhousegame.com";
   share.addEventListener("click", function () {
     track("share");
     var done = function () { share.textContent = "Copied. Paste it anywhere."; setTimeout(function () { share.textContent = "Share your result"; }, 2200); };
@@ -694,7 +832,18 @@ function finish(dead) {
   }
   show(card); badges(bd, fresh);
 }
-var BADGES = [["sold", "Sold one"], ["bought", "Bought one"], ["both", "Both sides"], ["ontime", "Closed on time"], ["sight", "Hired on sight"], ["solo", "Went alone and lived"], ["s", "Grade S"], ["week", "Seven day streak"]];
+function guideBox() {
+  var gd = store.get("guide", {}), n = 0; ALLTRAPS.forEach(function (t) { if (gd[t.id]) n++; });
+  var d = el("details", "guide");
+  d.appendChild(el("summary", "", "Field guide to traps <span>" + n + " of " + ALLTRAPS.length + " found</span>"));
+  ALLTRAPS.forEach(function (t) {
+    var st = gd[t.id];
+    d.appendChild(st ? el("div", "gitem", '<em class="' + (st === "spotted" ? "s" : "c") + '">' + (st === "spotted" ? "Spotted" : "Got you") + "</em><b>" + esc(t.name) + "</b>" + esc(t.habit))
+                     : el("div", "gitem lock", "<b>Not found yet</b>Keep playing. It is out there."));
+  });
+  return d;
+}
+var BADGES = [["sold", "Sold one"], ["bought", "Bought one"], ["both", "Both sides"], ["ontime", "Closed on time"], ["sight", "Hired on sight"], ["solo", "Went alone and lived"], ["guard", "Spotted five traps"], ["warden", "Spotted every trap"], ["s", "Grade S"], ["week", "Seven day streak"]];
 function badges(node, fresh) {
   var have = store.get("badges", {}); node.innerHTML = "";
   BADGES.forEach(function (b) { node.appendChild(el("span", "badge" + (have[b[0]] ? " on" : "") + (fresh && fresh.indexOf(b[0]) >= 0 ? " new" : ""), esc(b[1]))); });
