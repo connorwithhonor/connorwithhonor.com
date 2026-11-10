@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Escrow Run | Buy or Sell a Southern California Home in Five Minutes</title>
+<meta name="description" content="A free five-minute game. Buy or sell a home in Santa Clarita, Los Angeles County, Ventura County or Orange County. Seven decisions, thirty days, one grade. New deal every day.">
+<meta property="og:title" content="Escrow Run: thirty days, one house, seven decisions">
+<meta property="og:description" content="Buy or sell a Southern California home in five minutes. Everyone gets the same deal today. Can you close it?">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:url" content="https://connorwithhonor.com/play/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0c0b10">
+<link rel="canonical" href="https://connorwithhonor.com/play/">
+<link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Escrow Run","url":"https://connorwithhonor.com/play/","description":"A free browser game about buying or selling a home in Southern California. Seven decisions across a thirty day escrow in Santa Clarita Valley, Los Angeles County, Ventura County and Orange County.","genre":["Simulation","Educational"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","isAccessibleForFree":true,"inLanguage":"en","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com"}}
+</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0c0b10;--ink-2:#15141b;--ink-3:#1e1c25;
+  --cream:#f3eee4;--muted:#b3ad9f;--dim:#7d776c;
+  --gold:#e8a838;--gold-bright:#f3bd54;--line:rgba(232,168,56,.18);--line-soft:rgba(255,255,255,.08);
+  --good:#5fd08f;--ok:#f0c04a;--bad:#ff7461;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--ink);color:var(--cream);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;text-align:left}
+a{color:var(--gold-bright)}
+.shell{max-width:560px;margin:0 auto;padding:0 16px calc(28px + env(safe-area-inset-bottom));min-height:100vh;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px}
+.logo{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:-.01em;color:var(--cream);text-decoration:none}
+.logo b{color:var(--gold)}
+.streak{font-size:12.5px;font-weight:700;color:var(--muted);border:1px solid var(--line-soft);border-radius:99px;padding:4px 11px}
+.streak b{color:var(--gold-bright)}
+
+/* the street */
+.scene{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/8.4;background:#1b2a4a}
+.scene svg{display:block;width:100%;height:100%}
+.day{position:absolute;top:10px;left:12px;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;background:rgba(12,11,16,.62);backdrop-filter:blur(6px);border-radius:99px;padding:4px 11px}
+.where{position:absolute;top:10px;right:12px;font-size:11.5px;font-weight:700;background:rgba(12,11,16,.62);backdrop-filter:blur(6px);border-radius:99px;padding:4px 11px}
+#sky1,#sky2,#sun,#signface{transition:all 1.2s ease}
+
+/* meters */
+.meters{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 4px}
+.meter{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:9px 11px 10px}
+.meter .l{display:flex;justify-content:space-between;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.meter .l span{color:var(--cream);font-variant-numeric:tabular-nums}
+.track{height:6px;border-radius:3px;background:var(--ink-3);margin-top:7px;overflow:hidden}
+.fill{height:100%;border-radius:3px;background:var(--gold);transition:width .7s cubic-bezier(.2,.8,.2,1),background .4s}
+.fill.low{background:var(--bad)}
+.delta{position:absolute;right:10px;top:-8px;font-size:13px;font-weight:800;opacity:0;pointer-events:none}
+.delta.show{animation:rise 1.5s ease-out}
+.delta.up{color:var(--good)}.delta.down{color:var(--bad)}
+@keyframes rise{0%{opacity:0;transform:translateY(8px)}15%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+.pips{display:flex;gap:5px;margin:10px 0 2px}
+.pip{flex:1;height:4px;border-radius:2px;background:var(--ink-3)}
+.pip.good{background:var(--good)}.pip.ok{background:var(--ok)}.pip.bad{background:var(--bad)}.pip.now{background:var(--cream)}
+
+/* cards */
+.card{margin-top:12px;animation:in .35s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,8.4vw,42px);line-height:1.04;letter-spacing:-.02em;margin:6px 0 10px}
+h2{font-family:var(--serif);font-weight:800;font-size:24px;line-height:1.15;letter-spacing:-.01em;margin:4px 0 8px}
+p.lead{color:var(--muted);font-size:16px}
+p.story{font-size:16.5px;color:var(--cream);margin-bottom:4px}
+.choices{display:grid;gap:9px;margin-top:14px}
+.choice{display:block;width:100%;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;padding:13px 15px;min-height:58px;transition:transform .12s,border-color .12s,background .12s}
+.choice:hover{border-color:var(--line);background:var(--ink-3)}
+.choice:active{transform:scale(.985)}
+.choice b{display:block;font-weight:700;font-size:15.5px}
+.choice i{display:block;font-style:normal;color:var(--muted);font-size:13.5px;margin-top:2px}
+.choice.agent{border-color:rgba(232,168,56,.45);background:linear-gradient(180deg,rgba(232,168,56,.10),rgba(232,168,56,.03))}
+.choice.agent b::before{content:"Ask ";color:var(--gold-bright)}
+.choice.dead{opacity:.55;cursor:default;border-style:dashed}
+.choice.dead:hover{background:var(--ink-2);border-color:var(--line-soft)}
+.result{border-left:3px solid var(--ok);background:var(--ink-2);border-radius:0 14px 14px 0;padding:14px 16px;margin-top:14px;font-size:16px}
+.result.good{border-color:var(--good)}.result.bad{border-color:var(--bad)}
+.result small{display:block;color:var(--muted);font-size:13.5px;margin-top:8px}
+.btn{display:block;width:100%;text-align:center;background:var(--gold);color:#17120a;font-weight:800;font-size:16.5px;border-radius:14px;padding:15px 18px;margin-top:14px;min-height:54px;transition:transform .12s,background .12s}
+.btn:hover{background:var(--gold-bright)}.btn:active{transform:scale(.985)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--cream);font-weight:700}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pick .choice{text-align:center;padding:18px 10px}
+.pick .choice b{font-size:18px;font-family:var(--serif)}
+label.f{display:block;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+select{width:100%;appearance:none;background:var(--ink-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23e8a838' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center;color:var(--cream);border:1px solid var(--line-soft);border-radius:12px;padding:13px 40px 13px 14px;font:inherit;font-size:16px}
+select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+.fine{font-size:13px;color:var(--dim);margin-top:12px;text-align:center}
+
+/* end */
+.grade{display:flex;align-items:center;gap:16px;margin:6px 0 4px}
+.letter{font-family:var(--serif);font-weight:900;font-size:76px;line-height:.9;color:var(--gold-bright);min-width:62px;text-align:center}
+.letter.F{color:var(--bad)}
+.grade h2{margin:0}.grade p{color:var(--muted);font-size:14.5px}
+.lessons{margin-top:14px;display:grid;gap:8px}
+.lesson{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;font-size:15px}
+.lesson b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.near{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px}
+.near h3{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.near a{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;color:var(--cream);background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-weight:600;font-size:15px}
+.near a:hover{border-color:var(--line)}
+.near a span{color:var(--muted);font-weight:500;font-size:13px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.badge{font-size:12px;font-weight:700;border:1px solid var(--line-soft);border-radius:99px;padding:4px 10px;color:var(--dim)}
+.badge.on{color:var(--gold-bright);border-color:var(--line)}
+.badge.new{animation:pop .6s ease-out}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+footer{margin-top:auto;padding-top:28px;font-size:11.5px;color:var(--dim);text-align:center;line-height:1.6}
+footer a{color:var(--dim)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top">
+    <a class="logo" href="/play/">Escrow <b>Run</b></a>
+    <span class="streak" id="streak" hidden></span>
+  </div>
+
+  <div class="scene" aria-hidden="true">
+    <svg viewBox="0 0 640 336" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="sky1" offset="0" stop-color="#2b4a86"/><stop id="sky2" offset="1" stop-color="#f6c27a"/></linearGradient>
+        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e3c8"/><stop offset="1" stop-color="#e2c9a4"/></linearGradient>
+      </defs>
+      <rect width="640" height="336" fill="url(#sky)"/>
+      <circle id="sun" cx="120" cy="170" r="30" fill="#ffe9b0" opacity=".95"/>
+      <path d="M0 214 Q80 160 170 196 T330 178 T500 190 T640 168 V336 H0Z" fill="#3a3550" opacity=".55"/>
+      <path d="M0 236 Q110 196 220 226 T450 214 T640 222 V336 H0Z" fill="#2b2a3d" opacity=".8"/>
+      <rect y="262" width="640" height="74" fill="#3d5a3a"/>
+      <rect y="300" width="640" height="36" fill="#2a2a31"/>
+      <path d="M0 318h640" stroke="#e8a838" stroke-width="3" stroke-dasharray="26 22" opacity=".7"/>
+      <!-- palms -->
+      <g fill="none" stroke="#1d2a22" stroke-width="5" stroke-linecap="round">
+        <path d="M86 264 Q92 190 82 132"/><path d="M560 264 Q552 204 564 150"/>
+      </g>
+      <g fill="#20382a">
+        <path d="M82 132q-34-18-56 2q30-10 56-2zm0 0q-10-36-44-40q26 12 44 40zm0 0q18-34 52-30q-28 8-52 30zm0 0q36-12 58 12q-30-12-58-12zm0 0q-4 30-28 44q18-20 28-44z"/>
+        <path d="M564 150q-30-16-50 2q28-8 50-2zm0 0q-8-32-40-36q24 10 40 36zm0 0q16-30 46-26q-24 6-46 26zm0 0q32-10 52 12q-28-12-52-12zm0 0q4 28 26 40q-18-18-26-40z"/>
+      </g>
+      <!-- house -->
+      <g>
+        <rect x="236" y="176" width="210" height="92" fill="url(#wall)"/>
+        <path d="M222 180 L341 120 L460 180Z" fill="#b5553a"/>
+        <path d="M222 180h238" stroke="#8f3f2a" stroke-width="4"/>
+        <rect x="392" y="130" width="18" height="34" fill="#d9c3a0"/>
+        <path d="M322 268v-48a19 19 0 0 1 38 0v48z" fill="#6b3f2a"/>
+        <circle cx="352" cy="244" r="2.4" fill="#e8a838"/>
+        <g id="windows" fill="#27344f"><rect x="256" y="204" width="44" height="34" rx="3"/><rect x="382" y="204" width="44" height="34" rx="3"/></g>
+        <path d="M278 204v34M256 221h44M404 204v34M382 221h44" stroke="#f4e3c8" stroke-width="2.5"/>
+        <rect x="446" y="210" width="74" height="58" fill="#e6d0ad"/><path d="M440 212h86l-8-16h-70z" fill="#b5553a"/>
+        <rect x="456" y="224" width="54" height="44" fill="#cdb48c"/><path d="M456 238h54M456 252h54" stroke="#b79d74" stroke-width="2"/>
+        <ellipse cx="246" cy="266" rx="20" ry="11" fill="#2f4a2e"/><ellipse cx="432" cy="266" rx="16" ry="9" fill="#2f4a2e"/>
+      </g>
+      <!-- yard sign -->
+      <g id="sign" transform="translate(150 214)">
+        <path d="M6 0v62M6 6h58" stroke="#f3eee4" stroke-width="5" stroke-linecap="round"/>
+        <rect id="signface" x="16" y="12" width="48" height="30" rx="2" fill="#c0392b"/>
+        <text id="signtext" x="40" y="31" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff" letter-spacing=".3">FOR SALE</text>
+      </g>
+    </svg>
+    <div class="day" id="day">Day 1 of 30</div>
+    <div class="where" id="where" hidden></div>
+  </div>
+
+  <div id="hud" hidden>
+    <div class="pips" id="pips"></div>
+    <div class="meters">
+      <div class="meter"><div class="l">Money <span id="v-money">50</span></div><div class="track"><div class="fill" id="f-money"></div></div><div class="delta" id="d-money"></div></div>
+      <div class="meter"><div class="l">Deal <span id="v-deal">50</span></div><div class="track"><div class="fill" id="f-deal"></div></div><div class="delta" id="d-deal"></div></div>
+      <div class="meter"><div class="l">Calm <span id="v-calm">50</span></div><div class="track"><div class="fill" id="f-calm"></div></div><div class="delta" id="d-calm"></div></div>
+    </div>
+  </div>
+
+  <main id="main" aria-live="polite"></main>
+
+  <footer>
+    Escrow Run is a game. The events are fiction and nothing here is legal, financial or real estate advice. Every home and every deal is different.<br>
+    Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity<br>
+    <a href="/">ConnorWithHonor.com</a>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ---------- places: every city here has a live open house site on the network ---------- */
+var UTM = "?utm_source=connorwithhonor&utm_medium=game&utm_campaign=escrow-run";
+var REGIONS = [
+  { name: "Santa Clarita Valley", hub: ["Santa Clarita Valley", "santaclaritaopenhouses.com"], cities: [
+    ["Valencia","valenciaopenhouses.com"],["Saugus","saugusopenhouses.com"],["Canyon Country","canyoncountryopenhouses.com"],
+    ["Newhall","newhallopenhouses.com"],["Stevenson Ranch","stevensonranchopenhouses.com"],["Castaic","castaicopenhouses.com"]] },
+  { name: "Los Angeles County", hub: ["Los Angeles County", "laopenhouses.com"], cities: [
+    ["Pasadena","pasadenaopenhouses.com"],["Burbank","burbankopenhouses.com"],["Glendale","glendaleopenhouses.com"],
+    ["Arcadia","arcadiaopenhouses.com"],["Culver City","culvercityopenhouses.com"],["Santa Monica","santamonicaopenhomes.com"],
+    ["Venice","veniceopenhouses.com"],["Sherman Oaks","shermanoaksopenhouses.com"],["Studio City","studiocityopenhouses.com"],
+    ["Encino","encinoopenhouses.com"],["Northridge","northridgeopenhouses.com"],["Porter Ranch","porterranchopenhouses.com"],
+    ["Palmdale","palmdaleopenhouses.com"]] },
+  { name: "Ventura County", hub: ["Ventura County", "venturacountyopenhouses.com"], cities: [
+    ["Thousand Oaks","thousandoaksopenhouses.com"],["Ventura","venturaopenhouses.com"]] },
+  { name: "Orange County", hub: ["Orange County", "ocopenhouses.com"], cities: [
+    ["Huntington Beach","huntingtonbeachopenhouses.com"],["Costa Mesa","costamesaopenhouses.com"]] }
+];
+var ALL = [];
+REGIONS.forEach(function (r) { r.cities.forEach(function (c) { ALL.push({ city: c[0], site: c[1], region: r }); }); });
+
+/* ---------- seeded dice, so the daily deal is the same for everyone ---------- */
+function hash(s) { var h = 1779033703 ^ s.length; for (var i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return h >>> 0; }
+function rngFrom(seed) { var a = seed >>> 0; return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function todayKey() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+function dailyNumber() { var a = new Date(2026, 10, 10), d = new Date(); d.setHours(0, 0, 0, 0); return Math.max(1, Math.round((d - a) / 864e5) + 1); }
+
+/* ---------- saved progress, this browser only ---------- */
+var store = { get: function (k, d) { try { var v = localStorage.getItem("er:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+              set: function (k, v) { try { localStorage.setItem("er:" + k, JSON.stringify(v)); } catch (e) {} } };
+
+/* ---------- the people you can hire ----------
+   skill is hidden from the player. It decides how often the dice go your way
+   and whether "Ask your agent" is a real answer or a voicemail. */
+var AGENTS = {
+  open:   { name: "your agent", skill: 3, pick: "The agent you watched work an open house", sub: "A full room, one hard question and a stuck side gate. You saw how they handled all three.",
+            said: "You already know how they talk to strangers and what they do when something goes wrong. That is most of the job." },
+  bench:  { name: "the bus bench agent", skill: 2, pick: "The face on every bus bench", sub: "Forty benches. One headshot from a while back.",
+            said: "A cheerful assistant sends a welcome packet. The face from the bench is in a meeting." },
+  lead:   { name: "the top result", skill: 2, pick: "The first name a lead site shows you", sub: "They paid to be first. That is all you know so far.",
+            said: "They call back in four minutes. Fast is good. You still know nothing about how they work." },
+  cousin: { name: "your cousin", skill: 1, pick: "Your cousin. Licensed since spring.", sub: "Loyal. Available. Has closed one deal, and it was a condo.",
+            said: "Your cousin is thrilled. Your aunt is thrilled. You are quietly reading about escrow at midnight." },
+  none:   { name: "", skill: 0, pick: "Nobody. You own a laptop.", sub: "How hard can it be.",
+            said: "You are now the agent. Forty tabs are open. One of them is a forum from 2011." }
+};
+
+var g = null;   // the run in progress
+
+function luck(p) { return g.rng() < Math.min(.95, Math.max(.05, p + (g.agent.skill - 1.5) * .09)); }
+function pick(arr) { return arr[Math.floor(g.rng() * arr.length)]; }
+function out(grade, t, m, d, c, days) { return { g: grade, t: t, m: m || 0, d: d || 0, c: c || 0, days: days || 0 }; }
+/* What "Ask your agent" gives you depends on who you hired. */
+function ask(good, label) {
+  var a = g.agent;
+  // Even the best agent cannot make every break go your way. Most of the time, though.
+  if (a.skill >= 3) return { agent: true, b: a.name, i: label, fx: function () { return luck(.52) ? good() : out("ok", "They give you the straight answer, and it is not the one you were hoping for. You take the safe route on their advice. Nothing breaks.", -3, 2, -2); } };
+  if (a.skill === 2) return { agent: true, b: a.name, i: label, fx: function () { return luck(.55) ? good() : out("ok", "You get the assistant. The answer is polite, general, and two days late.", 0, 2, -4, 2); } };
+  if (a.skill === 1) return { agent: true, b: a.name, i: label, fx: function () { return luck(.3) ? good() : out("ok", "“Let me look that up and call you back.” They do call back. The answer is from a class they took in the spring.", -2, 1, -5, 1); } };
+  return { dead: true, b: "Ask an agent", i: "You did not hire one. The forum from 2011 has opinions." };
+}
+
+/* ---------- the seven decisions, seller side ---------- */
+var FOUND = ["an old sewer line with roots in it", "a roof with about two winters left", "an electrical panel older than the microwave", "termites in the garage framing"];
+var SELLER = [
+  { k: "Who sells it", sign: "FOR SALE", q: "You are selling your home in {city}. First decision, and it colors every one after it. Who do you hire?", hire: true },
+  { k: "Getting it ready", sign: "COMING SOON", q: "The house has twelve years of your life in it. Buyers will see it in two weeks. What do you do first?",
+    c: [
+      { b: "Sell it as it sits", i: "They are buying the house, not the garage.", fx: function () { return out("bad", "The photos show the treadmill, the dog crates and every magnet on the fridge. Buyers scroll past. The ones who visit start subtracting.", 0, -13, 4); } },
+      { b: "Clean, paint, fix the small stuff", i: "Two weekends and a storage unit.", fx: function () { return out("good", "Fresh paint, clear counters, a front door that closes without a shoulder. It photographs like a different house.", -6, 12, -3); } },
+      { b: "Redo the kitchen before listing", i: "Go big. Buyers love a kitchen.", fx: function () { return luck(.3) ? out("ok", "It finishes late and it is beautiful. You will not get all of it back, and you paid two extra months of mortgage to find that out.", -16, 9, -8, 6) : out("bad", "The contractor stops answering in week three. The cabinets are in your living room. The market does not wait.", -22, -4, -15, 9); } }
+    ], a: function () { return ask(function () { return out("good", "They walk every room with a notepad and hand you nine items. Four cost nothing. They tell you to leave the kitchen alone.", -4, 15, 4); }, "Walk the house together before spending a dollar."); } },
+  { k: "The price", sign: "FOR SALE", q: "Three homes like yours sold nearby this spring. Yours is cleaner than two of them. Where do you set the price?",
+    c: [
+      { b: "High. Leave room to come down.", i: "You can always drop it later.", fx: function () { return luck(.2) ? out("ok", "One buyer bites near your number. It took longer than your neighbor's sale, and you checked your phone every hour of it.", 8, -2, -9, 5) : out("bad", "Three weekends, no offers. Buyers now ask what is wrong with it. You drop the price and it looks like a retreat.", -5, -15, -10, 8); } },
+      { b: "Right where the recent sales say", i: "Boring. Defensible.", fx: function () { return out("good", "Showings start on day one. Nobody argues with the number because the number has receipts.", 4, 9, 3); } },
+      { b: "Just under, to draw a crowd", i: "Make them compete.", fx: function () { return luck(.55) ? out("good", "Eleven groups the first weekend. By Monday you have a stack of offers and the top ones are bidding against each other.", 12, 11, -3) : out("ok", "The crowd comes. Only one writes, right at your low number. You take it and wonder.", -6, 6, -5); } }
+    ], a: function () { return ask(function () { return out("good", "They show you the three sales, the two that failed and why. You pick a number together and you can explain it to anyone.", 9, 12, 5); }, "Go through the sales that closed and the ones that did not."); } },
+  { k: "Showing it", sign: "OPEN HOUSE", q: "The listing is live. It is Thursday. How do buyers get inside this weekend?",
+    c: [
+      { b: "Appointments only", i: "You do not want strangers wandering through.", fx: function () { return out("ok", "Four showings. Serious people, but not many of them. Fewer eyes means fewer offers.", 0, -6, 4); } },
+      { b: "Open house, both days", i: "Let everyone in. Go to brunch.", fx: function () { return out("good", "Thirty groups walk through. Two neighbors, six dreamers, and five real buyers who would never have booked a private showing.", 3, 12, -5); } },
+      { b: "Open house, and you stay to help", i: "Nobody knows this home like you.", fx: function () { return out("bad", "You follow a couple into the primary bath to explain the tile. They leave in four minutes. Buyers cannot picture their life with yours standing in it.", 0, -11, -8); } }
+    ], a: function () { return ask(function () { return out("good", "They run both days, learn every visitor's situation, and call the five serious ones Sunday night. You were at the beach.", 4, 15, 7); }, "Hand over the keys. Let them work the room."); } },
+  { k: "The offers", sign: "FOR SALE", q: "Three offers on the table by Tuesday. They are not the same animal.",
+    c: [
+      { b: "The highest number", i: "Small down payment. Every contingency. A lender you have never heard of.", fx: function () { return luck(.42) ? out("good", "It holds together. The lender was slow and the buyer was nervous, but the money arrived.", 15, 2, -8, 3) : out("bad", "Day nineteen, the loan is denied. You are back on the market, and now your listing has a history.", -4, -26, -15, 11); } },
+      { b: "The solid middle offer", i: "Strong loan letter. Short timelines. Local lender.", fx: function () { return out("good", "Nothing dramatic happens, which is the whole point. Every deadline gets met a day early.", 8, 11, 4); } },
+      { b: "The cash offer", i: "Lower. No loan. Closes fast.", fx: function () { return out("ok", "No appraisal, no lender, no waiting. You left something on the table and bought certainty with it.", 1, 15, 8, -4); } }
+    ], a: function () { return ask(function () { return out("good", "They call all three lenders, then counter all three buyers at once. The solid buyer comes up. The shaky one drops out on their own.", 13, 13, 4); }, "Check every buyer's financing before you answer anyone."); } },
+  { k: "The repair request", sign: "IN ESCROW", q: "The buyer's inspector found {found}. They want it handled. You have three days to answer.",
+    c: [
+      { b: "Refuse. The price is the price.", i: "They knew it was not a new house.", fx: function () { return luck(.45) ? out("ok", "They grumble and stay. You kept your money and spent some goodwill you may need at the walkthrough.", 2, -4, -4) : out("bad", "They cancel. And now you know about the problem, so you have to disclose it to the next buyer.", -4, -28, -14, 9); } },
+      { b: "Offer a credit and move on", i: "Money is faster than contractors.", fx: function () { return out("good", "A fair number, one signature, done. Nobody loves it. Everybody keeps going.", -6, 8, 2); } },
+      { b: "Fix it yourself this weekend", i: "You watched two videos.", fx: function () { return luck(.3) ? out("ok", "It passes re-inspection. Your back does not. You saved a little.", -3, 4, -10, 2) : out("bad", "The re-inspection fails. Now you are paying a professional, at rush prices, to undo your work first.", -12, -8, -14, 4); } }
+    ], a: function () { return ask(function () { return out("good", "They get a contractor's written bid in a day. The real cost is a third of what the buyer assumed. You credit that and nothing more.", -3, 10, 5); }, "Get a real bid before agreeing to any number."); } },
+  { k: "Closing week", sign: "IN ESCROW", curve: true },
+  { k: "Moving day", sign: "IN ESCROW", q: "Closing is in four days. Twelve years of belongings have to leave the building.",
+    c: [
+      { b: "Pack the night before", i: "You work well under pressure.", fx: function () { return out("bad", "It is 2 a.m. You are wrapping plates in bath towels. The buyers arrive for the walkthrough to a garage that is still full.", -4, -9, -16, 1); } },
+      { b: "Movers booked two weeks ago", i: "Paid for. Confirmed twice.", fx: function () { return out("good", "The truck shows up at eight. By noon the house echoes. You leave the manuals and the garage remotes on the counter.", -4, 7, 9); } },
+      { b: "Ask the buyers for a few extra days", i: "A short rent-back after closing.", fx: function () { return luck(.5) ? out("ok", "They agree, in writing, for a small daily amount. You move without sprinting.", -3, 2, 6, 2) : out("ok", "Their lease ends Friday. The answer is no, and now you are packing at speed anyway.", -3, -3, -9); } }
+    ] }
+];
+var SELLER_CURVES = [
+  { q: "The appraisal comes in under the price you agreed on. The buyer's lender will only lend against the lower number.",
+    c: [
+      { b: "Hold the price. Their problem.", i: "A deal is a deal.", fx: function () { return luck(.4) ? out("ok", "The buyer finds the difference in cash. They are not happy and they inspect the walkthrough with a flashlight.", 4, -3, -6) : out("bad", "They cannot cover the gap. Escrow cancels and you start over with the same appraisal problem waiting.", -3, -27, -13, 10); } },
+      { b: "Meet in the middle", i: "Split the gap and keep the buyer.", fx: function () { return out("good", "Half each. It stings for an afternoon and closes on schedule.", -6, 9, 2); } },
+      { b: "Drop to the appraised number", i: "Just get it done.", fx: function () { return out("ok", "Closed, quickly. You gave up the whole gap without testing whether you had to.", -12, 11, 3); } }
+    ], a: function () { return ask(function () { return out("good", "They send the appraiser two sales that were missed and ask for a second look. The number moves most of the way. The buyer covers the rest.", -2, 11, 5); }, "Challenge the appraisal with better sales."); } },
+  { q: "Title finds a lien. The solar company from 2017 recorded a claim against the house and nobody mentioned it.",
+    c: [
+      { b: "Ignore it. Escrow will sort it out.", i: "That is what they are for.", fx: function () { return out("bad", "Escrow cannot close with it there. You learn this on day twenty-eight, on hold with a call center.", -4, -14, -15, 7); } },
+      { b: "Pay it off from the sale", i: "Call for the payoff figure today.", fx: function () { return out("good", "One phone call, one payoff letter. It comes out of your proceeds and the title is clean.", -8, 9, -2); } },
+      { b: "Ask the buyer to take over the solar", i: "It is their roof now.", fx: function () { return luck(.5) ? out("ok", "They qualify and agree. It adds paperwork and a week.", 0, 3, -5, 6) : out("bad", "They do not want someone else's contract. Now it is day twenty-six and you are paying it off anyway.", -8, -6, -10, 4); } }
+    ], a: function () { return ask(function () { return out("good", "They asked about solar on day one and ordered the payoff then. This is already handled. You find out by email.", -6, 12, 7); }, "Find out what was already ordered."); } },
+  { q: "Three days before closing the buyer goes quiet. Their agent says they are having second thoughts about the commute.",
+    c: [
+      { b: "Threaten to keep their deposit", i: "A contract is a contract.", fx: function () { return luck(.35) ? out("ok", "It works. They close, tight-lipped. Nobody shakes hands.", 2, 2, -9) : out("bad", "They dig in and call an attorney. The house is tied up while everyone argues over the deposit.", -5, -22, -16, 9); } },
+      { b: "Wait it out", i: "Cold feet usually warm up.", fx: function () { return luck(.5) ? out("ok", "They come around on the last possible day. You did not sleep that week.", 0, 3, -11, 2) : out("bad", "Silence turns into a cancellation. You lost a week finding out.", -2, -20, -12, 7); } },
+      { b: "Offer something small to settle them", i: "A home warranty. The patio furniture.", fx: function () { return out("good", "It was never about the commute. They needed to feel they got one last thing. They sign Thursday.", -3, 10, 2); } }
+    ], a: function () { return ask(function () { return out("good", "Your agent calls theirs and listens for ten minutes. The real worry is the fence line. A survey copy fixes it by dinner.", -1, 12, 6); }, "Find out what is actually bothering them."); } }
+];
+
+/* ---------- the seven decisions, buyer side ---------- */
+var BUYER = [
+  { k: "Who is on your side", sign: "FOR SALE", q: "You are buying in {city}. In California you sign a representation agreement before an agent opens a single door for you, so choose someone worth signing with.", hire: true },
+  { k: "The money", sign: "FOR SALE", q: "You have a down payment and a number in your head. Sellers have not seen either one yet.",
+    c: [
+      { b: "Find the house first", i: "Lenders can wait until you are serious.", fx: function () { return out("bad", "You find it on a Sunday. By the time a lender returns your call on Tuesday, it has two offers with loan letters attached.", 0, -13, -8, 3); } },
+      { b: "Get pre-approved", i: "An afternoon of pay stubs.", fx: function () { return out("good", "You have a letter and a real ceiling. The ceiling is lower than the number in your head, which is useful to learn now.", 0, 9, -2); } },
+      { b: "Go through full underwriting up front", i: "Every document, before you shop.", fx: function () { return out("good", "It takes a week and one very personal question about a deposit from your mother. Your offer will now read almost like cash.", -1, 14, -6); } }
+    ], a: function () { return ask(function () { return out("good", "They introduce a local lender who answers the phone on Sundays. You are fully underwritten by Friday.", 2, 15, 3); }, "Ask who they have closed with and trust."); } },
+  { k: "The search", sign: "OPEN HOUSE", q: "Now the looking. There are more homes in {city} than weekends in your year. How do you search?",
+    c: [
+      { b: "Scroll listings at midnight", i: "Thousands of photos. Zero pants required.", fx: function () { return out("bad", "You fall for a wide-angle lens. In person the yard is a slope and the freeway is a roommate.", 0, -6, -10, 3); } },
+      { b: "Walk open houses every Sunday", i: "No appointment. No pressure. Real rooms.", fx: function () { return out("good", "Five Sundays and you can price a street by walking it. You know what a real third bedroom feels like and which floor plans you hate.", 0, 11, 5); } },
+      { b: "Wait for the perfect one", i: "It will come up. You will know.", fx: function () { return out("ok", "It comes up in month four. So do the eleven other people who were waiting for it.", -3, -8, -6, 8); } }
+    ], a: function () { return ask(function () { return out("good", "Each Thursday they send three that fit and one wildcard, with the open house times. The wildcard is the one you end up wanting.", 2, 13, 6); }, "Tell them what you need. Let them filter."); } },
+  { k: "The offer", sign: "FOR SALE", q: "This is the one. Good light, a real yard, a kitchen you can live with. There are other buyers circling.",
+    c: [
+      { b: "Lowball it", i: "Never open with your best.", fx: function () { return luck(.2) ? out("good", "The seller was tired and you were the only one who wrote. It worked. Do not tell anyone how.", 14, 6, 2) : out("bad", "The seller does not counter. They do not respond at all. It sells Friday to someone else.", 0, -19, -10, 6); } },
+      { b: "Strong and clean", i: "Fair number. Short timelines. Lender letter attached.", fx: function () { return out("good", "You are not the highest. You are the one the seller believes will close. Accepted.", -4, 13, 3); } },
+      { b: "Waive every protection to win", i: "No inspection. No appraisal out. No way back.", fx: function () { g.waived = true; return out("ok", "You win. You also just promised to buy whatever is inside those walls, at that price, whatever the appraiser says.", -2, 15, -9); } }
+    ], a: function () { return ask(function () { return out("good", "They call the listing agent first. The seller does not need more money. The seller needs three weeks after closing to move. You offer that and win at a fair price.", 5, 16, 5); }, "Find out what the seller actually needs."); } },
+  { k: "The inspection", sign: "PENDING", q: "Offer accepted. You have a few days to look under the hood.",
+    c: [
+      { b: "Skip it. It looks fine.", i: "Fresh paint. New carpet. What could be wrong.", fx: function () { return luck(.3) ? out("ok", "You got lucky. It really was fine. You will never know how close it was.", 2, 3, 0) : out("bad", "First rain, the hallway ceiling tells you what the fresh paint was for.", -24, 0, -14); } },
+      { b: "A general inspection", i: "One inspector, three hours.", fx: function () { return g.waived ? out("ok", "The report lists fourteen items. You waived your right to ask for anything, so it is a to-do list now.", -8, 2, -6) : out("good", "Fourteen small items and one real one. The seller credits you for the real one.", 4, 8, 0); } },
+      { b: "General, plus sewer camera and roof", i: "Costs more. Sees more.", fx: function () { var f = pick(FOUND); return g.waived ? out("ok", "The specialists find " + f + ". You cannot ask the seller for a cent. At least you know before you move in.", -10, 2, -5) : out("good", "The specialists find " + f + ". Nobody would have seen it from the hallway. The seller pays to make it right.", 9, 9, 2); } }
+    ], a: function () { return ask(function () { return g.waived ? out("ok", "Their inspectors are excellent and thorough. You waived the leverage, so the findings become your budget. They help you plan it.", -6, 5, 2) : out("good", "Their inspectors are the ones other inspectors call. They find two real issues and your agent turns both into credits.", 11, 11, 4); }, "Use the inspectors they would hire for their own house."); } },
+  { k: "The curveball", sign: "PENDING", curve: true },
+  { k: "The final walkthrough", sign: "PENDING", q: "Closing is tomorrow. You get one last look at the house before it is yours.",
+    c: [
+      { b: "Skip it and sign", i: "You have seen the house.", fx: function () { return luck(.4) ? out("ok", "It was fine. The seller even left a bottle of wine.", 0, 3, 3) : out("bad", "The seller took the refrigerator, the curtain rods and, somehow, the mailbox. You own what is left.", -9, 0, -11); } },
+      { b: "Walk it. Test everything.", i: "Every faucet, every outlet, the garage door.", fx: function () { return out("good", "The agreed repairs are done and the receipts are on the counter. One sprinkler is broken. The seller fixes it before noon.", 2, 8, 5); } },
+      { b: "Bring your family. Make it a party.", i: "Everyone wants to see it.", fx: function () { return out("ok", "Your uncle finds six things wrong with the fence. None are real. You check nothing yourself.", 0, 1, -7); } }
+    ] }
+];
+var BUYER_CURVES = [
+  { q: "The home sits near open brush. Your insurance quote comes back at more than double what you budgeted, and the lender needs a policy to close.",
+    c: [
+      { b: "Take the first quote", i: "No time to shop.", fx: function () { return out("ok", "You are covered and you will close. Your monthly payment just grew and it stays grown.", -12, 6, -5); } },
+      { b: "Shop it hard for two days", i: "Call everyone.", fx: function () { return luck(.5) ? out("good", "The ninth call finds a carrier that still writes here. It is not cheap. It is a lot less than the first quote.", -4, 7, -6, 2) : out("ok", "Two days of hold music. You end up near the first quote anyway.", -10, 2, -10, 3); } },
+      { b: "Cancel the purchase", i: "The math no longer works.", fx: function () { return out("bad", "You walk away inside your contingency and keep your deposit. You are also back to Sundays.", -3, -30, -8); } }
+    ], a: function () { return ask(function () { return out("good", "They flagged the brush on day one and had you get the quote before you offered. It was already in your numbers. Nothing changes.", 0, 12, 7); }, "Find out whether they saw this coming."); } },
+  { q: "The HOA documents arrive, all two hundred pages. Page 143 mentions a special assessment for the roofs, due next year.",
+    c: [
+      { b: "Sign the receipt without reading", i: "Everyone does.", fx: function () { return out("bad", "Next spring a bill arrives with your name on it. It was all on page 143.", -18, 2, -9); } },
+      { b: "Read it and ask the seller to pay", i: "It was voted on while they owned it.", fx: function () { return luck(.55) ? out("good", "The seller agrees to pay it at closing. Page 143 just paid for your weekend of reading.", 8, 6, -3) : out("ok", "The seller splits it with you. Half is better than a surprise.", -4, 4, -4); } },
+      { b: "Cancel over it", i: "What else is in there?", fx: function () { return out("bad", "You are within your rights and out of the deal. The next building has an HOA too.", -2, -28, -7); } }
+    ], a: function () { return ask(function () { return out("good", "They read all two hundred pages before you did and had the request written. The seller pays the assessment in full.", 10, 10, 5); }, "Ask what they found in the documents."); } },
+  { q: "Day twenty-seven. The lender needs one more document: a letter explaining a deposit from eight months ago.",
+    c: [
+      { b: "Get to it this weekend", i: "It is one letter.", fx: function () { return out("bad", "Underwriting does not work weekends. Closing slides, your rate lock expires, and extending it costs money.", -9, -8, -10, 5); } },
+      { b: "Send it within the hour", i: "Drop everything.", fx: function () { return out("good", "Signed, scanned, sent before lunch. The file clears that afternoon.", 0, 9, -2); } },
+      { b: "Argue that it is unnecessary", i: "They already have your statements.", fx: function () { return out("ok", "You are right. It is unnecessary. You send it anyway two days later, because they are the ones with the money.", -3, 0, -9, 2); } }
+    ], a: function () { return ask(function () { return out("good", "They have a call with the lender every Monday on your file. This request came up two weeks ago and you already answered it.", 2, 12, 6); }, "Check whether this was already handled."); } }
+];
+
+/* ---------- drawing ---------- */
+var $ = function (id) { return document.getElementById(id); };
+function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function fill(s) { return esc(s).replace(/\{city\}/g, esc(g.place.city)).replace(/\{found\}/g, esc(g.found)); }
+var SKIES = [["#2b4a86", "#f6c27a"], ["#3a78c2", "#bfe0f5"], ["#3f86cf", "#d8ecf7"], ["#4a7fc0", "#f3d9a8"], ["#5a5fa8", "#f5a86a"], ["#3b2f6b", "#ef7f5a"], ["#1d1b3a", "#b8506a"], ["#12122a", "#3a3a6e"]];
+var SIGNS = { "SOLD": "#1f7a4a", "YOURS": "#1f7a4a", "IN ESCROW": "#b9831f", "PENDING": "#b9831f", "OPEN HOUSE": "#1f5fa8", "COMING SOON": "#444", "BACK ON MARKET": "#7a2a22", "STILL LOOKING": "#444" };
+function scene(step, sign) {
+  var s = SKIES[Math.min(SKIES.length - 1, step)];
+  $("sky1").setAttribute("stop-color", s[0]); $("sky2").setAttribute("stop-color", s[1]);
+  $("sun").setAttribute("cx", 110 + step * 62); $("sun").setAttribute("cy", step < 4 ? 170 - step * 28 : 86 + (step - 3) * 40);
+  $("sun").setAttribute("opacity", step >= 7 ? .15 : .95);
+  $("windows").setAttribute("fill", step >= 5 ? "#f6cf6b" : "#27344f");
+  $("signtext").textContent = sign; $("signtext").setAttribute("font-size", sign.length > 10 ? 6.2 : sign.length > 8 ? 7.4 : 8.5);
+  $("signface").setAttribute("fill", SIGNS[sign] || "#c0392b");
+}
+function meters(prev) {
+  ["money", "deal", "calm"].forEach(function (k) {
+    var v = Math.max(0, Math.min(100, g[k]));
+    $("v-" + k).textContent = Math.round(v); $("f-" + k).style.width = v + "%"; $("f-" + k).className = "fill" + (v < 25 ? " low" : "");
+    if (prev) { var d = Math.round(g[k] - prev[k]), n = $("d-" + k); if (d) { n.textContent = (d > 0 ? "+" : "") + d; n.className = "delta " + (d > 0 ? "up" : "down"); void n.offsetWidth; n.classList.add("show"); } }
+  });
+  $("day").textContent = g.day > 30 ? "Day " + g.day + " · overtime" : "Day " + g.day + " of 30";
+  var p = $("pips"); p.innerHTML = "";
+  for (var i = 0; i < 7; i++) p.appendChild(el("i", "pip " + (g.log[i] || (i === g.step ? "now" : ""))));
+}
+function show(node) { var m = $("main"); m.innerHTML = ""; m.appendChild(node); window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+/* ---------- title ---------- */
+function title() {
+  g = null; $("hud").hidden = true; $("where").hidden = true; scene(0, "FOR SALE"); $("day").textContent = "Day 1 of 30";
+  var st = store.get("streak", { n: 0, last: "" }), s = $("streak");
+  if (st.n > 0) { s.hidden = false; s.innerHTML = "Streak <b>" + st.n + "</b>"; } else s.hidden = true;
+  var played = store.get("daily:" + todayKey(), null);
+  var c = el("div", "card");
+  c.innerHTML = '<div class="kicker">Daily deal #' + dailyNumber() + ' · Southern California</div>' +
+    '<h1>Thirty days. One house. Seven decisions.</h1>' +
+    '<p class="lead">Buy or sell a home somewhere between Castaic and Costa Mesa. Every choice moves your money, your deal and your nerve. Most people do not get an A.</p>' +
+    '<div class="pick"><button class="choice" data-role="seller"><b>Sell a home</b><i>Today’s seller deal</i></button><button class="choice" data-role="buyer"><b>Buy a home</b><i>Today’s buyer deal</i></button></div>' +
+    (played ? '<p class="fine">You played today’s deal as a ' + esc(played.role) + ' and got ' + esc(played.grade) + '. The other side is still open.</p>' : '<p class="fine">Everyone gets the same deal today. New one at midnight.</p>') +
+    '<label class="f" for="city">Or pick your own city and play it fresh</label><select id="city"><option value="">Choose a city</option></select>' +
+    '<div class="row"><button class="btn ghost" data-free="seller">Sell there</button><button class="btn ghost" data-free="buyer">Buy there</button></div>' +
+    '<div class="badges" id="badges"></div>';
+  var sel = c.querySelector("#city");
+  REGIONS.forEach(function (r) { var og = document.createElement("optgroup"); og.label = r.name; r.cities.forEach(function (x) { var o = document.createElement("option"); o.value = x[0]; o.textContent = x[0]; og.appendChild(o); }); sel.appendChild(og); });
+  sel.value = store.get("city", "");
+  c.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.role) start(b.dataset.role, true);
+    if (b.dataset.free) { if (!sel.value) { sel.focus(); return; } store.set("city", sel.value); start(b.dataset.free, false, sel.value); }
+  });
+  show(c); badges(c.querySelector("#badges"));
+}
+
+/* ---------- a run ---------- */
+function start(role, daily, city) {
+  var seed = daily ? hash(todayKey() + role) : (Math.random() * 4294967296) >>> 0;
+  var rng = rngFrom(seed);
+  var place = daily ? ALL[Math.floor(rng() * ALL.length)] : ALL.filter(function (x) { return x.city === city; })[0];
+  g = { role: role, daily: daily, rng: rng, place: place, step: 0, log: [], money: 56, deal: 56, calm: 66, day: 1, agent: null, waived: false, worst: null, best: null };
+  g.found = pick(FOUND);
+  g.stages = role === "seller" ? SELLER : BUYER;
+  g.curve = pick(role === "seller" ? SELLER_CURVES : BUYER_CURVES);
+  $("hud").hidden = false; $("where").hidden = false; $("where").textContent = place.city;
+  stage();
+}
+function stage() {
+  var s = g.stages[g.step], src = s.curve ? g.curve : s;
+  scene(g.step, s.sign); meters();
+  var c = el("div", "card");
+  c.appendChild(el("div", "kicker", (g.role === "seller" ? "Selling" : "Buying") + " · " + (g.step + 1) + " of 7 · " + esc(s.k)));
+  c.appendChild(el("p", "story", fill(src.q)));
+  var list = el("div", "choices"), opts = [];
+  if (s.hire) {
+    // The open house agent is always one of the four. The other three rotate.
+    var others = ["bench", "lead", "cousin", "none"]; others.splice(Math.floor(g.rng() * 4), 1);
+    var ids = others.concat(["open"]);
+    for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(g.rng() * (i + 1)), t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
+    ids.forEach(function (id) { var a = AGENTS[id]; opts.push({ b: a.pick, i: a.sub, fx: function () { return hire(id); } }); });
+  } else {
+    opts = src.c.slice();
+    if (src.a) opts.push(src.a());
+  }
+  opts.forEach(function (o, n) {
+    var b = el("button", "choice" + (o.agent ? " agent" : "") + (o.dead ? " dead" : ""), "<b>" + esc(o.b) + "</b><i>" + esc(o.i) + "</i>");
+    if (o.dead) b.disabled = true; else b.addEventListener("click", function () { resolve(o, s); });
+    b.dataset.n = n + 1; list.appendChild(b);
+  });
+  c.appendChild(list); show(c);
+}
+function hire(id) {
+  var a = AGENTS[id]; g.agent = { id: id, name: a.name, skill: a.skill };
+  // A bus bench or a paid placement tells you nothing. Sometimes you get the pro, sometimes the assistant.
+  if (id === "bench" && g.rng() < .45) g.agent.skill = 1;
+  if (id === "lead") g.agent.skill = 1 + Math.floor(g.rng() * 3);
+  return out(id === "open" ? "good" : id === "none" || id === "cousin" ? "bad" : "ok", a.said, 0, id === "open" ? 6 : id === "none" ? -6 : 0, id === "open" ? 6 : id === "cousin" ? 3 : id === "none" ? -6 : 0);
+}
+function resolve(o, s) {
+  var prev = { money: g.money, deal: g.deal, calm: g.calm }, r = o.fx();
+  g.money += r.m; g.deal += r.d; g.calm += r.c; g.day += 4 + r.days;
+  g.log[g.step] = r.g;
+  var swing = r.m + r.d + r.c;
+  if (!s.hire) { var said = o.agent ? "Asked the agent. " + o.i : o.b; if (!g.worst || swing < g.worst.swing) g.worst = { swing: swing, k: s.k, b: said }; if (!g.best || swing > g.best.swing) g.best = { swing: swing, k: s.k, b: said }; }
+  var dead = g.deal <= 0 ? "deal" : g.calm <= 0 ? "calm" : g.money <= 0 ? "money" : null;
+  g.step++; meters(prev);
+  var c = el("div", "card");
+  c.appendChild(el("div", "kicker", "You chose"));
+  c.appendChild(el("h2", "", esc((o.agent ? "Ask " : "") + o.b)));
+  c.appendChild(el("div", "result " + r.g, esc(r.t)));
+  var b = el("button", "btn", dead || g.step >= 7 ? "See how it ends" : "Next: " + esc(g.stages[g.step].k));
+  b.addEventListener("click", function () { if (dead || g.step >= 7) finish(dead); else stage(); });
+  c.appendChild(b); show(c); b.focus({ preventScroll: true });
+}
+
+/* ---------- the ending ---------- */
+var HIRED = {
+  open: "You hired someone you had already watched work. An open house is the one job interview where the agent does not know they are being interviewed.",
+  bench: "You hired a headshot. Whether you got the person or the assistant was a coin flip, and you flipped it blind.",
+  lead: "You hired whoever paid to be first in line. Being first in line says nothing about what happens on day nineteen.",
+  cousin: "You hired family. Loyalty is real. So is experience, and you paid the difference yourself.",
+  none: "You went alone. You now know exactly what the job is, because you did all of it."
+};
+function finish(dead) {
+  var closed = !dead, m = Math.max(0, Math.min(100, g.money)), d = Math.max(0, Math.min(100, g.deal)), c = Math.max(0, Math.min(100, g.calm));
+  var score = Math.round(m * .4 + d * .3 + c * .3) + (closed ? (g.day <= 30 ? 8 : -Math.min(12, g.day - 30)) : 0);
+  score = Math.max(0, Math.min(100, score));
+  var grade = !closed ? "F" : score >= 95 ? "S" : score >= 74 ? "A" : score >= 60 ? "B" : score >= 46 ? "C" : "D";
+  var seller = g.role === "seller";
+  var head = !closed ? (dead === "deal" ? (seller ? "Escrow cancelled. Back on the market." : "The deal fell apart.") : dead === "calm" ? "You walked away from your own deal." : "You ran out of money before closing.")
+    : grade === "S" ? "Closed. Clean. People will ask how you did it." : grade === "A" ? (seller ? "Sold, and you slept fine." : "Keys in hand, nerves intact.") : grade === "B" ? "Closed. A few scars." : grade === "C" ? "It closed. You will be telling this story for years." : "It closed. Barely. Do not do it this way again.";
+  scene(7, closed ? (seller ? "SOLD" : "YOURS") : (seller ? "BACK ON MARKET" : "STILL LOOKING")); meters();
+
+  // progress
+  var fresh = [], have = store.get("badges", {});
+  function award(id) { if (!have[id]) { have[id] = 1; fresh.push(id); } }
+  if (closed) award(seller ? "sold" : "bought");
+  if (closed && g.day <= 30) award("ontime");
+  if (grade === "S") award("s");
+  if (g.agent.id === "open" && closed) award("sight");
+  if (g.agent.id === "none" && closed) award("solo");
+  if (have.sold && have.bought) award("both");
+  var best = store.get("best", 0); if (closed && score > best) store.set("best", score);
+  if (g.daily) {
+    var k = "daily:" + todayKey();
+    if (!store.get(k, null)) {
+      var st = store.get("streak", { n: 0, last: "" }), y = new Date(); y.setDate(y.getDate() - 1);
+      var yk = y.getFullYear() + "-" + ("0" + (y.getMonth() + 1)).slice(-2) + "-" + ("0" + y.getDate()).slice(-2);
+      st.n = st.last === yk ? st.n + 1 : st.last === todayKey() ? st.n : 1; st.last = todayKey(); store.set("streak", st);
+      if (st.n >= 7) award("week");
+    }
+    store.set(k, { role: g.role, grade: grade });
+  }
+  store.set("badges", have);
+
+  var card = el("div", "card");
+  card.appendChild(el("div", "kicker", (g.daily ? "Daily deal #" + dailyNumber() + " · " : "") + (seller ? "Seller" : "Buyer") + " in " + esc(g.place.city)));
+  card.appendChild(el("div", "grade", '<div class="letter ' + grade + '">' + grade + '</div><div><h2>' + esc(head) + '</h2><p>Score ' + score + ' · ' + (closed ? "closed on day " + g.day : "ended on day " + g.day) + (best && closed && score > best ? " · new best" : "") + '</p></div>'));
+  var L = el("div", "lessons");
+  L.appendChild(el("div", "lesson", "<b>Who you hired</b>" + esc(HIRED[g.agent.id])));
+  var quote = function (t) { return "\u201c" + esc(t) + (/[.?!]$/.test(t) ? "" : ".") + "\u201d"; };
+  if (g.worst && g.worst.swing < 0) L.appendChild(el("div", "lesson", "<b>What cost you most</b>" + esc(g.worst.k) + ": " + quote(g.worst.b)));
+  if (g.best && g.best.swing > 0) L.appendChild(el("div", "lesson", "<b>What saved you</b>" + esc(g.best.k) + ": " + quote(g.best.b)));
+  card.appendChild(L);
+
+  var share = el("button", "btn", "Share your result");
+  var text = "Escrow Run" + (g.daily ? " #" + dailyNumber() : "") + "\n" + (seller ? "Seller" : "Buyer") + " in " + g.place.city + " · Grade " + grade + " (" + score + ")\n" +
+    g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (closed ? " 🔑" : " 🚫") + "\nhttps://connorwithhonor.com/play/";
+  share.addEventListener("click", function () {
+    var done = function () { share.textContent = "Copied. Paste it anywhere."; setTimeout(function () { share.textContent = "Share your result"; }, 2200); };
+    if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) navigator.share({ text: text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done();
+  });
+  card.appendChild(share);
+  var row = el("div", "row");
+  var again = el("button", "btn ghost", seller ? "Now try buying" : "Now try selling"); again.addEventListener("click", function () { start(seller ? "buyer" : "seller", g.daily, g.place.city); });
+  var home = el("button", "btn ghost", "New city"); home.addEventListener("click", title);
+  row.appendChild(again); row.appendChild(home); card.appendChild(row);
+  var bd = el("div", "badges"); card.appendChild(bd);
+
+  // The real thing, for anyone who wants to try this weekend what they just practiced.
+  var near = el("div", "near"), p = g.place;
+  near.innerHTML = "<h3>Real open houses this weekend</h3>" +
+    '<a href="https://' + p.site + "/" + UTM + '" target="_blank" rel="noopener">' + esc(p.city) + " <span>" + p.site + "</span></a>" +
+    '<a href="https://' + p.region.hub[1] + "/" + UTM + '" target="_blank" rel="noopener">' + esc(p.region.hub[0]) + " <span>" + p.region.hub[1] + "</span></a>" +
+    '<p class="fine" style="text-align:left;margin-top:4px">Walk a few. Watch who is running the room. ' + (seller ? "That is how sellers find the agent worth hiring." : "That is how buyers find the agent worth signing with.") + "</p>";
+  card.appendChild(near);
+  show(card); badges(bd, fresh);
+}
+var BADGES = [["sold", "Sold one"], ["bought", "Bought one"], ["both", "Both sides"], ["ontime", "Closed on time"], ["sight", "Hired on sight"], ["solo", "Went alone and lived"], ["s", "Grade S"], ["week", "Seven day streak"]];
+function badges(node, fresh) {
+  var have = store.get("badges", {}); node.innerHTML = "";
+  BADGES.forEach(function (b) { node.appendChild(el("span", "badge" + (have[b[0]] ? " on" : "") + (fresh && fresh.indexOf(b[0]) >= 0 ? " new" : ""), esc(b[1]))); });
+}
+document.addEventListener("keydown", function (e) {
+  if (e.target.tagName === "SELECT" || e.metaKey || e.ctrlKey) return;
+  var b = document.querySelector('.choice[data-n="' + e.key + '"]'); if (b && !b.disabled) b.click();
+});
+title();
+</script>
+</body>
+</html>
