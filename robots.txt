@@ -4,6 +4,7 @@
 
 # All standard search crawlers
 User-agent: *
+Disallow: /play/e/
 Allow: /
 
 # Explicit welcome to major AI/LLM crawlers (some respect this, some don't)
