@@ -8,7 +8,10 @@
 <meta property="og:title" content="Escrow Run: thirty days, one house, seven decisions">
 <meta property="og:description" content="Buy or sell a Southern California home in five minutes. Everyone gets the same deal today. Can you close it?">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://connorwithhonor.com/og-image.png">
+<meta property="og:image" content="https://connorwithhonor.com/play/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://connorwithhonor.com/play/og.png">
 <meta property="og:url" content="https://connorwithhonor.com/play/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0c0b10">
@@ -19,6 +22,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"VideoGame","name":"Escrow Run","url":"https://connorwithhonor.com/play/","description":"A free browser game about buying or selling a home in Southern California. Seven decisions across a thirty day escrow in Santa Clarita Valley, Los Angeles County, Ventura County and Orange County.","genre":["Simulation","Educational"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","isAccessibleForFree":true,"inLanguage":"en","author":{"@type":"Person","name":"Connor MacIvor","url":"https://connorwithhonor.com"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How long does Escrow Run take to play?","acceptedAnswer":{"@type":"Answer","text":"About five minutes. There is one daily deal for sellers and one for buyers, the same for everyone, and a new pair at midnight."}},
+{"@type":"Question","name":"Which areas does Escrow Run cover?","acceptedAnswer":{"@type":"Answer","text":"Cities across the Santa Clarita Valley, Los Angeles County, Ventura County and Orange County, from Castaic to Costa Mesa."}},
+{"@type":"Question","name":"Is Escrow Run real estate advice?","acceptedAnswer":{"@type":"Answer","text":"No. It is a game. The events are fiction and every real home, loan and contract is different."}},
+{"@type":"Question","name":"Who made Escrow Run?","acceptedAnswer":{"@type":"Answer","text":"Connor MacIvor, a Santa Clarita Valley real estate broker for more than 27 years and a retired LAPD motor officer."}}]}
 </script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -114,6 +124,16 @@ select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--gold-b
 .badge.on{color:var(--gold-bright);border-color:var(--line)}
 .badge.new{animation:pop .6s ease-out}
 @keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.host{display:flex;gap:12px;align-items:center;margin-top:16px;border-top:1px solid var(--line-soft);padding-top:16px}
+.host img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--line);flex:none}
+.host b{display:block;font-size:15px}.host span{display:block;color:var(--muted);font-size:13.5px}
+.vs{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;font-size:15.5px;background:rgba(232,168,56,.07)}
+.about{margin-top:34px;border-top:1px solid var(--line-soft);padding-top:22px;color:var(--muted);font-size:15px}
+.about h2{color:var(--cream);font-size:22px}.about h3{color:var(--cream);font-size:15.5px;margin:16px 0 3px;font-family:var(--sans)}
+.about ol{padding-left:20px;margin-top:8px}.about li{margin-bottom:7px}.about li b{color:var(--cream)}
+.about details{margin-top:18px}.about summary{cursor:pointer;color:var(--cream);font-weight:700}
+.about textarea{width:100%;height:92px;margin-top:8px;background:var(--ink-2);color:var(--muted);border:1px solid var(--line-soft);border-radius:10px;padding:10px;font:12px/1.5 ui-monospace,Menlo,monospace}
+body.embed .about,body.embed footer .site{display:none}
 footer{margin-top:auto;padding-top:28px;font-size:11.5px;color:var(--dim);text-align:center;line-height:1.6}
 footer a{color:var(--dim)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -183,10 +203,37 @@ footer a{color:var(--dim)}
 
   <main id="main" aria-live="polite"></main>
 
+  <section class="about" id="about">
+    <h2>What the game is teaching</h2>
+    <p>Escrow Run is seven decisions because a real sale turns on about seven. Miss one and you feel it at the closing table.</p>
+    <ol>
+      <li><b>Who you hire.</b> It changes every decision after it. Watch an agent work before you sign with one.</li>
+      <li><b>Preparation.</b> Small fixes show up in the photos. Big remodels rarely pay themselves back.</li>
+      <li><b>Price or financing.</b> Sellers win with a number they can defend. Buyers win with a loan that is already approved.</li>
+      <li><b>Exposure.</b> More qualified eyes on a home means more offers. Buyers learn a market fastest by walking it.</li>
+      <li><b>The offer.</b> The highest number is not always the strongest offer. The one that closes is.</li>
+      <li><b>Inspection and repairs.</b> Get a real bid before agreeing to any number. Skipping the inspection is a bet.</li>
+      <li><b>The curveball.</b> Appraisals, insurance, liens and cold feet show up late. Good preparation shows up early.</li>
+    </ol>
+    <h3>How long does it take to play?</h3>
+    <p>About five minutes. There is one daily deal for sellers and one for buyers, the same for everyone, and a new pair at midnight.</p>
+    <h3>Which areas does it cover?</h3>
+    <p>Cities across the Santa Clarita Valley, Los Angeles County, Ventura County and Orange County, from Castaic to Costa Mesa.</p>
+    <h3>Is this real estate advice?</h3>
+    <p>No. It is a game. The events are fiction and every real home, loan and contract is different. Talk to a licensed professional about yours.</p>
+    <h3>Who made it?</h3>
+    <p>Connor MacIvor, a Santa Clarita Valley real estate broker for more than 27 years and a retired LAPD motor officer. He builds his own software.</p>
+    <details><summary>Put this game on your own site</summary>
+      <p>Free to embed. Copy this and paste it into any page.</p>
+      <textarea readonly onclick="this.select()">&lt;iframe src="https://connorwithhonor.com/play/?embed=1" title="Escrow Run" width="100%" height="900" style="border:0;max-width:600px" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href="https://connorwithhonor.com/play/"&gt;Escrow Run, a home buying and selling game by Connor MacIvor&lt;/a&gt;&lt;/p&gt;</textarea>
+    </details>
+  </section>
+
   <footer>
     Escrow Run is a game. The events are fiction and nothing here is legal, financial or real estate advice. Every home and every deal is different.<br>
     Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity<br>
-    <a href="/">ConnorWithHonor.com</a>
+    <a class="site" href="/">ConnorWithHonor.com</a>
   </footer>
 </div>
 
@@ -314,6 +361,19 @@ var SELLER_CURVES = [
       { b: "Wait it out", i: "Cold feet usually warm up.", fx: function () { return luck(.5) ? out("ok", "They come around on the last possible day. You did not sleep that week.", 0, 3, -11, 2) : out("bad", "Silence turns into a cancellation. You lost a week finding out.", -2, -20, -12, 7); } },
       { b: "Offer something small to settle them", i: "A home warranty. The patio furniture.", fx: function () { return out("good", "It was never about the commute. They needed to feel they got one last thing. They sign Thursday.", -3, 10, 2); } }
     ], a: function () { return ask(function () { return out("good", "Your agent calls theirs and listens for ten minutes. The real worry is the fence line. A survey copy fixes it by dinner.", -1, 12, 6); }, "Find out what is actually bothering them."); } }
+,
+  { q: "The buyer's lender needs five more days. Your movers are booked and your next place is waiting on this money.",
+    c: [
+      { b: "No extension. Close on time or else.", i: "The contract has a date in it.", fx: function () { return luck(.4) ? out("ok", "The lender finds a way. Everyone is short with each other at signing.", 2, -2, -7) : out("bad", "They cannot fund on time. You hold a firm line and an empty escrow.", -3, -24, -12, 8); } },
+      { b: "Grant it, with a daily charge", i: "Your costs are real. Put a number on each day.", fx: function () { return out("good", "They agree in an hour. The delay now pays for your storage unit, and they close a day early to stop the meter.", 4, 8, -2, 4); } },
+      { b: "Grant it, no strings", i: "Be the easy one.", fx: function () { return out("ok", "They take the five days and then two more. You pay the movers to reschedule out of your own pocket.", -6, 6, -6, 7); } }
+    ], a: function () { return ask(function () { return out("good", "They have been calling the lender twice a week and saw this coming. The extension was already drafted, with a daily charge, and your movers were warned.", 3, 11, 5, 3); }, "Find out how long they have known."); } },
+  { q: "At the final walkthrough the buyer finds the water heater leaking. It was dry at the inspection. Closing is tomorrow.",
+    c: [
+      { b: "Not your problem anymore", i: "They inspected. They approved it.", fx: function () { return luck(.3) ? out("ok", "They close anyway and send a very long email afterward.", 2, -3, -6) : out("bad", "They refuse to sign until it is fixed. Closing slips and your rate on the next place slips with it.", -6, -15, -12, 5); } },
+      { b: "Replace it today", i: "Call a plumber before lunch.", fx: function () { return out("good", "Installed by four, receipt on the counter. The buyer shakes your hand.", -6, 10, 2); } },
+      { b: "Offer a credit at closing", i: "Let them pick their own.", fx: function () { return out("good", "Escrow adds one line. Nobody waits on a plumber.", -5, 9, 3); } }
+    ], a: function () { return ask(function () { return out("good", "Their plumber is there in ninety minutes. It was a loose fitting, not a dead heater. Fixed for the cost of a service call.", -1, 11, 6); }, "Find out what is actually wrong first."); } }
 ];
 
 /* ---------- the seven decisions, buyer side ---------- */
@@ -370,6 +430,19 @@ var BUYER_CURVES = [
       { b: "Send it within the hour", i: "Drop everything.", fx: function () { return out("good", "Signed, scanned, sent before lunch. The file clears that afternoon.", 0, 9, -2); } },
       { b: "Argue that it is unnecessary", i: "They already have your statements.", fx: function () { return out("ok", "You are right. It is unnecessary. You send it anyway two days later, because they are the ones with the money.", -3, 0, -9, 2); } }
     ], a: function () { return ask(function () { return out("good", "They have a call with the lender every Monday on your file. This request came up two weeks ago and you already answered it.", 2, 12, 6); }, "Check whether this was already handled."); } }
+,
+  { q: "The appraisal comes in below your offer. The lender will only lend against the lower number, and the difference is yours to solve.",
+    c: [
+      { b: "Pay the gap in cash", i: "You want this house.", fx: function () { return out("ok", "You close. Your emergency fund is now a memory, in a house that will need things.", -15, 9, -6); } },
+      { b: "Ask the seller to come down", i: "The appraiser just did your negotiating.", fx: function () { return luck(.55) ? out("good", "They meet you most of the way. Nobody else's lender would have appraised it higher either.", 4, 8, -2) : out("ok", "They move a little. You cover the rest and call it even.", -7, 5, -4); } },
+      { b: "Cancel", i: "The house is not worth it. A stranger said so.", fx: function () { return out("bad", "You are out, deposit intact. One appraiser's opinion just cost you the house with the good light.", -2, -30, -8); } }
+    ], a: function () { return ask(function () { return out("good", "They wrote an appraisal plan into your offer on day one. The split was agreed before anyone needed it. No argument, no delay.", 3, 12, 6); }, "Check what your offer already says."); } },
+  { q: "The seller asks to stay in the house for ten days after closing. Their next place is not ready.",
+    c: [
+      { b: "Refuse. Your house, your keys.", i: "You have movers too.", fx: function () { return luck(.5) ? out("ok", "They scramble and get out. The house is left clean but not kindly.", 0, -3, -4) : out("bad", "They slow-walk every signature from here to closing.", -2, -12, -10, 5); } },
+      { b: "Agree, in writing, with a daily rate", i: "A short rent-back with a deposit held.", fx: function () { return out("good", "They pay you to stay, a deposit sits in escrow, and they leave on day nine. The goodwill gets you the patio set.", 5, 9, 2); } },
+      { b: "Agree on a handshake", i: "They seem like nice people.", fx: function () { return luck(.4) ? out("ok", "They leave on day ten as promised. You got lucky and you know it.", 0, 5, -3) : out("bad", "Day ten becomes day nineteen. You are paying a mortgage on a house you cannot enter.", -10, 0, -15); } }
+    ], a: function () { return ask(function () { return out("good", "They add a one-page rent-back with a daily rate, a deposit and an insurance line. Signed that night. The seller is grateful and it shows at the walkthrough.", 6, 11, 5); }, "Have them paper it properly."); } }
 ];
 
 /* ---------- drawing ---------- */
@@ -401,11 +474,26 @@ function meters(prev) {
 function show(node) { var m = $("main"); m.innerHTML = ""; m.appendChild(node); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 /* ---------- title ---------- */
+function challenge() {
+  var m = /[?&]c=([0-9a-z]+)-([sb])-(\d+)-(\d+)/.exec(location.search); if (!m) return null;
+  var place = ALL[+m[3]]; if (!place) return null;
+  return { seed: parseInt(m[1], 36) >>> 0, role: m[2] === "s" ? "seller" : "buyer", place: place, score: Math.min(100, +m[4]) };
+}
 function title() {
-  g = null; $("hud").hidden = true; $("where").hidden = true; scene(0, "FOR SALE"); $("day").textContent = "Day 1 of 30";
+  g = null; $("hud").hidden = true; $("about").hidden = false; $("where").hidden = true; scene(0, "FOR SALE"); $("day").textContent = "Day 1 of 30";
   var st = store.get("streak", { n: 0, last: "" }), s = $("streak");
   if (st.n > 0) { s.hidden = false; s.innerHTML = "Streak <b>" + st.n + "</b>"; } else s.hidden = true;
   var played = store.get("daily:" + todayKey(), null);
+  var ch = challenge();
+  if (ch && !title.seen) {
+    title.seen = true;
+    var cc = el("div", "card");
+    cc.innerHTML = '<div class="kicker">You have been challenged</div><h1>Same house. Same dice. Beat ' + ch.score + '.</h1>' +
+      '<p class="lead">A friend ' + (ch.role === "seller" ? "sold" : "bought") + ' a home in ' + esc(ch.place.city) + ' and scored ' + ch.score + '. You get the identical deal: same agents on offer, same surprises. Seven decisions.</p>';
+    var go = el("button", "btn", "Take the deal"); go.addEventListener("click", function () { start(ch.role, false, ch.place.city, ch.seed, ch.score); });
+    var no = el("button", "btn ghost", "Play today\u2019s deal instead"); no.addEventListener("click", title);
+    cc.appendChild(go); cc.appendChild(no); show(cc); return;
+  }
   var c = el("div", "card");
   c.innerHTML = '<div class="kicker">Daily deal #' + dailyNumber() + ' · Southern California</div>' +
     '<h1>Thirty days. One house. Seven decisions.</h1>' +
@@ -427,11 +515,13 @@ function title() {
 }
 
 /* ---------- a run ---------- */
-function start(role, daily, city) {
-  var seed = daily ? hash(todayKey() + role) : (Math.random() * 4294967296) >>> 0;
+function start(role, daily, city, forced, target) {
+  var seed = forced != null ? forced : daily ? hash(todayKey() + role) : (Math.random() * 4294967296) >>> 0;
   var rng = rngFrom(seed);
-  var place = daily ? ALL[Math.floor(rng() * ALL.length)] : ALL.filter(function (x) { return x.city === city; })[0];
-  g = { role: role, daily: daily, rng: rng, place: place, step: 0, log: [], money: 56, deal: 56, calm: 66, day: 1, agent: null, waived: false, worst: null, best: null };
+  var drawn = ALL[Math.floor(rng() * ALL.length)];   // always drawn, so the dice line up for a challenger
+  var place = daily ? drawn : ALL.filter(function (x) { return x.city === city; })[0] || drawn;
+  document.body.classList.add("playing"); $("about").hidden = true;
+  g = { seed: seed, target: target == null ? null : target, role: role, daily: daily, rng: rng, place: place, step: 0, log: [], money: 56, deal: 56, calm: 66, day: 1, agent: null, waived: false, worst: null, best: null };
   g.found = pick(FOUND);
   g.stages = role === "seller" ? SELLER : BUYER;
   g.curve = pick(role === "seller" ? SELLER_CURVES : BUYER_CURVES);
@@ -529,6 +619,7 @@ function finish(dead) {
   var card = el("div", "card");
   card.appendChild(el("div", "kicker", (g.daily ? "Daily deal #" + dailyNumber() + " · " : "") + (seller ? "Seller" : "Buyer") + " in " + esc(g.place.city)));
   card.appendChild(el("div", "grade", '<div class="letter ' + grade + '">' + grade + '</div><div><h2>' + esc(head) + '</h2><p>Score ' + score + ' · ' + (closed ? "closed on day " + g.day : "ended on day " + g.day) + (best && closed && score > best ? " · new best" : "") + '</p></div>'));
+  if (g.target != null) card.appendChild(el("div", "vs", score > g.target ? "You " + score + ", your friend " + g.target + ". You win. Send it back." : score === g.target ? "You " + score + ", your friend " + g.target + ". Dead even." : "You " + score + ", your friend " + g.target + ". They got you. Run it again."));
   var L = el("div", "lessons");
   L.appendChild(el("div", "lesson", "<b>Who you hired</b>" + esc(HIRED[g.agent.id])));
   var quote = function (t) { return "\u201c" + esc(t) + (/[.?!]$/.test(t) ? "" : ".") + "\u201d"; };
@@ -545,8 +636,20 @@ function finish(dead) {
     else if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done();
   });
   card.appendChild(share);
+  // A challenge link replays this exact deal for whoever opens it, with this score to beat.
+  var link = "https://connorwithhonor.com/play/?c=" + g.seed.toString(36) + "-" + (seller ? "s" : "b") + "-" + ALL.indexOf(g.place) + "-" + score;
+  var dare = el("button", "btn ghost", "Challenge a friend to beat " + score);
+  dare.addEventListener("click", function () {
+    var msg = "I " + (closed ? (seller ? "sold" : "bought") : "tried to " + (seller ? "sell" : "buy")) + " a house in " + g.place.city + " and got a " + grade + " (" + score + "). Same deal, same dice. Beat it: " + link;
+    var done = function () { dare.textContent = "Link copied. Send it."; setTimeout(function () { dare.textContent = "Challenge a friend to beat " + score; }, 2200); };
+    if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) navigator.share({ text: msg }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(msg).then(done, done); else done();
+  });
+  card.appendChild(dare);
   var row = el("div", "row");
   var again = el("button", "btn ghost", seller ? "Now try buying" : "Now try selling"); again.addEventListener("click", function () { start(seller ? "buyer" : "seller", g.daily, g.place.city); });
+  var retry = null;
+  if (g.target != null && score <= g.target) { retry = el("button", "btn", "Run it again"); var keep = g; retry.addEventListener("click", function () { start(keep.role, false, keep.place.city, keep.seed, keep.target); }); card.appendChild(retry); }
   var home = el("button", "btn ghost", "New city"); home.addEventListener("click", title);
   row.appendChild(again); row.appendChild(home); card.appendChild(row);
   var bd = el("div", "badges"); card.appendChild(bd);
@@ -558,6 +661,13 @@ function finish(dead) {
     '<a href="https://' + p.region.hub[1] + "/" + UTM + '" target="_blank" rel="noopener">' + esc(p.region.hub[0]) + " <span>" + p.region.hub[1] + "</span></a>" +
     '<p class="fine" style="text-align:left;margin-top:4px">Walk a few. Watch who is running the room. ' + (seller ? "That is how sellers find the agent worth hiring." : "That is how buyers find the agent worth signing with.") + "</p>";
   card.appendChild(near);
+  var host = el("div", "host", '<img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="56" height="56" loading="lazy"><div><b>Built by Connor MacIvor</b><span>27 years selling homes in the Santa Clarita Valley. 20 years LAPD before that. He writes his own software.</span></div>');
+  card.appendChild(host);
+  if (seller) {
+    var soa = el("a", "btn ghost", "Selling for real? Meet the Seller\u2019s Only Agent\u2122");
+    soa.href = "https://sellersonlyagent.com/" + UTM + "&utm_content=seller-" + grade; soa.target = "_blank"; soa.rel = "noopener"; soa.style.textDecoration = "none";
+    card.appendChild(soa);
+  }
   show(card); badges(bd, fresh);
 }
 var BADGES = [["sold", "Sold one"], ["bought", "Bought one"], ["both", "Both sides"], ["ontime", "Closed on time"], ["sight", "Hired on sight"], ["solo", "Went alone and lived"], ["s", "Grade S"], ["week", "Seven day streak"]];
@@ -569,6 +679,7 @@ document.addEventListener("keydown", function (e) {
   if (e.target.tagName === "SELECT" || e.metaKey || e.ctrlKey) return;
   var b = document.querySelector('.choice[data-n="' + e.key + '"]'); if (b && !b.disabled) b.click();
 });
+if (/[?&]embed=1/.test(location.search)) document.body.classList.add("embed");
 title();
 </script>
 </body>
