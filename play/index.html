@@ -269,6 +269,22 @@ function dailyNumber() { var a = new Date(2026, 10, 10), d = new Date(); d.setHo
 var store = { get: function (k, d) { try { var v = localStorage.getItem("er:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
               set: function (k, v) { try { localStorage.setItem("er:" + k, JSON.stringify(v)); } catch (e) {} } };
 
+/* ---------- counting ----------
+   Cloudflare Web Analytics counts page views and nothing else. So each thing worth
+   counting is a tiny real page under /play/e/, loaded in a hidden frame. It shows up
+   in the dashboard as a page view on its own path: /play/e/finish-seller-a/ and so on.
+   No cookies, no third party, nothing about the player. */
+function track(name) {
+  try {
+    if (window.__noTrack || /[?&]notrack=1/.test(location.search)) return;
+    var f = document.createElement("iframe");
+    f.src = "/play/e/" + name + "/"; f.title = ""; f.tabIndex = -1; f.setAttribute("aria-hidden", "true");
+    f.style.cssText = "position:absolute;width:1px;height:1px;border:0;opacity:0;pointer-events:none;left:-9px";
+    document.body.appendChild(f);
+    setTimeout(function () { f.remove(); }, 15000);
+  } catch (e) {}
+}
+
 /* ---------- the people you can hire ----------
    skill is hidden from the player. It decides how often the dice go your way
    and whether "Ask your agent" is a real answer or a voicemail. */
@@ -486,7 +502,7 @@ function title() {
   var played = store.get("daily:" + todayKey(), null);
   var ch = challenge();
   if (ch && !title.seen) {
-    title.seen = true;
+    title.seen = true; track("challenge-opened");
     var cc = el("div", "card");
     cc.innerHTML = '<div class="kicker">You have been challenged</div><h1>Same house. Same dice. Beat ' + ch.score + '.</h1>' +
       '<p class="lead">A friend ' + (ch.role === "seller" ? "sold" : "bought") + ' a home in ' + esc(ch.place.city) + ' and scored ' + ch.score + '. You get the identical deal: same agents on offer, same surprises. Seven decisions.</p>';
@@ -521,6 +537,7 @@ function start(role, daily, city, forced, target) {
   var drawn = ALL[Math.floor(rng() * ALL.length)];   // always drawn, so the dice line up for a challenger
   var place = daily ? drawn : ALL.filter(function (x) { return x.city === city; })[0] || drawn;
   document.body.classList.add("playing"); $("about").hidden = true;
+  track("start-" + role);
   g = { seed: seed, target: target == null ? null : target, role: role, daily: daily, rng: rng, place: place, step: 0, log: [], money: 56, deal: 56, calm: 66, day: 1, agent: null, waived: false, worst: null, best: null };
   g.found = pick(FOUND);
   g.stages = role === "seller" ? SELLER : BUYER;
@@ -592,6 +609,7 @@ function finish(dead) {
   var seller = g.role === "seller";
   var head = !closed ? (dead === "deal" ? (seller ? "Escrow cancelled. Back on the market." : "The deal fell apart.") : dead === "calm" ? "You walked away from your own deal." : "You ran out of money before closing.")
     : grade === "S" ? "Closed. Clean. People will ask how you did it." : grade === "A" ? (seller ? "Sold, and you slept fine." : "Keys in hand, nerves intact.") : grade === "B" ? "Closed. A few scars." : grade === "C" ? "It closed. You will be telling this story for years." : "It closed. Barely. Do not do it this way again.";
+  track("finish-" + g.role + "-" + grade.toLowerCase());
   scene(7, closed ? (seller ? "SOLD" : "YOURS") : (seller ? "BACK ON MARKET" : "STILL LOOKING")); meters();
 
   // progress
@@ -631,6 +649,7 @@ function finish(dead) {
   var text = "Escrow Run" + (g.daily ? " #" + dailyNumber() : "") + "\n" + (seller ? "Seller" : "Buyer") + " in " + g.place.city + " · Grade " + grade + " (" + score + ")\n" +
     g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (closed ? " 🔑" : " 🚫") + "\nhttps://connorwithhonor.com/play/";
   share.addEventListener("click", function () {
+    track("share");
     var done = function () { share.textContent = "Copied. Paste it anywhere."; setTimeout(function () { share.textContent = "Share your result"; }, 2200); };
     if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) navigator.share({ text: text }).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done();
@@ -640,6 +659,7 @@ function finish(dead) {
   var link = "https://connorwithhonor.com/play/?c=" + g.seed.toString(36) + "-" + (seller ? "s" : "b") + "-" + ALL.indexOf(g.place) + "-" + score;
   var dare = el("button", "btn ghost", "Challenge a friend to beat " + score);
   dare.addEventListener("click", function () {
+    track("challenge-sent");
     var msg = "I " + (closed ? (seller ? "sold" : "bought") : "tried to " + (seller ? "sell" : "buy")) + " a house in " + g.place.city + " and got a " + grade + " (" + score + "). Same deal, same dice. Beat it: " + link;
     var done = function () { dare.textContent = "Link copied. Send it."; setTimeout(function () { dare.textContent = "Challenge a friend to beat " + score; }, 2200); };
     if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) navigator.share({ text: msg }).catch(function () {});
@@ -660,12 +680,14 @@ function finish(dead) {
     '<a href="https://' + p.site + "/" + UTM + '" target="_blank" rel="noopener">' + esc(p.city) + " <span>" + p.site + "</span></a>" +
     '<a href="https://' + p.region.hub[1] + "/" + UTM + '" target="_blank" rel="noopener">' + esc(p.region.hub[0]) + " <span>" + p.region.hub[1] + "</span></a>" +
     '<p class="fine" style="text-align:left;margin-top:4px">Walk a few. Watch who is running the room. ' + (seller ? "That is how sellers find the agent worth hiring." : "That is how buyers find the agent worth signing with.") + "</p>";
+  near.addEventListener("click", function (e) { if (e.target.closest("a")) track("click-open-houses"); });
   card.appendChild(near);
   var host = el("div", "host", '<img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="56" height="56" loading="lazy"><div><b>Built by Connor MacIvor</b><span>27 years selling homes in the Santa Clarita Valley. 20 years LAPD before that. He writes his own software.</span></div>');
   card.appendChild(host);
   if (seller) {
     var soa = el("a", "btn ghost", "Selling for real? Meet the Seller\u2019s Only Agent\u2122");
     soa.href = "https://sellersonlyagent.com/" + UTM + "&utm_content=seller-" + grade; soa.target = "_blank"; soa.rel = "noopener"; soa.style.textDecoration = "none";
+    soa.addEventListener("click", function () { track("click-sellers-only-agent"); });
     card.appendChild(soa);
   }
   show(card); badges(bd, fresh);
