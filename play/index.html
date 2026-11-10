@@ -647,7 +647,7 @@ function finish(dead) {
 
   var share = el("button", "btn", "Share your result");
   var text = "Escrow Run" + (g.daily ? " #" + dailyNumber() : "") + "\n" + (seller ? "Seller" : "Buyer") + " in " + g.place.city + " · Grade " + grade + " (" + score + ")\n" +
-    g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (closed ? " 🔑" : " 🚫") + "\nhttps://connorwithhonor.com/play/";
+    g.log.map(function (x) { return x === "good" ? "🟩" : x === "ok" ? "🟨" : "🟥"; }).join("") + (closed ? " 🔑" : " 🚫") + "\nhttps://openhousegame.com";
   share.addEventListener("click", function () {
     track("share");
     var done = function () { share.textContent = "Copied. Paste it anywhere."; setTimeout(function () { share.textContent = "Share your result"; }, 2200); };
@@ -656,7 +656,9 @@ function finish(dead) {
   });
   card.appendChild(share);
   // A challenge link replays this exact deal for whoever opens it, with this score to beat.
-  var link = "https://connorwithhonor.com/play/?c=" + g.seed.toString(36) + "-" + (seller ? "s" : "b") + "-" + ALL.indexOf(g.place) + "-" + score;
+  // openhousegame.com is a redirect to /play/ that keeps the query string. The game itself
+  // stays here, so the canonical URL, the embed code and the credit link do not change.
+  var link = "https://openhousegame.com/?c=" + g.seed.toString(36) + "-" + (seller ? "s" : "b") + "-" + ALL.indexOf(g.place) + "-" + score;
   var dare = el("button", "btn ghost", "Challenge a friend to beat " + score);
   dare.addEventListener("click", function () {
     track("challenge-sent");
