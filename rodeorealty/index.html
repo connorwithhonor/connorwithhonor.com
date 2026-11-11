@@ -15,12 +15,13 @@
 @media(max-width:700px){header{height:86px;gap:10px}.brand{font-size:11px;max-width:130px;line-height:1.5}.top-right{gap:8px;align-items:end;flex-direction:column}.event{font-size:10px}.review{font-size:8px;padding:5px 8px}.slide{padding-top:34px;padding-bottom:34px;min-height:calc(100svh - 174px)}main{min-height:calc(100svh - 174px)}h1{font-size:clamp(43px,11vw,68px)}h2{font-size:clamp(33px,8vw,48px)}.eyebrow{font-size:10px;letter-spacing:.12em;line-height:1.5}.points li{font-size:22px;gap:14px}.points{gap:18px}.subtitle{font-size:22px}.two-col,.penny{grid-template-columns:1fr;gap:25px}.timeline{grid-template-columns:1fr 1fr;gap:25px}.column p,.column li{font-size:21px}.takeaway{font-size:18px;padding-left:14px}.penny-value{font-size:48px}.bar-chart{height:90px}.penny-summary{font-size:20px}.citation-hint{line-height:1.4}footer{padding:13px 18px;gap:10px}.navigation{gap:7px}.nav-btn{min-width:38px;height:40px}.tools{gap:5px}.tools button{padding:10px 9px;font-size:11px}.optional-tool,.click-help{display:none}.counter{font-size:11px;min-width:40px}.dialog-body{padding:20px;font-size:17px}.dialog-head{padding:18px 20px}.slide-menu{grid-template-columns:1fr}.review small{display:none}}
 @media(max-width:700px){.slide:has(.penny){padding-top:20px;padding-bottom:20px}.penny{gap:12px}.penny .bar-chart{height:60px;margin-top:6px}.penny input{margin-top:10px;margin-bottom:8px}.penny small{font-size:11px}.penny-summary{font-size:19px}.penny-value{font-size:43px}}
 @media print{:root{color:#111;background:white;font-size:12pt}header,footer,.progress,dialog,.toast,.citation-hint,.range-row{display:none!important}main{min-height:0}.slide,.slide.active{display:flex!important;opacity:1;min-height:0;height:185mm;page-break-after:always;break-after:page;justify-content:center;padding:12mm 15mm;animation:none;color:#111;overflow:hidden}.slide:after{display:none}h1,h2{font-size:38pt;color:#111}.subtitle,.points li,.column p,.column li{font-size:21pt;color:#222}.eyebrow,.takeaway,.year,.penny-value,.column h3{color:#806023}.kicker,.penny small,.title-slide .title-line,.penny-label{color:#444}.takeaway{font-size:18pt}.penny-value{font-size:36pt}.bar-chart i{background:#806023!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4 landscape;margin:10mm}}
+.tools button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:#dfb56815}.voice-start{padding:14px 18px;color:var(--bg);background:var(--gold);font-weight:bold}@media(max-width:1060px){.click-help{display:none}}@media(max-width:700px){footer{flex-wrap:wrap;justify-content:center;gap:8px;min-height:115px}.tools{width:100%;justify-content:center}.slide,main{min-height:calc(100svh - 201px)}}
 </style>
 </head>
 <body>
 <header><div class="brand">CONNOR <span>WITH HONOR</span></div><div class="top-right"><div class="event">RODEO REALTY · STUDIO CITY<br>DECEMBER 15, 2026</div><div class="review">Working draft <small>· November 11</small></div></div></header>
 <main id="deck" aria-label="Presentation slides"></main>
-<footer><div class="navigation"><button class="nav-btn" id="previous" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button><span class="counter" id="count" aria-live="polite"></span><button class="nav-btn" id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button></div><div class="click-help">Click left to go back · right to advance</div><div class="tools"><button id="menu">Slides</button><button id="notes">Notes & sources</button><button class="optional-tool" id="fullscreen" title="Fullscreen (F)">Fullscreen</button><button id="help" aria-label="Presentation help">?</button></div></footer>
+<footer><div class="navigation"><button class="nav-btn" id="previous" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button><span class="counter" id="count" aria-live="polite"></span><button class="nav-btn" id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button></div><div class="click-help">Click left to go back · right to advance</div><div class="tools"><button id="voice" aria-pressed="false" title="Optional voice navigation (microphone is off)">Voice</button><span id="voiceStatus" class="sr-only" role="status" aria-live="polite">Voice navigation is off.</span><button id="menu">Slides</button><button id="notes">Notes & sources</button><button class="optional-tool" id="fullscreen" title="Fullscreen (F)">Fullscreen</button><button id="help" aria-label="Presentation help">?</button></div></footer>
 <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 <dialog id="dialog"><div class="dialog-head"><h2 id="dialogTitle"></h2><button id="closeDialog" aria-label="Close dialog">Close ×</button></div><div id="dialogBody" class="dialog-body"></div></dialog>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -51,7 +52,7 @@ function closeDialog(){dialog.close();if(lastFocus&&lastFocus.isConnected)lastFo
 function sourceList(s){const items=s.sources||s.citations||[];return items.length?'<ol class="source-list">'+items.map(v=>{const o=typeof v==='string'?{url:v,title:v}:v;const href=o.url||o.href||'';return '<li>'+(/^https?:\/\//.test(href)?'<a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(o.title||o.label||href)+'</a>':esc(o.title||o.label||o.text||v))+(o.note?'<br>'+esc(o.note):'')+'</li>'}).join('')+'</ol>':'<p>No external factual source is attached to this framing or exercise slide.</p>'}
 function notes(){const s=slides[index];let note=s.speaker_notes||s.speakerNotes||s.notes||'';if(Array.isArray(note))note=note.join('\n\n');openDialog('Slide '+(index+1)+' · Notes & sources','<h3>Speaker notes</h3><p>'+esc(note||'No additional notes.')+'</p><h3>Sources</h3>'+sourceList(s)+(s.review_note?'<h3>Review note</h3><p>'+esc(s.review_note)+'</p>':'')+'<h3>Research baseline</h3><p>Prepared November 11, 2026 for review. Recheck fast-moving claims and product settings before December 15. This presentation is educational, not legal advice.</p>')}
 function menu(){openDialog('Choose a slide','<ol class="slide-menu">'+slides.map((s,i)=>'<li><button data-jump="'+i+'" aria-current="'+(i===index)+'"><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(title(s))+'</button></li>').join('')+'</ol>');$('dialogBody').querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>{show(Number(b.dataset.jump));closeDialog()}))}
-function help(){openDialog('Present with confidence','<dl class="key-help"><dt>Click right / left</dt><dd>Next / previous slide. Links and controls remain clickable.</dd><dt>→, Space, Enter, Page Down</dt><dd>Next slide</dd><dt>←, Backspace, Page Up</dt><dd>Previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>N / S / ?</dt><dd>Notes / slide menu / help</dd><dt>F</dt><dd>Toggle fullscreen</dd><dt>Escape</dt><dd>Close a dialog or leave fullscreen</dd><dt>Swipe left / right</dt><dd>Next / previous slide on touchscreens</dd></dl><p>Notes are not visible until opened. They are part of this file, so never include private information in them.</p><button id="printSlides" style="padding:12px 18px">Print or save slides as PDF</button>');$('printSlides').addEventListener('click',()=>{closeDialog();window.print()})}
+function help(){openDialog('Present with confidence','<dl class="key-help"><dt>Click right / left</dt><dd>Next / previous slide. Links and controls remain clickable.</dd><dt>→, Space, Enter, Page Down</dt><dd>Next slide</dd><dt>←, Backspace, Page Up</dt><dd>Previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>N / S / ?</dt><dd>Notes / slide menu / help</dd><dt>Voice button</dt><dd>Optional “Natasha next / last slide please.” Enable the mic explicitly; last means previous.</dd><dt>F</dt><dd>Toggle fullscreen</dd><dt>Escape</dt><dd>Close a dialog or leave fullscreen</dd><dt>Swipe left / right</dt><dd>Next / previous slide on touchscreens</dd></dl><p>Notes are not visible until opened. They are part of this file, so never include private information in them.</p><button id="printSlides" style="padding:12px 18px">Print or save slides as PDF</button>');$('printSlides').addEventListener('click',()=>{closeDialog();window.print()})}
 function toast(t){$('toast').textContent=t;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,4500)}
 async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{toast('Fullscreen is unavailable here. Use your browser’s fullscreen control.')}}
 $('previous').addEventListener('click',()=>move(-1));$('next').addEventListener('click',()=>move(1));$('menu').addEventListener('click',menu);$('notes').addEventListener('click',notes);$('help').addEventListener('click',help);$('fullscreen').addEventListener('click',fullscreen);$('closeDialog').addEventListener('click',closeDialog);dialog.addEventListener('close',()=>{if(lastFocus&&lastFocus.isConnected)lastFocus.focus()});
@@ -60,6 +61,74 @@ let touchStart=null,suppressClick=false;deck.addEventListener('touchstart',e=>{i
 document.addEventListener('keydown',e=>{if(dialog.open||e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,[contenteditable=true]'))return;if(e.target.closest('button,a')&&[' ','Enter'].includes(e.key))return;if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();move(1)}else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();move(-1)}else if(e.key==='Home'){e.preventDefault();show(0)}else if(e.key==='End'){e.preventDefault();show(slides.length-1)}else if(e.key.toLowerCase()==='n')notes();else if(e.key.toLowerCase()==='s')menu();else if(e.key==='?'||e.key.toLowerCase()==='h')help();else if(e.key.toLowerCase()==='f')fullscreen()});
 window.addEventListener('popstate',()=>show(hashIndex(),'none'));window.addEventListener('hashchange',()=>show(hashIndex(),'none'));
 if($('pennyDay')){const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2});function penny(){const day=Number($('pennyDay').value);$('dayNumber').textContent=day;$('dayValue').textContent=money.format(Math.pow(2,day-1)/100);$('sumDay').textContent=day;$('sumValue').textContent=money.format((Math.pow(2,day)-1)/100);$('bars').querySelectorAll('i').forEach((b,k)=>b.classList.toggle('selected',k<day))}$('pennyDay').addEventListener('input',penny);$('resetPenny').addEventListener('click',()=>{$('pennyDay').value=1;penny()});penny()}
+// Voice navigation is opt-in for this page visit. No transcript storage or app-side upload.
+const SpeechRecognitionAPI=window.SpeechRecognition||window.webkitSpeechRecognition;
+let voiceRecognition=null,voiceEnabled=false,voiceStarting=false,voiceRestartTimer=null,voiceLastCommandAt=0;
+function voiceCommand(transcript){
+ const text=String(transcript||'').toLowerCase().replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();
+ const match=text.match(/^natasha (next slide|last slide|previous slide|stop listening)(?: please)?$/);
+ return match?({'next slide':'next','last slide':'previous','previous slide':'previous','stop listening':'stop'})[match[1]]:null;
+}
+function voiceButton(state){
+ $('voice').textContent=state==='starting'?'Mic starting…':state==='listening'?'Mic on · Stop':'Voice';
+ $('voice').setAttribute('aria-pressed',String(voiceEnabled));
+ $('voice').setAttribute('title',voiceEnabled?'Stop microphone listening':'Optional voice navigation (microphone is off)');
+ $('voiceStatus').textContent=state==='starting'?'Waiting for microphone permission.':state==='listening'?'Voice navigation is listening.':'Voice navigation is off.';
+}
+function stopVoice(message){
+ voiceEnabled=false;voiceStarting=false;clearTimeout(voiceRestartTimer);voiceRestartTimer=null;
+ if(voiceRecognition){const old=voiceRecognition;voiceRecognition=null;old.onend=null;try{old.abort()}catch{}}
+ voiceButton('off');if(message)toast(message);
+}
+function startVoice(){
+ if(voiceEnabled||!SpeechRecognitionAPI)return;
+ if(!window.isSecureContext){toast('Voice needs HTTPS. Use the live presentation URL.');return;}
+ voiceEnabled=true;voiceStarting=true;voiceLastCommandAt=0;voiceButton('starting');
+ try{
+  const recognition=new SpeechRecognitionAPI();voiceRecognition=recognition;
+  recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=false;recognition.maxAlternatives=1;
+  recognition.onstart=()=>{if(!voiceEnabled||voiceRecognition!==recognition)return;voiceStarting=false;voiceButton('listening')};
+  recognition.onresult=event=>{
+   if(!voiceEnabled||voiceRecognition!==recognition)return;
+   for(let i=event.resultIndex;i<event.results.length;i++){
+    const result=event.results[i];if(!result.isFinal)continue;
+    const command=voiceCommand(result[0].transcript);if(!command)continue;
+    if(command==='stop'){stopVoice('Microphone off.');return;}
+    if(dialog.open)continue;
+    const now=Date.now();if(voiceLastCommandAt&&now-voiceLastCommandAt<1200)continue;voiceLastCommandAt=now;
+    const before=index;move(command==='next'?1:-1);
+    toast(index===before?(command==='next'?'You are on the final slide.':'You are on the first slide.'):'Slide '+(index+1)+' of '+slides.length);
+   }
+  };
+  recognition.onerror=event=>{
+   if(voiceRecognition!==recognition)return;
+   if(event.error==='no-speech')return;
+   const message=event.error==='not-allowed'||event.error==='service-not-allowed'?'Microphone or speech service permission was not granted. Use clicks or arrow keys.':event.error==='audio-capture'?'No usable microphone was found. Check your microphone, or use arrow keys.':event.error==='network'?'The browser speech service is unavailable. Use clicks or arrow keys.':'Voice navigation stopped. Use clicks or arrow keys, or enable Voice again.';
+   stopVoice(message);
+  };
+  recognition.onend=()=>{
+   if(!voiceEnabled||voiceRecognition!==recognition)return;
+   // Some browsers end after a pause. Continue only within this explicit listening session.
+   if(document.hidden){stopVoice();return;}
+   voiceButton('starting');voiceRestartTimer=setTimeout(()=>{
+    if(!voiceEnabled||voiceRecognition!==recognition)return;
+    try{recognition.start()}catch{stopVoice('Voice paused. Click Voice to enable it again.');}
+   },300);
+  };
+  recognition.start();
+ }catch{stopVoice('Voice could not start in this browser. Use clicks or arrow keys.');}
+}
+function voiceHelp(){
+ if(voiceEnabled){stopVoice('Microphone off.');return;}
+ const supported=!!SpeechRecognitionAPI&&window.isSecureContext;
+ openDialog('Optional voice navigation','<p><strong>The microphone is off.</strong> Enable it only when you are ready to present.</p><ul><li>“Natasha next slide please” moves forward.</li><li>“Natasha last slide please” goes back one slide.</li><li>“Natasha previous slide please” also goes back.</li><li>“Natasha stop listening please” turns listening off.</li></ul><h3>Before enabling</h3><p>While enabled, your browser listens continuously, not just after the word Natasha. It may send surrounding audio to its speech-recognition provider, such as Google in Chrome. This presentation does not record or save audio or transcripts; your browser provider’s processing and retention policies still apply. Avoid confidential conversations while listening is on.</p><p>Click the button below, then allow microphone access in your browser if prompted. Listening stops when you click “Mic on · Stop,” leave this tab, or reload. Returning to the tab will not turn it back on.</p><p>Browser support varies. Some browsers require an internet connection or may stop listening. Try a current desktop Chrome browser and rehearse with your presentation microphone. Clicks and arrow keys always remain available. There is a visual response, not a spoken reply.</p><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition" target="_blank" rel="noopener noreferrer">Browser speech-recognition details</a></p>'+(supported?'<button id="startVoice" class="voice-start">Enable microphone & voice navigation</button>':'<p><strong>Voice recognition is unavailable in this browser or context.</strong> Open the HTTPS presentation in a supported browser, or use the existing controls.</p>'));
+ if(supported)$('startVoice').addEventListener('click',()=>{closeDialog();startVoice()});
+}
+$('voice').addEventListener('click',voiceHelp);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&voiceEnabled)stopVoice('Microphone off while this tab is hidden.');});
+window.addEventListener('pagehide',()=>stopVoice());
+voiceButton('off');
+
 show(hashIndex(),'replace');
 </script>
 </body>
