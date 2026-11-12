@@ -16,12 +16,54 @@
 @media(max-width:700px){.slide:has(.penny){padding-top:20px;padding-bottom:20px}.penny{gap:12px}.penny .bar-chart{height:60px;margin-top:6px}.penny input{margin-top:10px;margin-bottom:8px}.penny small{font-size:11px}.penny-summary{font-size:19px}.penny-value{font-size:43px}}
 @media print{:root{color:#111;background:white;font-size:12pt}header,footer,.progress,dialog,.toast,.citation-hint,.range-row{display:none!important}main{min-height:0}.slide,.slide.active{display:flex!important;opacity:1;min-height:0;height:185mm;page-break-after:always;break-after:page;justify-content:center;padding:12mm 15mm;animation:none;color:#111;overflow:hidden}.slide:after{display:none}h1,h2{font-size:38pt;color:#111}.subtitle,.points li,.column p,.column li{font-size:21pt;color:#222}.eyebrow,.takeaway,.year,.penny-value,.column h3{color:#806023}.kicker,.penny small,.title-slide .title-line,.penny-label{color:#444}.takeaway{font-size:18pt}.penny-value{font-size:36pt}.bar-chart i{background:#806023!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4 landscape;margin:10mm}}
 .tools button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:#dfb56815}.voice-start{padding:14px 18px;color:var(--bg);background:var(--gold);font-weight:bold}@media(max-width:1060px){.click-help{display:none}}@media(max-width:700px){footer{flex-wrap:wrap;justify-content:center;gap:8px;min-height:115px}.tools{width:100%;justify-content:center}.slide,main{min-height:calc(100svh - 201px)}}
+/* Obsidian / neural light: decorative only, with an always-available pause. */
+:root{--bg:#05080f;--paper:#f1f5fa;--muted:#acbacb;--line:#293748;--green:#c9d8e8;--gold:#e4bc76}
+body{isolation:isolate;background:radial-gradient(ellipse at 82% 45%,#102533 0%,#060a13 47%,#05080f 80%)}
+#neuralScene{position:fixed;inset:0;width:100%;height:100%;z-index:-3;pointer-events:none}
+.scene-shade{position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,rgba(5,8,15,.97),rgba(5,8,15,.86) 38%,rgba(5,8,15,.38) 66%,rgba(5,8,15,.05));}
+.scene-vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;box-shadow:inset 0 0 180px 50px #02040a70;background:linear-gradient(0deg,#05080f55,transparent 24%,transparent 75%,#05080f44)}
+header{position:relative;z-index:2;background:#060a12bb;backdrop-filter:blur(14px);border-bottom-color:#78d8f32a}
+header:after{content:"";height:1px;position:absolute;bottom:-1px;left:var(--pad);width:17%;background:linear-gradient(90deg,#75e4ef,#dbb879,transparent);box-shadow:0 0 15px #65ddff55}
+.brand{letter-spacing:.1em}.review{background:#121c2699}.event{color:#b1bdc9}
+h1,h2{font-family:Arial,Helvetica,sans-serif;font-weight:650;letter-spacing:-.045em;line-height:1.06;text-shadow:0 2px 20px #02040acc}
+h1{font-size:clamp(46px,5.9vw,88px);max-width:65%;text-wrap:balance}
+h2{font-size:clamp(34px,4.5vw,68px);max-width:1000px}
+.title-slide .subtitle{max-width:60%;font-size:clamp(21px,2.3vw,32px)}
+.title-slide .takeaway,.title-slide .title-line{max-width:61%}
+.title-slide .title-line{font-size:16px;line-height:1.4;border-top-color:#78d8f32a}
+.eyebrow{color:#e4bc76;letter-spacing:.17em}.eyebrow:before{box-shadow:0 0 12px #e4bc7680}
+.slide:after{font-family:Arial,sans-serif;font-weight:700;color:#79dfff09;z-index:-1}
+.slide.active{animation:scene-arrive .55s cubic-bezier(.2,.8,.2,1) both}
+.slide.active>.eyebrow{animation:signal-arrive .55s ease both}
+.slide.active>h1,.slide.active>h2{animation:content-arrive .65s cubic-bezier(.2,.8,.2,1) both}
+.slide.active>.subtitle,.slide.active>.body{animation:content-arrive .65s .1s cubic-bezier(.2,.8,.2,1) both}
+.slide.active>.takeaway,.slide.active>.title-line{animation:content-arrive .65s .2s cubic-bezier(.2,.8,.2,1) both}
+.slide.active .points li{animation:content-arrive .6s calc(.16s + var(--order,0)*.085s) both}
+.points li{color:#e7eef7}.points li:before{border-radius:1px;transform:rotate(45deg);background:#82dfe8;box-shadow:0 0 13px #5ed3f166;flex-basis:6px;height:6px}
+.takeaway{border-left:2px solid #e4bc76;background:linear-gradient(90deg,#162433d9,#101a260a);border-radius:0 8px 8px 0;padding:12px 20px;color:#d8e6f3}
+.two-col{gap:24px}.column{background:linear-gradient(135deg,#111d2bef,#0b131dd6);border:1px solid #49657a73;border-top:2px solid #83d4e2;padding:20px 24px 24px;border-radius:2px 14px 14px 14px;box-shadow:inset 0 1px 30px #5fc7eb05,0 16px 40px #0002}
+.column h3{color:#9fe3eb}.column p,.column li{font-size:clamp(19px,2vw,28px)}
+.milestone{background:linear-gradient(180deg,#132131cf,#0a131d80);border-top-color:#7bdae9;padding:17px 18px 20px;border-radius:0 0 10px 10px}.year{font-family:Arial,sans-serif;font-weight:600;color:#f0ca87}
+.penny{padding:20px 24px;background:#09111cd9;border:1px solid #45607380;border-radius:12px}.penny-value{font-family:Arial,sans-serif;font-weight:650;letter-spacing:-.04em;color:#f0ca87}.bar-chart i{background:linear-gradient(180deg,#b4f2f1,#55aeca);box-shadow:0 0 12px #5fd8ec18}.penny-summary strong{color:#dce9f1}
+footer{background:#060b13e8;backdrop-filter:blur(16px);border-top-color:#74bddb30}.nav-btn{background:#0f1b2999}.tools button{background:#0c162199;border-color:#3952678c}.tools button:hover:not(:disabled){background:#142537;border-color:#88cfde}.tools button[aria-pressed=true]{background:#15303c;color:#b5f4ee;border-color:#70b2c0}.progress{background:#142534}.progress span{background:linear-gradient(90deg,#e4bc76,#87e6ec);box-shadow:0 0 15px #78dfef99}
+dialog,.dialog-head{background:#0c1621}.dialog-head{border-bottom-color:#395267}.dialog-body{color:#d7e4f1}.slide-menu button[aria-current=true]{background:#1c3445;border-color:#8edfe8}.toast{background:#dcf1f4;color:#081421;box-shadow:0 8px 40px #0005}
+@keyframes content-arrive{from{opacity:0;transform:translate3d(0,15px,0)}to{opacity:1;transform:none}}
+@keyframes signal-arrive{from{opacity:0;transform:translate3d(-12px,0,0)}to{opacity:1;transform:none}}
+@keyframes scene-arrive{from{opacity:0}to{opacity:1}}
+.motion-paused .slide,.motion-paused .slide *{animation:none!important;transition:none!important}
+@media(max-width:1200px){.click-help{display:none}.tools button{padding:10px 11px}}
+@media(max-height:760px) and (min-width:800px){h1{font-size:clamp(44px,5.3vw,72px)}h2{font-size:clamp(34px,4.1vw,60px)}.title-slide .eyebrow{margin-bottom:22px}.column{padding:16px 20px 18px}.column p,.column li{font-size:clamp(19px,1.9vw,26px)}.penny{padding:14px 22px}.citation-hint{margin-top:20px}}
+@media(max-width:700px){.scene-shade{background:linear-gradient(90deg,#05080feb,#05080fce 65%,#05080f99)}.scene-vignette{box-shadow:inset 0 0 90px #02040a66}h1{font-size:clamp(39px,10.2vw,64px);max-width:100%}h2{font-size:clamp(31px,7.8vw,48px);max-width:100%}.title-slide .subtitle,.title-slide .takeaway,.title-slide .title-line{max-width:100%}.title-slide .subtitle{font-size:22px}.title-slide .title-line{font-size:14px}.two-col{gap:15px}.column{padding:15px 18px 18px}.column p,.column li{font-size:20px}.column h3{margin-bottom:12px}.milestone{padding:13px 12px 16px}.year{font-size:31px;margin-bottom:12px}.milestone p{font-size:17px}.penny{padding:13px 14px;gap:10px}.penny-value{font-size:37px}.penny .bar-chart{height:50px}.penny-summary{font-size:18px}.takeaway{font-size:17px}.tools button{padding:9px 8px;font-size:10px}.tools{gap:4px}.citation-hint{font-size:11px}.slide.active{animation-duration:.3s}}
+@media(prefers-reduced-motion:reduce){.slide,.slide *{animation:none!important;transition:none!important;transform:none!important}}
+@media print{#neuralScene,.scene-shade,.scene-vignette{display:none!important}body{background:white}.slide,.slide *{animation:none!important;opacity:1!important;transform:none!important;box-shadow:none!important;text-shadow:none!important}.column,.milestone,.penny,.takeaway{background:white!important;border-color:#777}h1,h2,.title-slide .subtitle,.title-slide .takeaway,.title-slide .title-line{max-width:100%}.points li,.column h3{color:#222}.penny-value{color:#806023}}
+
 </style>
 </head>
 <body>
+<canvas id="neuralScene" aria-hidden="true"></canvas><div class="scene-shade" aria-hidden="true"></div><div class="scene-vignette" aria-hidden="true"></div>
 <header><div class="brand">CONNOR <span>WITH HONOR</span></div><div class="top-right"><div class="event">RODEO REALTY · STUDIO CITY<br>DECEMBER 15, 2026</div><div class="review">Working draft <small>· November 11</small></div></div></header>
 <main id="deck" aria-label="Presentation slides"></main>
-<footer><div class="navigation"><button class="nav-btn" id="previous" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button><span class="counter" id="count" aria-live="polite"></span><button class="nav-btn" id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button></div><div class="click-help">Click left to go back · right to advance</div><div class="tools"><button id="voice" aria-pressed="false" title="Optional voice navigation (microphone is off)">Voice</button><span id="voiceStatus" class="sr-only" role="status" aria-live="polite">Voice navigation is off.</span><button id="menu">Slides</button><button id="notes">Notes & sources</button><button class="optional-tool" id="fullscreen" title="Fullscreen (F)">Fullscreen</button><button id="help" aria-label="Presentation help">?</button></div></footer>
+<footer><div class="navigation"><button class="nav-btn" id="previous" aria-label="Previous slide" title="Previous slide (Left arrow)">←</button><span class="counter" id="count" aria-live="polite"></span><button class="nav-btn" id="next" aria-label="Next slide" title="Next slide (Right arrow)">→</button></div><div class="click-help">Click left to go back · right to advance</div><div class="tools"><button id="voice" aria-pressed="false" title="Optional voice navigation (microphone is off)">Voice</button><span id="voiceStatus" class="sr-only" role="status" aria-live="polite">Voice navigation is off.</span><button id="motion" aria-pressed="true" aria-label="Pause animation" title="Pause decorative animation">Motion on</button><button id="menu">Slides</button><button id="notes">Notes & sources</button><button class="optional-tool" id="fullscreen" title="Fullscreen (F)">Fullscreen</button><button id="help" aria-label="Presentation help">?</button></div></footer>
 <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 <dialog id="dialog"><div class="dialog-head"><h2 id="dialogTitle"></h2><button id="closeDialog" aria-label="Close dialog">Close ×</button></div><div id="dialogBody" class="dialog-body"></div></dialog>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -34,7 +76,7 @@ const slides=Array.isArray(raw)?raw:raw.slides;
 const $=id=>document.getElementById(id),deck=$('deck'),dialog=$('dialog');
 let index=0,lastFocus=null,toastTimer;
 const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function bullets(points){return '<ul class="points">'+points.map(p=>'<li>'+esc(typeof p==='object'?(p.text||p.label||JSON.stringify(p)):p)+'</li>').join('')+'</ul>'}
+function bullets(points){return '<ul class="points">'+points.map((p,i)=>'<li style="--order:'+i+'">'+esc(typeof p==='object'?(p.text||p.label||JSON.stringify(p)):p)+'</li>').join('')+'</ul>'}
 function title(s){return s.title||s.heading||''}
 function render(s,n){const points=s.bullets||s.points||[];const type=s.layout||s.type||'';const content=s.body||s.content||'';let body='';
  if(s.columns){body='<div class="two-col">'+s.columns.map(c=>'<div class="column"><h3>'+esc(c.title||c.heading)+'</h3>'+(c.bullets?bullets(c.bullets):'<p>'+esc(c.text||c.body)+'</p>')+'</div>').join('')+'</div>'}
@@ -45,14 +87,14 @@ function render(s,n){const points=s.bullets||s.points||[];const type=s.layout||s
 deck.innerHTML=slides.map(render).join('');
 const sections=[...deck.querySelectorAll('.slide')];
 function hashIndex(){const m=location.hash.match(/^#s(\d+)$/);return m?Number(m[1])-1:0}
-function show(n,historyMode='push'){index=Math.max(0,Math.min(slides.length-1,n));sections.forEach((s,k)=>{s.classList.toggle('active',k===index);s.setAttribute('aria-hidden',k!==index);s.inert=k!==index});$('count').textContent=String(index+1).padStart(2,'0')+' / '+slides.length;$('previous').disabled=index===0;$('next').disabled=index===slides.length-1;$('progress').style.width=((index+1)/slides.length*100)+'%';document.title=title(slides[index])+' · Rodeo Realty';if(historyMode!=='none'&&location.hash!=='#s'+(index+1))history[historyMode==='replace'?'replaceState':'pushState'](null,'','#s'+(index+1));window.scrollTo(0,0)}
+function show(n,historyMode='push'){index=Math.max(0,Math.min(slides.length-1,n));sections.forEach((s,k)=>{s.classList.toggle('active',k===index);s.setAttribute('aria-hidden',k!==index);s.inert=k!==index});$('count').textContent=String(index+1).padStart(2,'0')+' / '+slides.length;$('previous').disabled=index===0;$('next').disabled=index===slides.length-1;$('progress').style.width=((index+1)/slides.length*100)+'%';document.title=title(slides[index])+' · Rodeo Realty';if(historyMode!=='none'&&location.hash!=='#s'+(index+1))history[historyMode==='replace'?'replaceState':'pushState'](null,'','#s'+(index+1));window.scrollTo(0,0);motionScene.onSlide(index)}
 function move(delta){show(index+delta)}
 function openDialog(label,html){lastFocus=document.activeElement;$('dialogTitle').textContent=label;$('dialogBody').innerHTML=html;dialog.showModal();$('closeDialog').focus()}
 function closeDialog(){dialog.close();if(lastFocus&&lastFocus.isConnected)lastFocus.focus()}
 function sourceList(s){const items=s.sources||s.citations||[];return items.length?'<ol class="source-list">'+items.map(v=>{const o=typeof v==='string'?{url:v,title:v}:v;const href=o.url||o.href||'';return '<li>'+(/^https?:\/\//.test(href)?'<a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(o.title||o.label||href)+'</a>':esc(o.title||o.label||o.text||v))+(o.note?'<br>'+esc(o.note):'')+'</li>'}).join('')+'</ol>':'<p>No external factual source is attached to this framing or exercise slide.</p>'}
 function notes(){const s=slides[index];let note=s.speaker_notes||s.speakerNotes||s.notes||'';if(Array.isArray(note))note=note.join('\n\n');openDialog('Slide '+(index+1)+' · Notes & sources','<h3>Speaker notes</h3><p>'+esc(note||'No additional notes.')+'</p><h3>Sources</h3>'+sourceList(s)+(s.review_note?'<h3>Review note</h3><p>'+esc(s.review_note)+'</p>':'')+'<h3>Research baseline</h3><p>Prepared November 11, 2026 for review. Recheck fast-moving claims and product settings before December 15. This presentation is educational, not legal advice.</p>')}
 function menu(){openDialog('Choose a slide','<ol class="slide-menu">'+slides.map((s,i)=>'<li><button data-jump="'+i+'" aria-current="'+(i===index)+'"><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(title(s))+'</button></li>').join('')+'</ol>');$('dialogBody').querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>{show(Number(b.dataset.jump));closeDialog()}))}
-function help(){openDialog('Present with confidence','<dl class="key-help"><dt>Click right / left</dt><dd>Next / previous slide. Links and controls remain clickable.</dd><dt>→, Space, Enter, Page Down</dt><dd>Next slide</dd><dt>←, Backspace, Page Up</dt><dd>Previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>N / S / ?</dt><dd>Notes / slide menu / help</dd><dt>Voice button</dt><dd>Optional “Natasha next / last slide please.” Enable the mic explicitly; last means previous.</dd><dt>F</dt><dd>Toggle fullscreen</dd><dt>Escape</dt><dd>Close a dialog or leave fullscreen</dd><dt>Swipe left / right</dt><dd>Next / previous slide on touchscreens</dd></dl><p>Notes are not visible until opened. They are part of this file, so never include private information in them.</p><button id="printSlides" style="padding:12px 18px">Print or save slides as PDF</button>');$('printSlides').addEventListener('click',()=>{closeDialog();window.print()})}
+function help(){openDialog('Present with confidence','<dl class="key-help"><dt>Click right / left</dt><dd>Next / previous slide. Links and controls remain clickable.</dd><dt>→, Space, Enter, Page Down</dt><dd>Next slide</dd><dt>←, Backspace, Page Up</dt><dd>Previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>N / S / ?</dt><dd>Notes / slide menu / help</dd><dt>Motion button</dt><dd>Pause or resume decorative animation. Your reduced-motion preference is respected.</dd><dt>Voice button</dt><dd>Optional “Natasha next / last slide please.” Enable the mic explicitly; last means previous.</dd><dt>F</dt><dd>Toggle fullscreen</dd><dt>Escape</dt><dd>Close a dialog or leave fullscreen</dd><dt>Swipe left / right</dt><dd>Next / previous slide on touchscreens</dd></dl><p>Notes are not visible until opened. They are part of this file, so never include private information in them.</p><button id="printSlides" style="padding:12px 18px">Print or save slides as PDF</button>');$('printSlides').addEventListener('click',()=>{closeDialog();window.print()})}
 function toast(t){$('toast').textContent=t;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,4500)}
 async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{toast('Fullscreen is unavailable here. Use your browser’s fullscreen control.')}}
 $('previous').addEventListener('click',()=>move(-1));$('next').addEventListener('click',()=>move(1));$('menu').addEventListener('click',menu);$('notes').addEventListener('click',notes);$('help').addEventListener('click',help);$('fullscreen').addEventListener('click',fullscreen);$('closeDialog').addEventListener('click',closeDialog);dialog.addEventListener('close',()=>{if(lastFocus&&lastFocus.isConnected)lastFocus.focus()});
@@ -128,6 +170,107 @@ $('voice').addEventListener('click',voiceHelp);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&voiceEnabled)stopVoice('Microphone off while this tab is hidden.');});
 window.addEventListener('pagehide',()=>stopVoice());
 voiceButton('off');
+
+// Self-contained 2.5D neural sculpture. Decorative: never receives clicks or microphone data.
+const motionScene=(()=>{
+ const canvas=$('neuralScene'),button=$('motion');let ctx;
+ try{ctx=canvas.getContext('2d',{alpha:true})}catch{}
+ if(!ctx){button.hidden=true;return{onSlide(){}}}
+ const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
+ let paused=false,raf=0,lastFrame=-1000,elapsed=0,lastTime=0,w=0,h=0,dpr=1,narrow=false,points=[],edges=[],faces=[],phase=0,pulse=0;
+ const TAU=Math.PI*2;
+ function build(){
+  points=[];edges=[];faces=[];const rows=narrow?9:12,cols=narrow?16:22;
+  for(let side=0;side<2;side++){
+   const offset=points.length;
+   for(let a=0;a<=rows;a++)for(let b=0;b<cols;b++){
+    const theta=(a+.15)/(rows+.3)*Math.PI,phi=b/cols*TAU;
+    const fold=1+.055*Math.sin(phi*7+theta*3)*Math.sin(theta*8)+.03*Math.cos(phi*11-theta*5);
+    const sign=side?1:-1;
+    points.push({x:sign*(.39+.63*Math.sin(theta)*Math.cos(phi)*fold),y:Math.cos(theta)*.94*fold,z:Math.sin(theta)*Math.sin(phi)*.76*fold,seed:points.length*.61803399});
+    const k=offset+a*cols+b;
+    if(a>0){edges.push([k,k-cols]);if(b%2===0)faces.push([k,k-cols,offset+(a-1)*cols+(b+1)%cols,offset+a*cols+(b+1)%cols]);}
+    edges.push([k,offset+a*cols+(b+1)%cols]);
+   }
+  }
+ }
+ function updateButton(){
+  const on=!paused&&!preference.matches;
+  document.body.classList.toggle('motion-paused',!on);
+  button.textContent=on?'Motion on':'Motion off';button.setAttribute('aria-pressed',String(on));
+  button.setAttribute('aria-label',on?'Pause animation':'Resume animation');
+  button.title=preference.matches?'Animation is off to respect your reduced-motion preference':on?'Pause decorative animation':'Resume decorative animation';button.disabled=preference.matches;
+ }
+ function resize(){
+  w=window.innerWidth;h=window.innerHeight;narrow=w<701;dpr=Math.min(window.devicePixelRatio||1,narrow?1:1.5);
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);build();draw(elapsed);
+ }
+ function project(p,t){
+  const yaw=.25+Math.sin(t*.12+phase*.35)*.34,roll=-.11+Math.sin(t*.09)*.035;
+  let x=p.x*Math.cos(yaw)+p.z*Math.sin(yaw),z=p.z*Math.cos(yaw)-p.x*Math.sin(yaw),y=p.y;
+  const tilt=.13;const y2=y*Math.cos(tilt)-z*Math.sin(tilt);z=z*Math.cos(tilt)+y*Math.sin(tilt);y=y2;
+  const xx=x*Math.cos(roll)-y*Math.sin(roll);y=x*Math.sin(roll)+y*Math.cos(roll);x=xx;
+  const size=narrow?Math.min(w*.38,h*.2):Math.min(w*.205,h*.29),scale=4.3/(4.3-z);
+  return{x:w*(narrow?.82:.8)+x*size*scale,y:h*(narrow?.43:.47)-y*size*scale,z,r:scale};
+ }
+ function path(list){ctx.beginPath();list.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));}
+ function draw(t){
+  ctx.clearRect(0,0,w,h);
+  const c=phase===1?[166,153,255]:phase===2?[222,181,108]:[105,218,235];
+  const rgb=c.join(',');
+  // Far-field glow and an unhurried perspective grid.
+  const glow=ctx.createRadialGradient(w*.8,h*.45,10,w*.8,h*.45,h*.5);glow.addColorStop(0,`rgba(${rgb},.085)`);glow.addColorStop(1,`rgba(${rgb},0)`);ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+  const horizon=h*.7,bottom=h*.91,vanish=w*.75;
+  ctx.lineWidth=.65;ctx.strokeStyle=`rgba(${rgb},.16)`;
+  for(let n=-12;n<=12;n++){path([{x:vanish+n*12,y:horizon},{x:vanish+n*w*.13,y:bottom}]);ctx.stroke();}
+  for(let n=0;n<12;n++){const q=((n+t*.15)%12)/12,yy=horizon+(bottom-horizon)*q*q;path([{x:0,y:yy},{x:w,y:yy}]);ctx.globalAlpha=q*.9;ctx.stroke();}ctx.globalAlpha=1;
+  const p=points.map(v=>project(v,t));
+  // Faceted black glass under the luminous neural mesh.
+  const sorted=faces.map(f=>({f,z:f.reduce((v,i)=>v+p[i].z,0)/4})).sort((a,b)=>a.z-b.z);
+  for(const item of sorted){const f=item.f;if(item.z<-.2)continue;path(f.map(i=>p[i]));ctx.closePath();ctx.fillStyle=`rgba(8,20,32,${.35+(item.z+1)*.16})`;ctx.fill();}
+  ctx.lineWidth=.7;
+  for(let k=0;k<edges.length;k++){
+   const [a,b]=edges[k],depth=(p[a].z+p[b].z)/2;
+   if(depth<-.45)continue;
+   const signal=Math.max(0,Math.sin(k*.071-t*.9))*Math.max(0,Math.sin(k*.013+t*.5));
+   ctx.strokeStyle=`rgba(${rgb},${.07+(depth+1)*.08+signal*.16})`;path([p[a],p[b]]);ctx.stroke();
+  }
+  ctx.save();ctx.shadowBlur=8;ctx.shadowColor=`rgba(${rgb},.8)`;
+  for(let k=11;k<edges.length;k+=71){
+   const [a,b]=edges[k],q=(t*.38+k*.017)%1;
+   if((p[a].z+p[b].z)/2<.1)continue;
+   ctx.beginPath();ctx.arc(p[a].x+(p[b].x-p[a].x)*q,p[a].y+(p[b].y-p[a].y)*q,1.7,0,TAU);ctx.fillStyle=`rgba(${rgb},.82)`;ctx.fill();
+  }
+  ctx.restore();
+  for(let k=0;k<p.length;k++){
+   const v=p[k];if(v.z<-.35||k%2)continue;const lit=.5+.5*Math.sin(t*1.1+points[k].seed*3);
+   ctx.beginPath();ctx.arc(v.x,v.y,(lit>.94?1.8:.75)*v.r,0,TAU);ctx.fillStyle=`rgba(${lit>.94?'225,244,255':rgb},${.16+lit*.58})`;ctx.fill();
+  }
+  // Slow orbit arcs and a few traveling signal points. No flicker or flashes.
+  const center=project({x:0,y:0,z:0},t),radius=narrow?w*.43:Math.min(w*.205,h*.29)*1.32;
+  ctx.save();ctx.translate(center.x,center.y);ctx.rotate(-.26);
+  for(let ring=0;ring<2;ring++){
+   const r=radius*(1+ring*.13);ctx.strokeStyle=`rgba(${rgb},${ring?.08:.17})`;ctx.lineWidth=1;
+   ctx.beginPath();ctx.ellipse(0,0,r,r*.67,0,.13+ring,4.8+ring);ctx.stroke();
+   const a=t*.12+ring*2.8;ctx.beginPath();ctx.arc(Math.cos(a)*r,Math.sin(a)*r*.67,2.5,0,TAU);ctx.fillStyle=`rgba(${rgb},.7)`;ctx.fill();
+  }
+  ctx.restore();
+  if(pulse>0){ctx.strokeStyle=`rgba(${rgb},${pulse*.18})`;ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(center.x,center.y,radius*(1+(1-pulse)*.35),radius*.75*(1+(1-pulse)*.35),-.26,0,TAU);ctx.stroke();}
+ }
+ function frame(now){
+  if(paused||preference.matches||document.hidden){raf=0;return;}
+  raf=requestAnimationFrame(frame);
+  if(now-lastFrame<(narrow?50:33))return;
+  const dt=lastTime?Math.min((now-lastTime)/1000,.08):0;lastTime=now;lastFrame=now;elapsed+=dt;pulse=Math.max(0,pulse-dt*.6);draw(elapsed);
+ }
+ function sync(){cancelAnimationFrame(raf);raf=0;lastTime=0;updateButton();if(!paused&&!preference.matches&&!document.hidden)raf=requestAnimationFrame(frame);else draw(elapsed)}
+ button.addEventListener('click',()=>{paused=!paused;sync()});
+ preference.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
+ let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(resize,120)});
+ window.addEventListener('pagehide',()=>{cancelAnimationFrame(raf);raf=0});
+ resize();sync();
+ return{onSlide(n){phase=n<7?0:n<13?1:n<19?2:0;pulse=preference.matches||paused?0:1;draw(elapsed)}};
+})();
 
 show(hashIndex(),'replace');
 </script>
