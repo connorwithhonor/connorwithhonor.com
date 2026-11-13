@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>A free class for Santa Clarita Public Library | Connor MacIvor</title>
+<meta name="description" content="A short video from Connor MacIvor about a free AI scam-safety class for the Santa Clarita Public Library.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="../../favicon-180.png">
+<style>
+  :root{
+    --bg:#FFFDF7; --panel:#FFFFFF; --ink:#1B1B1B; --muted:#4A4A4A;
+    --brand:#0F5E63; --brand-dark:#0A4447; --gold:#B8860B; --line:#E4DED0; --soft:#F3EFE4;
+  }
+  *{box-sizing:border-box}
+  html{font-size:20px;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+  a{color:var(--brand-dark)}
+  a:focus-visible,button:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
+  .skip{position:absolute;left:-999px}
+  .skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:10}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--brand-dark);line-height:1.2;margin:0 0 .5em}
+  h1{font-size:2.3rem}
+  h2{font-size:1.75rem;margin-top:0}
+  h3{font-size:1.3rem}
+  p{margin:0 0 1em}
+  .lead{font-size:1.2rem;color:var(--ink)}
+
+  /* Top bar */
+  .top{background:var(--panel);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;flex-wrap:wrap}
+  .brand{font-family:Georgia,serif;font-size:1.1rem;font-weight:bold;color:var(--brand-dark);text-decoration:none}
+  .top-call{font-weight:bold;font-size:1.05rem;text-decoration:none;white-space:nowrap}
+
+  /* Hero */
+  .hero{padding:48px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:center}
+  .eyebrow{font-size:.9rem;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;color:var(--brand);margin-bottom:12px}
+  .photo{width:240px;height:240px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 2px 0 var(--line),0 10px 30px rgba(0,0,0,.08);background:#fff}
+  .photo-cap{font-size:.85rem;color:var(--muted);text-align:center;margin-top:10px}
+  .ctas{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0 14px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:14px 26px;border-radius:10px;font-size:1.1rem;font-weight:bold;text-decoration:none;border:3px solid var(--brand);cursor:pointer}
+  .btn-main{background:var(--brand);color:#fff}
+  .btn-main:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
+  .btn-alt{background:#fff;color:var(--brand-dark)}
+  .btn-alt:hover{background:var(--soft)}
+  .free-note{font-size:1rem;color:var(--muted)}
+
+  /* Trust strip */
+  .trust{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust ul{list-style:none;margin:0 auto;padding:22px 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .trust li{font-size:1rem;padding-left:16px;border-left:4px solid var(--gold)}
+  .trust strong{display:block;color:var(--brand-dark);font-size:1.05rem}
+
+  section{padding:56px 0}
+  .alt{background:var(--soft)}
+
+  /* Talk cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-top:8px solid var(--brand);border-radius:12px;padding:26px;display:flex;flex-direction:column}
+  .card .len{font-weight:bold;color:var(--brand);font-size:1rem;margin-bottom:6px}
+  .card .fit{font-size:.95rem;color:var(--muted);margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+  .card .btn{margin-top:16px;width:100%}
+
+  .quote{font-family:Georgia,serif;font-size:1.3rem;line-height:1.5;border-left:6px solid var(--gold);padding:6px 0 6px 22px;margin:0 0 10px;color:var(--ink)}
+  .quote-cite{font-size:.95rem;color:var(--muted);padding-left:28px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .checks{list-style:none;padding:0;margin:0}
+  .checks li{position:relative;padding-left:40px;margin-bottom:16px}
+  .checks li::before{content:"";position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;background:var(--brand);box-shadow:inset 0 0 0 6px #fff,0 0 0 2px var(--brand)}
+
+  .steps{list-style:none;padding:0;margin:0;counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .steps li{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .steps li::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--brand);color:#fff;font-family:Georgia,serif;font-size:1.5rem;font-weight:bold;margin-bottom:12px}
+
+  /* Booking */
+  .book{background:var(--brand-dark);color:#fff}
+  .book h2,.book h3{color:#fff}
+  .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+  .book-card{background:#fff;color:var(--ink);border-radius:14px;padding:28px}
+  .book-card h3{color:var(--brand-dark)}
+  .big-phone{display:block;font-family:Georgia,serif;font-size:2.1rem;font-weight:bold;color:var(--brand-dark);text-decoration:none;margin:6px 0 12px}
+  .book-card .btn{width:100%;margin-top:8px}
+  .book-note{color:#E8F1F1;margin-top:22px;font-size:1rem}
+  .cal-card{background:#fff;border-radius:14px;padding:8px;margin-top:14px;min-height:736px}
+  .cal-card iframe{width:100%;min-height:720px;border:0;display:block}
+  .tmpl{background:var(--soft);border-radius:8px;padding:14px 18px;font-size:.95rem;margin:10px 0 0}
+
+  /* FAQ */
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:12px}
+  summary{cursor:pointer;padding:18px 22px;font-weight:bold;font-size:1.1rem;color:var(--brand-dark);list-style:none;min-height:60px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";float:right;font-size:1.5rem;line-height:1}
+  details[open] summary::after{content:"\2212"}
+  details p{padding:0 22px 6px;margin-bottom:14px}
+
+  .takehome{background:var(--panel);border:2px dashed var(--brand);border-radius:14px;padding:30px;display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+  .takehome > div{flex:1 1 360px}
+
+  footer{background:var(--panel);border-top:1px solid var(--line);padding:30px 0 40px;font-size:.95rem;color:var(--muted)}
+  footer strong{color:var(--ink)}
+
+  @media (max-width:860px){
+    html{font-size:19px}
+    h1{font-size:1.85rem}
+    .hero{padding:32px 0}
+    .hero-grid{grid-template-columns:1fr;gap:20px}
+    .hero-photo{order:-1;display:flex;align-items:center;gap:16px}
+    .photo{width:120px;height:120px;border-width:4px}
+    .photo-cap{text-align:left;margin:0}
+    .trust ul{grid-template-columns:1fr 1fr}
+    .cards,.two,.steps,.book-grid{grid-template-columns:1fr}
+    .btn{width:100%}
+    section{padding:40px 0}
+    .big-phone{font-size:1.8rem}
+  }
+  @media (max-width:420px){.trust ul{grid-template-columns:1fr}}
+
+  .video{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .narrow{max-width:820px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../">Connor MacIvor &middot; Community Talks</a>
+    <a class="top-call" href="tel:+16614001720">Call or text 661-400-1720</a>
+  </div>
+</header>
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap narrow">
+    <p class="eyebrow">For the team at the Santa Clarita Public Library</p>
+    <h1 id="h1">Hello, Santa Clarita Public Library team.</h1>
+    <p class="lead">I made this short video for you. It's about a free class for your patrons on beating AI voice and text scams.</p>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/CWC3Wc5PHXI?rel=0" title="Connor MacIvor: a free class for Santa Clarita Public Library" allow="encrypted-media; picture-in-picture; fullscreen" loading="lazy"></iframe></div>
+    <div class="ctas">
+      <a class="btn btn-main" href="#book">Pick a time to plan it</a>
+      <a class="btn btn-alt" href="tel:+16614001720">Call or text 661-400-1720</a>
+    </div>
+  </div>
+</section>
+<section class="alt" aria-labelledby="class-h">
+  <div class="wrap narrow">
+    <h2 id="class-h">The class: "That Call Sounds Real. It Isn't."</h2>
+    <ul class="checks">
+      <li><strong>One habit, practiced out loud:</strong> Pause. Hang up. Verify on a number you already have.</li>
+      <li><strong>25 or 60 minutes.</strong> Plain English, large print, no phone or computer needed.</li>
+      <li><strong>Nothing sold during the talk.</strong> No sign-up sheet, no attendee list, and nobody is contacted afterward.</li>
+      <li><strong>Free</strong> for the Santa Clarita Public Library. Connor usually comes with his wife, Roxy.</li>
+    </ul>
+    <p>For a library audience, "AI Made Simple" works well too: useful everyday tasks, and how to check what AI tells you. <a href="../#talks">See all three talks</a>.</p>
+  </div>
+</section>
+<section class="book" id="book" aria-labelledby="book-h">
+  <div class="wrap narrow">
+    <h2 id="book-h">Pick a time to plan it</h2>
+    <p>A 15-minute call. We'll pick the talk, a date, the room and anything your group needs.</p>
+    <div class="cal-card"><iframe src="https://api.honorelevate.com/widget/booking/eXYAhavt9XjtDJFUkIzN" title="Pick a time for a community talk planning call" id="book_eXYAhavt9XjtDJFUkIzN"></iframe></div>
+    <p class="book-note">Rather talk now? Call or text Connor at <a href="tel:+16614001720" style="color:#fff;font-weight:bold">661-400-1720</a>.</p>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <p><strong>Connor MacIvor &middot; Community AI Talks</strong><br>Santa Clarita, California &middot; <a href="tel:+16614001720">661-400-1720</a> &middot; <a href="../">All talks</a></p>
+    <p>Independent education. Not affiliated with or endorsed by the LAPD or any government agency.</p>
+  </div>
+</footer>
+</body>
+</html>
