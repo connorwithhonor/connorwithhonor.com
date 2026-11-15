@@ -24,7 +24,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--ink:#0c0b10;--ink-2:#15141b;--cream:#f3eee4;--muted:#b3ad9f;--dim:#7d776c;--gold:#e8a838;--gold-bright:#f3bd54;--line:rgba(232,168,56,.22);--good:#5fd08f;--bad:#ff7461;--bot:#35e0ff;
   --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;--serif:Georgia,'Times New Roman',serif}
-html,body{height:100%;overflow:hidden;background:var(--ink);color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:var(--ink);color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 a{color:var(--gold-bright)}
 #c{position:fixed;inset:0;width:100%;height:100%;display:block}
@@ -174,7 +174,7 @@ import * as THREE from "./three.module.min.js";
    ===================================================================================== */
 
 const $ = (id) => document.getElementById(id);
-const IS_TOUCH = matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+const IS_TOUCH = matchMedia("(pointer: coarse)").matches || (!matchMedia("(pointer: fine)").matches && "ontouchstart" in window);   // a touchscreen laptop with a mouse is a desktop
 document.body.classList.toggle("is-touch", IS_TOUCH);
 if (!IS_TOUCH) { $("how-move").textContent = "Click the game, then W A S D to walk and the mouse to look."; $("how-scan").textContent = "Aim at it and hold the mouse button or E."; }
 
@@ -366,7 +366,7 @@ const door = (a, b) => ({ a, b }), win = (a, b, y0, y1) => ({ a, b, win: 1, y0, 
 function lamp(x, z) { put(cyl(.2, .035, 20), "trim", x, H - .018, z, { flat: 1 }); put(cyl(.16, .02, 20), "glow", x, H - .045, z, { flat: 1 }); }
 function shrub(x, z, s = 1, m = "hedge") { for (const p of [[0, .28, 0, .34], [.22, .2, .1, .26], [-.2, .22, -.08, .28], [.05, .42, -.12, .22]]) put(ball(p[3] * s, 0), m, x + p[0] * s, p[1] * s, z + p[2] * s); }
 function plant(x, z, h = 1.2) { put(cyl(.15, .3, 12, .19), "pot", x, .15, z); for (let i = 0; i < 9; i++) { const a = i * 2.4, r = .1 + (i % 3) * .09; put(new THREE.ConeGeometry(.07, h * (.45 + (i % 4) * .14), 5), "leaf", x + Math.cos(a) * r, .3 + h * .3, z + Math.sin(a) * r, { rz: Math.cos(a) * .5, rx: Math.sin(a) * .5 }); } }
-function art(w, h, x, y, z, ry, cols) { box(ry ? .03 : w + .08, h + .08, ry ? w + .08 : .03, x, y, z, 0x2a2622); plane(w, h, paint(64, 64, (c) => { c.fillStyle = cols[0]; c.fillRect(0, 0, 64, 64); for (let i = 0; i < 7; i++) { c.fillStyle = cols[1 + i % (cols.length - 1)]; c.beginPath(); c.arc(Math.random() * 64, Math.random() * 64, 6 + Math.random() * 16, 0, 7); c.fill(); } }), x + (ry === Math.PI / 2 ? .02 : ry === -Math.PI / 2 ? -.02 : 0), y, z + (ry === 0 ? .02 : ry === Math.PI ? -.02 : 0), { ry }); }
+function art(w, h, x, y, z, ry, cols) { const side = Math.abs(Math.sin(ry)) > .5; box(side ? .03 : w + .08, h + .08, side ? w + .08 : .03, x, y, z, 0x2a2622); plane(w, h, paint(64, 64, (c) => { c.fillStyle = cols[0]; c.fillRect(0, 0, 64, 64); for (let i = 0; i < 7; i++) { c.fillStyle = cols[1 + i % (cols.length - 1)]; c.beginPath(); c.arc(Math.random() * 64, Math.random() * 64, 6 + Math.random() * 16, 0, 7); c.fill(); } }), x + (ry === Math.PI / 2 ? .02 : ry === -Math.PI / 2 ? -.02 : 0), y, z + (ry === 0 ? .02 : ry === Math.PI ? -.02 : 0), { ry }); }
 function bed(x, z, w, len, quilt) {                 // head against +z
   bx("walnut", w + .1, .28, len + .06, x, .16, z, { solid: 1 }); bx("walnut", w + .1, 1.05, .08, x, .55, z + len / 2 + .02);
   soft(w, .24, len - .04, .07, "linen", x, .42, z); soft(w + .04, .12, len * .62, .05, quilt, x, .53, z - len * .17);
@@ -448,7 +448,7 @@ function buildHouse() {
   soft(.42, .36, .13, .06, "blue", 5.3, .68, 5.42, { rx: -.3, ry: .2 }); soft(.4, .34, .13, .06, mat(0xd9a441, { roughness: 1 }), 6.95, .67, 5.42, { rx: -.3, ry: -.2 });
   plane(2.9, 2, paint(128, 128, (c) => { c.fillStyle = "#c9b79a"; c.fillRect(0, 0, 128, 128); c.strokeStyle = "#8f5f4a"; c.lineWidth = 6; c.strokeRect(8, 8, 112, 112); c.strokeStyle = "#e9dfcc"; c.lineWidth = 2; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(20, 22 + i * 10.5); c.lineTo(108, 22 + i * 10.5); c.stroke(); } }), 6.1, .012, 4.05, { rx: -Math.PI / 2 });
   bx("oak", 1.15, .05, .62, 6.1, .4, 4.05, { solid: 1 }); for (const a of [[-.5, -.24], [.5, -.24], [-.5, .24], [.5, .24]]) bx("black", .04, .38, .04, 6.1 + a[0], .19, 4.05 + a[1]); bx("blue", .3, .04, .22, 5.85, .445, 4.05); put(cyl(.09, .1, 14, .12), "ceramic", 6.4, .475, 4.1);
-  bx("walnut", 1.7, .46, .4, .3, .23, 4.2, { solid: 1 }); bx("black", .03, .5, .5, .09, .26, 4.2);                                                      // media console under the TV
+  bx("walnut", .4, .46, 1.7, .3, .23, 4.2, { solid: 1 }); bx("black", .03, .5, .5, .09, .26, 4.2);                                                      // media console under the TV
   bx("oak", .95, .04, .42, .75, .73, 1.2); for (const a of [[-.42, -.17], [.42, -.17], [-.42, .17], [.42, .17]]) bx("black", .04, .71, .04, .75 + a[0], .355, 1.2 + a[1]); hard(.75, 1.2, .95, .42);   // entry table
   put(cyl(.1, .06, 16, .15), "ceramic", .5, .78, 1.2);
   bx("oak", .5, .04, .5, 7.55, .58, .85); bx("oak", .08, .56, .08, 7.55, .28, .85); hard(7.55, .85, .5, .5);                                          // side table
@@ -471,7 +471,7 @@ function buildHouse() {
   bx("steel", .85, 1.92, .78, 15.48, .96, 5.1, { solid: 1 }); bx("black", .008, 1.9, .012, 15.05, .96, 5.1); for (const z of [5.04, 5.16]) bx("steel", .03, 1.1, .02, 15.035, 1.15, z);
   bx("steel", .28, .2, .18, 9.6, 1.03, .4); bx("ceramic", .16, .26, .16, 10.2, 1.06, .36);
   // A flyer on the entry wall, where every visitor walks past it.
-  box(.56, .72, .02, .085, 1.45, 2.35, 0x2a2622); plane(.5, .66, sign(["THIS WEEKEND'S", "OPEN HOUSES", "SantaClaritaOpenHouses.com"], .5, .66, "#ffffff", "#17120a", true), .1, 1.45, 2.35, { ry: Math.PI / 2 });
+  box(.02, .72, .56, .085, 1.45, 2.35, 0x2a2622); plane(.5, .66, sign(["THIS WEEKEND'S", "OPEN HOUSES", "SantaClaritaOpenHouses.com"], .5, .66, "#ffffff", "#17120a", true), .1, 1.45, 2.35, { ry: Math.PI / 2 });
   // And a magnet on the fridge.
   plane(.3, .18, sign(["Seller's Only Agent™", "SellersOnlyAgent.com"], .3, .18, "#e8a838", "#17120a", true), 15.04, 1.55, 4.86, { ry: -Math.PI / 2 });
 
@@ -503,7 +503,7 @@ function buildHouse() {
   // ---- garage
   for (const y of [.5, 1.1, 1.7]) bx("steel", .45, .03, 1.8, 15.7, y, 8.3); for (const z of [7.45, 9.15]) bx("steel", .04, 1.8, .04, 15.5, .9, z); hard(15.7, 8.3, .45, 1.8);
   for (const b of [[.55, 7.8, .3], [.55, 8.5, .36], [1.15, 8, .3], [1.15, 8.7, .26], [1.75, 8.3, .32]]) bx(b[0] > 1 ? "walnut" : "oak", .36, b[2], .4, 15.7, b[0] + b[2] / 2 + .015, b[1]);
-  for (const x of [13.42, 14.08]) { bx("white", .6, .86, .62, x, .43, 7.8, { solid: 1 }); put(cyl(.2, .02, 22), "black", x, .5, 8.115, { rx: Math.PI / 2 }); put(cyl(.15, .025, 22), "glass", x, .5, 8.12, { rx: Math.PI / 2, flat: 1 }); }
+  for (const x of [13.42]) { bx("white", .6, .86, .62, x, .43, 7.8, { solid: 1 }); put(cyl(.2, .02, 22), "black", x, .5, 8.115, { rx: Math.PI / 2 }); put(cyl(.15, .025, 22), "glass", x, .5, 8.12, { rx: Math.PI / 2, flat: 1 }); }
 
   // ---- patio
   put(cyl(.6, .04, 26), "oak", 19, .73, 3); put(cyl(.05, .72, 10), "black", 19, .36, 3); put(cyl(.3, .03, 16), "black", 19, .015, 3); hard(19, 3, 1.1, 1.1);
@@ -532,13 +532,13 @@ const NEAR = {}; for (const k in NODES) NEAR[k] = []; for (const [a, b] of EDGES
 const blotch = (col) => paint(128, 128, (c) => { for (let i = 0; i < 26; i++) { const r = 12 + Math.random() * 30, x = 64 + (Math.random() - .5) * 60, y = 64 + (Math.random() - .5) * 60, g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); } });
 const FLAGS = [
   { id: "signin", room: "the entry", name: "The sign-in sheet wants too much", tip: "A sign-in sheet needs your name. It never needs your Social Security or bank number.", always: 1,
-    build(g) { box(.3, .02, .42, .75, .735, 1.2, 0x5a4632, { parent: g });
-      plane(.27, .38, paint(256, 360, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 256, 360); c.fillStyle = "#17120a"; c.font = "800 26px Arial"; c.fillText("PLEASE SIGN IN", 22, 44); c.font = "600 19px Arial"; ["Name", "Phone", "Social Security #", "Bank account #", "Mother's maiden name"].forEach((l, i) => { c.fillStyle = i > 1 ? "#c0392b" : "#17120a"; c.fillText(l, 22, 96 + i * 54); c.fillRect(22, 108 + i * 54, 212, 2); }); }), .75, .748, 1.2, { parent: g, rx: -Math.PI / 2 });
+    build(g) { box(.3, .02, .42, .75, .76, 1.2, 0x5a4632, { parent: g });
+      plane(.27, .38, paint(256, 360, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 256, 360); c.fillStyle = "#17120a"; c.font = "800 26px Arial"; c.fillText("PLEASE SIGN IN", 22, 44); c.font = "600 19px Arial"; ["Name", "Phone", "Social Security #", "Bank account #", "Mother's maiden name"].forEach((l, i) => { c.fillStyle = i > 1 ? "#c0392b" : "#17120a"; c.fillText(l, 22, 96 + i * 54); c.fillRect(22, 108 + i * 54, 212, 2); }); }), .75, .773, 1.2, { parent: g, rx: -Math.PI / 2 });
       return [.75, .8, 1.2]; } },
   { id: "qr", room: "the kitchen", name: "The deposit QR code", tip: "Deposits go to a licensed escrow company. Never to a QR code sitting on a counter.",
     build(g) { const t = paint(256, 256, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 256, 256); c.fillStyle = "#17120a"; c.font = "800 22px Arial"; c.textAlign = "center"; c.fillText("RESERVE THIS HOME", 128, 34); c.font = "600 15px Arial"; c.fillText("Scan to send your deposit", 128, 58); for (let y = 0; y < 11; y++) for (let x = 0; x < 11; x++) if (Math.random() > .48 || (x < 3 && y < 3) || (x > 7 && y < 3) || (x < 3 && y > 7)) c.fillRect(62 + x * 12, 76 + y * 12, 11, 11); c.fillStyle = "#c0392b"; c.font = "800 15px Arial"; c.fillText("OFFER ENDS TODAY", 128, 236); });
       const a = plane(.3, .3, t, 10.9, 1.12, 4.12, { parent: g, double: 1 }); a.rotation.x = -.28; const b = plane(.3, .3, t, 10.9, 1.12, 3.88, { parent: g, double: 1, ry: Math.PI }); b.rotation.x = .28; return [10.9, 1.1, 4]; } },
-  { id: "stain", room: "the hall", name: "A stain on the ceiling", tip: "A ceiling stain means water came through once. Ask what leaked, and ask for the repair receipt.",
+  { id: "stain", room: "the hall", name: "A stain on the ceiling", tip: "A ceiling stain means water came through. Ask what leaked, whether it is fixed, and for the repair receipt.",
     build(g) { plane(1.1, .9, blotch("rgba(120,80,30,.5)"), 9.2, H - .012, 6.7, { parent: g, alpha: 1, rx: Math.PI / 2 }); return [9.2, H - .05, 6.7]; } },
   { id: "crack", room: "the living room", name: "A crack behind the art", tip: "Art hung in an odd spot can be hiding a crack. Wide or stair-step cracks are a question for an inspector.", cover: "painting",
     build(g, cov) { plane(.8, 1.1, paint(128, 180, (c) => { c.strokeStyle = "#3a332b"; c.lineWidth = 3; c.beginPath(); let x = 30, y = 6; c.moveTo(x, y); while (y < 176) { x += (Math.random() - .3) * 16; y += 9 + Math.random() * 7; c.lineTo(x, y); } c.stroke(); c.lineWidth = 1.2; c.beginPath(); c.moveTo(70, 70); c.lineTo(104, 96); c.lineTo(98, 128); c.stroke(); }), 1.5, 1.45, 5.922, { parent: g, alpha: 1, ry: Math.PI });
@@ -546,9 +546,9 @@ const FLAGS = [
       return [1.5, 1.45, 5.86]; } },
   { id: "scorch", room: "the first bedroom", name: "Scorch marks at an outlet", tip: "Scorch marks at an outlet mean heat. Have an electrician look before you make an offer.",
     build(g) { box(.09, .13, .02, .75, .38, 11.92, 0xf4f0e6, { parent: g }); plane(.5, .6, blotch("rgba(20,15,10,.75)"), .75, .6, 11.925, { parent: g, alpha: 1, ry: Math.PI }); return [.75, .5, 11.9]; } },
-  { id: "leak", room: "the kitchen", name: "Water under the sink", tip: "Look under the sink. A slow leak is cheap to fix and expensive to ignore.",
+  { id: "leak", room: "the kitchen", name: "Water under the sink", tip: "Look under the sink. A slow leak is easy to miss and expensive to ignore.",
     build(g) { box(.02, .6, .5, 11.72, .42, .98, 0xe9e5db, { parent: g }); box(.5, .62, .02, 12, .42, .735, 0x3b3530, { parent: g }); plane(.9, .7, blotch("rgba(70,130,190,.62)"), 12, .012, 1.15, { parent: g, alpha: 1, rx: -Math.PI / 2 }); return [12, .15, 1.05]; } },
-  { id: "smoke", room: "the second bedroom", name: "A missing smoke alarm", tip: "Count the smoke and carbon monoxide alarms. A missing one is a small fix and a clue about upkeep.",
+  { id: "smoke", room: "the second bedroom", name: "A missing smoke alarm", tip: "Count the smoke and carbon monoxide alarms. A missing one is a clue about upkeep.",
     build(g) { const r = new THREE.Mesh(new THREE.TorusGeometry(.085, .012, 6, 18), mat(0xd9d2c2)); r.rotation.x = Math.PI / 2; r.position.set(11, H - .012, 9.2); g.add(r); box(.012, .16, .012, 10.98, H - .09, 9.2, 0xc0392b, { parent: g }); box(.012, .13, .012, 11.03, H - .075, 9.21, 0x222222, { parent: g }); return [11, H - .08, 9.2]; } },
   { id: "heater", room: "the garage", name: "A water heater with no straps", tip: "In California a water heater should be strapped to the wall. Look for the straps.",
     build(g) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.27, .27, 1.5, 14), mat(0xdfe3e6)); c.position.set(15.5, .78, 11.4); c.rotation.z = .07; g.add(c); box(.09, .5, .09, 15.5, 1.75, 11.42, 0x8a8f94, { parent: g }); solids.push({ x1: 15.2, x2: 15.8, z1: 11.1, z2: 11.7, run: 1 }); return [15.5, 1, 11.4]; } },
@@ -556,10 +556,10 @@ const FLAGS = [
     build(g) { box(1, .38, 1.9, 13.75, .19, 10.9, 0x9fb3c8, { parent: g }); box(.9, .1, .45, 13.75, .43, 11.6, 0xffffff, { parent: g }); box(.05, .03, 2.4, 14.6, .016, 10.2, 0xe67e22, { parent: g }); box(.3, .07, .1, 14.6, .04, 9, 0xf2f2f2, { parent: g }); solids.push({ x1: 13.25, x2: 14.25, z1: 9.95, z2: 11.85, run: 1 }); return [13.75, .45, 10.9]; } },
   { id: "fresh", room: "the bathroom", name: "Four air fresheners", tip: "One air freshener is taste. Four is a cover story. Ask what the smell was.", cover: "fresheners",
     build(g, cov) { plane(.9, .9, blotch("rgba(60,70,40,.5)"), 8.925, .5, 9.9, { parent: g, alpha: 1, ry: -Math.PI / 2 }); for (let i = 0; i < 4; i++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.045, .05, .16, 10), mat([0xff7eb6, 0x7ee0ff, 0xc3f584, 0xffd166][i])); c.position.set(8.6, .97, 8.25 + i * .32); cov.add(c); } return [8.62, .95, 8.75]; } },
-  { id: "rug", room: "the first bedroom", name: "What the rug was hiding", tip: "Ask what is under the rug. Warped or stained flooring means water got there.", cover: "rug",
+  { id: "rug", room: "the first bedroom", name: "What the rug was hiding", tip: "Ask what is under the rug. Warped or stained flooring can mean water got there.", cover: "rug",
     build(g, cov) { plane(1.3, 1, blotch("rgba(60,40,25,.6)"), 1.9, .011, 10.4, { parent: g, alpha: 1, rx: -Math.PI / 2 }); box(1.7, .03, 1.3, 1.9, .028, 10.4, 0xb5475a, { parent: cov }); box(1.4, .034, 1, 1.9, .03, 10.4, 0xe9c46a, { parent: cov }); return [1.9, .1, 10.4]; } },
   { id: "pool", room: "the patio", name: "Water pooling at the wall", tip: "Water should run away from a house. Pooling against the wall is a drainage question.",
-    build(g) { plane(1.5, 1.1, blotch("rgba(60,110,160,.6)"), 16.75, .004, 5.1, { parent: g, alpha: 1, rx: -Math.PI / 2 }); box(.09, 1.6, .09, 16.14, 1.2, 5.6, 0xd9d2c2, { parent: g }); return [16.6, .1, 5.1]; } }
+    build(g) { plane(1.5, 1.1, blotch("rgba(60,110,160,.6)"), 16.75, .027, 5.1, { parent: g, alpha: 1, rx: -Math.PI / 2 }); box(.09, 1.6, .09, 16.14, 1.2, 5.6, 0xd9d2c2, { parent: g }); return [16.6, .1, 5.1]; } }
 ];
 /* =====================================================================================
    STRAIGHT ANSWERS. The questions buyers and sellers really ask, each pinned to an
@@ -580,12 +580,12 @@ const ANSWERS = [
     build(g) { plane(.4, .5, paint(128, 160, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 128, 160); c.fillStyle = "#c0392b"; c.fillRect(0, 0, 128, 34); c.fillStyle = "#fff"; c.font = "800 16px Arial"; c.fillText("LISTED", 34, 23); c.strokeStyle = "#cfc9bc"; for (let i = 0; i < 5; i++) for (let k = 0; k < 6; k++) c.strokeRect(6 + k * 19.5, 42 + i * 23, 19.5, 23); c.strokeStyle = "#c0392b"; c.lineWidth = 3; c.beginPath(); c.arc(74, 76, 9, 0, 7); c.stroke(); }), 15.925, 1.5, 3.7, { parent: g, ry: -Math.PI / 2 }); } },
   { id: "photos", at: [14.9, .34, 8.9], q: "Why are all the family photos packed in a box?", a: "Buyers need to picture their own life here. Sellers take theirs down before the listing photos for exactly that reason.",
     build(g) { box(.5, .34, .4, 14.9, .17, 8.9, 0xb08a5c, { parent: g }); for (let i = 0; i < 3; i++) { const f = box(.22, .3, .02, 14.76 + i * .13, .36, 8.9, 0x2a2622, { parent: g }); f.rotation.z = (i - 1) * .16; } } },
-  { id: "presale", at: [.42, 1.0, 8.3], q: "What is a pre-sale inspection?", a: "Some sellers inspect before they list, then fix or disclose what turns up. It removes the surprise that kills deals later.",
+  { id: "presale", at: [.42, 1.0, 8.3], q: "What is a pre-sale inspection?", a: "Some sellers inspect before they list, then disclose what turns up and decide what to fix. It removes the surprise that kills deals later.",
     build(g) { box(.24, .05, .3, .42, .975, 8.3, 0x1f5fa8, { parent: g }); plane(.2, .26, paper("INSPECTION", "#1f5fa8"), .42, 1.003, 8.3, { parent: g, rx: -Math.PI / 2 }); } },
   { id: "dual", at: [9.3, .98, .45], q: "What is dual agency?", a: "One brokerage representing both buyer and seller. In California it takes written consent from both. Always ask who each agent works for.", build(g) { flat(g, "WHO REPRESENTS YOU", 9.3, .932, .45, "#c0392b"); } },
   { id: "credit", at: [19, .8, 3.25], q: "What is a seller concession?", a: "A credit the seller agrees to give the buyer, often toward closing costs. Sellers say yes when it nets them a better deal.", build(g) { flat(g, "CLOSING COSTS", 19, .754, 3.25, "#2e7d5b"); } },
   { id: "writing", at: [5.2, .58, 11.3], q: "Three agents said three different things. How do I compare them?", a: "Ask each agent and each lender to put their offer in writing. Then lay them side by side. Promises get specific on paper.", build(g) { flat(g, "PROPOSALS", 5.34, .512, 11.42, "#17120a"); } },
-  { id: "curb", at: [3.75, .5, -1.05], q: "How fast do buyers make up their minds about a house?", a: "About eight seconds, from the curb. That is why the front yard gets the first weekend of work.",
+  { id: "curb", at: [3.75, .5, -1.05], q: "How fast do buyers make up their minds about a house?", a: "Fast, and often from the curb. That is why the front yard gets the first weekend of work.",
     build(g) { put(cyl(.2, .34, 14, .26), "pot", 3.75, .17, -1.05, { parent: g }); for (let i = 0; i < 7; i++) put(ball(.07, 0), mat([0xe84a5f, 0xffd166, 0xff8fab][i % 3], { roughness: .8 }), 3.75 + Math.cos(i) * .13, .42 + (i % 2) * .05, -1.05 + Math.sin(i) * .13, { parent: g }); } }
 ];
 /* GLOSS talks while you work. Everything it says is a thing people really believe, and it is wrong. */
@@ -604,7 +604,7 @@ const DEVICES = [
   { id: "speaker", name: "Smart speaker", at: [7.55, .7, .85], node: "L", build(g) { put(cyl(.1, .2, 18, .085), mat(0x2b2f36, { roughness: 1 }), 7.55, .7, .85, { parent: g }); } },
   { id: "tv", name: "Smart TV", at: [.13, 1.3, 4.2], node: "L", build(g) { box(.04, .82, 1.45, .1, 1.3, 4.2, 0x0c0d10, { parent: g, mat: M.black }); } },
   { id: "fridge", name: "Smart fridge", at: [15.04, 1.15, 5.1], node: "K", build(g) { box(.02, .34, .26, 15.045, 1.12, 5.22, 0x111317, { parent: g }); } },
-  { id: "thermo", name: "Smart thermostat", at: [8.6, 1.5, 6.09], node: "KH", build(g) { box(.14, .14, .03, 8.6, 1.5, 6.085, 0xf4f4f4, { parent: g }); } },
+  { id: "thermo", name: "Smart thermostat", at: [8.6, 1.5, 6.09], node: "H2", build(g) { box(.14, .14, .03, 8.6, 1.5, 6.085, 0xf4f4f4, { parent: g }); } },
   { id: "vacuum", name: "Robot vacuum", at: [12.4, .08, 11.4], node: "B2", build(g) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.17, .17, .08, 18), mat(0x2b2f36)); c.position.set(12.4, .05, 11.4); g.add(c); } },
   { id: "opener", name: "Smart garage opener", at: [15.9, 1.5, 9.2], node: "G", build(g) { box(.03, .2, .14, 15.915, 1.5, 9.2, 0xf4f4f4, { parent: g }); } }
 ];
@@ -739,6 +739,7 @@ function sees(x1, z1, x2, z2) {
 const In = { mx: 0, mz: 0, scan: false, keys: {} };
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
+addEventListener("blur", () => { In.keys = {}; In.scan = false; });   // keys must not stick when the window loses focus
 const look = (dx, dy, k) => { P.yaw -= dx * k; P.pitch = Math.max(-1.25, Math.min(1.25, P.pitch - dy * k)); };
 if (!IS_TOUCH) {
   let drag = false;
@@ -827,14 +828,14 @@ function doScan(hit) {
     if (G.found === 1) objective("GLOSS is hiding in a smart device. Every red flag you tag boosts the bot signal. Follow it.");
     else if (G.found === G.flags.length) objective("Every red flag found. Now find GLOSS.");
   } else if (hit.kind === "ans") {
-    const a = hit.ref; a.found = true; a.mark.visible = false; G.ans++; $("ac").textContent = G.ans; G.time = Math.min(TOTAL, G.time + 6);
+    const a = hit.ref; a.found = true; a.mark.visible = false; G.ans++; $("ac").textContent = G.ans; G.time += 6;
     beep(660, .1, "triangle", .1); beep(990, .16, "triangle", .1, 0, .09); buzz(25); burst(a.at[0], a.at[1] + .3, a.at[2], 0xf3bd54, 10);
     card("ansc", "Straight answer · plus 6 seconds", a.def.q, a.def.a, 8.5);
     const got = store.get("answers", {}); got[a.def.id] = 1; store.set("answers", got); track("hunt-answer");
   } else if (hit.kind === "dev") {
     const d = hit.ref; d.checked = true;
     if (d === G.hide) {
-      G.bot = makeBot(d.def.at); const n = nearestNode(d.def.at[0], d.def.at[2]); G.bot.from = null; G.bot.to = n;
+      G.bot = makeBot(d.def.at); G.bot.from = null; G.bot.to = d.def.node;   // each device names a spot in its own room, so the bot never leaves through a wall
       sfx.eject(); buzz([60, 40, 120]); flash("#35e0ff"); G.shake = 1; burst(d.def.at[0], d.def.at[1], d.def.at[2], 0x35e0ff, 30);
       card("botc", "GLOSS", "“You were not supposed to look in there.”", "It is running. You have a blaster now. Three hits.", 4.5); objective("BLAST GLOSS. Three hits. Anything else you hit is on you."); banner("BLASTER ONLINE", "Three hits to take GLOSS down", 1.9); track("hunt-bot-found");
     } else { G.wrong++; G.time = Math.max(1, G.time - 8); sfx.wrong(); buzz(120); flash("#ff7461"); card("badc", "Minus 8 seconds", "Just a " + d.def.name.toLowerCase() + ".", "GLOSS is not in this one. Watch the bot signal.", 3.2); }
@@ -849,7 +850,7 @@ function finish(caught) {
   if (G.over) return; G.over = true; In.scan = false;
   const left = Math.ceil(G.time), n = G.flags.length, all = G.found === n;
   const score = G.found * 100 + G.ans * 60 + (caught ? 500 + left * 2 : 0) - G.wrong * 40;
-  const grade = caught && all ? "S" : caught && G.found >= n - 2 ? "A" : caught ? "B" : G.found >= 5 ? "C" : "D";
+  const grade = caught && all ? "S" : caught && G.found >= n - 2 ? "A" : caught || all ? "B" : G.found >= 5 ? "C" : "D";
   if (!caught) sfx.lost();
   banner(caught ? "GLOSS CAUGHT" : "DOORS CLOSED", caught ? (all ? "Every red flag found" : G.found + " of " + n + " red flags found") : "The bot got away");
   track("hunt-finish-" + grade.toLowerCase()); if (caught) track("hunt-bot-caught");
@@ -876,8 +877,8 @@ function showEnd(r) {
     '<a href="https://santaclaritaopenhouses.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-scoh">Santa Clarita open houses <span>SantaClaritaOpenHouses.com</span></a>' +
     '<a href="https://sellersonlyagent.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-soa">Selling yours? Seller’s Only Agent™ <span>SellersOnlyAgent.com</span></a></div>' +
     '<p class="fine" style="text-align:left">Walk a few. Look under the sink. Count the smoke alarms. And watch who is running the room.</p>' +
-    '<div class="host"><img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="54" height="54"><div><b>Built by Connor MacIvor</b><span>27 years selling homes in the Santa Clarita Valley. 20 years LAPD before that. He writes his own software.</span></div></div>' +
-    '<p class="fine">Open House Game is a game. The house and its problems are fiction and nothing here is legal, financial or inspection advice. A real home needs a licensed inspector.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
+    '<div class="host"><img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="54" height="54"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div></div>' +
+    '<p class="fine">Open House Game is a game. The house and its problems are fiction and nothing here is legal, financial or inspection advice. A real home needs a qualified home inspector.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
   const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0;
   const text = "Open House Game" + (G.daily ? " #" + dailyNumber() : "") + "\n🚩 " + G.found + "/" + r.n + " · 🤖 " + (r.caught ? "caught" : "got away") + " · 💬 " + G.ans + "/" + G.answers.length + " · Grade " + r.grade + "\n" + G.flags.map((f) => f.found ? "🟩" : "⬜").join("") + "\nhttps://openhousegame.com/hunt";
   end.querySelector("#share").addEventListener("click", (e) => { track("hunt-share"); const b = e.currentTarget, done = () => { b.textContent = "Copied. Paste it anywhere."; setTimeout(() => b.textContent = "Share your result", 2200); }; if (navigator.share && IS_TOUCH) navigator.share({ text }).catch(() => {}); else if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done(); });

@@ -823,7 +823,7 @@ function finish(dead) {
     '<p class="fine" style="text-align:left;margin-top:4px">Walk a few. Watch who is running the room. ' + (seller ? "That is how sellers find the agent worth hiring." : "That is how buyers find the agent worth signing with.") + "</p>";
   near.addEventListener("click", function (e) { if (e.target.closest("a")) track("click-open-houses"); });
   card.appendChild(near);
-  var host = el("div", "host", '<img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="56" height="56" loading="lazy"><div><b>Built by Connor MacIvor</b><span>27 years selling homes in the Santa Clarita Valley. 20 years LAPD before that. He writes his own software.</span></div>');
+  var host = el("div", "host", '<img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="56" height="56" loading="lazy"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div>');
   card.appendChild(host);
   if (seller) {
     var soa = el("a", "btn ghost", "Selling for real? Meet the Seller\u2019s Only Agent\u2122");
