@@ -66,12 +66,12 @@ body.play .hud{display:block}
 /* touch */
 .touch{display:none}
 body.play.is-touch .touch{display:block}
-#stick{position:absolute;width:118px;height:118px;border-radius:50%;border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);display:none;margin:-59px 0 0 -59px}
+#stick{position:absolute;width:148px;height:148px;border-radius:50%;border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);display:none;margin:-74px 0 0 -74px}
 #stick i{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(255,255,255,.4)}
 #scanbtn{position:absolute;right:calc(22px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));width:92px;height:92px;border-radius:50%;background:rgba(232,168,56,.9);color:#17120a;font-weight:900;font-size:15px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 6px 22px rgba(0,0,0,.5)}
 #scanbtn:active,#scanbtn.down{transform:scale(.94);background:var(--gold-bright)}
 #scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
-#lhint{position:absolute;left:calc(56px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-shadow:0 1px 3px #000}
+#lhint{position:absolute;left:calc(56px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:46vw;font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.92);text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8)}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
 .ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
@@ -138,7 +138,7 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <div id="flash"></div>
   <div class="touch">
     <div id="stick"><i></i></div>
-    <div id="lhint">Drag here to walk</div>
+    <div id="lhint">Left thumb here.<br>Push up to walk.<br>Push sideways to turn.</div>
     <button id="scanbtn">SCAN</button>
   </div>
 </div>
@@ -148,7 +148,7 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <h1>Something in this house is <em>hiding the problems.</em></h1>
   <p class="lead">A rogue staging bot called GLOSS makes every house look perfect. Walk the open house. Find what it covered up. Then catch it before the doors close.</p>
   <div class="how">
-    <div><b>Look and walk.</b> <span id="how-move">Left thumb drags to walk. Right thumb drags to look around.</span></div>
+    <div><b>Look and walk.</b> <span id="how-move">Put a thumb on the left side. Push up to walk. Push sideways to turn. Drag the right side to look up and down.</span></div>
     <div><b>Scan anything that looks off.</b> <span id="how-scan">Aim at it and hold SCAN.</span></div>
     <div><b>Every red flag boosts your tracker.</b> Follow the signal to the smart device it is hiding in. A wrong guess costs time.</div>
     <div><b>Gold question marks are straight answers.</b> Each one buys you six seconds.</div>
@@ -308,6 +308,7 @@ const M = {
 /* ---------- building blocks ---------- */
 const H = 2.7, T = .14;                    // ceiling height, wall thickness
 const solids = [];                          // {x1,x2,z1,z2,los} for collision and line of sight
+const DOORWAYS = [];                        // {ax,c,a,b} every door opening, filled in by wall() from the same door(a,b) data
 const world = new THREE.Group(); scene.add(world);
 let perRun = new THREE.Group(); scene.add(perRun);
 const hard = (x, z, w, d, los) => solids.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2, los: !!los });
@@ -372,6 +373,7 @@ function wall(ax, c, a, b, open = [], mA = "wall", mB = "wall", inside = 0) {
       at(.035, y1 - y0, .04, mid, (y0 + y1) / 2); at(len, .035, .04, mid, (y0 + y1) / 2);
       const g = new THREE.Mesh(unit, M.glass); g.scale.set(ax === "x" ? len : .012, y1 - y0, ax === "x" ? .012 : len); g.position.set(ax === "x" ? mid : c, (y0 + y1) / 2, ax === "x" ? c : mid); world.add(g);
     } else { part(o.a, o.b, 2.1, H); at(.08, 2.1, T + .05, o.a + .02, 1.05); at(.08, 2.1, T + .05, o.b - .02, 1.05); at(len + .08, .09, T + .05, mid, 2.13); }
+    if (!o.win) DOORWAYS.push({ ax, c, a: o.a, b: o.b });
     cur = o.b;
   }
   part(cur, b, 0, H); base(cur, b); if (b > cur) block(cur, b);
@@ -454,7 +456,7 @@ function buildHouse() {
   box(.96, .66, .025, 1.08, 1.52, -3.6, 0xffffff); plane(.92, .62, sign(["FOR SALE"], .92, .62, "#1f5fa8", "#ffffff"), 1.08, 1.52, -3.615, { ry: Math.PI });
   box(.96, .32, .025, 1.08, 1.0, -3.6, 0xffffff); plane(.92, .28, sign(["Seller's Only Agent™", "SellersOnlyAgent.com"], .92, .28, "#e8a838", "#17120a", true), 1.08, 1.0, -3.615, { ry: Math.PI });
   for (const x of [.72, 1.44]) for (const y of [1.87, 1.19]) bx("steel", .012, .06, .012, x, y, -3.6);
-  hard(1, -3.6, 1.4, .3);
+  hard(.98, -3.6, 1.2, .3);   // post and panels only, so nothing solid is near the walk from the kerb to the door
 
   // ---- living room
   bx("sofa", 2.4, .3, .95, 6.1, .2, 5.28, { solid: 1 }); bx("sofa", 2.4, .62, .2, 6.1, .56, 5.74); for (const x of [4.98, 7.22]) soft(.22, .5, .95, .07, "sofa", x, .42, 5.28);
@@ -468,6 +470,7 @@ function buildHouse() {
   bx("oak", .5, .04, .5, 7.55, .58, .85); bx("oak", .08, .56, .08, 7.55, .28, .85); hard(7.55, .85, .5, .5);                                          // side table
   soft(.82, .3, .8, .09, "blue", 6.45, .3, 1.2); soft(.82, .52, .2, .08, "blue", 6.45, .62, .86, { rx: .14 }); for (const x of [6.0, 6.9]) soft(.16, .2, .8, .06, "blue", x, .5, 1.2); hard(6.45, 1.15, .9, .9);   // armchair
   plant(.48, 5.45, 1.5); hard(.48, 5.45, .4, .4);
+  hard(6.45, .385, .9, .63);                                                                              // the slot behind the armchair led nowhere and trapped walkers: closed
   for (const s of [4.36, 7.04]) soft(.24, 2.15, .09, .04, "linen", s, 1.3, .13);                                                                        // curtains
   bx("steel", 3, .025, .025, 5.7, 2.4, .13);
   art(.55, .7, 7.9, 1.55, 5.2, -Math.PI / 2, ["#e9dfcc", "#c0392b", "#1f5fa8", "#e8a838"]);
@@ -531,6 +534,7 @@ function buildHouse() {
   renderer.shadowMap.needsUpdate = true;
 }
 buildHouse();
+DOORWAYS.find((d) => d.ax === "x" && d.c === 0).far = 6.5;   // the front door: doorway help starts at the kerb, not two steps from the door
 
 /* ---------- the bot's road map: door centres and room centres, joined where you can walk ---------- */
 const NODES = { F: [2.5, -3], E: [2.5, 0], L: [4, 3], LK: [8, 3], K: [13.6, 2.4], BD: [16, 2.5], P: [18.2, 3.6], LH: [3.6, 6], HW: [3.6, 6.7], KH: [11.6, 6], HE: [11.6, 6.7],
@@ -626,7 +630,7 @@ const DEVICES = [
 const lowName = (d) => d.def.name.replace(/^Smart|^Robot/, (m) => m.toLowerCase());   // mid-sentence: "smart TV", not "smart tv"
 
 /* ---------- one run ---------- */
-const P = { x: 2.5, z: -5.6, yaw: Math.PI, pitch: 0 };                // the player
+const P = { x: 2.5, z: -5.6, yaw: Math.PI, pitch: 0, vx: 0, vz: 0, vw: 0, door: null, doorT: 0 };   // the player: place, view, speed of walking and turning, and the last door walked through
 let G = null, state = "title";
 const TOTAL = 210;                                                    // seconds
 const led = new THREE.MeshBasicMaterial({ color: 0x35e0ff });
@@ -648,7 +652,7 @@ function newRun(seed, daily) {
   const lies = LIES.map((_, i) => i); for (let i = lies.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [lies[i], lies[j]] = [lies[j], lies[i]]; }
   renderer.shadowMap.needsUpdate = true;
   G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
-  P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0;
+  P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0; P.vx = P.vz = P.vw = 0; P.door = null; In.two = 0;
   $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("timer").classList.remove("low");
   objective("Walk up to the house and go in.");
 }
@@ -743,6 +747,50 @@ function stepFx(dt) {
 /* ---------- collision and line of sight ---------- */
 const R = .27;
 function blocked(x, z) { for (const s of solids) if (x > s.x1 - R && x < s.x2 + R && z > s.z1 - R && z < s.z2 + R) return true; return false; }
+/** The player walks as a circle. Where the circle overlaps a box it is pushed out the shortest way,
+    so a wall, a corner or a door jamb turns the walker aside instead of stopping it dead.
+    thumb: the player is on a touch screen. Two rules then keep a clumsy thumb in the room it means to be in.
+    A walker rubbing along a wall is not asking to go through the doors in it, so to that walker a doorway is wall.
+    And nobody backs straight out of a door they walked through a moment ago. Turn toward a door and it is a door again. */
+function walk(dx, dz, thumb, backing) {
+  const ox = P.x, oz = P.z, r = R + 1e-6, shut = []; let hit = true;
+  if (thumb) for (const d of DOORWAYS) { const X = d.ax === "x", across = X ? dz : dx, along = X ? dx : dz;
+    if (d.b - d.a > 1.6 || (d.far && across > 0)) continue;                                                  // never a wide opening, never the way in from the street
+    const gap = d.c - (X ? oz : ox), fa = X ? -Math.cos(P.yaw) : -Math.sin(P.yaw), at = (X ? ox : oz) + (X ? -Math.sin(P.yaw) : -Math.cos(P.yaw)) * gap / fa;   // at: where the line of the view meets this wall
+    if ((Math.abs(across) >= Math.abs(along) || (fa * gap > 0 && at > d.a && at < d.b)) && !(backing && d === P.door && G.t - P.doorT < 1.5)) continue;   // heading more through it than along the wall, or looking through it
+    const g = X ? { x1: d.a, x2: d.b, z1: d.c - T / 2, z2: d.c + T / 2 } : { x1: d.c - T / 2, x2: d.c + T / 2, z1: d.a, z2: d.b };
+    if (Math.hypot(ox - Math.max(g.x1, Math.min(g.x2, ox)), oz - Math.max(g.z1, Math.min(g.z2, oz))) > r - 1e-7) shut.push(g); }   // never one the walker is already standing in
+  P.x += dx; P.z += dz;
+  for (let pass = 0; pass < 4 && hit; pass++) { hit = false;
+    for (let corner = 0; corner < 2; corner++) for (const s of shut.length ? solids.concat(shut) : solids) {   // flat faces first, then corners: the seam between two boxes in one flat wall must not act as a corner
+      const ex = P.x - Math.max(s.x1, Math.min(s.x2, P.x)), ez = P.z - Math.max(s.z1, Math.min(s.z2, P.z)), d2 = ex * ex + ez * ez; if (d2 > r * r - 1e-9 || (ex && ez ? 1 : 0) !== corner) continue; hit = true;
+      if (d2 > 1e-9) { const k = r / Math.sqrt(d2) - 1; P.x += ex * k; P.z += ez * k; }
+      else { const l = P.x - s.x1, e = s.x2 - P.x, u = P.z - s.z1, m = Math.min(l, e, u, s.z2 - P.z); if (m === l) P.x = s.x1 - r; else if (m === e) P.x = s.x2 + r; else if (m === u) P.z = s.z1 - r; else P.z = s.z2 + r; }   // the centre got inside: leave by the nearest face
+    } }
+  if (hit) { P.x = ox; P.z = oz; }                                      // wedged between two things: stay put
+  for (const d of DOORWAYS) { const X = d.ax === "x", u = X ? P.x : P.z; if (u > d.a && u < d.b && ((X ? oz : ox) - d.c) * ((X ? P.z : P.x) - d.c) < 0) { P.door = d; P.doorT = G.t; } }   // remember the door just walked through
+}
+/** Doorway help. A walker close to a door and heading for it, but on course to clip a jamb, is bent just enough to walk through clear.
+    v is the wanted velocity [x, z] and is changed in place. Returns how far it was turned, as a yaw angle. */
+function doorHelp(v) {
+  const sp = Math.hypot(v[0], v[1]); if (sp < .2) return 0;
+  const yv = Math.atan2(-v[0], -v[1]), lim = (q) => Math.max(0, Math.min(1, q)); let turn = 0, best = 0;
+  for (const d of DOORWAYS) {
+    const X = d.ax === "x", va = X ? v[1] : v[0], vl = X ? v[0] : v[1], dir = va < 0 ? -1 : 1, far = d.far && dir > 0;   // far: walking up to the front door from outside
+    if (!far && Math.abs(va) <= Math.abs(vl)) continue;                                                      // rubbing along the wall, not heading for the door
+    const depth = ((X ? P.z : P.x) - d.c) * dir, reach = far ? d.far : 2.5; if (depth < -reach || depth > .4) continue;   // depth: metres past the door plane, negative before it
+    const half = (d.b - d.a) / 2, lat = (X ? P.x : P.z) - (d.a + d.b) / 2, room = half + Math.max(0, -depth) * .58; if (Math.abs(lat) > room) continue;   // the help reaches out as a funnel in front of the door
+    const keep = Math.max(0, half - R - .1), ahead = Math.max(.9, -depth), at = lat + vl / Math.abs(va) * ahead; if (Math.abs(at) <= keep) continue;   // already going to walk through clear of both jambs
+    const side = Math.max(-keep, Math.min(keep, at)) - lat, spot = (d.a + d.b) / 2 + lat + side;              // aim: the nearest clear spot in the opening, then a point just beyond it
+    if (!sees(P.x, P.z, X ? spot : d.c, X ? d.c : spot)) continue;                                            // never toward a door on the far side of a wall
+    let ang = Math.atan2(X ? -side : -ahead * dir, X ? -ahead * dir : -side) - yv; ang = Math.atan2(Math.sin(ang), Math.cos(ang));
+    let w = lim(((far && IS_TOUCH ? 1.5 : .78) - Math.abs(ang)) / .35) * lim((reach + depth) / .5) * lim((room - Math.abs(lat)) / .25);   // only for a walker already pointed at the door. A thumb on the front walk gets the widest margin
+    if (!IS_TOUCH) w *= lim((.45 - (Math.abs(at) - half)) / .2);                                              // a keyboard walks straight: help it only past a jamb it was about to clip
+    if (w > best) { best = w; turn = ang * w; }
+  }
+  if (turn) { v[0] = -Math.sin(yv + turn) * sp; v[1] = -Math.cos(yv + turn) * sp; }
+  return turn;
+}
 function sees(x1, z1, x2, z2) {
   const dx = x2 - x1, dz = z2 - z1;
   for (const s of solids) { if (!s.los) continue; let t0 = 0, t1 = 1, ok = true;
@@ -752,7 +800,7 @@ function sees(x1, z1, x2, z2) {
 }
 
 /* ---------- input: one small object the rest of the game reads ---------- */
-const In = { mx: 0, mz: 0, scan: false, keys: {} };
+const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
 addEventListener("blur", () => { In.keys = {}; In.scan = false; });   // keys must not stick when the window loses focus
@@ -763,10 +811,15 @@ if (!IS_TOUCH) {
   addEventListener("mouseup", () => { In.scan = false; drag = false; });
   addEventListener("mousemove", (e) => { if (state !== "play") return; if (document.pointerLockElement === canvas || drag) look(e.movementX, e.movementY, .0023); });
 } else {
-  // Left half of the screen is a walk stick that appears where the thumb lands. Right half looks.
+  // The left side of the screen is a walk stick that appears where the thumb lands. The right side looks. One thumb on the stick is enough: see update().
   let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild;
-  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * .46 && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; $("lhint").style.display = "none"; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
-  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy; const d = Math.hypot(dx, dy), m = 52; if (d > m) { dx *= m / d; dy *= m / d; } knob.style.transform = `translate(${dx}px,${dy}px)`; In.mx = dx / m; In.mz = dy / m; } else if (t.identifier === lid) { look(t.clientX - lx, t.clientY - ly, .0058); lx = t.clientX; ly = t.clientY; } } e.preventDefault(); }, { passive: false });
+  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
+  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
+      if (d > leash) { const k = 1 - leash / d; sx += dx * k; sy += dy * k; dx -= dx * k; dy -= dy * k; d = leash; stick.style.left = sx + "px"; stick.style.top = sy + "px"; }   // the base follows a thumb that drags well past its edge
+      if (d > m) { dx *= m / d; dy *= m / d; d = m; } knob.style.transform = `translate(${dx}px,${dy}px)`;
+      const g = Math.max(0, d / m - .12) / .88, out = d ? g * (.4 + .6 * g) / d : 0; In.mx = dx * out; In.mz = dy * out;                                             // a small dead zone, then a gentle curve
+    } else if (t.identifier === lid) { const dx = t.clientX - lx, dy = t.clientY - ly; look(dx, dy, .0058); lx = t.clientX; ly = t.clientY;
+      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
   const end = (e) => { if (state === "play") audio();   // lifting a finger is the only touch iPhone accepts for waking sound mid-run
     for (const t of e.changedTouches) { if (t.identifier === sid) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null; } };
   addEventListener("touchend", end); addEventListener("touchcancel", end);
@@ -778,15 +831,21 @@ const STEP = 1 / 60, fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
 function update(dt) {
   G.t += dt;
   if (!G.over) { G.time -= dt; if (G.time <= 0) { G.time = 0; return finish(false); } }
-  // --- walk
+  // --- walk. The stick walks where it points. With one thumb the view also turns to follow the walk, so pushing sideways turns you that way.
   let mx = In.mx, mz = In.mz;
+  In.two = Math.max(0, In.two - dt);
+  const one = IS_TOUCH && !In.two && !In.scan;                           // one thumb: nothing dragged the look side just now, and nothing is holding SCAN
   if (In.keys.KeyW || In.keys.ArrowUp) mz -= 1; if (In.keys.KeyS || In.keys.ArrowDown) mz += 1; if (In.keys.KeyA) mx -= 1; if (In.keys.KeyD) mx += 1;
   if (In.keys.ArrowLeft) P.yaw += 2.2 * dt; if (In.keys.ArrowRight) P.yaw -= 2.2 * dt;
   const len = Math.hypot(mx, mz); if (len > 1) { mx /= len; mz /= len; }
   const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw);
-  const dx = (mx * c + mz * s) * sp * dt, dz = (-mx * s + mz * c) * sp * dt;
-  if (!blocked(P.x + dx, P.z)) P.x += dx; if (!blocked(P.x, P.z + dz)) P.z += dz;
-  const moved = Math.hypot(dx, dz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
+  const v = [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = In.scan && G.target ? 0 : doorHelp(v), k = 1 - Math.exp(-dt * (!one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
+  P.vx += (v[0] - P.vx) * k; P.vz += (v[1] - P.vz) * k;
+  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH, mz > 0);
+  const moved = Math.hypot(P.x - ox, P.z - oz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
+  if (one) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
+    P.vw += (-Math.sign(lat) * Math.max(0, Math.abs(lat) - .5) * 3.6 - P.vw) * k; P.yaw += P.vw * dt + bend * Math.min(1, dt * 6); if (moved && !G.target) P.pitch *= 1 - dt * 1.2; } else P.vw = 0;   // past 30 degrees off straight the view turns toward the walk. It also follows the walk through a door. A view left tilted up or down comes back level on the walk, unless it is aimed at something to scan
+  if (!G.said.walk && (G.walked = (G.walked || 0) + moved) > 1.5 && (Math.abs(P.yaw - Math.PI) > .5 || G.walked > 22)) { G.said.walk = 1; $("lhint").style.display = "none"; }   // the walking hint goes once they have walked and turned, or walked a good way
   G.bob = (G.bob || 0) + moved * 4.2;
   if (!G.said.in && P.z > 1.1) { G.said.in = 1; objective("Turn right. Something on the table by the door looks wrong. Aim at it and hold " + (IS_TOUCH ? "SCAN" : "the mouse button") + "."); }   // not sooner: until here the open door leaf hides the table
 
