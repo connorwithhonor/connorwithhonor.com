@@ -42,7 +42,7 @@ body.play .hud{display:block}
 #sig .bars{display:flex;gap:3px;align-items:flex-end;height:16px}
 #sig .bars i{width:5px;background:rgba(255,255,255,.18);border-radius:1px}
 #sig .bars i.on{background:var(--bot);box-shadow:0 0 6px var(--bot)}
-#obj{position:absolute;top:calc(52px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:min(74vw,460px);text-align:center;font-size:13px;font-weight:600;color:var(--cream);text-shadow:0 1px 3px #000,0 0 12px rgba(0,0,0,.8)}
+#obj{position:absolute;top:calc(52px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:max-content;max-width:min(calc(100vw - 320px),460px);text-align:center;font-size:13px;font-weight:600;color:var(--cream);text-shadow:0 1px 3px #000,0 0 12px rgba(0,0,0,.8)}
 #cross{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px}
 #cross::before{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.55)}
 #ring{position:absolute;inset:-9px;border-radius:50%;border:2px solid transparent;transition:border-color .12s,transform .12s}
@@ -66,15 +66,15 @@ body.play .hud{display:block}
 /* touch */
 .touch{display:none}
 body.play.is-touch .touch{display:block}
-#stick{position:absolute;width:118px;height:118px;border-radius:50%;border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);display:none;margin:-59px 0 0 -59px}
+#stick{position:absolute;width:148px;height:148px;border-radius:50%;border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);display:none;margin:-74px 0 0 -74px}
 #stick i{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(255,255,255,.4)}
 #scanbtn{position:absolute;right:calc(22px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));width:92px;height:92px;border-radius:50%;background:rgba(232,168,56,.9);color:#17120a;font-weight:900;font-size:15px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 6px 22px rgba(0,0,0,.5)}
 #scanbtn:active,#scanbtn.down{transform:scale(.94);background:var(--gold-bright)}
 #scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
-#lhint{position:absolute;left:calc(22px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-shadow:0 1px 3px #000}
+#lhint{position:absolute;left:calc(56px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:46vw;font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.92);text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8)}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
-.ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
+.ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
 body.title #ov-title,body.end #ov-end{display:block}
 .box{max-width:520px;margin:0 auto;padding:calc(22px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom));min-height:100%;display:flex;flex-direction:column;justify-content:flex-end}
 #ov-end .box{justify-content:flex-start}
@@ -108,6 +108,14 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
 .host img{width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--line);flex:none}
 .host b{display:block;font-size:15px}.host span{display:block;color:var(--muted);font-size:13.5px;line-height:1.4}
 @media(max-width:640px){#obj{top:calc(150px + env(safe-area-inset-top));max-width:92vw;font-size:14px}#mute{top:calc(68px + env(safe-area-inset-top))}}
+/* a phone held sideways: the card drops to the bottom edge so it never covers the crosshair */
+@media(max-height:600px) and (orientation:landscape){#obj{top:calc(52px + env(safe-area-inset-top));max-width:min(calc(100vw - 320px),460px);font-size:12.5px}#card{bottom:calc(6px + env(safe-area-inset-bottom));width:min(60vw,560px);padding:8px 12px}#card b{font-size:14px}#card span{font-size:12.5px;line-height:1.3}
+  /* on a phone it takes all the room left of the SCAN button, which keeps it short enough to stay under the hint line */
+  body.is-touch #card{left:calc(50% - 57px);width:min(calc(100vw - 150px - env(safe-area-inset-left) - env(safe-area-inset-right)),600px)}}
+/* a phone held upright: a tall card must stay under the hint line. Mid-height screens seat it right on top of the SCAN button. Short ones run out of room there, so it drops beside the button, as it does sideways */
+@media(max-height:700px) and (orientation:portrait){#card{bottom:calc(132px + env(safe-area-inset-bottom))}}
+@media(max-height:660px) and (orientation:portrait){#card{bottom:calc(6px + env(safe-area-inset-bottom));padding:8px 12px}#card b{font-size:14px}#card span{font-size:12.5px;line-height:1.3}
+  body.is-touch #card{left:calc(50% - 57px);width:calc(100vw - 150px - env(safe-area-inset-left) - env(safe-area-inset-right))}}
 #nogl{display:none;position:fixed;inset:0;place-items:center;padding:24px;text-align:center;background:var(--ink)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
@@ -130,7 +138,7 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <div id="flash"></div>
   <div class="touch">
     <div id="stick"><i></i></div>
-    <div id="lhint">Drag here to walk</div>
+    <div id="lhint">Left thumb here.<br>Push up to walk.<br>Push sideways to turn.</div>
     <button id="scanbtn">SCAN</button>
   </div>
 </div>
@@ -140,9 +148,9 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <h1>Something in this house is <em>hiding the problems.</em></h1>
   <p class="lead">A rogue staging bot called GLOSS makes every house look perfect. Walk the open house. Find what it covered up. Then catch it before the doors close.</p>
   <div class="how">
-    <div><b>Look and walk.</b> <span id="how-move">Drag left to walk, drag right to look.</span></div>
+    <div><b>Look and walk.</b> <span id="how-move">Put a thumb on the left side. Push up to walk. Push sideways to turn. Drag the right side to look up and down.</span></div>
     <div><b>Scan anything that looks off.</b> <span id="how-scan">Aim at it and hold SCAN.</span></div>
-    <div><b>Every red flag boosts your tracker.</b> Follow the signal to the bot.</div>
+    <div><b>Every red flag boosts your tracker.</b> Follow the signal to the smart device it is hiding in. A wrong guess costs time.</div>
     <div><b>Gold question marks are straight answers.</b> Each one buys you six seconds.</div>
   </div>
   <button class="btn" id="go">Walk in</button>
@@ -181,7 +189,8 @@ if (!IS_TOUCH) { $("how-move").textContent = "Click the game, then W A S D to wa
 /* ---------- seeded dice ---------- */
 function hash(s) { let h = 1779033703 ^ s.length; for (let i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return h >>> 0; }
 function rngFrom(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const todayKey = () => { const d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); };
+const dayKey = (d) => d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+const todayKey = () => dayKey(new Date()), yesterdayKey = () => { const y = new Date(); y.setDate(y.getDate() - 1); return dayKey(y); };
 const dailyNumber = () => { const a = new Date(2026, 10, 15), d = new Date(); d.setHours(0, 0, 0, 0); return Math.max(1, Math.round((d - a) / 864e5) + 1); };
 const store = { get(k, d) { try { const v = localStorage.getItem("ohg:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem("ohg:" + k, JSON.stringify(v)); } catch (e) {} } };
 
@@ -197,7 +206,7 @@ function track(name) {
 
 /* ---------- sound: every noise is synthesized, there are no audio files ---------- */
 let AC = null, muted = store.get("muted", false);
-function audio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state === "suspended") AC.resume(); return AC; }
+function audio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state !== "running" && AC.state !== "closed") { const p = AC.resume(); if (p) p.catch(() => {}); } return AC; }   // iPhone parks it as "interrupted" after a call or a lock, not "suspended"
 function beep(freq, dur = .08, type = "sine", vol = .12, slide = 0, when = 0) {
   if (muted) return; const ac = audio(); if (!ac) return;
   const t = ac.currentTime + when, o = ac.createOscillator(), g = ac.createGain();
@@ -249,12 +258,17 @@ const speck = (c, n, a, s = 256, d = 2) => { for (let i = 0; i < n; i++) { c.fil
 const sky = new THREE.Mesh(new THREE.SphereGeometry(150, 32, 16), new THREE.MeshBasicMaterial({ side: THREE.BackSide, fog: false, map: paint(8, 256, (c) => { const g = c.createLinearGradient(0, 0, 0, 256); g.addColorStop(0, "#3f7fc4"); g.addColorStop(.42, "#8fc0e8"); g.addColorStop(.5, "#dcebf3"); g.addColorStop(.56, "#e9e2cf"); g.addColorStop(1, "#b7a98a"); c.fillStyle = g; c.fillRect(0, 0, 8, 256); }) }));
 scene.add(sky);
 // light the whole scene softly from that sky, which is what makes surfaces stop looking like flat paint
-{ const pm = new THREE.PMREMGenerator(renderer), es = new THREE.Scene(); es.add(sky.clone()); scene.environment = pm.fromScene(es, .03).texture; pm.dispose(); }
+function buildEnv() { const pm = new THREE.PMREMGenerator(renderer), es = new THREE.Scene(); es.add(sky.clone()); scene.environment = pm.fromScene(es, .03).texture; pm.dispose(); }
+buildEnv();
+// A phone can drop the graphics context while the tab is away. three restores what it can re-upload, but not these two, which were drawn on the GPU.
+canvas.addEventListener("webglcontextrestored", () => { buildEnv(); renderer.shadowMap.needsUpdate = true; });
 scene.add(new THREE.HemisphereLight(0xdfeeff, 0xb39a78, .55));
 const sun = new THREE.DirectionalLight(0xfff1d6, 3.4); sun.position.set(-9, 15, -13); sun.target.position.set(8, 0, 5); scene.add(sun, sun.target);
 sun.castShadow = true; sun.shadow.mapSize.set(IS_TOUCH ? 2048 : 4096, IS_TOUCH ? 2048 : 4096);
 Object.assign(sun.shadow.camera, { left: -22, right: 22, top: 20, bottom: -20, near: 1, far: 70 }); sun.shadow.bias = -.0005; sun.shadow.normalBias = .035;
 for (const p of (IS_TOUCH ? [[6, 3.4, 0xffe6c2, 13], [5, 9.4, 0xffdcae, 11], [12.5, 8.6, 0xffe2b8, 11]] : [[4, 3, 0xffe2b8, 9], [12, 3, 0xfff0d8, 9], [3.2, 9.7, 0xffdcae, 7], [11, 9.7, 0xffdcae, 8], [8, 6.7, 0xffe2b8, 5]])) { const l = new THREE.PointLight(p[2], p[3], 7.5, 1.7); l.position.set(p[0], 2.3, p[1]); scene.add(l); }
+// The bot's glow lives in the scene from the start, switched down to nothing. Adding a light mid-game changes the light count, and that recompiles every shader at the exact moment the chase begins.
+const botLight = new THREE.PointLight(0x35e0ff, 0, 5, 1.6); scene.add(botLight);
 
 /* ---------- materials: each one is a painted texture plus how rough or shiny it is ---------- */
 const std = (o) => new THREE.MeshStandardMaterial(Object.assign({ roughness: .85, metalness: 0, envMapIntensity: .6 }, o));
@@ -294,6 +308,7 @@ const M = {
 /* ---------- building blocks ---------- */
 const H = 2.7, T = .14;                    // ceiling height, wall thickness
 const solids = [];                          // {x1,x2,z1,z2,los} for collision and line of sight
+const DOORWAYS = [];                        // {ax,c,a,b} every door opening, filled in by wall() from the same door(a,b) data
 const world = new THREE.Group(); scene.add(world);
 let perRun = new THREE.Group(); scene.add(perRun);
 const hard = (x, z, w, d, los) => solids.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2, los: !!los });
@@ -358,6 +373,7 @@ function wall(ax, c, a, b, open = [], mA = "wall", mB = "wall", inside = 0) {
       at(.035, y1 - y0, .04, mid, (y0 + y1) / 2); at(len, .035, .04, mid, (y0 + y1) / 2);
       const g = new THREE.Mesh(unit, M.glass); g.scale.set(ax === "x" ? len : .012, y1 - y0, ax === "x" ? .012 : len); g.position.set(ax === "x" ? mid : c, (y0 + y1) / 2, ax === "x" ? c : mid); world.add(g);
     } else { part(o.a, o.b, 2.1, H); at(.08, 2.1, T + .05, o.a + .02, 1.05); at(.08, 2.1, T + .05, o.b - .02, 1.05); at(len + .08, .09, T + .05, mid, 2.13); }
+    if (!o.win) DOORWAYS.push({ ax, c, a: o.a, b: o.b });
     cur = o.b;
   }
   part(cur, b, 0, H); base(cur, b); if (b > cur) block(cur, b);
@@ -419,7 +435,7 @@ function buildHouse() {
   const fd = new THREE.Group(); fd.position.set(2.04, 0, .04); fd.rotation.y = -1.25; world.add(fd);            // the front door, swung open
   box(.92, 2.04, .045, .46, 1.02, 0, 0x7a2e24, { parent: fd }); for (const y of [.55, 1.5]) box(.6, .7, .055, .46, y, 0, 0x8a372b, { parent: fd }); put(ball(.035, 1), "steel", .84, 1, .05, { parent: fd });
   bx("walnut", 1.1, .02, .6, 2.5, .032, -.5);                                                                    // doormat
-  for (const x of [1.15, 3.85]) { bx("trim", .16, 2.5, .16, x, 1.25, -1.35); } bx("trim", 3.2, .16, 1.7, 2.5, 2.58, -.72); bx("roof", 3.4, .1, 1.9, 2.5, 2.7, -.72);   // porch
+  for (const x of [1.15, 3.85]) { bx("trim", .16, 2.5, .16, x, 1.25, -1.35); } bx("trim", 3.2, .16, 1.5, 2.5, 2.58, -.82); bx("roof", 3.4, .1, 1.6, 2.5, 2.7, -.87);   // porch, stopping at the outside face of the wall
   for (const s of [[4.42, 1.5], [6.98, 1.5], [10.92, 1.62], [13.08, 1.62]]) bx("walnut", .34, s[1] > 1.55 ? .95 : 1.3, .04, s[0], s[1], -.1);                     // shutters
   for (const x of [4.6, 5.3, 6, 6.7, 8.4, 9.4, 13.6, 14.6, 15.4]) shrub(x, -.75, .9 + (x % 1) * .4);
   for (const x of [.5, 1]) shrub(x, -.7, .8);
@@ -440,7 +456,7 @@ function buildHouse() {
   box(.96, .66, .025, 1.08, 1.52, -3.6, 0xffffff); plane(.92, .62, sign(["FOR SALE"], .92, .62, "#1f5fa8", "#ffffff"), 1.08, 1.52, -3.615, { ry: Math.PI });
   box(.96, .32, .025, 1.08, 1.0, -3.6, 0xffffff); plane(.92, .28, sign(["Seller's Only Agent™", "SellersOnlyAgent.com"], .92, .28, "#e8a838", "#17120a", true), 1.08, 1.0, -3.615, { ry: Math.PI });
   for (const x of [.72, 1.44]) for (const y of [1.87, 1.19]) bx("steel", .012, .06, .012, x, y, -3.6);
-  hard(1, -3.6, 1.4, .3);
+  hard(.98, -3.6, 1.2, .3);   // post and panels only, so nothing solid is near the walk from the kerb to the door
 
   // ---- living room
   bx("sofa", 2.4, .3, .95, 6.1, .2, 5.28, { solid: 1 }); bx("sofa", 2.4, .62, .2, 6.1, .56, 5.74); for (const x of [4.98, 7.22]) soft(.22, .5, .95, .07, "sofa", x, .42, 5.28);
@@ -450,17 +466,18 @@ function buildHouse() {
   bx("oak", 1.15, .05, .62, 6.1, .4, 4.05, { solid: 1 }); for (const a of [[-.5, -.24], [.5, -.24], [-.5, .24], [.5, .24]]) bx("black", .04, .38, .04, 6.1 + a[0], .19, 4.05 + a[1]); bx("blue", .3, .04, .22, 5.85, .445, 4.05); put(cyl(.09, .1, 14, .12), "ceramic", 6.4, .475, 4.1);
   bx("walnut", .4, .46, 1.7, .3, .23, 4.2, { solid: 1 }); bx("black", .03, .5, .5, .09, .26, 4.2);                                                      // media console under the TV
   bx("oak", .95, .04, .42, .75, .73, 1.2); for (const a of [[-.42, -.17], [.42, -.17], [-.42, .17], [.42, .17]]) bx("black", .04, .71, .04, .75 + a[0], .355, 1.2 + a[1]); hard(.75, 1.2, .95, .42);   // entry table
-  put(cyl(.1, .06, 16, .15), "ceramic", .5, .78, 1.2);
+  put(cyl(.1, .06, 16, .15), "ceramic", .46, .78, 1.2);                                                                                                    // key bowl, clear of the sign-in sheet
   bx("oak", .5, .04, .5, 7.55, .58, .85); bx("oak", .08, .56, .08, 7.55, .28, .85); hard(7.55, .85, .5, .5);                                          // side table
   soft(.82, .3, .8, .09, "blue", 6.45, .3, 1.2); soft(.82, .52, .2, .08, "blue", 6.45, .62, .86, { rx: .14 }); for (const x of [6.0, 6.9]) soft(.16, .2, .8, .06, "blue", x, .5, 1.2); hard(6.45, 1.15, .9, .9);   // armchair
   plant(.48, 5.45, 1.5); hard(.48, 5.45, .4, .4);
+  hard(6.45, .385, .9, .63);                                                                              // the slot behind the armchair led nowhere and trapped walkers: closed
   for (const s of [4.36, 7.04]) soft(.24, 2.15, .09, .04, "linen", s, 1.3, .13);                                                                        // curtains
   bx("steel", 3, .025, .025, 5.7, 2.4, .13);
   art(.55, .7, 7.9, 1.55, 5.2, -Math.PI / 2, ["#e9dfcc", "#c0392b", "#1f5fa8", "#e8a838"]);
 
   // ---- kitchen
   bx("cab", 6.4, .88, .62, 12.2, .44, .4, { solid: 1 }); bx("stone", 6.5, .045, .68, 12.2, .905, .42);
-  bx("tile", 6.4, .55, .02, 12.2, 1.21, .085);                                                                                                           // backsplash
+  bx("tile", 1.95, .55, .02, 9.975, 1.21, .085); bx("tile", 2.35, .55, .02, 14.225, 1.21, .085); bx("tile", 2.1, .18, .02, 12, 1.025, .085);             // backsplash: full height beside the window, a strip under its sill
   bx("cab", 1.9, .72, .34, 9.95, 2.2, .26); bx("cab", 2.3, .72, .34, 14.25, 2.2, .26);
   bx("steel", .62, .02, .44, 12, .93, .42); bx("black", .54, .14, .36, 12, .86, .42); put(cyl(.016, .26, 8), "steel", 12, 1.06, .2); put(cyl(.014, .16, 8), "steel", 12, 1.18, .27, { rx: Math.PI / 2 });   // sink and tap
   bx("black", .76, .02, .56, 14.2, .935, .42); bx("steel", .76, .7, .03, 14.2, .5, .725); bx("black", .56, .34, .01, 14.2, .5, .742); for (const k of [-.27, -.09, .09, .27]) put(cyl(.022, .03, 10), "black", 14.2 + k, .84, .74, { rx: Math.PI / 2 });   // range
@@ -480,7 +497,7 @@ function buildHouse() {
   art(.4, .5, 5.6, 1.55, 7.32, Math.PI, ["#dfe8ea", "#2e6f8e", "#f2a65a"]); art(.4, .5, 6.2, 1.55, 7.32, Math.PI, ["#f3e9dc", "#7da33a", "#c0392b"]); art(.5, .4, 13, 1.55, 6.08, 0, ["#e9dfcc", "#1f5fa8", "#e8a838"]);
 
   // ---- bedroom 1
-  bed(4.25, 10.75, 1.8, 2.05, "blue"); nightstand(3.02, 11.7); nightstand(5.2, 11.3);
+  bed(4.0, 10.75, 1.8, 2.05, "blue"); nightstand(2.8, 11.7); nightstand(5.2, 11.3);   // the frame ends at x 4.95, so the right nightstand stands beside it
   bx("walnut", .5, .95, 1.5, .36, .475, 8.3, { solid: 1 }); for (const y of [.2, .48, .76]) { bx("black", .012, .012, 1.3, .615, y + .12, 8.3); for (const z of [7.95, 8.65]) put(ball(.02, 0), "steel", .62, y, z); }
   for (const s of [1.36, 2.94]) soft(.22, 2.1, .09, .04, "linen", s, 1.3, 11.87);
   art(.6, .45, 5.42, 1.6, 9.2, -Math.PI / 2, ["#f3e9dc", "#4f6b8a", "#d9a441"]);
@@ -517,6 +534,7 @@ function buildHouse() {
   renderer.shadowMap.needsUpdate = true;
 }
 buildHouse();
+DOORWAYS.find((d) => d.ax === "x" && d.c === 0).far = 6.5;   // the front door: doorway help starts at the kerb, not two steps from the door
 
 /* ---------- the bot's road map: door centres and room centres, joined where you can walk ---------- */
 const NODES = { F: [2.5, -3], E: [2.5, 0], L: [4, 3], LK: [8, 3], K: [13.6, 2.4], BD: [16, 2.5], P: [18.2, 3.6], LH: [3.6, 6], HW: [3.6, 6.7], KH: [11.6, 6], HE: [11.6, 6.7],
@@ -537,7 +555,7 @@ const FLAGS = [
       return [.75, .8, 1.2]; } },
   { id: "qr", room: "the kitchen", name: "The deposit QR code", tip: "Deposits go to a licensed escrow company. Never to a QR code sitting on a counter.",
     build(g) { const t = paint(256, 256, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 256, 256); c.fillStyle = "#17120a"; c.font = "800 22px Arial"; c.textAlign = "center"; c.fillText("RESERVE THIS HOME", 128, 34); c.font = "600 15px Arial"; c.fillText("Scan to send your deposit", 128, 58); for (let y = 0; y < 11; y++) for (let x = 0; x < 11; x++) if (Math.random() > .48 || (x < 3 && y < 3) || (x > 7 && y < 3) || (x < 3 && y > 7)) c.fillRect(62 + x * 12, 76 + y * 12, 11, 11); c.fillStyle = "#c0392b"; c.font = "800 15px Arial"; c.fillText("OFFER ENDS TODAY", 128, 236); });
-      const a = plane(.3, .3, t, 10.9, 1.12, 4.12, { parent: g, double: 1 }); a.rotation.x = -.28; const b = plane(.3, .3, t, 10.9, 1.12, 3.88, { parent: g, double: 1, ry: Math.PI }); b.rotation.x = .28; return [10.9, 1.1, 4]; } },
+      const a = plane(.3, .3, t, 10.9, 1.075, 4.04, { parent: g, double: 1 }); a.rotation.x = -.28; const b = plane(.3, .3, t, 10.9, 1.075, 3.96, { parent: g, double: 1, ry: Math.PI }); b.rotation.x = .28; return [10.9, 1.1, 4]; } },
   { id: "stain", room: "the hall", name: "A stain on the ceiling", tip: "A ceiling stain means water came through. Ask what leaked, whether it is fixed, and for the repair receipt.",
     build(g) { plane(1.1, .9, blotch("rgba(120,80,30,.5)"), 9.2, H - .012, 6.7, { parent: g, alpha: 1, rx: Math.PI / 2 }); return [9.2, H - .05, 6.7]; } },
   { id: "crack", room: "the living room", name: "A crack behind the art", tip: "Art hung in an odd spot can be hiding a crack. Wide or stair-step cracks are a question for an inspector.", cover: "painting",
@@ -555,7 +573,7 @@ const FLAGS = [
   { id: "bonus", room: "the garage", name: "A bedroom in the garage", tip: "A garage turned into a bedroom needs a permit. Ask to see it.",
     build(g) { box(1, .38, 1.9, 13.75, .19, 10.9, 0x9fb3c8, { parent: g }); box(.9, .1, .45, 13.75, .43, 11.6, 0xffffff, { parent: g }); box(.05, .03, 2.4, 14.6, .016, 10.2, 0xe67e22, { parent: g }); box(.3, .07, .1, 14.6, .04, 9, 0xf2f2f2, { parent: g }); solids.push({ x1: 13.25, x2: 14.25, z1: 9.95, z2: 11.85, run: 1 }); return [13.75, .45, 10.9]; } },
   { id: "fresh", room: "the bathroom", name: "Four air fresheners", tip: "One air freshener is taste. Four is a cover story. Ask what the smell was.", cover: "fresheners",
-    build(g, cov) { plane(.9, .9, blotch("rgba(60,70,40,.5)"), 8.925, .5, 9.9, { parent: g, alpha: 1, ry: -Math.PI / 2 }); for (let i = 0; i < 4; i++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.045, .05, .16, 10), mat([0xff7eb6, 0x7ee0ff, 0xc3f584, 0xffd166][i])); c.position.set(8.6, .97, 8.25 + i * .32); cov.add(c); } return [8.62, .95, 8.75]; } },
+    build(g, cov) { plane(.9, .9, blotch("rgba(60,70,40,.5)"), 8.925, .5, 9.9, { parent: g, alpha: 1, ry: -Math.PI / 2 }); for (let i = 0; i < 4; i++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.045, .05, .16, 10), mat([0xff7eb6, 0x7ee0ff, 0xc3f584, 0xffd166][i])); c.position.set(8.6, .948, 8.03 + i * .16); cov.add(c); } return [8.6, .95, 8.27]; } },   // four cans standing on the vanity top, clear of the basin
   { id: "rug", room: "the first bedroom", name: "What the rug was hiding", tip: "Ask what is under the rug. Warped or stained flooring can mean water got there.", cover: "rug",
     build(g, cov) { plane(1.3, 1, blotch("rgba(60,40,25,.6)"), 1.9, .011, 10.4, { parent: g, alpha: 1, rx: -Math.PI / 2 }); box(1.7, .03, 1.3, 1.9, .028, 10.4, 0xb5475a, { parent: cov }); box(1.4, .034, 1, 1.9, .03, 10.4, 0xe9c46a, { parent: cov }); return [1.9, .1, 10.4]; } },
   { id: "pool", room: "the patio", name: "Water pooling at the wall", tip: "Water should run away from a house. Pooling against the wall is a drainage question.",
@@ -584,7 +602,7 @@ const ANSWERS = [
     build(g) { box(.24, .05, .3, .42, .975, 8.3, 0x1f5fa8, { parent: g }); plane(.2, .26, paper("INSPECTION", "#1f5fa8"), .42, 1.003, 8.3, { parent: g, rx: -Math.PI / 2 }); } },
   { id: "dual", at: [9.3, .98, .45], q: "What is dual agency?", a: "One brokerage representing both buyer and seller. In California it takes written consent from both. Always ask who each agent works for.", build(g) { flat(g, "WHO REPRESENTS YOU", 9.3, .932, .45, "#c0392b"); } },
   { id: "credit", at: [19, .8, 3.25], q: "What is a seller concession?", a: "A credit the seller agrees to give the buyer, often toward closing costs. Sellers say yes when it nets them a better deal.", build(g) { flat(g, "CLOSING COSTS", 19, .754, 3.25, "#2e7d5b"); } },
-  { id: "writing", at: [5.2, .58, 11.3], q: "Three agents said three different things. How do I compare them?", a: "Ask each agent and each lender to put their offer in writing. Then lay them side by side. Promises get specific on paper.", build(g) { flat(g, "PROPOSALS", 5.34, .512, 11.42, "#17120a"); } },
+  { id: "writing", at: [5.34, .78, 11.42], q: "Three agents said three different things. How do I compare them?", a: "Ask each agent and each lender to put their offer in writing. Then lay them side by side. Promises get specific on paper.", build(g) { flat(g, "PROPOSALS", 5.32, .512, 11.36, "#17120a"); } },
   { id: "curb", at: [3.75, .5, -1.05], q: "How fast do buyers make up their minds about a house?", a: "Fast, and often from the curb. That is why the front yard gets the first weekend of work.",
     build(g) { put(cyl(.2, .34, 14, .26), "pot", 3.75, .17, -1.05, { parent: g }); for (let i = 0; i < 7; i++) put(ball(.07, 0), mat([0xe84a5f, 0xffd166, 0xff8fab][i % 3], { roughness: .8 }), 3.75 + Math.cos(i) * .13, .42 + (i % 2) * .05, -1.05 + Math.sin(i) * .13, { parent: g }); } }
 ];
@@ -609,15 +627,17 @@ const DEVICES = [
   { id: "opener", name: "Smart garage opener", at: [15.9, 1.5, 9.2], node: "G", build(g) { box(.03, .2, .14, 15.915, 1.5, 9.2, 0xf4f4f4, { parent: g }); } }
 ];
 
+const lowName = (d) => d.def.name.replace(/^Smart|^Robot/, (m) => m.toLowerCase());   // mid-sentence: "smart TV", not "smart tv"
+
 /* ---------- one run ---------- */
-const P = { x: 2.5, z: -5.6, yaw: Math.PI, pitch: 0 };                // the player
+const P = { x: 2.5, z: -5.6, yaw: Math.PI, pitch: 0, vx: 0, vz: 0, vw: 0, door: null, doorT: 0 };   // the player: place, view, speed of walking and turning, and the last door walked through
 let G = null, state = "title";
 const TOTAL = 210;                                                    // seconds
 const led = new THREE.MeshBasicMaterial({ color: 0x35e0ff });
 const coverGlow = [];
 
 function newRun(seed, daily) {
-  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun);
+  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0;
   for (const m of smashed) m.visible = true; smashed.length = 0; for (const q of scorches) fx.remove(q); scorches.length = 0; for (const q of beams) fx.remove(q.m); beams.length = 0;
   for (let i = solids.length - 1; i >= 0; i--) if (solids[i].run) solids.splice(i, 1);
   coverGlow.length = 0;
@@ -632,7 +652,7 @@ function newRun(seed, daily) {
   const lies = LIES.map((_, i) => i); for (let i = lies.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [lies[i], lies[j]] = [lies[j], lies[i]]; }
   renderer.shadowMap.needsUpdate = true;
   G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
-  P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0;
+  P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0; P.vx = P.vz = P.vw = 0; P.door = null; In.two = 0;
   $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("timer").classList.remove("low");
   objective("Walk up to the house and go in.");
 }
@@ -643,8 +663,8 @@ function makeBot(at) {
   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(.17, 0), new THREE.MeshBasicMaterial({ color: 0x35e0ff })); g.add(core);
   const shell = new THREE.Mesh(new THREE.IcosahedronGeometry(.25, 1), new THREE.MeshBasicMaterial({ color: 0x35e0ff, wireframe: true, transparent: true, opacity: .55 })); g.add(shell);
   const ring = new THREE.Mesh(new THREE.TorusGeometry(.33, .012, 6, 28), new THREE.MeshBasicMaterial({ color: 0xffffff })); ring.rotation.x = Math.PI / 2; g.add(ring);
-  const light = new THREE.PointLight(0x35e0ff, 6, 5, 1.6); g.add(light);
   g.position.set(at[0], Math.max(.55, at[1]), at[2]); g.userData.bot = true; perRun.add(g);
+  botLight.position.copy(g.position); botLight.intensity = 6;
   return { g, core, shell, ring, x: at[0], z: at[2], from: null, to: null, speed: 3.55, age: 0, hp: 3, panic: 0 };
 }
 function botPick(b, here) {
@@ -727,6 +747,50 @@ function stepFx(dt) {
 /* ---------- collision and line of sight ---------- */
 const R = .27;
 function blocked(x, z) { for (const s of solids) if (x > s.x1 - R && x < s.x2 + R && z > s.z1 - R && z < s.z2 + R) return true; return false; }
+/** The player walks as a circle. Where the circle overlaps a box it is pushed out the shortest way,
+    so a wall, a corner or a door jamb turns the walker aside instead of stopping it dead.
+    thumb: the player is on a touch screen. Two rules then keep a clumsy thumb in the room it means to be in.
+    A walker rubbing along a wall is not asking to go through the doors in it, so to that walker a doorway is wall.
+    And nobody backs straight out of a door they walked through a moment ago. Turn toward a door and it is a door again. */
+function walk(dx, dz, thumb, backing) {
+  const ox = P.x, oz = P.z, r = R + 1e-6, shut = []; let hit = true;
+  if (thumb) for (const d of DOORWAYS) { const X = d.ax === "x", across = X ? dz : dx, along = X ? dx : dz;
+    if (d.b - d.a > 1.6 || (d.far && across > 0)) continue;                                                  // never a wide opening, never the way in from the street
+    const gap = d.c - (X ? oz : ox), fa = X ? -Math.cos(P.yaw) : -Math.sin(P.yaw), at = (X ? ox : oz) + (X ? -Math.sin(P.yaw) : -Math.cos(P.yaw)) * gap / fa;   // at: where the line of the view meets this wall
+    if ((Math.abs(across) >= Math.abs(along) || (fa * gap > 0 && at > d.a && at < d.b)) && !(backing && d === P.door && G.t - P.doorT < 1.5)) continue;   // heading more through it than along the wall, or looking through it
+    const g = X ? { x1: d.a, x2: d.b, z1: d.c - T / 2, z2: d.c + T / 2 } : { x1: d.c - T / 2, x2: d.c + T / 2, z1: d.a, z2: d.b };
+    if (Math.hypot(ox - Math.max(g.x1, Math.min(g.x2, ox)), oz - Math.max(g.z1, Math.min(g.z2, oz))) > r - 1e-7) shut.push(g); }   // never one the walker is already standing in
+  P.x += dx; P.z += dz;
+  for (let pass = 0; pass < 4 && hit; pass++) { hit = false;
+    for (let corner = 0; corner < 2; corner++) for (const s of shut.length ? solids.concat(shut) : solids) {   // flat faces first, then corners: the seam between two boxes in one flat wall must not act as a corner
+      const ex = P.x - Math.max(s.x1, Math.min(s.x2, P.x)), ez = P.z - Math.max(s.z1, Math.min(s.z2, P.z)), d2 = ex * ex + ez * ez; if (d2 > r * r - 1e-9 || (ex && ez ? 1 : 0) !== corner) continue; hit = true;
+      if (d2 > 1e-9) { const k = r / Math.sqrt(d2) - 1; P.x += ex * k; P.z += ez * k; }
+      else { const l = P.x - s.x1, e = s.x2 - P.x, u = P.z - s.z1, m = Math.min(l, e, u, s.z2 - P.z); if (m === l) P.x = s.x1 - r; else if (m === e) P.x = s.x2 + r; else if (m === u) P.z = s.z1 - r; else P.z = s.z2 + r; }   // the centre got inside: leave by the nearest face
+    } }
+  if (hit) { P.x = ox; P.z = oz; }                                      // wedged between two things: stay put
+  for (const d of DOORWAYS) { const X = d.ax === "x", u = X ? P.x : P.z; if (u > d.a && u < d.b && ((X ? oz : ox) - d.c) * ((X ? P.z : P.x) - d.c) < 0) { P.door = d; P.doorT = G.t; } }   // remember the door just walked through
+}
+/** Doorway help. A walker close to a door and heading for it, but on course to clip a jamb, is bent just enough to walk through clear.
+    v is the wanted velocity [x, z] and is changed in place. Returns how far it was turned, as a yaw angle. */
+function doorHelp(v) {
+  const sp = Math.hypot(v[0], v[1]); if (sp < .2) return 0;
+  const yv = Math.atan2(-v[0], -v[1]), lim = (q) => Math.max(0, Math.min(1, q)); let turn = 0, best = 0;
+  for (const d of DOORWAYS) {
+    const X = d.ax === "x", va = X ? v[1] : v[0], vl = X ? v[0] : v[1], dir = va < 0 ? -1 : 1, far = d.far && dir > 0;   // far: walking up to the front door from outside
+    if (!far && Math.abs(va) <= Math.abs(vl)) continue;                                                      // rubbing along the wall, not heading for the door
+    const depth = ((X ? P.z : P.x) - d.c) * dir, reach = far ? d.far : 2.5; if (depth < -reach || depth > .4) continue;   // depth: metres past the door plane, negative before it
+    const half = (d.b - d.a) / 2, lat = (X ? P.x : P.z) - (d.a + d.b) / 2, room = half + Math.max(0, -depth) * .58; if (Math.abs(lat) > room) continue;   // the help reaches out as a funnel in front of the door
+    const keep = Math.max(0, half - R - .1), ahead = Math.max(.9, -depth), at = lat + vl / Math.abs(va) * ahead; if (Math.abs(at) <= keep) continue;   // already going to walk through clear of both jambs
+    const side = Math.max(-keep, Math.min(keep, at)) - lat, spot = (d.a + d.b) / 2 + lat + side;              // aim: the nearest clear spot in the opening, then a point just beyond it
+    if (!sees(P.x, P.z, X ? spot : d.c, X ? d.c : spot)) continue;                                            // never toward a door on the far side of a wall
+    let ang = Math.atan2(X ? -side : -ahead * dir, X ? -ahead * dir : -side) - yv; ang = Math.atan2(Math.sin(ang), Math.cos(ang));
+    let w = lim(((far && IS_TOUCH ? 1.5 : .78) - Math.abs(ang)) / .35) * lim((reach + depth) / .5) * lim((room - Math.abs(lat)) / .25);   // only for a walker already pointed at the door. A thumb on the front walk gets the widest margin
+    if (!IS_TOUCH) w *= lim((.45 - (Math.abs(at) - half)) / .2);                                              // a keyboard walks straight: help it only past a jamb it was about to clip
+    if (w > best) { best = w; turn = ang * w; }
+  }
+  if (turn) { v[0] = -Math.sin(yv + turn) * sp; v[1] = -Math.cos(yv + turn) * sp; }
+  return turn;
+}
 function sees(x1, z1, x2, z2) {
   const dx = x2 - x1, dz = z2 - z1;
   for (const s of solids) { if (!s.los) continue; let t0 = 0, t1 = 1, ok = true;
@@ -736,7 +800,7 @@ function sees(x1, z1, x2, z2) {
 }
 
 /* ---------- input: one small object the rest of the game reads ---------- */
-const In = { mx: 0, mz: 0, scan: false, keys: {} };
+const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
 addEventListener("blur", () => { In.keys = {}; In.scan = false; });   // keys must not stick when the window loses focus
@@ -747,11 +811,17 @@ if (!IS_TOUCH) {
   addEventListener("mouseup", () => { In.scan = false; drag = false; });
   addEventListener("mousemove", (e) => { if (state !== "play") return; if (document.pointerLockElement === canvas || drag) look(e.movementX, e.movementY, .0023); });
 } else {
-  // Left half of the screen is a walk stick that appears where the thumb lands. Right half looks.
+  // The left side of the screen is a walk stick that appears where the thumb lands. The right side looks. One thumb on the stick is enough: see update().
   let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild;
-  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * .46 && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; $("lhint").style.display = "none"; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
-  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy; const d = Math.hypot(dx, dy), m = 52; if (d > m) { dx *= m / d; dy *= m / d; } knob.style.transform = `translate(${dx}px,${dy}px)`; In.mx = dx / m; In.mz = dy / m; } else if (t.identifier === lid) { look(t.clientX - lx, t.clientY - ly, .0058); lx = t.clientX; ly = t.clientY; } } e.preventDefault(); }, { passive: false });
-  const end = (e) => { for (const t of e.changedTouches) { if (t.identifier === sid) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null; } };
+  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
+  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
+      if (d > leash) { const k = 1 - leash / d; sx += dx * k; sy += dy * k; dx -= dx * k; dy -= dy * k; d = leash; stick.style.left = sx + "px"; stick.style.top = sy + "px"; }   // the base follows a thumb that drags well past its edge
+      if (d > m) { dx *= m / d; dy *= m / d; d = m; } knob.style.transform = `translate(${dx}px,${dy}px)`;
+      const g = Math.max(0, d / m - .12) / .88, out = d ? g * (.4 + .6 * g) / d : 0; In.mx = dx * out; In.mz = dy * out;                                             // a small dead zone, then a gentle curve
+    } else if (t.identifier === lid) { const dx = t.clientX - lx, dy = t.clientY - ly; look(dx, dy, .0058); lx = t.clientX; ly = t.clientY;
+      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
+  const end = (e) => { if (state === "play") audio();   // lifting a finger is the only touch iPhone accepts for waking sound mid-run
+    for (const t of e.changedTouches) { if (t.identifier === sid) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null; } };
   addEventListener("touchend", end); addEventListener("touchcancel", end);
   const sb = $("scanbtn"); sb.addEventListener("touchstart", (e) => { In.scan = true; sb.classList.add("down"); audio(); e.preventDefault(); }, { passive: false }); const up = () => { In.scan = false; sb.classList.remove("down"); }; sb.addEventListener("touchend", up); sb.addEventListener("touchcancel", up);
 }
@@ -761,17 +831,23 @@ const STEP = 1 / 60, fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
 function update(dt) {
   G.t += dt;
   if (!G.over) { G.time -= dt; if (G.time <= 0) { G.time = 0; return finish(false); } }
-  // --- walk
+  // --- walk. The stick walks where it points. With one thumb the view also turns to follow the walk, so pushing sideways turns you that way.
   let mx = In.mx, mz = In.mz;
+  In.two = Math.max(0, In.two - dt);
+  const one = IS_TOUCH && !In.two && !In.scan;                           // one thumb: nothing dragged the look side just now, and nothing is holding SCAN
   if (In.keys.KeyW || In.keys.ArrowUp) mz -= 1; if (In.keys.KeyS || In.keys.ArrowDown) mz += 1; if (In.keys.KeyA) mx -= 1; if (In.keys.KeyD) mx += 1;
   if (In.keys.ArrowLeft) P.yaw += 2.2 * dt; if (In.keys.ArrowRight) P.yaw -= 2.2 * dt;
   const len = Math.hypot(mx, mz); if (len > 1) { mx /= len; mz /= len; }
   const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw);
-  const dx = (mx * c + mz * s) * sp * dt, dz = (-mx * s + mz * c) * sp * dt;
-  if (!blocked(P.x + dx, P.z)) P.x += dx; if (!blocked(P.x, P.z + dz)) P.z += dz;
-  const moved = Math.hypot(dx, dz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
+  const v = [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = In.scan && G.target ? 0 : doorHelp(v), k = 1 - Math.exp(-dt * (!one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
+  P.vx += (v[0] - P.vx) * k; P.vz += (v[1] - P.vz) * k;
+  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH, mz > 0);
+  const moved = Math.hypot(P.x - ox, P.z - oz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
+  if (one) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
+    P.vw += (-Math.sign(lat) * Math.max(0, Math.abs(lat) - .5) * 3.6 - P.vw) * k; P.yaw += P.vw * dt + bend * Math.min(1, dt * 6); if (moved && !G.target) P.pitch *= 1 - dt * 1.2; } else P.vw = 0;   // past 30 degrees off straight the view turns toward the walk. It also follows the walk through a door. A view left tilted up or down comes back level on the walk, unless it is aimed at something to scan
+  if (!G.said.walk && (G.walked = (G.walked || 0) + moved) > 1.5 && (Math.abs(P.yaw - Math.PI) > .5 || G.walked > 22)) { G.said.walk = 1; $("lhint").style.display = "none"; }   // the walking hint goes once they have walked and turned, or walked a good way
   G.bob = (G.bob || 0) + moved * 4.2;
-  if (!G.said.in && P.z > .4) { G.said.in = 1; objective("Something on that table by the door looks wrong. Aim at it and hold " + (IS_TOUCH ? "SCAN" : "the mouse button") + "."); }
+  if (!G.said.in && P.z > 1.1) { G.said.in = 1; objective("Turn right. Something on the table by the door looks wrong. Aim at it and hold " + (IS_TOUCH ? "SCAN" : "the mouse button") + "."); }   // not sooner: until here the open door leaf hides the table
 
   // --- what is under the crosshair
   camera.getWorldDirection(fwd);
@@ -789,13 +865,15 @@ function update(dt) {
   { const sb = $("scanbtn"), want = armed && !best ? "FIRE" : "SCAN"; if (sb.textContent !== want) { sb.textContent = want; sb.classList.toggle("fire", want === "FIRE"); } }
   if (best && In.scan && !G.over) { G.scan += dt; if (Math.floor(G.scan * 14) !== Math.floor((G.scan - dt) * 14)) beep(500 + G.scan / need * 700, .03, "sine", .05); if (G.scan >= need) { G.scan = 0; doScan(best); } } else if (!In.scan) G.scan = 0;
   $("cross").className = best ? "hot" : armed ? "hot bot" : ""; $("prog").style.setProperty("--p", best ? Math.min(100, G.scan / need * 100) : 0);
-  const hint = $("hint"); if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · hold to scan" : best.kind === "ans" ? "A straight answer · hold to read" : best.ref.cov && best.ref.cov.visible ? "This looks staged · hold to scan" : "Hold to scan"; hint.classList.add("on"); }
+  const hint = $("hint"), how = IS_TOUCH ? "hold SCAN" : "hold the mouse button";   // name the control: pressing the object itself does nothing
+  if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · " + how + " to check" : best.kind === "ans" ? "A straight answer · " + how + " to read" : best.ref.cov && best.ref.cov.visible ? "This looks staged · " + how : how[0].toUpperCase() + how.slice(1) + " to scan"; hint.classList.add("on"); }
   else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else hint.classList.remove("on");
 
   // --- tracker: hot or cold. Its reach grows with every red flag you tag.
-  let sig = 0;
-  if (!G.caught) { const tx = G.bot ? G.bot.x : G.hide.def.at[0], tz = G.bot ? G.bot.z : G.hide.def.at[2], reach = G.bot ? 30 : 3.5 + G.found * 3.2; sig = Math.max(0, 1 - Math.hypot(tx - P.x, tz - P.z) / reach); }
-  const bars = $("sig").querySelectorAll("i"); bars.forEach((b, i) => b.classList.toggle("on", sig > i * .19 + .04));
+  let sig = 0, far = 0;
+  if (!G.caught) { const tx = G.bot ? G.bot.x : G.hide.def.at[0], tz = G.bot ? G.bot.z : G.hide.def.at[2], reach = G.bot ? 30 : 3.5 + G.found * 3.2; far = Math.hypot(tx - P.x, tz - P.z); sig = Math.max(0, 1 - far / reach); }
+  // While GLOSS hides, the top two bars also need real closeness (6 m, then 3 m). Otherwise a player with every flag reads five bars at two devices at once.
+  const bars = $("sig").querySelectorAll("i"); bars.forEach((b, i) => b.classList.toggle("on", sig > i * .19 + .04 && (!!G.bot || i < 3 || far < (i === 3 ? 6 : 3))));
   if (sig > .04) { G.pingAcc += dt; if (G.pingAcc > 1.15 - sig * 1.02) { G.pingAcc = 0; sfx.ping(sig); } }
 
   // --- GLOSS runs
@@ -804,7 +882,7 @@ function update(dt) {
     b.age += dt; const tgt = NODES[b.to], ddx = tgt[0] - b.x, ddz = tgt[1] - b.z, d = Math.hypot(ddx, ddz);
     b.panic = Math.max(0, b.panic - dt); const v = (Math.max(2.5, b.speed - b.age * .028) + (b.panic > 0 ? 1.5 : 0)) * dt;              // it tires, slowly, so a chase always ends
     if (d <= v) { b.x = tgt[0]; b.z = tgt[1]; botPick(b, b.to); } else { b.x += ddx / d * v; b.z += ddz / d * v; }
-    b.g.position.set(b.x, .62 + Math.sin(G.t * 7) * .07, b.z); b.shell.rotation.y += dt * 3; b.shell.rotation.x += dt * 1.7; b.ring.rotation.z += dt * 5;
+    b.g.position.set(b.x, .62 + Math.sin(G.t * 7) * .07, b.z); botLight.position.copy(b.g.position); b.shell.rotation.y += dt * 3; b.shell.rotation.x += dt * 1.7; b.ring.rotation.z += dt * 5;
     if (Math.random() < dt * 1.6) sfx.chirp();
   }
   // --- small moving parts
@@ -815,7 +893,7 @@ function update(dt) {
   for (let i = bits.length - 1; i >= 0; i--) { const p = bits[i]; p.life -= dt; p.vy -= 7 * dt; p.m.position.x += p.vx * dt; p.m.position.y += p.vy * dt; p.m.position.z += p.vz * dt; p.m.material.opacity = Math.max(0, p.life / .7); if (p.life <= 0) { perRun.remove(p.m); bits.splice(i, 1); } }
   if (G.cardT > 0) { G.cardT -= dt; if (G.cardT <= 0) $("card").className = ""; }
   G.shake = Math.max(0, G.shake - dt * 2.2);
-  const t = Math.ceil(G.time); $("timer").textContent = Math.floor(t / 60) + ":" + ("0" + t % 60).slice(-2); if (t <= 30 && !G.over) { $("timer").classList.add("low"); if (t !== G.lastT && t <= 10) sfx.tick(); } G.lastT = t;
+  const t = Math.ceil(G.time); $("timer").textContent = Math.floor(t / 60) + ":" + ("0" + t % 60).slice(-2); $("timer").classList.toggle("low", t <= 30 && !G.over); if (t <= 10 && !G.over && t !== G.lastT) sfx.tick(); G.lastT = t;   // toggle, not add: an answer can lift the clock back over 30
 }
 
 function doScan(hit) {
@@ -825,7 +903,7 @@ function doScan(hit) {
     burst(f.at[0], f.at[1], f.at[2], 0xf3bd54, 14); sfx.found(); buzz(40); flash("#f3bd54");
     card("", f.cov ? "GLOSS was hiding this" : "Red flag " + G.found + " of " + G.flags.length, f.def.name, f.def.tip, 6);
     const guide = store.get("guide", {}); guide[f.def.id] = 1; store.set("guide", guide);
-    if (G.found === 1) objective("GLOSS is hiding in a smart device. Every red flag you tag boosts the bot signal. Follow it.");
+    if (G.found === 1) objective("GLOSS is hiding in a smart device. The bot signal (top left) is weak. Each red flag you tag makes it reach further. More bars means closer. A wrong device costs time.");
     else if (G.found === G.flags.length) objective("Every red flag found. Now find GLOSS.");
   } else if (hit.kind === "ans") {
     const a = hit.ref; a.found = true; a.mark.visible = false; G.ans++; $("ac").textContent = G.ans; G.time += 6;
@@ -836,11 +914,12 @@ function doScan(hit) {
     const d = hit.ref; d.checked = true;
     if (d === G.hide) {
       G.bot = makeBot(d.def.at); G.bot.from = null; G.bot.to = d.def.node;   // each device names a spot in its own room, so the bot never leaves through a wall
+      G.cool = .7;                                                          // a held SCAN must not turn straight into hits: the bot gets a head start
       sfx.eject(); buzz([60, 40, 120]); flash("#35e0ff"); G.shake = 1; burst(d.def.at[0], d.def.at[1], d.def.at[2], 0x35e0ff, 30);
       card("botc", "GLOSS", "“You were not supposed to look in there.”", "It is running. You have a blaster now. Three hits.", 4.5); objective("BLAST GLOSS. Three hits. Anything else you hit is on you."); banner("BLASTER ONLINE", "Three hits to take GLOSS down", 1.9); track("hunt-bot-found");
-    } else { G.wrong++; G.time = Math.max(1, G.time - 8); sfx.wrong(); buzz(120); flash("#ff7461"); card("badc", "Minus 8 seconds", "Just a " + d.def.name.toLowerCase() + ".", "GLOSS is not in this one. Watch the bot signal.", 3.2); }
+    } else { G.wrong++; G.time = Math.max(1, G.time - 8); sfx.wrong(); buzz(120); flash("#ff7461"); card("badc", "Minus 8 seconds", "Just a " + lowName(d) + ".", "GLOSS is not in this one. Watch the bot signal.", 3.2); }
   } else if (hit.kind === "bot") {
-    burst(G.bot.x, .7, G.bot.z, 0x35e0ff, 40); burst(G.bot.x, .7, G.bot.z, 0xffffff, 18); perRun.remove(G.bot.g); G.bot = null; G.caught = true; sfx.caught(); buzz([80, 50, 80, 50, 200]); flash("#fff"); G.shake = 1.2;
+    burst(G.bot.x, .7, G.bot.z, 0x35e0ff, 40); burst(G.bot.x, .7, G.bot.z, 0xffffff, 18); perRun.remove(G.bot.g); botLight.intensity = 0; G.bot = null; G.caught = true; sfx.caught(); buzz([80, 50, 80, 50, 200]); flash("#fff"); G.shake = 1.2;
     finish(true);
   }
 }
@@ -855,18 +934,19 @@ function finish(caught) {
   banner(caught ? "GLOSS CAUGHT" : "DOORS CLOSED", caught ? (all ? "Every red flag found" : G.found + " of " + n + " red flags found") : "The bot got away");
   track("hunt-finish-" + grade.toLowerCase()); if (caught) track("hunt-bot-caught");
   const best = store.get("best", 0); if (score > best) store.set("best", score);
-  if (G.daily) { const k = "daily:" + todayKey(); if (!store.get(k, null)) { const st = store.get("streak", { n: 0, last: "" }), y = new Date(); y.setDate(y.getDate() - 1); const yk = y.getFullYear() + "-" + ("0" + (y.getMonth() + 1)).slice(-2) + "-" + ("0" + y.getDate()).slice(-2); st.n = st.last === yk ? st.n + 1 : 1; st.last = todayKey(); store.set("streak", st); } store.set(k, { grade, score }); }
+  if (G.daily) { const k = "daily:" + todayKey(); if (!store.get(k, null)) { const st = store.get("streak", { n: 0, last: "" }); st.n = st.last === yesterdayKey() ? st.n + 1 : 1; st.last = todayKey(); store.set("streak", st); } store.set(k, { grade, score }); }
   setTimeout(() => showEnd({ caught, left, n, all, score, grade, best: score > best }), 2300);
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 function showEnd(r) {
   if (document.pointerLockElement) document.exitPointerLock();
   state = "end"; document.body.className = "end" + (IS_TOUCH ? " is-touch" : "");
-  const head = r.grade === "S" ? "Nothing gets past you." : r.caught ? "Bot caught. House cleared." : r.all ? "You saw everything. The bot still got out." : "The doors closed on you.";
+  const head = r.grade === "S" ? "Nothing gets past you." : r.caught ? "Bot caught. House cleared." : r.all ? (G.hide.checked ? "You saw everything. The bot still got out." : "You saw everything. The bot stayed hidden.") : "The doors closed on you.";
   const mmss = Math.floor(r.left / 60) + ":" + ("0" + r.left % 60).slice(-2);
   let h = '<div class="kick">' + (G.daily ? "Daily house #" + dailyNumber() : "Random house") + '</div>' +
     '<div class="grade"><div class="letter">' + r.grade + '</div><div><h2>' + esc(head) + '</h2><p class="lead" style="font-size:14.5px">Score ' + r.score + (r.best ? " · new best" : "") + '</p></div></div>' +
     '<div class="stats"><div class="stat"><b>' + G.found + "/" + r.n + '</b><span>Red flags</span></div><div class="stat"><b>' + (r.caught ? "Caught" : "Escaped") + '</b><span>GLOSS</span></div><div class="stat"><b>' + mmss + '</b><span>Time left</span></div></div>' +
+    (r.caught ? "" : '<div class="item" style="margin-top:10px"><b>' + esc(G.hide.checked ? "GLOSS got out of the " + lowName(G.hide) + "." : "GLOSS was hiding in the " + lowName(G.hide) + ".") + "</b>" + (G.hide.checked ? "Next time, chase it and land three hits before the doors close." : "Scan the device where the bot signal peaks to flush it out. Then land three hits.") + "</div>") +   // a loss should say what the missing step was
     (G.wrecked ? '<div class="item" style="margin-top:10px"><b>You blasted ' + G.wrecked + (G.wrecked === 1 ? " thing" : " things") + ' in a stranger’s house.</b>At a real open house the only thing you fire is questions.</div>' : "") +
     '<button class="btn" id="share">Share your result</button><div class="row"><button class="btn ghost" id="again">' + (G.daily ? "Random house" : "Another house") + '</button><a class="btn ghost" href="/play/">Play Escrow Run</a></div>' +
     '<div class="sec">What to look for at a real open house</div><div class="list">';
@@ -881,7 +961,9 @@ function showEnd(r) {
     '<p class="fine">Open House Game is a game. The house and its problems are fiction and nothing here is legal, financial or inspection advice. A real home needs a qualified home inspector.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
   const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0;
   const text = "Open House Game" + (G.daily ? " #" + dailyNumber() : "") + "\n🚩 " + G.found + "/" + r.n + " · 🤖 " + (r.caught ? "caught" : "got away") + " · 💬 " + G.ans + "/" + G.answers.length + " · Grade " + r.grade + "\n" + G.flags.map((f) => f.found ? "🟩" : "⬜").join("") + "\nhttps://openhousegame.com/hunt";
-  end.querySelector("#share").addEventListener("click", (e) => { track("hunt-share"); const b = e.currentTarget, done = () => { b.textContent = "Copied. Paste it anywhere."; setTimeout(() => b.textContent = "Share your result", 2200); }; if (navigator.share && IS_TOUCH) navigator.share({ text }).catch(() => {}); else if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done(); });
+  end.querySelector("#share").addEventListener("click", (e) => { track("hunt-share"); const b = e.currentTarget, say = (t) => { b.textContent = t; setTimeout(() => b.textContent = "Share your result", 2600); }, done = () => say("Copied. Paste it anywhere."), fail = () => say("Could not copy. Take a screenshot.");
+    const copy = () => navigator.clipboard ? navigator.clipboard.writeText(text).then(done, fail) : fail();   // only say Copied when it was
+    if (navigator.share && IS_TOUCH) navigator.share({ text }).catch((err) => { if (!err || err.name !== "AbortError") copy(); }); else copy(); });
   end.querySelector("#again").addEventListener("click", () => begin(false));
   end.querySelectorAll("[data-ev]").forEach((a) => a.addEventListener("click", () => track(a.dataset.ev)));
 }
@@ -892,12 +974,16 @@ function begin(daily) {
   state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : ""); $("card").className = ""; $("lhint").style.display = "";
   track("hunt-start"); last = performance.now(); acc = 0;
   if (!IS_TOUCH && canvas.requestPointerLock) { try { canvas.requestPointerLock(); } catch (e) {} }
+  try { if (!history.state || !history.state.g) history.pushState({ g: 1 }, ""); } catch (e) {}   // one spare history entry, so a stray back-swipe has something to pop
 }
+// A walk drag that starts on the left bezel is the iPhone back gesture. The first one in a run pops the spare entry and the page stays put.
+// A second one, or any Back off a run, means the player wants out, so it carries on to the page before.
+addEventListener("popstate", (e) => { try { if (state === "play" && !G.backed) { G.backed = 1; history.pushState({ g: 1 }, ""); } else if (!e.state) history.back(); } catch (err) {} });
 $("go").addEventListener("click", () => begin(true));
 $("fresh").addEventListener("click", () => begin(false));
 { const st = store.get("streak", { n: 0 }), b = store.get("best", 0), d = store.get("daily:" + todayKey(), null);
   $("daily").textContent = "Daily house #" + dailyNumber() + " · the same house for everyone today";
-  $("best").textContent = (d ? "Today you got " + d.grade + ". " : "") + (b ? "Best score " + b + ". " : "") + (st.n > 1 ? "Streak " + st.n + " days." : ""); }
+  $("best").textContent = (d ? "Today you got " + d.grade + ". " : "") + (b ? "Best score " + b + ". " : "") + (st.n > 1 && (st.last === todayKey() || st.last === yesterdayKey()) ? "Streak " + st.n + " days." : ""); }   // a streak that skipped a day is over, so do not show it
 
 const map = $("map"), mc = map.getContext("2d"), MS = 264 / 26, mapX = (x) => (x + 3.5) * MS, mapZ = (z) => (z + 7.5) * MS;
 function drawMap() {
@@ -908,8 +994,10 @@ function drawMap() {
   mc.save(); mc.translate(mapX(P.x), mapZ(P.z)); mc.rotate(-P.yaw); mc.fillStyle = "#fff"; mc.beginPath(); mc.moveTo(0, -9); mc.lineTo(6, 7); mc.lineTo(0, 3.5); mc.lineTo(-6, 7); mc.closePath(); mc.fill(); mc.restore();
 }
 
-let last = performance.now(), acc = 0, attract = 0, slow = 0, fast = 0;
-function pace(dt) { if (dt > 1 / 28) { fast = 0; if (++slow > 45) { slow = 0; if (PR > .85) { PR = Math.max(.85, PR - .2); renderer.setPixelRatio(PR); resize(); } else if (sun.castShadow) { sun.castShadow = false; scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; }); } } } else { slow = Math.max(0, slow - 1); } }
+let last = performance.now(), acc = 0, attract = 0, slow = 0;
+/** Quality only steps down. Stepping back up would bounce a weak phone between two settings all run long. */
+function pace(dt) { if (dt > 1 / 28) { if (++slow > 45) { slow = 0; if (PR > .85) { PR = Math.max(.85, PR - .2); renderer.setPixelRatio(PR); resize(); } else if (sun.castShadow) { sun.castShadow = false; sun.intensity = 1.2;   // with no shadow the sun would shine through the roof, so dim it
+        scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; }); } } } else { slow = Math.max(0, slow - 1); } }
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(.1, (now - last) / 1000); last = now; pace(dt);
