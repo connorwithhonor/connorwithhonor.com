@@ -15,8 +15,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://connorwithhonor.com/play/hunt/og.png">
 <meta name="theme-color" content="#0c0b10">
-<!-- Unlisted while it is being play-tested. Remove this line to let search engines in. -->
-<meta name="robots" content="noindex">
 <link rel="canonical" href="https://connorwithhonor.com/play/hunt/">
 <link rel="icon" type="image/svg+xml" href="/favicon-shield.svg">
 <script type="application/ld+json">
@@ -72,6 +70,7 @@ body.play.is-touch .touch{display:block}
 #stick i{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(255,255,255,.4)}
 #scanbtn{position:absolute;right:calc(22px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));width:92px;height:92px;border-radius:50%;background:rgba(232,168,56,.9);color:#17120a;font-weight:900;font-size:15px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 6px 22px rgba(0,0,0,.5)}
 #scanbtn:active,#scanbtn.down{transform:scale(.94);background:var(--gold-bright)}
+#scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
 #lhint{position:absolute;left:calc(22px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-shadow:0 1px 3px #000}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
@@ -323,7 +322,7 @@ function box(w, h, d, x, y, z, color, o = {}) {
   const m = new THREE.Mesh(unit, o.mat || mat(color)); m.scale.set(w, h, d); m.position.set(x, y, z); if (o.ry) m.rotation.y = o.ry; m.castShadow = !o.flat; m.receiveShadow = true; (o.parent || world).add(m);
   if (o.solid) hard(x, z, w, d, o.los); return m;
 }
-function put(geo, material, x, y, z, o = {}) { const m = new THREE.Mesh(geo, typeof material === "string" ? M[material] : material); m.position.set(x, y, z); if (o.rx) m.rotation.x = o.rx; if (o.ry) m.rotation.y = o.ry; if (o.rz) m.rotation.z = o.rz; if (o.s) m.scale.set(o.s[0], o.s[1], o.s[2]); m.castShadow = !o.flat; m.receiveShadow = true; (o.parent || world).add(m); return m; }
+function put(geo, material, x, y, z, o = {}) { const m = new THREE.Mesh(geo, typeof material === "string" ? M[material] : material); m.position.set(x, y, z); if (o.rx) m.rotation.x = o.rx; if (o.ry) m.rotation.y = o.ry; if (o.rz) m.rotation.z = o.rz; if (o.s) m.scale.set(o.s[0], o.s[1], o.s[2]); m.castShadow = !o.flat; m.receiveShadow = true; m.userData.brk = !o.flat && !o.keep; (o.parent || world).add(m); return m; }
 const cyl = (r, h, n = 16, r2) => new THREE.CylinderGeometry(r2 ?? r, r, h, n);
 const ball = (r, d = 1) => new THREE.IcosahedronGeometry(r, d);
 /** A box with rounded corners, for anything soft: cushions, pillows, mattresses. */
@@ -619,19 +618,20 @@ const coverGlow = [];
 
 function newRun(seed, daily) {
   scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun);
+  for (const m of smashed) m.visible = true; smashed.length = 0; for (const q of scorches) fx.remove(q); scorches.length = 0; for (const q of beams) fx.remove(q.m); beams.length = 0;
   for (let i = solids.length - 1; i >= 0; i--) if (solids[i].run) solids.splice(i, 1);
   coverGlow.length = 0;
   const rng = rngFrom(seed);
   const pool = FLAGS.filter((f) => !f.always); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
   const chosen = FLAGS.filter((f) => f.always).concat(pool.slice(0, 7));
-  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); perRun.add(g); if (f.cover) { perRun.add(cov); cov.traverse((o) => {}); } const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
-  const devs = DEVICES.map((d) => { const g = new THREE.Group(); perRun.add(g); d.build(g); const l = new THREE.Mesh(new THREE.SphereGeometry(.018, 8, 8), led); l.position.set(d.at[0], d.at[1] + .1, d.at[2]); g.add(l); return { def: d, g, checked: false }; });
+  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); g.userData.keep = cov.userData.keep = true; perRun.add(g); if (f.cover) { perRun.add(cov); cov.traverse((o) => {}); } const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
+  const devs = DEVICES.map((d) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); const l = new THREE.Mesh(new THREE.SphereGeometry(.018, 8, 8), led); l.position.set(d.at[0], d.at[1] + .1, d.at[2]); g.add(l); return { def: d, g, checked: false }; });
   const hide = devs[1 + Math.floor(rng() * (devs.length - 1))];          // never the first one: too close to the door
   const apool = ANSWERS.filter((a) => !a.always); for (let i = apool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [apool[i], apool[j]] = [apool[j], apool[i]]; }
-  const answers = ANSWERS.filter((a) => a.always).concat(apool.slice(0, 4)).map((a) => { const g = new THREE.Group(); perRun.add(g); a.build(g); const mark = new THREE.Sprite(qmark); mark.scale.set(.2, .2, 1); mark.position.set(a.at[0], a.at[1] + .34, a.at[2]); perRun.add(mark); return { def: a, g, mark, at: a.at, found: false }; });
+  const answers = ANSWERS.filter((a) => a.always).concat(apool.slice(0, 4)).map((a) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); a.build(g); const mark = new THREE.Sprite(qmark); mark.scale.set(.2, .2, 1); mark.position.set(a.at[0], a.at[1] + .34, a.at[2]); perRun.add(mark); return { def: a, g, mark, at: a.at, found: false }; });
   const lies = LIES.map((_, i) => i); for (let i = lies.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [lies[i], lies[j]] = [lies[j], lies[i]]; }
   renderer.shadowMap.needsUpdate = true;
-  G = { answers, ans: 0, lies, nextLie: 38, seed, daily, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
+  G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
   P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0;
   $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("timer").classList.remove("low");
   objective("Walk up to the house and go in.");
@@ -644,8 +644,8 @@ function makeBot(at) {
   const shell = new THREE.Mesh(new THREE.IcosahedronGeometry(.25, 1), new THREE.MeshBasicMaterial({ color: 0x35e0ff, wireframe: true, transparent: true, opacity: .55 })); g.add(shell);
   const ring = new THREE.Mesh(new THREE.TorusGeometry(.33, .012, 6, 28), new THREE.MeshBasicMaterial({ color: 0xffffff })); ring.rotation.x = Math.PI / 2; g.add(ring);
   const light = new THREE.PointLight(0x35e0ff, 6, 5, 1.6); g.add(light);
-  g.position.set(at[0], Math.max(.55, at[1]), at[2]); perRun.add(g);
-  return { g, core, shell, ring, x: at[0], z: at[2], from: null, to: null, speed: 3.55, age: 0 };
+  g.position.set(at[0], Math.max(.55, at[1]), at[2]); g.userData.bot = true; perRun.add(g);
+  return { g, core, shell, ring, x: at[0], z: at[2], from: null, to: null, speed: 3.55, age: 0, hp: 3, panic: 0 };
 }
 function botPick(b, here) {
   // Run to whichever next spot is farthest from the player. Avoid dead ends while there is a choice.
@@ -669,8 +669,59 @@ const buzz = (ms) => { try { navigator.vibrate && navigator.vibrate(ms); } catch
 
 /* ---------- particles: a small burst of cubes, reused ---------- */
 const bits = [];
-function burst(x, y, z, color, n = 16) {
-  for (let i = 0; i < n; i++) { const m = new THREE.Mesh(unit, new THREE.MeshBasicMaterial({ color, transparent: true })); const s = .03 + Math.random() * .05; m.scale.set(s, s, s); m.position.set(x, y, z); perRun.add(m); bits.push({ m, vx: (Math.random() - .5) * 3, vy: Math.random() * 3, vz: (Math.random() - .5) * 3, life: .7 }); }
+function burst(x, y, z, color, n = 16, big = 1) {
+  for (let i = 0; i < n; i++) { const m = new THREE.Mesh(unit, new THREE.MeshBasicMaterial({ color, transparent: true })); m.userData.fx = true; const s = (.03 + Math.random() * .05) * big; m.scale.set(s, s, s); m.position.set(x, y, z); perRun.add(m); bits.push({ m, vx: (Math.random() - .5) * 3, vy: Math.random() * 3, vz: (Math.random() - .5) * 3, life: .7 }); }
+}
+
+/* =====================================================================================
+   THE BLASTER. It appears the moment GLOSS runs. Three hits end the chase.
+   Anything loose in the house can be blasted apart on the way: cushions, lamps, plants,
+   stools. Walls and counters only scorch. The evidence, the signs and the answers are
+   safe. Aiming is forgiving on purpose: a shot that passes close to the bot counts.
+   ===================================================================================== */
+scene.add(camera);
+const gun = new THREE.Group(); gun.visible = false; camera.add(gun);
+{ const gm = (c) => new THREE.MeshBasicMaterial({ color: c, depthTest: false }), part = (geo, c, x, y, z, order, rx) => { const m = new THREE.Mesh(geo, gm(c)); m.position.set(x, y, z); if (rx) m.rotation.x = rx; m.renderOrder = 990 + order; gun.add(m); return m; };
+  part(new THREE.BoxGeometry(.07, .09, .3), 0x1c2026, 0, 0, 0, 1); part(new THREE.BoxGeometry(.05, .12, .07), 0x14171c, 0, -.09, .09, 0, .3);
+  part(new THREE.CylinderGeometry(.022, .026, .24, 12), 0x3a4048, 0, .012, -.24, 2, Math.PI / 2);
+  for (const z of [-.2, -.26, -.32]) part(new THREE.TorusGeometry(.032, .007, 6, 16), 0x35e0ff, 0, .012, z, 3);
+  gun.tip = part(new THREE.SphereGeometry(.02, 10, 10), 0xdffbff, 0, .012, -.37, 4); }
+const fx = new THREE.Group(); scene.add(fx);
+const beams = [], scorches = [], smashed = [];
+const beamGeo = new THREE.CylinderGeometry(.013, .013, 1, 6), beamMat = new THREE.MeshBasicMaterial({ color: 0x9df3ff, transparent: true, opacity: .95 });
+const scorchMat = new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, map: paint(64, 64, (c) => { const g = c.createRadialGradient(32, 32, 2, 32, 32, 30); g.addColorStop(0, "rgba(10,8,6,.95)"); g.addColorStop(.5, "rgba(25,18,12,.6)"); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(0, 0, 64, 64); }) });
+const ray = new THREE.Raycaster(); ray.far = 45; ray.camera = camera;
+const UP = new THREE.Vector3(0, 1, 0), v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3();
+function shootable(o) { if (!o.isMesh || o.userData.fx || o.material === M.glass) return false; for (let p = o; p; p = p.parent) { if (!p.visible || p.userData.bot) return false; } return true; }
+function kept(o) { for (let p = o; p; p = p.parent) if (p.userData.keep) return true; return false; }
+function fire() {
+  const b = G.bot; G.kick = 1; G.shots++;
+  beep(1500, .09, "sawtooth", .055, -1250); beep(700, .05, "square", .03, -300);
+  camera.getWorldDirection(fwd); const o = camera.position;
+  let end = null, hitBot = false;
+  if (b) { v1.set(b.x - o.x, b.g.position.y - o.y, b.z - o.z); const d = v1.length(), a = Math.acos(Math.max(-1, Math.min(1, v1.dot(fwd) / d)));
+    if (d < 30 && a < (IS_TOUCH ? .13 : .085) + .22 / Math.max(1, d) && sees(P.x, P.z, b.x, b.z)) { hitBot = true; end = b.g.position.clone(); } }
+  if (!hitBot) {
+    ray.set(o, fwd); const hit = ray.intersectObjects([world, perRun], true).find((h) => shootable(h.object));
+    if (hit) { end = hit.point.clone(); const n = v2.copy(hit.face ? hit.face.normal : UP).transformDirection(hit.object.matrixWorld);
+      burst(end.x, end.y, end.z, 0xffb347, 6, .7);
+      if (hit.object.userData.brk && !kept(hit.object)) { const m = hit.object; m.visible = false; smashed.push(m); m.getWorldPosition(v3); const col = m.material.color ? m.material.color.getHex() : 0xcccccc; burst(v3.x, v3.y, v3.z, col, 18, 2.2); burst(v3.x, v3.y, v3.z, 0xffffff, 6, 1.2); beep(120, .22, "sawtooth", .1, -70); buzz(30); G.wrecked++; G.shadowDirty = .3; G.shake = Math.max(G.shake, .35); }
+      else { const s = new THREE.Mesh(new THREE.PlaneGeometry(.34, .34), scorchMat); s.userData.fx = true; s.position.copy(end).addScaledVector(n, .012); s.lookAt(v3.copy(end).add(n)); fx.add(s); scorches.push(s); if (scorches.length > 48) fx.remove(scorches.shift()); }
+    } else end = v1.copy(fwd).multiplyScalar(45).add(o).clone();
+  }
+  // the beam: from the muzzle to wherever it landed
+  gun.tip.getWorldPosition(v1); const len = v1.distanceTo(end), m = new THREE.Mesh(beamGeo, beamMat.clone()); m.userData.fx = true;
+  m.position.copy(v1).lerp(end, .5); m.scale.set(1, len, 1); m.quaternion.setFromUnitVectors(UP, v2.copy(end).sub(v1).normalize()); fx.add(m); beams.push({ m, life: .09 });
+  if (hitBot) {
+    b.hp--; b.panic = 1.3; burst(b.x, b.g.position.y, b.z, 0x35e0ff, 22, 1.3); beep(280, .2, "square", .1, 1100); buzz(50); G.shake = .7; flash("#35e0ff");
+    if (b.hp <= 0) doScan({ kind: "bot", ref: b }); else { card("botc", "Hit " + (3 - b.hp) + " of 3", b.hp === 2 ? "“That is listed as a feature.”" : "“I can stage around this.”", b.hp === 1 ? "One more." : "It is running faster. Lead it through the doors.", 2.4); }
+  }
+}
+function stepFx(dt) {
+  for (let i = beams.length - 1; i >= 0; i--) { const q = beams[i]; q.life -= dt; q.m.material.opacity = Math.max(0, q.life / .09); if (q.life <= 0) { fx.remove(q.m); q.m.material.dispose(); beams.splice(i, 1); } }
+  const armed = !!(G && G.bot && !G.over); if (gun.visible !== armed) gun.visible = armed;
+  if (armed) { G.kick = Math.max(0, (G.kick || 0) - dt * 7); gun.position.set(IS_TOUCH && innerWidth < innerHeight ? .15 : .24, -.19 + Math.sin(G.bob || 0) * .007, -.44 + G.kick * .07); gun.rotation.x = G.kick * .13; gun.tip.scale.setScalar(1 + G.kick * 2.5); }
+  if (G && G.shadowDirty > 0) { G.shadowDirty -= dt; if (G.shadowDirty <= 0) renderer.shadowMap.needsUpdate = true; }
 }
 
 /* ---------- collision and line of sight ---------- */
@@ -726,16 +777,19 @@ function update(dt) {
   let best = null, ba = 9;
   const consider = (kind, ref, at, range, cone) => { tmp.set(at[0] - P.x, at[1] - 1.6, at[2] - P.z); const d = tmp.length(); if (d > range) return; const a = Math.acos(Math.max(-1, Math.min(1, tmp.dot(fwd) / d))); if (a > cone || a >= ba) return; if (!sees(P.x, P.z, at[0], at[2])) return; ba = a; best = { kind, ref, d }; };
   const cone = IS_TOUCH ? .34 : .26;                                    // generous on purpose: aiming should never be the hard part
-  if (G.bot) consider("bot", G.bot, [G.bot.x, G.bot.g.position.y, G.bot.z], 3.4, cone * 1.5);
   for (const f of G.flags) if (!f.found) consider("flag", f, f.at, 3.7, cone);
   for (const a of G.answers) if (!a.found) consider("ans", a, a.at, 3.6, cone);
   if (!G.bot && !G.caught) for (const d of G.devs) if (!d.checked) consider("dev", d, d.def.at, 3.7, cone * .9);
   if (!best || !G.target || best.ref !== G.target.ref) G.scan = 0;
   G.target = best;
   const need = best ? (best.kind === "bot" ? .38 : .55) : 1;
+  const armed = !!G.bot && !G.over;
+  if (armed) { G.cool -= dt; if (In.scan && !best && G.cool <= 0) { G.cool = .17; fire(); if (G.over) return; } }
+  { const sb = $("scanbtn"), want = armed && !best ? "FIRE" : "SCAN"; if (sb.textContent !== want) { sb.textContent = want; sb.classList.toggle("fire", want === "FIRE"); } }
   if (best && In.scan && !G.over) { G.scan += dt; if (Math.floor(G.scan * 14) !== Math.floor((G.scan - dt) * 14)) beep(500 + G.scan / need * 700, .03, "sine", .05); if (G.scan >= need) { G.scan = 0; doScan(best); } } else if (!In.scan) G.scan = 0;
-  $("cross").className = best ? (best.kind === "bot" ? "hot bot" : "hot") : ""; $("prog").style.setProperty("--p", best ? Math.min(100, G.scan / need * 100) : 0);
-  const hint = $("hint"); if (best) { hint.textContent = best.kind === "bot" ? "GLOSS · hold to catch" : best.kind === "dev" ? best.ref.def.name + " · hold to scan" : best.kind === "ans" ? "A straight answer · hold to read" : best.ref.cov && best.ref.cov.visible ? "This looks staged · hold to scan" : "Hold to scan"; hint.classList.add("on"); } else hint.classList.remove("on");
+  $("cross").className = best ? "hot" : armed ? "hot bot" : ""; $("prog").style.setProperty("--p", best ? Math.min(100, G.scan / need * 100) : 0);
+  const hint = $("hint"); if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · hold to scan" : best.kind === "ans" ? "A straight answer · hold to read" : best.ref.cov && best.ref.cov.visible ? "This looks staged · hold to scan" : "Hold to scan"; hint.classList.add("on"); }
+  else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else hint.classList.remove("on");
 
   // --- tracker: hot or cold. Its reach grows with every red flag you tag.
   let sig = 0;
@@ -747,7 +801,7 @@ function update(dt) {
   const b = G.bot;
   if (b) {
     b.age += dt; const tgt = NODES[b.to], ddx = tgt[0] - b.x, ddz = tgt[1] - b.z, d = Math.hypot(ddx, ddz);
-    const v = Math.max(2.5, b.speed - b.age * .028) * dt;              // it tires, slowly, so a chase always ends
+    b.panic = Math.max(0, b.panic - dt); const v = (Math.max(2.5, b.speed - b.age * .028) + (b.panic > 0 ? 1.5 : 0)) * dt;              // it tires, slowly, so a chase always ends
     if (d <= v) { b.x = tgt[0]; b.z = tgt[1]; botPick(b, b.to); } else { b.x += ddx / d * v; b.z += ddz / d * v; }
     b.g.position.set(b.x, .62 + Math.sin(G.t * 7) * .07, b.z); b.shell.rotation.y += dt * 3; b.shell.rotation.x += dt * 1.7; b.ring.rotation.z += dt * 5;
     if (Math.random() < dt * 1.6) sfx.chirp();
@@ -782,7 +836,7 @@ function doScan(hit) {
     if (d === G.hide) {
       G.bot = makeBot(d.def.at); const n = nearestNode(d.def.at[0], d.def.at[2]); G.bot.from = null; G.bot.to = n;
       sfx.eject(); buzz([60, 40, 120]); flash("#35e0ff"); G.shake = 1; burst(d.def.at[0], d.def.at[1], d.def.at[2], 0x35e0ff, 30);
-      card("botc", "GLOSS", "“You were not supposed to look in there.”", "It is running. Chase it down and scan it.", 4.5); objective("CATCH GLOSS. Cut it off at the doors."); track("hunt-bot-found");
+      card("botc", "GLOSS", "“You were not supposed to look in there.”", "It is running. You have a blaster now. Three hits.", 4.5); objective("BLAST GLOSS. Three hits. Anything else you hit is on you."); banner("BLASTER ONLINE", "Three hits to take GLOSS down", 1.9); track("hunt-bot-found");
     } else { G.wrong++; G.time = Math.max(1, G.time - 8); sfx.wrong(); buzz(120); flash("#ff7461"); card("badc", "Minus 8 seconds", "Just a " + d.def.name.toLowerCase() + ".", "GLOSS is not in this one. Watch the bot signal.", 3.2); }
   } else if (hit.kind === "bot") {
     burst(G.bot.x, .7, G.bot.z, 0x35e0ff, 40); burst(G.bot.x, .7, G.bot.z, 0xffffff, 18); perRun.remove(G.bot.g); G.bot = null; G.caught = true; sfx.caught(); buzz([80, 50, 80, 50, 200]); flash("#fff"); G.shake = 1.2;
@@ -812,6 +866,7 @@ function showEnd(r) {
   let h = '<div class="kick">' + (G.daily ? "Daily house #" + dailyNumber() : "Random house") + '</div>' +
     '<div class="grade"><div class="letter">' + r.grade + '</div><div><h2>' + esc(head) + '</h2><p class="lead" style="font-size:14.5px">Score ' + r.score + (r.best ? " · new best" : "") + '</p></div></div>' +
     '<div class="stats"><div class="stat"><b>' + G.found + "/" + r.n + '</b><span>Red flags</span></div><div class="stat"><b>' + (r.caught ? "Caught" : "Escaped") + '</b><span>GLOSS</span></div><div class="stat"><b>' + mmss + '</b><span>Time left</span></div></div>' +
+    (G.wrecked ? '<div class="item" style="margin-top:10px"><b>You blasted ' + G.wrecked + (G.wrecked === 1 ? " thing" : " things") + ' in a stranger’s house.</b>At a real open house the only thing you fire is questions.</div>' : "") +
     '<button class="btn" id="share">Share your result</button><div class="row"><button class="btn ghost" id="again">' + (G.daily ? "Random house" : "Another house") + '</button><a class="btn ghost" href="/play/">Play Escrow Run</a></div>' +
     '<div class="sec">What to look for at a real open house</div><div class="list">';
   for (const f of G.flags) h += f.found ? '<div class="item"><em>Found</em><b>' + esc(f.def.name) + "</b>" + esc(f.def.tip) + "</div>" : '<div class="item miss"><em>Missed</em><b>Something in ' + esc(f.def.room) + "</b>Play again and look closer.</div>";
@@ -859,7 +914,7 @@ function frame(now) {
   const dt = Math.min(.1, (now - last) / 1000); last = now; pace(dt);
   if (state === "play") {
     acc += dt; let n = 0; while (acc >= STEP && n++ < 6 && state === "play") { update(STEP); acc -= STEP; }
-    const sh = G.shake * .05; camera.position.set(P.x + (Math.random() - .5) * sh, 1.6 + Math.sin(G.bob || 0) * .022 + (Math.random() - .5) * sh, P.z);
+    stepFx(dt); const sh = G.shake * .05; camera.position.set(P.x + (Math.random() - .5) * sh, 1.6 + Math.sin(G.bob || 0) * .022 + (Math.random() - .5) * sh, P.z);
     camera.rotation.set(P.pitch, P.yaw, 0); drawMap();
   } else if (state === "title") {
     attract += dt * .06; camera.position.set(5 + Math.sin(attract) * 7, 1.9 + Math.sin(attract * .7) * .3, -7 + Math.cos(attract * 1.3) * .8); camera.lookAt(7, 1.6, 2);   // attract mode: a slow drift past the front of the house
@@ -870,7 +925,7 @@ newRun(hash(todayKey() + "hunt"), true); G.over = true;
 requestAnimationFrame(frame);
 
 /* a small door for tests: lets a script stand the player somewhere and read the state */
-window.__ohg = { P, get G() { return G; }, get state() { return state; }, begin, In, NODES, FLAGS, DEVICES, ANSWERS, doScan, blocked, sees, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
+window.__ohg = { P, get G() { return G; }, get state() { return state; }, begin, In, NODES, FLAGS, DEVICES, ANSWERS, doScan, blocked, sees, fire, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
 </script>
 </body>
 </html>
