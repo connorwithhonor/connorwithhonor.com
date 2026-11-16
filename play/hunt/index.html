@@ -72,8 +72,15 @@ body.play.is-touch .touch{display:block}
 #stick i{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(255,255,255,.4)}
 #scanbtn{position:absolute;right:calc(22px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));width:92px;height:92px;border-radius:50%;background:rgba(232,168,56,.9);color:#17120a;font-weight:900;font-size:15px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 6px 22px rgba(0,0,0,.5)}
 #scanbtn:active,#scanbtn.down{transform:scale(.94);background:var(--gold-bright)}
+@keyframes nudge{50%{transform:scale(1.2)}}#scanbtn.nudge{animation:nudge .4s 2}
+#turnbtn{position:absolute;right:calc(12px + env(safe-area-inset-right));top:250px;width:60px;height:60px;border-radius:30px;background:rgba(12,11,16,.62);border:2px solid rgba(255,255,255,.5);color:#fff;font-weight:900;font-size:12.5px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 4px 14px rgba(0,0,0,.45)}
+#turnbtn:active{transform:scale(.94);background:rgba(232,168,56,.85);color:#17120a}
+.edge{position:absolute;top:58%;margin-top:-22px;width:44px;height:44px;box-sizing:border-box;border-radius:22px;background:rgba(12,11,16,.62);border:2px solid rgba(255,255,255,.5);font:900 30px/36px Arial,sans-serif;font-style:normal;text-align:center;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.45)}#el{left:calc(5px + env(safe-area-inset-left))}#er{right:calc(5px + env(safe-area-inset-right))}
+@media(max-width:359px){.edge{width:36px;height:36px;margin-top:-18px;border-radius:18px;font:900 25px/30px Arial,sans-serif}#el{left:calc(4px + env(safe-area-inset-left))}#er{right:calc(4px + env(safe-area-inset-right))}}
+@media(max-height:600px) and (orientation:portrait){#turnbtn{top:calc(58% - 98px)}}
+@media(orientation:landscape){#turnbtn{top:calc(10px + env(safe-area-inset-top));right:calc(172px + env(safe-area-inset-right));height:40px}.edge{top:max(46%,170px)}}
 #scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
-#lhint{position:absolute;left:calc(56px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:46vw;font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.92);text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8)}
+#lhint{position:absolute;left:calc(12px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:min(57vw,260px);box-sizing:border-box;padding:6px 10px;border-radius:10px;background:rgba(12,11,16,.55);font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.95);text-shadow:0 1px 3px #000}#lhint span{display:block}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
 .ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
@@ -149,7 +156,9 @@ body.lv-reg #mute{margin-top:16px}
   <div id="flash"></div>
   <div class="touch">
     <div id="stick"><i></i></div>
-    <div id="lhint">Left thumb here.<br>Push up to walk.<br>Push sideways to turn.</div>
+    <div id="lhint"><span>Tap where you want to go.</span><span>Tap a door to walk through it.</span><span>Tap or hold an arrow to turn.</span></div>
+    <i class="edge" id="el">&lsaquo;</i><i class="edge" id="er">&rsaquo;</i>
+    <button id="turnbtn">TURN</button>
     <button id="scanbtn">SCAN</button>
   </div>
 </div>
@@ -159,7 +168,7 @@ body.lv-reg #mute{margin-top:16px}
   <h1>Something in this house is <em>hiding the problems.</em></h1>
   <p class="lead">A rogue staging bot called GLOSS makes every house look perfect. Walk the open house. Find what it covered up. Then catch it before the doors close.</p>
   <div class="how">
-    <div><b>Look and walk.</b> <span id="how-move">Put a thumb on the left side. Push up to walk. Push sideways to turn. Drag the right side to look up and down.</span></div>
+    <div><b>Look and walk.</b> <span id="how-move">Tap where you want to go. Tap a door to walk through it. Tap an arrow to turn.</span></div>
     <div><b>Scan anything that looks off.</b> <span id="how-scan">Aim at it and hold SCAN.</span></div>
     <div><b>Every find boosts your tracker.</b> Follow the signal to the smart device it is hiding in. A wrong guess costs time.</div>
     <div><b>Gold question marks are straight answers.</b> Each one buys you six seconds.</div>
@@ -1044,7 +1053,7 @@ const coverGlow = [];
 
 function newRun(seed, daily, level = "resale") {
   LV = LEVELS[level] || LEVELS.resale; const away = LV === LEVELS.resale ? LEVELS.model : LEVELS.resale;
-  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0;
+  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0; Go = null; NAV = null; tapMark.visible = false; P.spin = null;
   for (const m of smashed) m.visible = true; smashed.length = 0; for (const q of scorches) fx.remove(q); scorches.length = 0; for (const q of beams) fx.remove(q.m); beams.length = 0;
   for (let i = solids.length - 1; i >= 0; i--) if (solids[i].run) solids.splice(i, 1);
   coverGlow.length = 0;
@@ -1222,10 +1231,10 @@ function sees(x1, z1, x2, z2) {
 }
 
 /* ---------- input: one small object the rest of the game reads ---------- */
-const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
+const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0, down: 0, upAt: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
-addEventListener("blur", () => { In.keys = {}; In.scan = false; });   // keys must not stick when the window loses focus
+addEventListener("blur", () => { In.keys = {}; In.scan = false; In.edge = null; stopGo(); });   // keys must not stick when the window loses focus
 const look = (dx, dy, k) => { P.yaw -= dx * k; P.pitch = Math.max(-1.25, Math.min(1.25, P.pitch - dy * k)); };
 if (!IS_TOUCH) {
   let drag = false;
@@ -1234,19 +1243,129 @@ if (!IS_TOUCH) {
   addEventListener("mousemove", (e) => { if (state !== "play") return; if (document.pointerLockElement === canvas || drag) look(e.movementX, e.movementY, .0023); });
 } else {
   // The left side of the screen is a walk stick that appears where the thumb lands. The right side looks. One thumb on the stick is enough: see update().
-  let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild;
-  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
-  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
+  let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild, taps = new Map(), resting = (o) => o.far <= TAP.px && G.t - o.t > 1;
+  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute" || t.target.id === "turnbtn") { In.edge = null; continue; }
+      let lone = true; for (const o of taps.values()) if (!resting(o)) { o.solo = false; lone = false; }   // a second finger down: neither one is a tap. A palm or a thumb that has lain still for a second does not count as a finger
+      taps.set(t.identifier, { x: t.clientX, y: t.clientY, t: G.t, ts: e.timeStamp, lag: TAP.lag, far: 0, yaw: 0, pitch: 0, two: In.two, solo: lone }); In.edge = lone && onArrow(t.clientX, t.clientY) ? { dir: edgeOf(t.clientX), t: G.t, id: t.identifier } : null; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
+  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { const tp = taps.get(t.identifier), y0 = P.yaw, p0 = P.pitch; if (tp && tp.far <= TAP.px && (tp.far = Math.max(tp.far, Math.hypot(t.clientX - tp.x, t.clientY - tp.y))) > TAP.px) { stopGo(); In.edge = null; }   // a drag, on either side, ends a tap walk
+      if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
       if (d > leash) { const k = 1 - leash / d; sx += dx * k; sy += dy * k; dx -= dx * k; dy -= dy * k; d = leash; stick.style.left = sx + "px"; stick.style.top = sy + "px"; }   // the base follows a thumb that drags well past its edge
-      if (d > m) { dx *= m / d; dy *= m / d; d = m; } knob.style.transform = `translate(${dx}px,${dy}px)`;
+      if (d > m) { dx *= m / d; dy *= m / d; d = m; } if (d > 6) stick.style.display = "block"; knob.style.transform = `translate(${dx}px,${dy}px)`;
       const g = Math.max(0, d / m - .12) / .88, out = d ? g * (.4 + .6 * g) / d : 0; In.mx = dx * out; In.mz = dy * out;                                             // a small dead zone, then a gentle curve
     } else if (t.identifier === lid) { const dx = t.clientX - lx, dy = t.clientY - ly; look(dx, dy, .0058); lx = t.clientX; ly = t.clientY;
-      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
+      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); if (tp) { tp.yaw += P.yaw - y0; tp.pitch += P.pitch - p0; } } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
   const end = (e) => { if (state === "play") audio();   // lifting a finger is the only touch iPhone accepts for waking sound mid-run
-    for (const t of e.changedTouches) { if (t.identifier === sid) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null; } };
+    for (const t of e.changedTouches) { const wasStick = t.identifier === sid; if (wasStick) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null;
+      const tp = taps.get(t.identifier), held = In.edge && In.edge.id === t.identifier && G.t - In.edge.t > TAP.s; taps.delete(t.identifier); if (In.edge && In.edge.id === t.identifier) In.edge = null; if (!tp || held || state !== "play" || G.over) continue; if (tp.far > TAP.px) { G.restT = G.t + (wasStick ? TAP.rest : .25); continue; }   // restT: a touch that soon after a drag is a thumb changing sides, not a tap. A walker on the stick gets the longer wait
+      let lone = tp.solo && e.type === "touchend" && !In.scan && !(G.t < G.restT); for (const o of taps.values()) if (!resting(o)) lone = false;
+      const dur = Math.max(G.t - tp.t, Math.min((e.timeStamp - tp.ts) / 1000, G.t - tp.t + TAP.lag - tp.lag));   // game time, plus the time the game lost to slow frames while the finger was down. A slow phone must not turn a long press into a tap
+      if (lone && dur <= TAP.long) { P.yaw -= tp.yaw; P.pitch -= tp.pitch; In.two = Math.min(In.two, tp.two); onTap(t.clientX, t.clientY); }   // a tap. The few pixels it wobbled must not turn the view or count as a second thumb
+      else { stopGo(); if (lone && dur < 1.6) tip("Tap and let go to walk."); } } };                                                                      // a finger pressed and held: stop
   addEventListener("touchend", end); addEventListener("touchcancel", end);
-  const sb = $("scanbtn"); sb.addEventListener("touchstart", (e) => { In.scan = true; sb.classList.add("down"); audio(); e.preventDefault(); }, { passive: false }); const up = () => { In.scan = false; sb.classList.remove("down"); }; sb.addEventListener("touchend", up); sb.addEventListener("touchcancel", up);
+  for (const k of ["touchstart", "touchend", "touchcancel"]) addEventListener(k, (e) => { In.down = e.touches.length; if (k !== "touchstart") In.upAt = performance.now(); }, { passive: true });   // fingers on the glass, for the result screen
+  const sb = $("scanbtn"); $("turnbtn").addEventListener("touchstart", (e) => { if (state === "play" && !G.over) turnAround(); e.preventDefault(); }, { passive: false });
+  sb.addEventListener("touchstart", (e) => { if (!G.bot || G.over || G.target) stopGo(); In.scan = true; sb.classList.add("down"); audio(); e.preventDefault(); }, { passive: false }); const up = () => { In.scan = false; sb.classList.remove("down"); }; sb.addEventListener("touchend", up); sb.addEventListener("touchcancel", up);
 }
+
+/* ---------- tap to walk: touch a spot and the game walks you there, the way a home tour does ----------
+   A tap is a lone finger that lifts within TAP.long seconds and never strays TAP.px, and not within TAP.rest seconds of a stick drag. Anything else is still the stick or the look drag.
+   The world is cut into CELL squares once per run. One flood from the player finds every square they can walk to, and the way there. */
+const edgeOf = (cx) => { const e = Math.min(64, innerWidth * .13), l = $("el").getBoundingClientRect(), r = $("er").getBoundingClientRect(); return cx < Math.max(e, l.width ? l.right + 2 : 0) ? 1 : cx > Math.min(innerWidth - e, r.width ? r.left - 2 : innerWidth) ? -1 : 0; };   // the strips at the left and right edge of the screen, under the two arrows
+const onArrow = (cx, cy) => { const r = $("el").getBoundingClientRect(); return edgeOf(cx) && Math.abs(cy - (r.top + r.bottom) / 2) < 60; };   // on an arrow itself. Only there does a finger held down keep turning: a thumb at rest on the bezel must not spin the view
+const tip = (s) => { G.tip = s; G.tipT = G.t + 2; };
+const TAP = { px: 12, s: .45, long: .7, rest: 1, lag: 0 }, CELL = .2, NX = [1, -1, 0, 0, 1, 1, -1, -1], NZ = [0, 0, 1, -1, 1, -1, 1, -1];
+let Go = null, NAV = null, tapN = 0;                                  // Go: the walk in progress. tapN: taps seen, for tests
+const wrapA = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+const tapMark = new THREE.Mesh(new THREE.RingGeometry(.17, .27, 32), new THREE.MeshBasicMaterial({ color: 0xf3bd54, transparent: true, opacity: .95, depthTest: false, side: THREE.DoubleSide }));
+tapMark.rotation.x = -Math.PI / 2; tapMark.renderOrder = 9; tapMark.visible = false; scene.add(tapMark);   // the gold ring on the floor where the walk will end. It shows through furniture and doorways
+/** Is a straight walk clear for the round walker? The first step is not tested: a walker leaning on a round corner reads as blocked there. */
+function clearWalk(x1, z1, x2, z2, pad = 0) { const d = Math.hypot(x2 - x1, z2 - z1), n = Math.max(1, Math.ceil(d / .08)), q = R + pad;
+  for (let i = 1; i <= n; i++) { const k = i / n, x = x1 + (x2 - x1) * k, z = z1 + (z2 - z1) * k; if (k * d < .3 && i < n) continue; for (const s of solids) if (x > s.x1 - q && x < s.x2 + q && z > s.z1 - q && z < s.z2 + q) return false; } return true; }
+function nav() { if (NAV) return NAV; let x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9;
+  for (const k in LEVELS) for (const p of Object.values(LEVELS[k].nodes).concat([LEVELS[k].spawn])) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); z0 = Math.min(z0, p[1]); z1 = Math.max(z1, p[1]); }
+  x0 -= 5; z0 -= 5; const w = Math.ceil((x1 + 5 - x0) / CELL) + 1, h = Math.ceil((z1 + 5 - z0) / CELL) + 1, free = new Uint8Array(w * h).fill(1);   // 1: open floor. 2: floor right beside something. 0: no place to stand
+  for (const s of solids) { const a = Math.max(0, Math.floor((s.x1 - R - x0) / CELL) + 1), b = Math.min(w - 1, Math.ceil((s.x2 + R - x0) / CELL) - 1), c = Math.max(0, Math.floor((s.z1 - R - z0) / CELL) + 1), d = Math.min(h - 1, Math.ceil((s.z2 + R - z0) / CELL) - 1); for (let j = c; j <= d; j++) for (let i = a; i <= b; i++) free[j * w + i] = 0; }
+  for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) { const m = j * w + i; if (free[m]) for (let e = 0; e < 8; e++) if (!free[m + NX[e] + NZ[e] * w]) { free[m] = 2; break; } }
+  return NAV = { x0, z0, w, h, free, dist: new Float32Array(w * h), prev: new Int32Array(w * h) }; }
+/** Walking distance from the player to every square they can reach. Squares beside furniture and jambs cost double, so a path keeps to open floor. */
+function flood() { const n = nav(), { x0, z0, w, h, free, dist, prev } = n, q = [], ci = Math.round((P.x - x0) / CELL), cj = Math.round((P.z - z0) / CELL); dist.fill(1e9);
+  for (let j = cj - 2; j <= cj + 2; j++) for (let i = ci - 2; i <= ci + 2; i++) { if (i < 0 || j < 0 || i >= w || j >= h) continue; const m = j * w + i, d = Math.hypot(x0 + i * CELL - P.x, z0 + j * CELL - P.z); if (free[m] && d < .45) { dist[m] = d; prev[m] = -1; q.push(m); } }
+  if (!q.length) { let b = -1, bd = .85; for (let j = cj - 4; j <= cj + 4; j++) for (let i = ci - 4; i <= ci + 4; i++) { if (i < 0 || j < 0 || i >= w || j >= h) continue; const m = j * w + i, d = Math.hypot(x0 + i * CELL - P.x, z0 + j * CELL - P.z); if (free[m] && d < bd) { bd = d; b = m; } } if (b >= 0) { dist[b] = bd; prev[b] = -1; q.push(b); } }   // squeezed into a corner the squares do not cover: start from the nearest one
+  for (let k = 0; k < q.length; k++) { const c = q[k], i = c % w, j = (c - i) / w, d0 = dist[c];
+    for (let e = 0; e < 8; e++) { const I = i + NX[e], J = j + NZ[e]; if (I < 0 || J < 0 || I >= w || J >= h) continue; const m = J * w + I; if (!free[m] || (e > 3 && (!free[j * w + I] || !free[J * w + i]))) continue;   // never diagonally past a corner
+      const nd = d0 + (e > 3 ? 1.414 : 1) * CELL * (free[m] === 2 ? 2 : 1); if (nd < dist[m] - 1e-4) { dist[m] = nd; prev[m] = c; q.push(m); } } }
+  return n; }
+/** After flood(): the reachable square nearest (gx, gz), no further than reach from it. -1 if there is none. vis: only squares in plain sight of the player or of (gx, gz), so never one on the far side of a wall. */
+function cellNear(gx, gz, reach, vis) { const { x0, z0, w, h, dist } = NAV, r = Math.ceil(reach / CELL), ci = Math.round((gx - x0) / CELL), cj = Math.round((gz - z0) / CELL); let best = -1, bs = 1e9;
+  for (let j = Math.max(0, cj - r); j <= Math.min(h - 1, cj + r); j++) for (let i = Math.max(0, ci - r); i <= Math.min(w - 1, ci + r); i++) { const m = j * w + i; if (dist[m] >= 1e9) continue; const e = Math.hypot(x0 + i * CELL - gx, z0 + j * CELL - gz), sc = e + dist[m] * .05; if (e <= reach && sc < bs && (!vis || sees(P.x, P.z, x0 + i * CELL, z0 + j * CELL) || sees(gx, gz, x0 + i * CELL, z0 + j * CELL))) { bs = sc; best = m; } }
+  return best; }
+/** After flood(): the corners of the walk from the player to square c, and on to (gx, gz) itself when that last step is clear. */
+function trace(c, gx, gz) { const { x0, z0, w, prev } = NAV, cells = [], out = []; for (; c >= 0; c = prev[c]) cells.push([x0 + (c % w) * CELL, z0 + Math.floor(c / w) * CELL]); cells.reverse();
+  const e = cells[cells.length - 1]; if (Math.hypot(e[0] - gx, e[1] - gz) < .5 && !blocked(gx, gz) && clearWalk(e[0], e[1], gx, gz)) cells.push([gx, gz]);
+  let ax = P.x, az = P.z; for (let i = 0; i < cells.length;) { let j = i; while (j + 1 < cells.length && clearWalk(ax, az, cells[j + 1][0], cells[j + 1][1], .06)) j++; out.push(cells[j]); ax = cells[j][0]; az = cells[j][1]; i = j + 1; }
+  return out; }
+/** A point on the screen to a place to walk to. Floor: that spot. A wall, or anything above the floor: up to it. A doorway, its frame, or just beyond it: through the door.
+    Whatever it is, the place is pulled back to where the walker can stand and get to without a long way round. null: nowhere to go. */
+function pickFloor(cx, cy) {
+  const t = Math.tan(camera.fov * Math.PI / 360), nx = (cx / innerWidth * 2 - 1) * t * camera.aspect, ny = (1 - cy / innerHeight * 2) * t, cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), ry = ny * cp + sp, rz = ny * sp - cp;
+  const cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), rx = nx * cw + rz * sw, rzz = -nx * sw + rz * cw, hz = Math.hypot(rx, rzz); if (hz < .05) return null;
+  const ux = rx / hz, uz = rzz / hz, floor = ry < -.02 * hz; let far = floor ? Math.min(10, 1.6 * hz / -ry) : 6, s = 0, wall = false, door = null, dk = 1e9, x, z;
+  while (s + .1 <= far && sees(P.x, P.z, P.x + ux * (s + .1), P.z + uz * (s + .1))) s += .1;
+  if (s + .1 <= far) { wall = true; far = s; }
+  for (const d of DOORWAYS) { if (d.b - d.a > 1.65) continue; const X = d.ax === "x", gap = d.c - (X ? P.z : P.x), ua = X ? uz : ux, k = gap / ua; if (Math.abs(gap) < .05 || !(k > 0) || k >= dk) continue;
+    const u = X ? P.x + ux * k : P.z + uz * k, m = wall ? .45 : .05; if (u < d.a - m || u > d.b + m || k > far + (wall ? .5 : .15) || (floor && !wall && far - k > .9)) continue;   // the opening, or the frame and the wall right beside it. A floor tap well past the door keeps its own spot
+    const keep = Math.max(0, (d.b - d.a) / 2 - R - .1), mid = (d.a + d.b) / 2, uu = Math.max(mid - keep, Math.min(mid + keep, u)), a = d.c + Math.sign(gap) * .9; door = d; dk = k; x = X ? uu : a; z = X ? a : uu; }
+  flood(); let c = -1;
+  if (door) { c = cellNear(x, z, .8); if (c >= 0 && NAV.dist[c] > 3 * Math.hypot(x - P.x, z - P.z) + 4) c = -1; if (c < 0) door = null; }
+  if (wall) far = Math.max(0, far - .45);
+  for (let d = far, reach = 1.2; c < 0 && d >= .4; d -= .3, reach = .45) { x = P.x + ux * d; z = P.z + uz * d; c = cellNear(x, z, reach, true); if (c >= 0 && NAV.dist[c] > Math.min(3 * d + 4, d + 9)) c = -1; }   // over a fence or behind a window: come back along the line to a spot with a short way to it
+  if (c < 0) return null; const path = trace(c, x, z), e = path[path.length - 1]; if (Math.hypot(e[0] - P.x, e[1] - P.z) < .4) return null;
+  return { x: e[0], z: e[1], path, door, kind: door ? "door" : wall ? "wall" : floor ? "floor" : "way" };
+}
+function stopGo() { if (Go) { Go = null; tapMark.visible = false; } }
+function goTo(t) { Go = { path: t.path, x: t.x, z: t.z, t: 0, n: 0, chk: .5, cx: P.x, cz: P.z, re: 0, face: null, kind: t.kind }; tapMark.position.set(t.x, .03, t.z); tapMark.visible = true;
+  if (t.door) { const X = t.door.ax === "x", sd = Math.sign(t.door.c - (X ? P.z : P.x)) || 1, a0 = X ? (sd > 0 ? Math.PI : 0) : -sd * Math.PI / 2;   // through a door into a narrow hall: end the walk looking along the hall, not at its wall
+    const open = (a) => { let d = 0; while (d < 8 && sees(t.x, t.z, t.x - Math.sin(a) * (d + .25), t.z - Math.cos(a) * (d + .25))) d += .25; return d; }, f = open(a0), l = open(a0 + Math.PI / 2), r = open(a0 - Math.PI / 2);
+    if (f < 2.2 && Math.max(l, r) > f + .8) Go.face = l >= r ? a0 + Math.PI / 2 : a0 - Math.PI / 2; } }
+/** One step of a tap walk. Returns the velocity wanted, in the world. The view turns to face the way it is going. */
+function autoStep(dt) { const g = Go, p = g.path, turn = (to, rate) => { const e = wrapA(to - P.yaw); P.yaw += Math.max(-rate * dt, Math.min(rate * dt, e * (1 - Math.exp(-dt * 8)))); return e; }; g.t += dt;
+  tapMark.scale.setScalar(1 + .14 * Math.sin(G.t * 9)); if (!G.target && !(g.turn && g.aim)) P.pitch *= 1 - dt * 2;
+  if (g.turn) { let done; if (g.aim) { const hx = g.aim[0] - P.x, hz = g.aim[2] - P.z, pt = Math.max(-1.25, Math.min(1.25, Math.atan2(g.aim[1] - 1.6, Math.hypot(hx, hz)))); P.pitch += (pt - P.pitch) * (1 - Math.exp(-dt * 9)); done = Math.abs(turn(Math.atan2(-hx, -hz), 3.4)) < .04 && Math.abs(pt - P.pitch) < .04; }   // a tap on something to scan: end the walk with the crosshair on it
+    else done = Math.abs(turn(g.face, 3)) < .06; if (done || (g.turn += dt) > 1.6) stopGo(); return [0, 0]; }
+  while (p.length > 1 && (Math.hypot(p[0][0] - P.x, p[0][1] - P.z) < .3 || (g.n++ % 6 === 0 && clearWalk(P.x, P.z, p[1][0], p[1][1], .04)))) p.shift();
+  let dx = p[0][0] - P.x, dz = p[0][1] - P.z; const d = Math.hypot(dx, dz) || 1e-6;
+  if (p.length === 1 && d < .12) { if (g.kind === "door") G.said.door = 1; if (g.face === null && !g.aim) stopGo(); else g.turn = dt; return [0, 0]; }
+  if (g.t > g.chk) { if (Math.hypot(P.x - g.cx, P.z - g.cz) < .12) { if (g.re++ > 1 || g.t > 30) { stopGo(); return [0, 0]; } flood(); const c = cellNear(g.x, g.z, .6); if (c < 0) { stopGo(); return [0, 0]; } g.path = trace(c, g.x, g.z); } g.chk = g.t + .5; g.cx = P.x; g.cz = P.z; }   // wedged: look for another way, twice, then give up
+  let lx = dx, lz = dz; if (p.length > 1 && d < 1) { const ex = p[1][0] - p[0][0], ez = p[1][1] - p[0][1], el = Math.hypot(ex, ez) || 1; lx += ex / el * (1 - d); lz += ez / el * (1 - d); }   // look a metre along the path, so the view turns into a corner before the walk does
+  const err = Math.abs(turn(Math.atan2(-lx, -lz), 3.2)), sp = (G.bot ? 3.7 : 3.2) * Math.max(.25, Math.min(1, 1.2 - err / 1.4)) * (p.length === 1 ? Math.max(.25, Math.min(1, d / .6)) : 1);
+  return [dx / d * sp, dz / d * sp]; }
+/** The TURN button shows the way out. It turns to the nearest door in sight behind the player. With none behind, to the nearest door in sight that is off the screen. With no door at all it is a plain about-face. */
+function turnAround() { stopGo(); let e = null, bd = 9, eb = null, bb = 9; const half = Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect); G.said.arrow = 1;
+  for (const d of DOORWAYS) { if (d.b - d.a > 1.65) continue; const X = d.ax === "x", sd = Math.sign((X ? P.z : P.x) - d.c) || 1, m = (d.a + d.b) / 2, px = X ? m : d.c + sd * .5, pz = X ? d.c + sd * .5 : m, dd = Math.hypot(px - P.x, pz - P.z), a = wrapA(Math.atan2(P.x - px, P.z - pz) - P.yaw); if (dd > .6 && Math.abs(a) > half * .8 && dd < Math.max(bd, bb) && sees(P.x, P.z, px, pz)) { if (dd < bd) { bd = dd; e = a; } if (Math.abs(a) > 1.75 && dd < bb) { bb = dd; eb = a; } } }
+  if (eb !== null) e = eb; P.spin = e === null ? { dir: 1, left: Math.PI } : { dir: Math.sign(e), left: Math.abs(e) }; buzz(10); }
+/** A place in the world to its spot on the screen, in pixels, and how far in front it is. null when it is behind the player. The ray in pickFloor, the other way round. */
+function scr(x, y, z) { const dx = x - P.x, dy = y - 1.6, dz = z - P.z, cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), nx = dx * cw - dz * sw, rz = dx * sw + dz * cw, ny = dy * cp + rz * sp, dep = dy * sp - rz * cp, t = Math.tan(camera.fov * Math.PI / 360);
+  return dep > .1 ? [(nx / dep / (t * camera.aspect) + 1) / 2 * innerWidth, (1 - ny / dep / t) / 2 * innerHeight, dep] : null; }
+const scanAt = (g) => g.kind === "dev" ? g.ref.def.at : g.ref.at;
+/** Is the tap on something that can be scanned? Returns where that thing is. People tap the thing itself, so the walk should end aimed at it. */
+function tapThing(cx, cy) { let best = null, bs = 1; const t = Math.tan(camera.fov * Math.PI / 360);
+  const c = (at) => { const p = scr(at[0], at[1], at[2]); if (!p || Math.hypot(at[0] - P.x, at[2] - P.z) > 9) return; const s = Math.hypot(p[0] - cx, p[1] - cy) / Math.max(22, Math.min(56, innerWidth * .14, .25 * innerHeight / (2 * t * p[2]))); if (s < bs && sees(P.x, P.z, at[0], at[2])) { bs = s; best = at; } };
+  for (const f of G.flags) if (!f.found) c(f.at); for (const a of G.answers) if (!a.found && !a.shut && a.wait <= G.t) c(a.at); if (G.card && !G.reg) { c(G.card.at); c(G.desk.at); } if (!G.bot && !G.caught) for (const d of G.devs) if (!d.checked) c(d.def.at);
+  return best; }
+/** Walk to about two metres from a thing and end facing it, so SCAN is ready. Close enough already: only turn to it. false: no spot to stand on. */
+function aimAt(at) { const dx = P.x - at[0], dz = P.z - at[2], d = Math.hypot(dx, dz) || 1e-6, base = { x: P.x, z: P.z, t: 0, n: 0, chk: .5, cx: P.x, cz: P.z, re: 0, face: null, aim: at, kind: "aim" };
+  if (d <= 2.6) { Go = Object.assign(base, { path: [[P.x, P.z]], turn: 1e-3 }); tapMark.visible = false; return true; }
+  flood(); for (const da of [0, .5, -.5, 1, -1]) for (const k of [2, 1.6, 2.4, 1.2]) { const ca = Math.cos(da), sa = Math.sin(da), x = at[0] + (dx * ca - dz * sa) / d * k, z = at[2] + (dx * sa + dz * ca) / d * k, c = cellNear(x, z, .5); if (c < 0 || NAV.dist[c] > Math.min(3 * d + 4, d + 9)) continue; const path = trace(c, x, z), e = path[path.length - 1]; if (![[0, 0], [.15, 0], [-.15, 0], [0, .15], [0, -.15]].every(([i, j]) => sees(e[0] + i, e[1] + j, at[0], at[2]))) continue;   // in plain sight of the thing, with room to spare
+    Go = Object.assign(base, { path, x: e[0], z: e[1] }); tapMark.position.set(e[0], .03, e[1]); tapMark.visible = true; return true; }
+  return false; }
+/** A tap on the picture. Not on the HUD. A tap on an open card closes it. A tap on the thing under the crosshair wants SCAN. A tap at the left or right edge turns. */
+function onTap(cx, cy) { tapN++;
+  for (const id of ["card", "obj", "flags", "timer", "sig", "map", "mute", "scanbtn", "turnbtn"]) { const el = $(id), r = el.getBoundingClientRect(), m = id === "scanbtn" && innerWidth >= 360 ? 16 : id.endsWith("btn") ? 10 : 0; if ((id !== "card" || el.classList.contains("on")) && r.width && cx > r.left - m && (cx < r.right + m || id === "scanbtn") && cy > r.top - m && cy < r.bottom + m) { if (id === "card") { G.cardT = 0; el.className = ""; } return; } }   // a near miss beside SCAN, out to the edge of the screen, is not a walk and not a turn
+  const dir = edgeOf(cx); if (dir) { stopGo(); G.said.arrow = 1; P.spin = { dir, left: (P.spin && P.spin.dir === dir ? P.spin.left : 0) + Math.min(.78, 1.2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect)) }; buzz(8); return; }   // the two arrows at the edges of the screen: a tap there turns the view and walks nowhere. A finger held on an arrow keeps turning: see update(). The turn is a little over half the width of the view, so what was just off the edge comes to the middle
+  const at = tapThing(cx, cy);
+  if (G.target) { const ta = scanAt(G.target), p = scr(ta[0], ta[1], ta[2]); if (at === ta || Math.hypot(cx - innerWidth / 2, cy - innerHeight / 2) < 30 || (!at && p && Math.hypot(cx - p[0], cy - p[1]) < 90)) { const sb = $("scanbtn"); sb.classList.remove("nudge"); void sb.offsetWidth; sb.classList.add("nudge"); return; } }   // people press the object itself. It is under the crosshair already: show them the button
+  const t = pickFloor(cx, cy); if (at && !(t && t.door) && aimAt(at)) { buzz(10); return; }   // something to scan that is not under the crosshair yet: go and face it. A door comes first: a thing beside a doorway must not stop the walk through it
+  if (t) { goTo(t); buzz(10); } else if (Go) stopGo(); else tip("Tap the floor or a door."); }
 
 /* ---------- the simulation: one fixed slice of time ---------- */
 const STEP = 1 / 60, fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
@@ -1260,14 +1379,18 @@ function update(dt) {
   if (In.keys.KeyW || In.keys.ArrowUp) mz -= 1; if (In.keys.KeyS || In.keys.ArrowDown) mz += 1; if (In.keys.KeyA) mx -= 1; if (In.keys.KeyD) mx += 1;
   if (In.keys.ArrowLeft) P.yaw += 2.2 * dt; if (In.keys.ArrowRight) P.yaw -= 2.2 * dt;
   const len = Math.hypot(mx, mz); if (len > 1) { mx /= len; mz /= len; }
-  const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw);
-  const v = [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = In.scan && G.target ? 0 : doorHelp(v, IS_TOUCH && In.two > 0), k = 1 - Math.exp(-dt * (!one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
+  if (Go && (len > .05 || (In.scan && (!G.bot || G.over || G.target)))) stopGo();   // the stick, a key or SCAN takes over from a tap walk at once. FIRE does not: in the chase a tap walker can run and fire
+  if (In.edge && !In.scan && !G.over && G.t - In.edge.t > TAP.s) { stopGo(); P.spin = null; G.said.arrow = 1; P.yaw += In.edge.dir * 1.8 * dt; if (!G.target) P.pitch *= 1 - dt * 3; }   // a finger held on an edge arrow
+  if (P.spin) { const a = Math.min(P.spin.left, 4.2 * dt); P.yaw += P.spin.dir * a; if ((P.spin.left -= a) <= 0) P.spin = null; if (!G.target) P.pitch *= 1 - dt * 3; }   // the TURN button
+  const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw), auto = Go ? autoStep(dt) : null;
+  const v = auto || [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = auto || (In.scan && G.target) ? 0 : doorHelp(v, IS_TOUCH && In.two > 0), k = 1 - Math.exp(-dt * (auto ? 12 : !one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
   P.vx += (v[0] - P.vx) * k; P.vz += (v[1] - P.vz) * k;
-  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH, mz > 0, IS_TOUCH && In.two > 0); cull(P.x);
+  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH && !auto, mz > 0, IS_TOUCH && In.two > 0 && !auto); cull(P.x);   // a tap walk follows a path that already clears every jamb, so it gets no doorway help and none of the thumb rules
   const moved = Math.hypot(P.x - ox, P.z - oz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
-  if (one) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
+  if (one && !auto) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
     P.vw += (-Math.sign(lat) * Math.max(0, Math.abs(lat) - .5) * 3.6 - P.vw) * k; P.yaw += P.vw * dt + (doorHelp.street && bend * mx > 0 && len > .15 && Math.abs(mx) > .8 * len ? 0 : bend * Math.min(1, dt * 6)); if (moved && !G.target) P.pitch *= 1 - dt * 1.2; } else P.vw = 0;   // past 30 degrees off straight the view turns toward the walk. It also follows the walk through a door. A view left tilted up or down comes back level on the walk, unless it is aimed at something to scan
-  if (!G.said.walk && (G.walked = (G.walked || 0) + moved) > 1.5 && (Math.abs(P.yaw - Math.PI) > .5 || G.walked > 22)) { G.said.walk = 1; $("lhint").style.display = "none"; }   // the walking hint goes once they have walked and turned, or walked a good way
+  if (!G.said.walk) { G.walked = (G.walked || 0) + moved; G.turned = (G.turned || 0) + (Math.abs(P.vw) + (In.two > 0 ? 1 : 0)) * dt; const h = $("lhint").children, off = (i) => { if (!((G.said.h || 0) >> i & 1)) { G.said.h |= 1 << i; h[i].style.display = "none"; } };   // the three lines of the walking hint go one at a time, each once the player has done what it says
+    if (G.walked > 1.5 && G.t > 5) off(0); if (G.said.door || (G.said.in && G.t > 5) || G.walked > 30) off(1); if ((G.said.arrow && G.t > 5) || (G.turned > 1.5 && G.t > 8) || G.walked > 45) off(2); if (G.said.h === 7) { G.said.walk = 1; $("lhint").style.display = "none"; } }
   G.bob = (G.bob || 0) + moved * 4.2;
   if (!G.said.in && LV.entered(P)) { G.said.in = 1; if (!G.found && !G.reg && !G.bot && !G.caught) objective(LV.text.enter); }   // resale: not before z 1.1, because until there the open door leaf hides the table
 
@@ -1290,7 +1413,7 @@ function update(dt) {
   $("cross").className = best ? "hot" : armed ? "hot bot" : ""; $("prog").style.setProperty("--p", best ? Math.min(100, G.scan / need * 100) : 0);
   const hint = $("hint"), how = IS_TOUCH ? "hold SCAN" : "hold the mouse button";   // name the control: pressing the object itself does nothing
   if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · " + how + " to check" : best.kind === "reg" ? "Register your agent · " + how : best.kind === "desk" ? "Sales desk · " + how + " to sign in" : best.kind === "ans" ? (best.ref.def.insider && G.reg !== "yes" ? "A locked answer · " + how + " to try" : "A straight answer · " + how + " to read") : best.ref.cov && best.ref.cov.visible ? "This looks staged · " + how : how[0].toUpperCase() + how.slice(1) + " to scan"; hint.classList.add("on"); }
-  else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else hint.classList.remove("on");
+  else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else if (G.tipT > G.t) { hint.textContent = G.tip; hint.classList.add("on"); } else hint.classList.remove("on");
 
   // --- tracker: hot or cold. Its reach grows with every red flag you tag.
   let sig = 0, far = 0;
@@ -1366,7 +1489,7 @@ function doScan(hit) {
 
 /* ---------- the ending ---------- */
 function finish(caught) {
-  if (G.over) return; G.over = true; In.scan = false;
+  if (G.over) return; G.over = true; In.scan = false; stopGo();
   const left = Math.ceil(G.time), n = G.flags.length, all = G.found === n;
   const score = G.found * 100 + G.ans * 60 + (caught ? 500 + left * 2 : 0) - G.wrong * 40 + (G.reg === "yes" ? 150 : 0);
   const grade = caught && all ? "S" : caught && G.found >= n - 2 ? "A" : caught || all ? "B" : G.found >= 5 ? "C" : "D";
@@ -1405,7 +1528,7 @@ function showEnd(r) {
     '<p class="fine" style="text-align:left">' + T.last + '</p>' +
     '<div class="host"><img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="54" height="54"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div></div>' +
     '<p class="fine">Open House Game is a game. ' + T.fine + '<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
-  const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0;
+  const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0; end.style.pointerEvents = "none"; const t0 = performance.now(), open = () => { const now = performance.now(); if (now < t0 + 900 || In.down || now < In.upAt + 350) setTimeout(open, 150); else end.style.pointerEvents = ""; }; open();   // a thumb still tapping to walk, or still down from the run, must not press Play again
   const text = "Open House Game" + T.share + (G.daily ? " #" + dailyNumber() : "") + "\n🚩 " + G.found + "/" + r.n + " · 🤖 " + (r.caught ? "caught" : "got away") + " · 💬 " + G.ans + "/" + G.answers.length + (model ? " · 🤝 " + (G.reg === "yes" ? "agent registered" : G.reg === "no" ? "signed in alone" : "no sign in") : "") + " · Grade " + r.grade + "\n" + G.flags.map((f) => f.found ? "🟩" : "⬜").join("") + "\nhttps://openhousegame.com/hunt";
   end.querySelector("#share").addEventListener("click", (e) => { track("hunt-share"); const b = e.currentTarget, say = (t) => { b.textContent = t; setTimeout(() => b.textContent = "Share your result", 2600); }, done = () => say("Copied. Paste it anywhere."), fail = () => say("Could not copy. Take a screenshot.");
     const copy = () => navigator.clipboard ? navigator.clipboard.writeText(text).then(done, fail) : fail();   // only say Copied when it was
@@ -1418,7 +1541,7 @@ function showEnd(r) {
 function begin(daily, level = "resale") {
   const L = LEVELS[level] || LEVELS.resale;                             // each level has its own daily seed
   audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id);
-  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; $("lhint").style.display = "";
+  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; $("lhint").style.display = ""; for (const c of $("lhint").children) c.style.display = "";
   track(L.start); last = performance.now(); acc = 0;
   if (!IS_TOUCH && canvas.requestPointerLock) { try { canvas.requestPointerLock(); } catch (e) {} }
   try { if (!history.state || !history.state.g) history.pushState({ g: 1 }, ""); } catch (e) {}   // one spare history entry, so a stray back-swipe has something to pop
@@ -1453,7 +1576,7 @@ function pace(dt) { if (dt > 1 / 28) { if (++slow > 45) { slow = 0; if (PR > .85
         scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; }); } } } else { slow = Math.max(0, slow - 1); } }
 function frame(now) {
   requestAnimationFrame(frame);
-  const dt = Math.min(.1, (now - last) / 1000); last = now; pace(dt);
+  const raw = (now - last) / 1000, dt = Math.min(.1, raw); last = now; pace(dt); if (state === "play" && raw > dt) TAP.lag += Math.min(2, raw) - dt;   // under ten frames a second the game runs slow. Taps are timed against the clock all the same
   for (let i = 0; i < feathers.length; i++) { const f = feathers[i]; f.rotation.y = f.userData.ry + Math.sin(now * .0021 + i * 1.7) * .16 + Math.sin(now * .0057 + i) * .05; }   // the feather flags flutter
   if (state === "play") {
     acc += dt; let n = 0; while (acc >= STEP && n++ < 6 && state === "play") { update(STEP); acc -= STEP; }
@@ -1468,7 +1591,7 @@ newRun(hash(todayKey() + "hunt"), true); G.over = true;
 requestAnimationFrame(frame);
 
 /* a small door for tests: lets a script stand the player somewhere and read the state */
-window.__ohg = { P, get G() { return G; }, get state() { return state; }, get LV() { return LV; }, LEVELS, solids, DOORWAYS, get info() { return renderer.info.render; }, begin, In, get NODES() { return LV.nodes; }, get FLAGS() { return LV.flags; }, get DEVICES() { return LV.devices; }, get ANSWERS() { return LV.answers; }, doScan, blocked, sees, fire, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
+window.__ohg = { P, get G() { return G; }, get state() { return state; }, get LV() { return LV; }, LEVELS, solids, DOORWAYS, get info() { return renderer.info.render; }, begin, In, get NODES() { return LV.nodes; }, get FLAGS() { return LV.flags; }, get DEVICES() { return LV.devices; }, get ANSWERS() { return LV.answers; }, doScan, blocked, sees, fire, TAP, scr, tapThing, pickFloor, goTo, stopGo, onTap, turnAround, clearWalk, nav, get Go() { return Go; }, get taps() { return tapN; }, get mark() { return tapMark.visible; }, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
 </script>
 </body>
 </html>
