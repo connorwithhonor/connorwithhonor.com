@@ -37,6 +37,7 @@ body.play .hud{display:block}
 #flags{position:absolute;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right))}
 #flags b{color:var(--gold-bright)}
 #flags small{display:block;font-size:11.5px;font-weight:700;color:var(--muted);margin-top:1px;text-align:right}
+#flags small:empty{display:none}
 #map{position:absolute;top:calc(10px + env(safe-area-inset-top));left:calc(10px + env(safe-area-inset-left));width:132px;height:108px;border-radius:12px;background:rgba(12,11,16,.6);border:1px solid rgba(255,255,255,.12)}
 #sig{position:absolute;top:calc(126px + env(safe-area-inset-top));left:calc(10px + env(safe-area-inset-left));display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 #sig .bars{display:flex;gap:3px;align-items:flex-end;height:16px}
@@ -57,6 +58,7 @@ body.play .hud{display:block}
 #card small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-bright);margin-bottom:2px}
 #card.botc small{color:var(--bot)}#card.badc small{color:var(--bad)}
 #card.ansc{border-left-color:#8fc0e8}#card.ansc small{color:#8fc0e8}
+#card.lockc{border-left-color:#8d939c}#card.lockc small{color:#aab0b8}
 #card b{display:block;font-size:16px}#card span{display:block;font-size:14px;color:var(--muted);margin-top:3px;line-height:1.4}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .35s}
 #vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 58%,rgba(8,6,4,.34) 100%)}
@@ -70,8 +72,15 @@ body.play.is-touch .touch{display:block}
 #stick i{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(255,255,255,.4)}
 #scanbtn{position:absolute;right:calc(22px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));width:92px;height:92px;border-radius:50%;background:rgba(232,168,56,.9);color:#17120a;font-weight:900;font-size:15px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 6px 22px rgba(0,0,0,.5)}
 #scanbtn:active,#scanbtn.down{transform:scale(.94);background:var(--gold-bright)}
+@keyframes nudge{50%{transform:scale(1.2)}}#scanbtn.nudge{animation:nudge .4s 2}
+#turnbtn{position:absolute;right:calc(12px + env(safe-area-inset-right));top:250px;width:60px;height:60px;border-radius:30px;background:rgba(12,11,16,.62);border:2px solid rgba(255,255,255,.5);color:#fff;font-weight:900;font-size:12.5px;letter-spacing:.06em;pointer-events:auto;box-shadow:0 4px 14px rgba(0,0,0,.45)}
+#turnbtn:active{transform:scale(.94);background:rgba(232,168,56,.85);color:#17120a}
+.edge{position:absolute;top:58%;margin-top:-22px;width:44px;height:44px;box-sizing:border-box;border-radius:22px;background:rgba(12,11,16,.62);border:2px solid rgba(255,255,255,.5);font:900 30px/36px Arial,sans-serif;font-style:normal;text-align:center;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.45)}#el{left:calc(5px + env(safe-area-inset-left))}#er{right:calc(5px + env(safe-area-inset-right))}
+@media(max-width:359px){.edge{width:36px;height:36px;margin-top:-18px;border-radius:18px;font:900 25px/30px Arial,sans-serif}#el{left:calc(4px + env(safe-area-inset-left))}#er{right:calc(4px + env(safe-area-inset-right))}}
+@media(max-height:600px) and (orientation:portrait){#turnbtn{top:calc(58% - 98px)}}
+@media(orientation:landscape){#turnbtn{top:calc(10px + env(safe-area-inset-top));right:calc(172px + env(safe-area-inset-right));height:40px}.edge{top:max(46%,170px)}}
 #scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
-#lhint{position:absolute;left:calc(56px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:46vw;font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.92);text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8)}
+#lhint{position:absolute;left:calc(12px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:min(57vw,260px);box-sizing:border-box;padding:6px 10px;border-radius:10px;background:rgba(12,11,16,.55);font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.95);text-shadow:0 1px 3px #000}#lhint span{display:block}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
 .ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
@@ -86,6 +95,7 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
 .btn{display:block;width:100%;text-align:center;background:var(--gold);color:#17120a;font-weight:800;font-size:17px;border-radius:14px;padding:16px;margin-top:14px;text-decoration:none}
 .btn:active{transform:scale(.985)}
 .btn.ghost{background:rgba(12,11,16,.6);border:1px solid var(--line);color:var(--cream);font-weight:700;font-size:15.5px;padding:13px}
+.btn.alt{background:#2f8f86;color:#f3fbfa;margin-top:10px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .how{display:grid;gap:7px;margin-top:14px;font-size:14.5px;color:var(--cream)}
 .how div{background:rgba(21,20,27,.82);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:9px 12px}
@@ -101,6 +111,8 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
 .item b{display:block;color:var(--cream);font-size:14.5px}
 .item em{float:right;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--good)}
 .item.miss{opacity:.62;border-style:dashed}.item.miss em{color:var(--bad)}
+.item.lock{border-style:dashed}.item.lock em{color:#aab0b8}
+.item.reg{border-color:var(--line)}
 .sec{font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:20px 0 0}
 .near a{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;color:var(--cream);background:var(--ink-2);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin-top:8px;font-weight:650;font-size:15px}
 .near a span{color:var(--muted);font-weight:500;font-size:13px}
@@ -112,10 +124,16 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
 @media(max-height:600px) and (orientation:landscape){#obj{top:calc(52px + env(safe-area-inset-top));max-width:min(calc(100vw - 320px),460px);font-size:12.5px}#card{bottom:calc(6px + env(safe-area-inset-bottom));width:min(60vw,560px);padding:8px 12px}#card b{font-size:14px}#card span{font-size:12.5px;line-height:1.3}
   /* on a phone it takes all the room left of the SCAN button, which keeps it short enough to stay under the hint line */
   body.is-touch #card{left:calc(50% - 57px);width:min(calc(100vw - 150px - env(safe-area-inset-left) - env(safe-area-inset-right)),600px)}}
-/* a phone held upright: a tall card must stay under the hint line. Mid-height screens seat it right on top of the SCAN button. Short ones run out of room there, so it drops beside the button, as it does sideways */
+/* a phone held upright: a tall card must stay under the hint line. Mid-height screens seat it right on top of the SCAN button. Short ones run out of room there, so it drops beside the button, as it does sideways. */
 @media(max-height:700px) and (orientation:portrait){#card{bottom:calc(132px + env(safe-area-inset-bottom))}}
 @media(max-height:660px) and (orientation:portrait){#card{bottom:calc(6px + env(safe-area-inset-bottom));padding:8px 12px}#card b{font-size:14px}#card span{font-size:12.5px;line-height:1.3}
   body.is-touch #card{left:calc(50% - 57px);width:calc(100vw - 150px - env(safe-area-inset-left) - env(safe-area-inset-right))}}
+/* the model home: its HUD has a third line, so the sound button sits lower. Its cards are the longest in the game, so they drop beside the button on taller screens too */
+body.lv-reg #mute{margin-top:16px}
+@media(max-height:735px) and (orientation:portrait){body.lv-reg #card{bottom:calc(6px + env(safe-area-inset-bottom));padding:8px 12px}body.lv-reg #card b{font-size:14px}body.lv-reg #card span{font-size:12.5px;line-height:1.3}
+  body.lv-reg.is-touch #card{left:calc(50% - 57px);width:calc(100vw - 150px - env(safe-area-inset-left) - env(safe-area-inset-right))}}
+/* the narrowest phones: the HUD must clear the clock, and the model home's longest cards must stay under the hint line */
+@media(max-width:340px){#flags{font-size:12.5px}#flags small{font-size:10.5px}body.lv-reg #card{padding:7px 10px}body.lv-reg #card b{font-size:13px}body.lv-reg #card span{font-size:11.5px;line-height:1.26}}
 #nogl{display:none;position:fixed;inset:0;place-items:center;padding:24px;text-align:center;background:var(--ink)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
@@ -128,7 +146,7 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <canvas id="map" width="264" height="216"></canvas>
   <div id="sig"><span>Bot signal</span><div class="bars"><i style="height:4px"></i><i style="height:7px"></i><i style="height:10px"></i><i style="height:13px"></i><i style="height:16px"></i></div></div>
   <div id="timer" class="pill">3:30</div>
-  <div id="flags" class="pill">Red flags <b id="fc">0</b>/<span id="ft">8</span><small>Answers <b id="ac">0</b>/<span id="at">6</span></small></div>
+  <div id="flags" class="pill"><span id="fl">Red flags</span> <b id="fc">0</b>/<span id="ft">8</span><small>Answers <b id="ac">0</b>/<span id="at">6</span></small><small id="rg"></small></div>
   <button id="mute" class="pill">Sound on</button>
   <div id="obj"></div>
   <div id="cross"><div id="prog"></div><div id="ring"></div></div>
@@ -138,7 +156,9 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <div id="flash"></div>
   <div class="touch">
     <div id="stick"><i></i></div>
-    <div id="lhint">Left thumb here.<br>Push up to walk.<br>Push sideways to turn.</div>
+    <div id="lhint"><span>Tap where you want to go.</span><span>Tap a door to walk through it.</span><span>Tap or hold an arrow to turn.</span></div>
+    <i class="edge" id="el">&lsaquo;</i><i class="edge" id="er">&rsaquo;</i>
+    <button id="turnbtn">TURN</button>
     <button id="scanbtn">SCAN</button>
   </div>
 </div>
@@ -148,15 +168,17 @@ p.lead{color:var(--muted);font-size:16px;line-height:1.5}
   <h1>Something in this house is <em>hiding the problems.</em></h1>
   <p class="lead">A rogue staging bot called GLOSS makes every house look perfect. Walk the open house. Find what it covered up. Then catch it before the doors close.</p>
   <div class="how">
-    <div><b>Look and walk.</b> <span id="how-move">Put a thumb on the left side. Push up to walk. Push sideways to turn. Drag the right side to look up and down.</span></div>
+    <div><b>Look and walk.</b> <span id="how-move">Tap where you want to go. Tap a door to walk through it. Tap an arrow to turn.</span></div>
     <div><b>Scan anything that looks off.</b> <span id="how-scan">Aim at it and hold SCAN.</span></div>
-    <div><b>Every red flag boosts your tracker.</b> Follow the signal to the smart device it is hiding in. A wrong guess costs time.</div>
+    <div><b>Every find boosts your tracker.</b> Follow the signal to the smart device it is hiding in. A wrong guess costs time.</div>
     <div><b>Gold question marks are straight answers.</b> Each one buys you six seconds.</div>
   </div>
-  <button class="btn" id="go">Walk in</button>
-  <div class="row"><a class="btn ghost" href="/play/">Play Escrow Run</a><button class="btn ghost" id="fresh">Random house</button></div>
+  <button class="btn" id="go">Walk the resale open house</button>
+  <button class="btn alt" id="go2">Walk the builder's model home</button>
+  <div class="row"><button class="btn ghost" id="fresh">Random house</button><button class="btn ghost" id="fresh2">Random model home</button></div>
+  <a class="btn ghost" href="/play/">Play Escrow Run</a>
   <p class="fine" id="best"></p>
-  <p class="fine">Open House Game is a game. The house and its problems are fiction and nothing here is legal, financial or inspection advice.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>
+  <p class="fine">Open House Game is a game. The houses, the builder and their problems are fiction and nothing here is legal, financial or inspection advice.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>
 </div></div>
 
 <div class="ov" id="ov-end"><div class="box" id="end"></div></div>
@@ -179,6 +201,9 @@ import * as THREE from "./three.module.min.js";
                        comes from one seeded generator.
    5. THE CORE LOOP.   See something off -> aim -> hold to scan -> reward. About eight seconds.
                        Everything else in here exists to make that loop feel good.
+   6. TWO LEVELS.      A resale open house and a builder's model home stand on the same street.
+                       Both are always built. LEVELS says which one a run happens in, and holds
+                       everything that differs: the spawn, the bot's road map, the pools, the words.
    ===================================================================================== */
 
 const $ = (id) => document.getElementById(id);
@@ -242,7 +267,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = IS_TOUCH ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
 renderer.shadowMap.autoUpdate = false;                        // the house does not move, so its shadows are drawn once
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0xd7e6f0, 40, 120);
+scene.fog = new THREE.Fog(0xd7e6f0, 52, 132);                  // far enough that the model home down the street reads clearly
 const camera = new THREE.PerspectiveCamera(72, 1, .06, 200);
 camera.rotation.order = "YXZ";
 function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.fov = w < h ? 78 : 66; camera.updateProjectionMatrix(); }
@@ -263,10 +288,13 @@ buildEnv();
 // A phone can drop the graphics context while the tab is away. three restores what it can re-upload, but not these two, which were drawn on the GPU.
 canvas.addEventListener("webglcontextrestored", () => { buildEnv(); renderer.shadowMap.needsUpdate = true; });
 scene.add(new THREE.HemisphereLight(0xdfeeff, 0xb39a78, .55));
-const sun = new THREE.DirectionalLight(0xfff1d6, 3.4); sun.position.set(-9, 15, -13); sun.target.position.set(8, 0, 5); scene.add(sun, sun.target);
+// one sun for the whole street. Its shadow box is wide enough to hold both houses and the walk between them.
+const sun = new THREE.DirectionalLight(0xfff1d6, 3.4); sun.position.set(5, 15, -16); sun.target.position.set(22, 0, 2); scene.add(sun, sun.target);
 sun.castShadow = true; sun.shadow.mapSize.set(IS_TOUCH ? 2048 : 4096, IS_TOUCH ? 2048 : 4096);
-Object.assign(sun.shadow.camera, { left: -22, right: 22, top: 20, bottom: -20, near: 1, far: 70 }); sun.shadow.bias = -.0005; sun.shadow.normalBias = .035;
-for (const p of (IS_TOUCH ? [[6, 3.4, 0xffe6c2, 13], [5, 9.4, 0xffdcae, 11], [12.5, 8.6, 0xffe2b8, 11]] : [[4, 3, 0xffe2b8, 9], [12, 3, 0xfff0d8, 9], [3.2, 9.7, 0xffdcae, 7], [11, 9.7, 0xffdcae, 8], [8, 6.7, 0xffe2b8, 5]])) { const l = new THREE.PointLight(p[2], p[3], 7.5, 1.7); l.position.set(p[0], 2.3, p[1]); scene.add(l); }
+Object.assign(sun.shadow.camera, { left: -29, right: 28.5, top: 22, bottom: -15, near: 1, far: 64 }); sun.shadow.bias = -.0005; sun.shadow.normalBias = .035;
+// Indoor lamps. A phone gets three and a desktop gets five, and they follow the player to whichever house the run is in
+// (see LEVELS and newRun). A desktop also keeps two in the other house, so a visit down the street is not a walk into the dark.
+const lamps = []; for (let i = 0; i < (IS_TOUCH ? 3 : 7); i++) { const l = new THREE.PointLight(0xffe2b8, 9, 7.5, 1.7); l.position.y = 2.3; scene.add(l); lamps.push(l); }
 // The bot's glow lives in the scene from the start, switched down to nothing. Adding a light mid-game changes the light count, and that recompiles every shader at the exact moment the chase begins.
 const botLight = new THREE.PointLight(0x35e0ff, 0, 5, 1.6); scene.add(botLight);
 
@@ -302,7 +330,17 @@ const M = {
   glow: new THREE.MeshBasicMaterial({ color: 0xfff1cf }),
   hill: std({ color: 0xa79a78, roughness: 1, flatShading: true, envMapIntensity: .2 }),
   hedge: std({ color: 0x356f3c, roughness: .9, flatShading: true }),
-  white: std({ color: 0xffffff, roughness: .6 })
+  white: std({ color: 0xffffff, roughness: .6 }),
+  // the model home's lighter palette
+  stuccoL: bumped(tile(256, 1.6, (c) => { c.fillStyle = "#f3efe6"; c.fillRect(0, 0, 256, 256); speck(c, 5200, .05, 256, 3); }), { roughness: .97 }, 1),
+  roofS: bumped(tile(256, 1.4, (c) => { c.fillStyle = "#5f666d"; c.fillRect(0, 0, 256, 256); for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) { const x = k * 64 + (r % 2 ? 32 : 0), y = r * 64, g = c.createLinearGradient(x, 0, x + 64, 0); g.addColorStop(0, "#4a5057"); g.addColorStop(.5, "#747c84"); g.addColorStop(1, "#4a5057"); c.fillStyle = g; c.fillRect(x, y, 64, 64); c.fillRect(x - 256, y, 64, 64); c.fillStyle = "rgba(0,0,0,.3)"; c.fillRect(0, y + 60, 256, 4); } }), { roughness: .8, shadowSide: THREE.DoubleSide }, 1.4),
+  plank: bumped(tile(512, 2.4, (c) => { for (let r = 0; r < 8; r++) { let x = (r * 211) % 512 - 512; while (x < 512) { const len = 190 + (r * 67 + x) % 170, sh = 206 + ((r * 29 + x * 3) % 14); c.fillStyle = `rgb(${sh + 12},${sh - 12},${sh - 46})`; c.fillRect(x, r * 64, len - 2, 62.5); c.fillStyle = "rgba(90,60,20,.1)"; for (let k = 0; k < 6; k++) c.fillRect(x + Math.random() * len, r * 64 + Math.random() * 62, 30 + Math.random() * 60, 1); c.fillStyle = "rgba(60,40,15,.22)"; c.fillRect(x + len - 1.5, r * 64, 1.5, 64); x += len; } c.fillStyle = "rgba(60,40,15,.2)"; c.fillRect(0, r * 64 + 62.6, 512, 1.4); } }), { roughness: .46, envMapIntensity: .9 }, .4),
+  paver: bumped(tile(256, 1.6, (c) => { c.fillStyle = "#8f8a80"; c.fillRect(0, 0, 256, 256); for (let r = 0; r < 8; r++) for (let k = -1; k < 4; k++) { const x = k * 64 + (r % 2 ? 32 : 0), sh = 176 + ((r * 5 + k * 9) % 5) * 7; c.fillStyle = `rgb(${sh + 8},${sh},${sh - 14})`; c.fillRect(x + 1.5, r * 32 + 1.5, 61, 29); } speck(c, 2600, .05, 256, 2); }), { roughness: .95 }, .9),
+  quartz: bumped(tile(256, 1.5, (c) => { c.fillStyle = "#f6f4ef"; c.fillRect(0, 0, 256, 256); c.strokeStyle = "rgba(120,120,125,.16)"; for (let i = 0; i < 7; i++) { c.lineWidth = .6 + Math.random(); c.beginPath(); let x = Math.random() * 256, y = 0; c.moveTo(x, y); while (y < 256) { x += (Math.random() - .5) * 40; y += 20 + Math.random() * 30; c.lineTo(x, y); } c.stroke(); } }), { roughness: .14, envMapIntensity: 1.3 }, .04),
+  cabB: bumped(tile(256, .6, (c) => { c.fillStyle = "#3d6166"; c.fillRect(0, 0, 256, 256); c.strokeStyle = "#2c494d"; c.lineWidth = 5; c.strokeRect(4, 4, 248, 248); c.strokeStyle = "#4b7479"; c.lineWidth = 9; c.strokeRect(34, 34, 188, 188); c.fillStyle = "#c9a15a"; c.fillRect(214, 112, 10, 44); }), { roughness: .5 }, .5),
+  cream: bumped(tile(128, .5, (c) => { c.fillStyle = "#ece5d7"; c.fillRect(0, 0, 128, 128); speck(c, 3000, .06, 128, 1); }), { roughness: 1 }, .9),
+  sage: bumped(tile(128, .6, (c) => { c.fillStyle = "#96a78d"; c.fillRect(0, 0, 128, 128); speck(c, 2200, .07, 128, 1); }), { roughness: 1 }, .7),
+  carpetL: bumped(tile(256, 1.4, (c) => { c.fillStyle = "#d9d1c3"; c.fillRect(0, 0, 256, 256); speck(c, 9000, .07); }), { roughness: 1 }, 1.3)
 };
 
 /* ---------- building blocks ---------- */
@@ -310,6 +348,12 @@ const H = 2.7, T = .14;                    // ceiling height, wall thickness
 const solids = [];                          // {x1,x2,z1,z2,los} for collision and line of sight
 const DOORWAYS = [];                        // {ax,c,a,b} every door opening, filled in by wall() from the same door(a,b) data
 const world = new THREE.Group(); scene.add(world);
+// The loose pieces inside each house sit in a group of their own. The renderer cannot tell that a wall is in the way,
+// so a house the player is nowhere near keeps its welded shell and has its contents switched off. See cull().
+const inside = { resale: new THREE.Group(), model: new THREE.Group() }; world.add(inside.resale, inside.model);
+let into = world;                           // where box(), put() and plane() add a piece that names no parent
+function cull(x) { const r = x < 27, m = x > 21;   // the resale lot ends at its patio fence, x 21. The model home starts at x 32.
+  if (inside.resale.visible !== r || inside.model.visible !== m) { inside.resale.visible = r; inside.model.visible = m; renderer.shadowMap.needsUpdate = true; } }
 let perRun = new THREE.Group(); scene.add(perRun);
 const hard = (x, z, w, d, los) => solids.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2, los: !!los });
 
@@ -334,10 +378,10 @@ const mats = new Map();
 function mat(color, o) { const k = color + JSON.stringify(o || {}); if (!mats.has(k)) mats.set(k, std(Object.assign({ color }, o || {}))); return mats.get(k); }
 const unit = new THREE.BoxGeometry(1, 1, 1);
 function box(w, h, d, x, y, z, color, o = {}) {
-  const m = new THREE.Mesh(unit, o.mat || mat(color)); m.scale.set(w, h, d); m.position.set(x, y, z); if (o.ry) m.rotation.y = o.ry; m.castShadow = !o.flat; m.receiveShadow = true; (o.parent || world).add(m);
+  const m = new THREE.Mesh(unit, o.mat || mat(color)); m.scale.set(w, h, d); m.position.set(x, y, z); if (o.ry) m.rotation.y = o.ry; m.castShadow = !o.flat; m.receiveShadow = true; (o.parent || into).add(m);
   if (o.solid) hard(x, z, w, d, o.los); return m;
 }
-function put(geo, material, x, y, z, o = {}) { const m = new THREE.Mesh(geo, typeof material === "string" ? M[material] : material); m.position.set(x, y, z); if (o.rx) m.rotation.x = o.rx; if (o.ry) m.rotation.y = o.ry; if (o.rz) m.rotation.z = o.rz; if (o.s) m.scale.set(o.s[0], o.s[1], o.s[2]); m.castShadow = !o.flat; m.receiveShadow = true; m.userData.brk = !o.flat && !o.keep; (o.parent || world).add(m); return m; }
+function put(geo, material, x, y, z, o = {}) { const m = new THREE.Mesh(geo, typeof material === "string" ? M[material] : material); m.position.set(x, y, z); if (o.rx) m.rotation.x = o.rx; if (o.ry) m.rotation.y = o.ry; if (o.rz) m.rotation.z = o.rz; if (o.s) m.scale.set(o.s[0], o.s[1], o.s[2]); m.castShadow = !o.flat; m.receiveShadow = true; m.userData.brk = !o.flat && !o.keep; (o.parent || into).add(m); return m; }
 const cyl = (r, h, n = 16, r2) => new THREE.CylinderGeometry(r2 ?? r, r, h, n);
 const ball = (r, d = 1) => new THREE.IcosahedronGeometry(r, d);
 /** A box with rounded corners, for anything soft: cushions, pillows, mattresses. */
@@ -349,7 +393,7 @@ function soft(w, h, d, r, material, x, y, z, o = {}) {
 }
 function plane(w, h, tex, x, y, z, o = {}) {
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), std({ map: tex || null, color: o.color ?? 0xffffff, transparent: !!o.alpha, side: o.double ? THREE.DoubleSide : THREE.FrontSide, depthWrite: !o.alpha, roughness: .9, envMapIntensity: .3, polygonOffset: true, polygonOffsetFactor: -2 }));
-  m.position.set(x, y, z); if (o.rx != null) m.rotation.x = o.rx; if (o.ry != null) m.rotation.y = o.ry; m.receiveShadow = true; (o.parent || world).add(m); return m;
+  m.position.set(x, y, z); if (o.rx != null) m.rotation.x = o.rx; if (o.ry != null) m.rotation.y = o.ry; if (o.rz != null) m.rotation.z = o.rz; m.receiveShadow = true; (o.parent || into).add(m); return m;
 }
 function sign(lines, w, h, bg, fg, sub) {
   return paint(512, Math.round(512 * h / w), (c, W, Hh) => {
@@ -379,19 +423,22 @@ function wall(ax, c, a, b, open = [], mA = "wall", mB = "wall", inside = 0) {
   part(cur, b, 0, H); base(cur, b); if (b > cur) block(cur, b);
 }
 const door = (a, b) => ({ a, b }), win = (a, b, y0, y1) => ({ a, b, win: 1, y0, y1 });
+/** One line of text that fills its board: street blades, door signs, tags. */
+function label(text, w, h, bg, fg) { return paint(512, Math.max(16, Math.round(512 * h / w)), (c, W, Hh) => { c.fillStyle = bg; c.fillRect(0, 0, W, Hh); c.fillStyle = fg; c.textAlign = "center"; c.textBaseline = "middle"; let s = Hh * .62; c.font = `800 ${s}px Arial, Helvetica, sans-serif`; while (c.measureText(text).width > W * .9) { s *= .94; c.font = `800 ${s}px Arial, Helvetica, sans-serif`; } c.fillText(text, W / 2, Hh * .54); }); }
 function lamp(x, z) { put(cyl(.2, .035, 20), "trim", x, H - .018, z, { flat: 1 }); put(cyl(.16, .02, 20), "glow", x, H - .045, z, { flat: 1 }); }
 function shrub(x, z, s = 1, m = "hedge") { for (const p of [[0, .28, 0, .34], [.22, .2, .1, .26], [-.2, .22, -.08, .28], [.05, .42, -.12, .22]]) put(ball(p[3] * s, 0), m, x + p[0] * s, p[1] * s, z + p[2] * s); }
-function plant(x, z, h = 1.2) { put(cyl(.15, .3, 12, .19), "pot", x, .15, z); for (let i = 0; i < 9; i++) { const a = i * 2.4, r = .1 + (i % 3) * .09; put(new THREE.ConeGeometry(.07, h * (.45 + (i % 4) * .14), 5), "leaf", x + Math.cos(a) * r, .3 + h * .3, z + Math.sin(a) * r, { rz: Math.cos(a) * .5, rx: Math.sin(a) * .5 }); } }
+function plant(x, z, h = 1.2, n = 9) { put(cyl(.15, .3, 12, .19), "pot", x, .15, z); for (let i = 0; i < n; i++) { const a = i * 2.4, r = .1 + (i % 3) * .09; put(new THREE.ConeGeometry(.07, h * (.45 + (i % 4) * .14), 5), "leaf", x + Math.cos(a) * r, .3 + h * .3, z + Math.sin(a) * r, { rz: Math.cos(a) * .5, rx: Math.sin(a) * .5 }); } }
 function art(w, h, x, y, z, ry, cols) { const side = Math.abs(Math.sin(ry)) > .5; box(side ? .03 : w + .08, h + .08, side ? w + .08 : .03, x, y, z, 0x2a2622); plane(w, h, paint(64, 64, (c) => { c.fillStyle = cols[0]; c.fillRect(0, 0, 64, 64); for (let i = 0; i < 7; i++) { c.fillStyle = cols[1 + i % (cols.length - 1)]; c.beginPath(); c.arc(Math.random() * 64, Math.random() * 64, 6 + Math.random() * 16, 0, 7); c.fill(); } }), x + (ry === Math.PI / 2 ? .02 : ry === -Math.PI / 2 ? -.02 : 0), y, z + (ry === 0 ? .02 : ry === Math.PI ? -.02 : 0), { ry }); }
-function bed(x, z, w, len, quilt) {                 // head against +z
-  bx("walnut", w + .1, .28, len + .06, x, .16, z, { solid: 1 }); bx("walnut", w + .1, 1.05, .08, x, .55, z + len / 2 + .02);
+function bed(x, z, w, len, quilt, frame = "walnut") {   // head against +z
+  bx(frame, w + .1, .28, len + .06, x, .16, z, { solid: 1 }); bx(frame, w + .1, 1.05, .08, x, .55, z + len / 2 + .02);
   soft(w, .24, len - .04, .07, "linen", x, .42, z); soft(w + .04, .12, len * .62, .05, quilt, x, .53, z - len * .17);
   for (const s of [-1, 1]) soft(w * .4, .13, .42, .06, "linen", x + s * w * .24, .58, z + len / 2 - .3, { rx: -.12 });
 }
-function nightstand(x, z) { bx("walnut", .46, .5, .4, x, .25, z, { solid: 1 }); put(cyl(.07, .02, 12), "steel", x, .51, z); put(cyl(.012, .3, 6), "steel", x, .66, z); put(cyl(.13, .2, 14, .09), "glow", x, .86, z, { flat: 1 }); }
+function nightstand(x, z, frame = "walnut") { bx(frame, .46, .5, .4, x, .25, z, { solid: 1 }); put(cyl(.07, .02, 12), "steel", x, .51, z); put(cyl(.012, .3, 6), "steel", x, .66, z); put(cyl(.13, .2, 14, .09), "glow", x, .86, z, { flat: 1 }); }
 
 /* =====================================================================================
-   THE HOUSE. One hand-built floor plan, 16 m by 12 m. Front door faces -z.
+   THE RESALE HOUSE. One hand-built floor plan, 16 m by 12 m. Front door faces -z.
+   This function also lays the ground, the street and the far side of it.
 
         -z  street, front yard (spawn)
       +--door--------+--------------+
@@ -429,7 +476,7 @@ function buildHouse() {
   wall("x", 6, 0, 16, [door(3, 4.2), door(11, 12.2)]);
   wall("x", 7.4, 0, 16, [door(2, 2.95), door(6.6, 7.55), door(10, 10.95), door(14, 14.95)]);
   wall("z", 5.5, 7.4, 12); wall("z", 9, 7.4, 12); wall("z", 13, 7.4, 12);
-  for (const l of [[4, 3], [12, 2.2], [12, 4.6], [3.6, 6.7], [8, 6.7], [12.6, 6.7], [2.75, 9.7], [7.25, 9.7], [11, 9.7], [14.5, 9.7]]) lamp(l[0], l[1]);
+  into = inside.resale; for (const l of [[4, 3], [12, 2.2], [12, 4.6], [3.6, 6.7], [8, 6.7], [12.6, 6.7], [2.75, 9.7], [7.25, 9.7], [11, 9.7], [14.5, 9.7]]) lamp(l[0], l[1]); into = world;
 
   // ---- front of the house
   const fd = new THREE.Group(); fd.position.set(2.04, 0, .04); fd.rotation.y = -1.25; world.add(fd);            // the front door, swung open
@@ -440,7 +487,6 @@ function buildHouse() {
   for (const x of [4.6, 5.3, 6, 6.7, 8.4, 9.4, 13.6, 14.6, 15.4]) shrub(x, -.75, .9 + (x % 1) * .4);
   for (const x of [.5, 1]) shrub(x, -.7, .8);
   bx("walnut", .12, 1.1, .12, -1.2, .55, -7.6); bx("black", .5, .24, .24, -1.2, 1.2, -7.6); hard(-1.2, -7.6, .4, .4);                                             // mailbox
-  for (const e of [[-3.1, -3.6, .2, 9], [19.1, -3.6, .2, 9], [8, -8.2, 22.6, .2], [-1.6, -.1, 3.2, .2], [17.6, -.1, 3.2, .2]]) hard(e[0], e[1], e[2], e[3]);
   for (const p of [[-1.7, -2.6, 5.6], [17.5, -3.6, 6.4], [10.2, -6.2, 5], [23.5, 9, 6.2], [-9, 14, 7]]) {
     for (let k = 0; k < 5; k++) put(cyl(.2 - k * .016, p[2] / 5 + .02, 8, .184 - k * .016), "walnut", p[0] + Math.sin(k * .5) * .12, p[2] / 5 * (k + .5), p[1]);
     for (let i = 0; i < 11; i++) { const a = i * Math.PI * 2 / 11, f = new THREE.Group(); f.position.set(p[0] + Math.sin(2.5) * .12, p[2], p[1]); f.rotation.y = a; world.add(f); for (let k = 0; k < 3; k++) { const l = put(new THREE.BoxGeometry(.4 - k * .1, .03, .85), "leaf", 0, -k * k * .16, .45 + k * .78, { parent: f, rx: .22 + k * .34 }); } }
@@ -458,7 +504,8 @@ function buildHouse() {
   for (const x of [.72, 1.44]) for (const y of [1.87, 1.19]) bx("steel", .012, .06, .012, x, y, -3.6);
   hard(.98, -3.6, 1.2, .3);   // post and panels only, so nothing solid is near the walk from the kerb to the door
 
-  // ---- living room
+  // ---- living room. From here to the garage, loose pieces go in the house's inside group.
+  into = inside.resale;
   bx("sofa", 2.4, .3, .95, 6.1, .2, 5.28, { solid: 1 }); bx("sofa", 2.4, .62, .2, 6.1, .56, 5.74); for (const x of [4.98, 7.22]) soft(.22, .5, .95, .07, "sofa", x, .42, 5.28);
   for (const x of [5.42, 6.1, 6.78]) { soft(.66, .17, .72, .06, "sofa", x, .43, 5.2); soft(.62, .4, .17, .07, "sofa", x, .7, 5.6, { rx: -.16 }); }
   soft(.42, .36, .13, .06, "blue", 5.3, .68, 5.42, { rx: -.3, ry: .2 }); soft(.4, .34, .13, .06, mat(0xd9a441, { roughness: 1 }), 6.95, .67, 5.42, { rx: -.3, ry: -.2 });
@@ -476,7 +523,7 @@ function buildHouse() {
   art(.55, .7, 7.9, 1.55, 5.2, -Math.PI / 2, ["#e9dfcc", "#c0392b", "#1f5fa8", "#e8a838"]);
 
   // ---- kitchen
-  bx("cab", 6.4, .88, .62, 12.2, .44, .4, { solid: 1 }); bx("stone", 6.5, .045, .68, 12.2, .905, .42);
+  bx("cab", 6.4, .88, .62, 12.2, .44, .4, { solid: 1 }); bx("stone", 6.5, .045, .68, 12.2, .905, .42); hard(15.665, .4, .53, .62);   // the notch between the counter end and the wall was a hair narrower than a walker: closed
   bx("tile", 1.95, .55, .02, 9.975, 1.21, .085); bx("tile", 2.35, .55, .02, 14.225, 1.21, .085); bx("tile", 2.1, .18, .02, 12, 1.025, .085);             // backsplash: full height beside the window, a strip under its sill
   bx("cab", 1.9, .72, .34, 9.95, 2.2, .26); bx("cab", 2.3, .72, .34, 14.25, 2.2, .26);
   bx("steel", .62, .02, .44, 12, .93, .42); bx("black", .54, .14, .36, 12, .86, .42); put(cyl(.016, .26, 8), "steel", 12, 1.06, .2); put(cyl(.014, .16, 8), "steel", 12, 1.18, .27, { rx: Math.PI / 2 });   // sink and tap
@@ -504,7 +551,7 @@ function buildHouse() {
 
   // ---- bathroom
   bx("ceramic", 2.6, .56, .82, 7.3, .28, 11.5, { solid: 1 }); bx("black", 2.36, .02, .6, 7.3, .565, 11.5); put(cyl(.018, .2, 8), "steel", 8.45, .68, 11.5);
-  bx("cab", .5, .82, 1.6, 8.66, .41, 8.8, { solid: 1 }); bx("stone", .56, .045, 1.7, 8.66, .845, 8.8); put(cyl(.19, .05, 20, .15), "ceramic", 8.62, .885, 8.8); put(cyl(.014, .18, 8), "steel", 8.84, .96, 8.8);
+  bx("cab", .5, .82, 1.6, 8.66, .41, 8.8, { solid: 1 }); hard(8.66, 7.735, .5, .53); bx("stone", .56, .045, 1.7, 8.66, .845, 8.8); put(cyl(.19, .05, 20, .15), "ceramic", 8.62, .885, 8.8); put(cyl(.014, .18, 8), "steel", 8.84, .96, 8.8);
   bx("walnut", .03, .95, 1.25, 8.925, 1.62, 8.8); bx("steel", .012, .85, 1.15, 8.9, 1.62, 8.8);                                                           // mirror
   put(cyl(.19, .36, 18, .15), "ceramic", 5.92, .2, 9.9); bx("ceramic", .42, .05, .46, 5.92, .41, 9.9); bx("ceramic", .42, .4, .18, 5.92, .58, 10.22); hard(5.92, 10, .46, .7);
   bx("steel", .02, .02, .7, 5.62, 1.2, 8.3); soft(.06, .6, .5, .025, "blue", 5.66, .94, 8.3);                                                             // towel
@@ -523,6 +570,7 @@ function buildHouse() {
   for (const x of [13.42]) { bx("white", .6, .86, .62, x, .43, 7.8, { solid: 1 }); put(cyl(.2, .02, 22), "black", x, .5, 8.115, { rx: Math.PI / 2 }); put(cyl(.15, .025, 22), "glass", x, .5, 8.12, { rx: Math.PI / 2, flat: 1 }); }
 
   // ---- patio
+  into = world;
   put(cyl(.6, .04, 26), "oak", 19, .73, 3); put(cyl(.05, .72, 10), "black", 19, .36, 3); put(cyl(.3, .03, 16), "black", 19, .015, 3); hard(19, 3, 1.1, 1.1);
   put(cyl(.025, 2.3, 8), "steel", 19, 1.6, 3); put(new THREE.ConeGeometry(1.5, .5, 10), mat(0xc9553b, { roughness: 1 }), 19, 2.55, 3);
   for (const a of [0, 1.57, 3.14, 4.71]) { const x = 19 + Math.cos(a) * 1.05, z = 3 + Math.sin(a) * 1.05; soft(.44, .07, .44, .03, "linen", x, .45, z); for (const k of [[-.18, -.18], [.18, -.18], [-.18, .18], [.18, .18]]) bx("black", .03, .42, .03, x + k[0], .21, z + k[1]); soft(.44, .42, .05, .02, "black", x + Math.cos(a) * .22, .7, z + Math.sin(a) * .22, { ry: -a + Math.PI / 2 }); hard(x, z, .44, .44); }
@@ -530,17 +578,252 @@ function buildHouse() {
   for (const z of [.3, 5.7]) { bx("walnut", 1.6, .4, .45, 20.3, .2, z, { solid: 1 }); shrub(19.8, z, .8); shrub(20.4, z, 1); shrub(20.9, z, .7); }
   bx("black", .7, .8, .5, 16.6, .4, .5, { solid: 1 }); bx("steel", .74, .1, .54, 16.6, .86, .5);
 
-  for (const k in batches) batches[k].build();
-  renderer.shadowMap.needsUpdate = true;
 }
 buildHouse();
 DOORWAYS.find((d) => d.ax === "x" && d.c === 0).far = 6.5;   // the front door: doorway help starts at the kerb, not two steps from the door
 
-/* ---------- the bot's road map: door centres and room centres, joined where you can walk ---------- */
+/* =====================================================================================
+   THE STREET. The sidewalk joins the resale house to the builder's model home, about
+   ten seconds away on foot. The player can use both front yards and the sidewalk
+   between them. The road, the back yards and the far side of the street are scenery.
+   ===================================================================================== */
+const MX = 32;                                   // where the model home starts along the street. It is 13 m wide and 10 m deep.
+const feathers = [];                             // feather flags, so the frame loop can make them flutter
+const buntP = [], buntC = [];                    // every pennant on every string, welded into one mesh
+function bunting(x1, y1, z1, x2, y2, z2, n, sag) {
+  const cols = [[.1, .42, .4], [.85, .3, .1], [.9, .6, .15], [1, 1, 1]], dx = x2 - x1, dz = z2 - z1, len = Math.hypot(dx, dz), ux = dx / len, uz = dz / len, w = len / n * .4;
+  for (let i = 0; i < n; i++) { const t = (i + .5) / n, x = x1 + dx * t, z = z1 + dz * t, y = y1 + (y2 - y1) * t - sag * 4 * t * (1 - t), c = cols[i % 4]; buntP.push(x - ux * w, y, z - uz * w, x + ux * w, y, z + uz * w, x, y - .36, z); for (let k = 0; k < 3; k++) buntC.push(c[0], c[1], c[2]); }
+}
+function feather(x, z, col, word, fg = "#ffffff") {
+  put(cyl(.022, 4.7, 6), "steel", x, 2.35, z, { keep: 1 }); hard(x, z, .16, .16);
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.userData.ry = g.rotation.y = (feathers.length * .37) % 1 - .5; world.add(g); feathers.push(g);
+  plane(.72, 3.4, paint(96, 448, (c) => { c.fillStyle = col; c.beginPath(); c.moveTo(0, 448); c.lineTo(0, 60); c.quadraticCurveTo(4, 2, 60, 6); c.quadraticCurveTo(96, 40, 92, 448); c.closePath(); c.fill(); c.fillStyle = fg; c.textAlign = "center"; c.textBaseline = "middle"; c.font = "900 56px Arial, Helvetica, sans-serif"; [...word].forEach((ch, i) => c.fillText(ch, 46, 104 + i * (290 / Math.max(1, word.length - 1)))); }), .38, 2.95, 0, { parent: g, alpha: 1, double: 1 });
+}
+function tree(x, z, h = 3.2) { put(cyl(.13, h, 8, .09), "walnut", x, h / 2, z); for (const p of [[0, h + .5, 0, 1.15], [.62, h + .1, .3, .8], [-.55, h + .2, -.2, .85], [.1, h + 1.15, -.3, .7]]) put(ball(p[3], 1), "leaf", x + p[0], p[1], z + p[2]); hard(x, z, .4, .4); }
+/** A roof with a ridge: two slopes, and the two wall triangles under them. Returns [slopes, ends]. */
+function gable(w, d, h) {
+  const L = Math.hypot(h, d / 2), s = new THREE.BufferGeometry(), e = new THREE.BufferGeometry(), a = w / 2, b = d / 2;
+  s.setAttribute("position", new THREE.Float32BufferAttribute([-a, 0, -b, -a, h, 0, a, 0, -b, -a, h, 0, a, h, 0, a, 0, -b, a, 0, b, a, h, 0, -a, 0, b, a, h, 0, -a, h, 0, -a, 0, b], 3));
+  s.setAttribute("uv", new THREE.Float32BufferAttribute([-a, 0, -a, L, a, 0, -a, L, a, L, a, 0, a, 0, a, L, -a, 0, a, L, -a, L, -a, 0], 2)); s.computeVertexNormals();
+  e.setAttribute("position", new THREE.Float32BufferAttribute([-a, 0, -b, -a, 0, b, -a, h, 0, a, 0, -b, a, h, 0, a, 0, b], 3));
+  e.setAttribute("uv", new THREE.Float32BufferAttribute([-b, 0, b, 0, 0, h, -b, 0, 0, h, b, 0], 2)); e.computeVertexNormals();
+  return [s, e];
+}
+function ridgeRoof(w, d, h, x, y, z, ry = 0) { const g = gable(w, d, h); for (const [geo, m] of [[g[0], M.roofS], [g[1], M.stuccoL]]) { const r = new THREE.Mesh(geo, m); r.position.set(x, y, z); r.rotation.y = ry; r.castShadow = r.receiveShadow = true; world.add(r); } }
+
+function buildStreet() {
+  // ---- more ground to the east, so the horizon past the model home is not an edge
+  bx("grass", 44, .2, 110, 90, -.12, 6); bx("asphalt", 44, .2, 7, 90, -.105, -12.4); bx("concrete", 44, .2, 1.5, 90, -.09, -8.1); bx("concrete", 44, .14, .25, 90, -.07, -8.95);
+  for (let x = 70; x < 110; x += 6) bx("trim", 2.6, .02, .14, x, -.004, -12.4);
+  // ---- the invisible edges of the walkable world: both front yards and the sidewalk, from the curb to the house fronts
+  for (const e of [[-3.1, -4.1, .2, 10], [MX + 16.1, -4.1, .2, 10], [22.5, -9, 51.4, .2], [-1.6, -.1, 3.2, .2], [26.45, -.1, 11.1, .2], [MX + 14.6, -.1, 3.2, .2]]) hard(e[0], e[1], e[2], e[3]);   // the patio fence closes x 16 to 21
+
+  // ---- things worth walking past
+  // the corner street sign
+  bx("steel", .07, 2.95, .07, 22.6, 1.475, -7.05); hard(22.6, -7.05, .22, .22);
+  const s1 = label("ESCROW RUN", .96, .2, "#1e6b3c", "#ffffff"), s2 = label("DISCLOSURE DR", .96, .2, "#1e6b3c", "#ffffff");
+  box(1, .23, .025, 22.6, 2.82, -7.05, 0x1e6b3c); plane(.96, .2, s1, 22.6, 2.82, -7.066, { ry: Math.PI }); plane(.96, .2, s1, 22.6, 2.82, -7.034);
+  box(.025, .23, 1, 22.6, 2.57, -7.05, 0x1e6b3c); plane(.96, .2, s2, 22.584, 2.57, -7.05, { ry: -Math.PI / 2 }); plane(.96, .2, s2, 22.616, 2.57, -7.05, { ry: Math.PI / 2 });
+  // a fire hydrant
+  { const y = mat(0xe3b81f, { roughness: .6 }); put(cyl(.1, .5, 10), y, 20.3, .25, -7.1); put(ball(.11, 1), y, 20.3, .52, -7.1); put(cyl(.05, .3, 8), y, 20.3, .32, -7.1, { rx: Math.PI / 2 }); hard(20.3, -7.1, .26, .26); }
+  // the builder's weekend sign: the board faces people walking up from the resale house
+  for (const z of [-6.95, -5.85]) bx("white", .08, 1.9, .08, 26.6, .95, z); hard(26.6, -6.4, .16, 1.3);
+  box(.04, .95, 1.3, 26.6, 1.42, -6.4, 0xffffff);
+  plane(1.24, .9, paint(512, 372, (c) => { c.fillStyle = "#2f8f86"; c.fillRect(0, 0, 512, 372); c.fillStyle = "#fff"; c.textAlign = "center"; c.font = "800 62px Arial, Helvetica, sans-serif"; c.fillText("NEW HOMES", 256, 78); c.font = "800 44px Arial, Helvetica, sans-serif"; c.fillText("MODEL HOME OPEN", 256, 140); c.beginPath(); c.moveTo(256, 172); c.lineTo(340, 262); c.lineTo(290, 262); c.lineTo(290, 344); c.lineTo(222, 344); c.lineTo(222, 262); c.lineTo(172, 262); c.closePath(); c.fill(); }), 26.576, 1.42, -6.4, { ry: -Math.PI / 2 });
+  plane(1.24, .9, sign(["OPEN HOUSE", "this way", "SantaClaritaOpenHouses.com"], 1.24, .9, "#c0392b", "#ffffff"), 26.624, 1.42, -6.4, { ry: Math.PI / 2 });
+  // a bench, three trees and some planting on the lawn between the lots
+  bx("oak", 1.6, .06, .45, 24.6, .45, -6.85, { solid: 1 }); bx("oak", 1.6, .4, .05, 24.6, .72, -6.63); for (const x of [23.9, 25.3]) bx("black", .06, .44, .42, x, .22, -6.85);
+  tree(24.2, -3.2); tree(28.9, -4.6, 3.6); tree(29.5, -2.4, 2.9);
+  for (const p of [[22.2, -1.3, 1.1], [23, -1.1, .9], [26.6, -2, 1.2], [27.4, -1.7, .9], [27, -2.6, .8]]) shrub(p[0], p[1], p[2]);
+  feather(23.6, -7.05, "#2f8f86", "NEW"); feather(29.6, -7.05, "#e8743b", "OPEN");
+  // a car parked at the curb
+  { const paintJob = mat(0x2e6f8e, { roughness: .25, envMapIntensity: 1.3 }), dark = mat(0x18222c, { roughness: .12, envMapIntensity: 1.5 });
+    box(4.3, .6, 1.78, 29, .64, -10.25, 0, { mat: paintJob }); box(2.3, .5, 1.62, 28.85, 1.18, -10.25, 0, { mat: dark }); box(2.36, .06, 1.66, 28.85, 1.45, -10.25, 0, { mat: paintJob });
+    for (const x of [27.65, 30.35]) for (const z of [-11.1, -9.4]) put(cyl(.33, .2, 16), "black", x, .33, z, { rx: Math.PI / 2, keep: 1 });
+    box(.05, .14, 1.5, 31.16, .72, -10.25, 0xfff1cf); box(.05, .12, 1.5, 26.84, .74, -10.25, 0xb3261c); }
+  // ---- the next phase, past the model: a slab, some framing and a sign. Scenery only.
+  bx("concrete", 11, .16, 8, MX + 24, -.03, 5);
+  for (let i = 0; i < 6; i++) for (const z of [1.2, 8.8]) bx("oak", .09, 2.6, .09, MX + 18.8 + i * 2.08, 1.35, z);
+  for (const z of [1.2, 8.8]) bx("oak", 10.6, .09, .14, MX + 24, 2.7, z);
+  for (const x of [MX + 18.8, MX + 29.2]) { bx("oak", .14, .09, 7.7, x, 2.7, 5); for (const z of [3.1, 5, 6.9]) bx("oak", .09, 2.6, .09, x, 1.35, z); }
+  for (const x of [MX + 20.9, MX + 23, MX + 25, MX + 27.1]) bx("oak", .07, .07, 7.7, x, 2.78, 5);
+  for (const z of [-3.6, -1.9]) bx("white", .09, 2.2, .09, MX + 17.2, 1.1, z); box(.04, 1, 1.9, MX + 17.2, 1.65, -2.75, 0xffffff);
+  plane(1.82, .92, sign(["PHASE 2", "COMING SOON"], 1.82, .92, "#1f5a5e", "#ffffff"), MX + 17.176, 1.65, -2.75, { ry: -Math.PI / 2 });
+}
+
+/* =====================================================================================
+   THE MODEL HOME. A builder's model, 13 m by 10 m, new and staged. Front door faces -z.
+   The garage has been turned into the sales office, which is how most models are run.
+
+        -z  sidewalk, paved court, feather flags (spawn for the model level)
+      +--glass doors--+--door----------------+-----------+
+      | SALES OFFICE  : ENTRY   GREAT ROOM   .  KITCHEN  |
+      |  (the garage) d         open to the kitchen      |
+      +---------------+- -+----- -+------ -+-------------+
+      |  PRIMARY BED      d  BATH |   OFFICE / BED 2     |
+      +-------------------+-------+----------------------+   +z
+   ===================================================================================== */
+function buildModel() {
+  const o = MX, B = (n, w, h, d, u, y, v, k) => bx(n, w, h, d, o + u, y, v, k);
+  const brass = mat(0xc9a15a, { metalness: .9, roughness: .3 }), terra = mat(0xc97b56, { roughness: 1 }), TEAL = 0x1f5a5e;
+  const rug = (w, d, u, v, a, b) => plane(w, d, paint(128, 128, (c) => { c.fillStyle = a; c.fillRect(0, 0, 128, 128); c.strokeStyle = b; c.lineWidth = 3; c.strokeRect(7, 7, 114, 114); c.lineWidth = 1.5; for (let i = 0; i < 8; i++) { c.beginPath(); c.moveTo(18 + i * 13, 18); c.lineTo(18 + i * 13, 110); c.stroke(); } }), o + u, .012, v, { rx: -Math.PI / 2 });
+
+  // ---- the lot: a paved court from the sidewalk to both doors, a porch, planting
+  B("paver", 8.6, .2, 7.4, 4.1, -.085, -3.7); B("concrete", 2.8, .22, 1.5, 5.7, -.08, -.75);
+  for (const u of [4.6, 6.8]) B("trim", .16, 2.5, .16, u, 1.25, -1.35); B("trim", 2.6, .16, 1.7, 5.7, 2.58, -.72); B("roofS", 2.8, .1, 1.9, 5.7, 2.7, -.72);
+  B("walnut", 1.1, .02, .6, 5.7, .032, -.5);
+  B("walnut", 5.9, .24, .5, 9.95, .09, -.45);
+  for (const u of [7.4, 8.3, 9.2, 10.5, 11.4, 12.4]) shrub(o + u, -.5, .85 + (u % 1) * .4); for (const u of [.4, .95, 3.4]) shrub(o + u, -.6, .8);
+  for (const u of [7.85, 9.85, 11.9]) for (let i = 0; i < 3; i++) put(ball(.07, 0), mat([0xf2c14e, 0xe8743b, 0xffffff][i], { roughness: .8 }), o + u + i * .11, .3 + (i % 2) * .05, -.78);
+  for (const u of [.25, 7.95]) { put(cyl(.26, .5, 14, .32), "pot", o + u, .25, -6.95); put(ball(.36, 1), "hedge", o + u, .72, -6.95); hard(o + u, -6.95, .6, .6); }
+
+  // ---- floors, ceiling, roof: a long ridge, with a second gable over the old garage
+  B("tile", 4.2, .1, 5.6, 2.1, -.05, 2.8); B("plank", 8.8, .1, 5.6, 8.6, -.05, 2.8);
+  B("carpetL", 5.5, .1, 4.4, 2.75, -.05, 7.8); B("tile", 2.7, .1, 4.4, 6.85, -.05, 7.8); B("plank", 4.8, .1, 4.4, 10.6, -.05, 7.8);
+  B("ceil", 13.2, .18, 10.2, 6.5, H + .09, 5); B("trim", 14.2, .16, 11.2, 6.5, H + .26, 5);
+  ridgeRoof(14.8, 11.8, 2.1, o + 6.5, H + .34, 5); ridgeRoof(5.6, 5.4, 1.45, o + 2.1, H + .34, 2, Math.PI / 2);
+  B("trim", .5, .5, .04, 2.1, H + 1.05, -.82);                                                                           // the vent in the front gable
+
+  // ---- walls. Outside faces are a pale stucco, inside faces are paint.
+  wall("x", 0, o, o + 13, [door(o + 1.3, o + 2.9), door(o + 5.2, o + 6.2), win(o + 6.7, o + 8.7, .5, 2.2), win(o + 10.2, o + 11.8, 1.12, 2.1)], "stuccoL", "wall", 1);
+  wall("x", 10, o, o + 13, [win(o + .45, o + 1.25, 1, 2.1), win(o + 3.35, o + 4.15, 1, 2.1), win(o + 6.75, o + 7.75, 1.5, 2.1), win(o + 10.3, o + 12.3, .95, 2.1)], "wall", "stuccoL", -1);
+  wall("z", o, 0, 10, [win(7.3, 8.7, .95, 2.1)], "stuccoL", "wall", 1);
+  wall("z", o + 13, 0, 10, [win(3.7, 5, .95, 2.1)], "wall", "stuccoL", -1);
+  wall("z", o + 4.2, 0, 5.6, [door(4, 5)]);
+  wall("x", 5.6, o, o + 13, [door(o + 4.4, o + 5.3), door(o + 6.4, o + 7.3), door(o + 8.6, o + 9.5)]);
+  wall("z", o + 5.5, 5.6, 10, [door(7.6, 8.5)]); wall("z", o + 8.2, 5.6, 10);
+  into = inside.model; for (const l of [[2.1, 1.6], [2.1, 4.2], [6.2, 2.9], [8.2, 1.1], [10.4, 1.3], [11.8, 4.3], [2.7, 7.8], [6.85, 7.6], [10.6, 7.8]]) lamp(o + l[0], l[1]); into = world;
+
+  // ---- the front
+  const fd = new THREE.Group(); fd.position.set(o + 5.24, 0, .04); fd.rotation.y = -1.25; world.add(fd);            // the front door, swung open
+  box(.92, 2.04, .045, .46, 1.02, 0, TEAL, { parent: fd }); for (const y of [.55, 1.5]) box(.6, .7, .055, .46, y, 0, 0x2a7377, { parent: fd }); put(ball(.035, 1), brass, .84, 1, .05, { parent: fd });
+  for (const s of [1, -1]) {                                                                                              // the sales office: glass doors where the garage door was, propped open
+    const gd = new THREE.Group(); gd.position.set(o + 2.1 - s * .76, 0, -.06); gd.rotation.y = s > 0 ? 1.9 : 1.25; world.add(gd);
+    box(.76, 2.04, .025, .38, 1.02, 0, 0, { parent: gd, mat: M.glass, flat: 1 }); for (const y of [.03, 2.02]) box(.76, .06, .04, .38, y, 0, 0x2b2f36, { parent: gd }); box(.03, .4, .05, s > 0 ? .68 : .08, 1.05, 0, 0xc9ced3, { parent: gd });
+  }
+  box(2.06, .44, .03, o + 2.1, 2.45, -.085, 0xffffff); plane(2, .38, label("SALES OFFICE", 2, .38, "#1f5a5e", "#ffffff"), o + 2.1, 2.45, -.102, { ry: Math.PI });
+  for (const u of [1.05, 3.15, 4.95, 6.45]) put(cyl(.05, .22, 10, .07), "glow", o + u, 1.95, -.13, { flat: 1 });                // door lights
+  // The registration stand. It sits between the two doors, so nobody reaches the front door without passing it.
+  B("black", .06, 1, .06, 4.15, .5, -1.15); B("black", .42, .03, .32, 4.15, .015, -1.15); hard(o + 4.15, -1.15, .44, .34);
+  { const rg = new THREE.Group(); rg.position.set(o + 4.15, 1.3, -1.17); rg.rotation.x = .2; world.add(rg);
+    box(.64, .84, .03, 0, 0, 0, 0xffffff, { parent: rg });
+    plane(.6, .8, paint(384, 512, (c) => { c.fillStyle = "#fffdf8"; c.fillRect(0, 0, 384, 512); c.fillStyle = "#1f5a5e"; c.fillRect(0, 0, 384, 104); c.fillStyle = "#fff"; c.textAlign = "center"; c.font = "800 30px Arial, Helvetica, sans-serif"; c.fillText("WORKING WITH", 192, 44); c.fillText("AN AGENT?", 192, 84); c.fillStyle = "#17120a"; c.font = "900 46px Arial, Helvetica, sans-serif"; c.fillText("REGISTER", 192, 176); c.fillText("YOUR AGENT", 192, 228); c.fillText("HERE", 192, 280); c.fillStyle = "#c0392b"; c.font = "800 27px Arial, Helvetica, sans-serif"; c.fillText("First visit.", 192, 346); c.fillText("Before you sign in.", 192, 382); c.strokeStyle = "#1f5a5e"; c.lineWidth = 5; c.strokeRect(92, 412, 200, 70); c.fillStyle = "#1f5a5e"; c.font = "700 20px Arial, Helvetica, sans-serif"; c.fillText("AGENT CARDS", 192, 454); }), 0, 0, -.018, { parent: rg, ry: Math.PI }); }
+  // The sales office A-frame, which says to start at the desk.
+  { const aTex = sign(["SALES OFFICE", "START HERE", "Sign in at the desk"], 1, 1.25, "#1f5a5e", "#ffffff"), af = new THREE.Group(); af.position.set(o + .55, 0, -2.5); af.rotation.y = Math.PI - .3; world.add(af);
+    for (const s of [1, -1]) { const b = box(.99, 1.26, .03, 0, .63, s * .19, 0xffffff, { parent: af }); b.rotation.x = -s * .26; const a = plane(.93, 1.2, aTex, 0, .63, s * .215, { parent: af, ry: s > 0 ? 0 : Math.PI }); a.rotation.x = -s * .26; } hard(o + .55, -2.5, 1, .8); }
+  // MODEL HOME OPEN, on posts by the sidewalk, and a blade sign for people walking up from the resale house.
+  { const t = sign(["MODEL HOME OPEN", "Tour it today", "Sales office on site"], 2.5, .95, "#1f5a5e", "#ffffff");
+    for (const u of [10.05, 12.55]) B("white", .1, 2.1, .1, u, 1.05, -6.3); box(2.6, 1.05, .04, o + 11.3, 1.52, -6.3, 0xffffff); plane(2.5, .95, t, o + 11.3, 1.52, -6.325, { ry: Math.PI }); plane(2.5, .95, t, o + 11.3, 1.52, -6.275); hard(o + 11.3, -6.3, 2.7, .2);
+    B("white", .1, 2.4, .1, -1.9, 1.2, -7.02); box(.04, .9, 1.5, o - 1.9, 1.85, -6.3, 0xffffff); hard(o - 1.9, -6.5, .2, 1.3);
+    plane(1.42, .82, sign(["MODEL HOME", "OPEN TODAY"], 1.42, .82, "#1f5a5e", "#ffffff"), o - 1.925, 1.85, -6.3, { ry: -Math.PI / 2 }); plane(1.42, .82, sign(["THANK YOU", "FOR VISITING"], 1.42, .82, "#1f5a5e", "#ffffff", true), o - 1.875, 1.85, -6.3, { ry: Math.PI / 2 }); }
+  // A brochure box on a post at the edge of the court.
+  B("white", .08, 1, .08, 8.9, .5, -6.2); B("oak", .3, .26, .16, 8.9, 1.1, -6.2); hard(o + 8.9, -6.2, .3, .2);
+  feather(o - .7, -6.9, "#2f8f86", "OPEN"); feather(o + 9.6, -6.9, "#e8743b", "MODEL"); feather(o + 13.3, -6.9, "#2f8f86", "HOMES"); feather(o - .7, -3.2, "#e8743b", "TOUR"); feather(o + 14.6, -3.2, "#f4f1ea", "OPEN", "#1f5a5e");
+  bunting(o - .7, 4.05, -6.9, o + 9.6, 4.05, -6.9, 26, .75); bunting(o - .7, 4.05, -6.9, o - .35, 3.02, -.85, 14, .5); bunting(o + 9.6, 4.05, -6.9, o + 8.6, 3.02, -.85, 14, .5);
+
+  // ---- the sales office, in what was the garage. From here on, loose pieces go in the model's inside group.
+  into = inside.model;
+  B("oak", 1.6, .74, .7, 2.05, .37, 2.95, { solid: 1 }); B("quartz", 1.7, .04, .8, 2.05, .76, 2.95);                     // the desk faces the doors: the first thing a visitor walks up to
+  B("black", .5, .32, .03, 2.5, 1.02, 3.12); B("black", .16, .1, .12, 2.5, .83, 3.14); B("black", .34, .015, .13, 2.45, .788, 2.98);
+  box(.52, .2, .02, o + 1.55, .88, 2.64, 0xffffff); plane(.5, .18, label("WELCOME. PLEASE SIGN IN.", .5, .18, "#ffffff", "#1f5a5e"), o + 1.55, .88, 2.628, { ry: Math.PI });
+  box(.25, .015, .33, o + 2.2, .788, 2.74, 0x5a4632);                                                                     // the guest card on its clipboard
+  plane(.22, .3, paint(220, 300, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 220, 300); c.fillStyle = "#1f5a5e"; c.font = "800 24px Arial"; c.fillText("GUEST CARD", 16, 36); c.fillStyle = "#17120a"; c.font = "600 16px Arial"; ["Name", "Phone", "Email", "Agent (if any)"].forEach((l, i) => { c.fillText(l, 16, 78 + i * 56); c.fillStyle = "#b9b4a8"; c.fillRect(16, 90 + i * 56, 188, 2); c.fillStyle = "#17120a"; }); }), o + 2.2, .797, 2.74, { rx: -Math.PI / 2, rz: Math.PI });   // rz: the top of the card is away from the visitor, so it reads the right way up from the doors
+  put(cyl(.007, .15, 6), "black", o + 2.4, .79, 2.74, { rx: Math.PI / 2, rz: .4 }); put(cyl(.09, .06, 14, .12), "ceramic", o + 1.5, .81, 3.05); for (let i = 0; i < 4; i++) put(ball(.025, 0), mat([0xe84a5f, 0xffd166, 0x7ee0ff, 0xc3f584][i], { roughness: .6 }), o + 1.47 + (i % 2) * .05, .85, 3.03 + (i > 1 ? .05 : 0));
+  soft(.46, .08, .46, .03, "black", o + 2.05, .47, 3.85); put(cyl(.025, .45, 8), "steel", o + 2.05, .23, 3.85); soft(.44, .5, .06, .03, "black", o + 2.05, .78, 4.07); hard(o + 2.05, 3.85, .44, .44);
+  rug(3, 2.2, 2.1, 1.35, "#dfe6e2", "#2f8f86");
+  // the site map, on the wall you face from the desk
+  box(.03, 1.25, 1.9, o + .085, 1.55, 2.1, 0x2a2622);
+  plane(1.8, 1.15, paint(512, 328, (c) => { c.fillStyle = "#f6f1e4"; c.fillRect(0, 0, 512, 328); c.fillStyle = "#1f5a5e"; c.fillRect(0, 0, 512, 40); c.fillStyle = "#fff"; c.font = "800 24px Arial"; c.fillText("SITE MAP", 16, 28); c.strokeStyle = "#c9c2b2"; c.lineWidth = 22; c.beginPath(); c.moveTo(-10, 180); c.bezierCurveTo(140, 150, 330, 215, 530, 176); c.stroke();
+    c.lineWidth = 2; c.font = "700 15px Arial"; for (let i = 0; i < 14; i++) { const x = 20 + (i % 7) * 68, y = i < 7 ? 66 + Math.sin(i) * 5 : 226 + Math.cos(i) * 5; c.fillStyle = i % 5 === 1 ? "#e9d9c2" : "#dfe9d6"; c.fillRect(x, y, 60, 64); c.strokeStyle = "#8d9a86"; c.strokeRect(x, y, 60, 64); c.fillStyle = "#3b4a3f"; c.fillText("Lot " + (i + 1), x + 6, y + 18); if (i % 3 === 0) { c.fillStyle = "#c0392b"; c.font = "800 13px Arial"; c.fillText("SOLD", x + 12, y + 50); c.font = "700 15px Arial"; } } }), o + .104, 1.55, 2.1, { ry: Math.PI / 2 });
+  // brochures on the far wall, a credenza with binders at the back, a wall of finish samples
+  for (const y of [.72, 1.08]) B("oak", .16, .03, 1.7, 4.04, y, 1.75); for (let i = 0; i < 7; i++) for (const y of [.86, 1.22]) B(["blue", "linen", "sage"][(i + (y > 1 ? 1 : 0)) % 3], .02, .25, .18, 4.07, y, 1.05 + i * .235);
+  B("cab", 2, .8, .42, 2.6, .4, 5.3, { solid: 1 }); hard(o + 3.865, 5.3, .53, .42); B("quartz", 2.06, .03, .46, 2.6, .815, 5.3);
+  for (let i = 0; i < 4; i++) B(["blue", "sage", "walnut", "linen"][i], .07, .3, .24, 2.25 + i * .085, .98, 5.34);
+  put(cyl(.1, .16, 12, .13), "ceramic", o + 2.76, .91, 5.3); for (let i = 0; i < 5; i++) put(new THREE.ConeGeometry(.04, .34, 5), "leaf", o + 2.76 + Math.cos(i * 1.3) * .05, 1.12, 5.3 + Math.sin(i * 1.3) * .05, { rz: Math.cos(i * 1.3) * .4, rx: Math.sin(i * 1.3) * .4 });
+  box(.9, .7, .03, o + .9, 1.5, 5.515, 0x2a2622);
+  plane(.84, .64, paint(256, 196, (c) => { c.fillStyle = "#fbf9f4"; c.fillRect(0, 0, 256, 196); c.fillStyle = "#1f5a5e"; c.font = "800 17px Arial"; c.fillText("DESIGN STUDIO", 12, 22); const cols = ["#f4f1ea", "#d9d1c3", "#96a78d", "#3d6166", "#b08a5c", "#6a4a33", "#2f3136", "#e4dfd3", "#c9a15a", "#8f8a80", "#f6f4ef", "#73877f"]; cols.forEach((k, i) => { c.fillStyle = k; c.fillRect(12 + (i % 6) * 40, 34 + Math.floor(i / 6) * 78, 34, 68); c.strokeStyle = "#b9b4a8"; c.strokeRect(12 + (i % 6) * 40, 34 + Math.floor(i / 6) * 78, 34, 68); }); }), o + .9, 1.5, 5.498, { ry: Math.PI });
+  B("black", .08, 1.05, .08, .6, .525, .55); B("black", .34, .03, .34, .6, .015, .55); hard(o + .6, .55, .36, .36);    // the stand for the touch screen
+  plant(o + .45, 5.2, 1.4, 6); hard(o + .45, 5.2, .4, .4);
+
+  // ---- entry and great room
+  B("oak", .36, .04, 1, 4.47, .74, .8); for (const a of [[-.14, -.45], [.14, -.45], [-.14, .45], [.14, .45]]) B("black", .035, .72, .035, 4.47 + a[0], .36, .8 + a[1]); hard(o + 4.47, .8, .36, 1);   // entry table
+  put(cyl(.3, .02, 26), "steel", o + 4.285, 1.6, .8, { rz: Math.PI / 2, flat: 1 }); put(cyl(.09, .2, 14, .06), terra, o + 4.47, .86, .42);
+  rug(1.3, .8, 5.7, .7, "#cfd8d3", "#1f5a5e");
+  B("oak", .42, .46, 1.8, 4.5, .23, 2.9, { solid: 1 }); for (const v of [2.3, 2.9, 3.5]) B("black", .012, .34, .012, 4.715, .23, v);                                                                      // media console under the TV
+  put(cyl(.07, .26, 12, .09), "ceramic", o + 4.5, .59, 3.6); B("sage", .2, .05, .28, 4.5, .485, 3.3); B("linen", .18, .04, .26, 4.5, .53, 3.3);
+  B("cream", .95, .3, 2.4, 7.7, .2, 2.9, { solid: 1 }); B("cream", .2, .62, 2.4, 8.16, .56, 2.9); for (const v of [1.8, 4]) soft(.95, .5, .22, .07, "cream", o + 7.7, .42, v);                          // the sofa, with its back to the kitchen
+  for (const v of [2.22, 2.9, 3.58]) { soft(.72, .17, .66, .06, "cream", o + 7.62, .43, v); soft(.17, .4, .62, .07, "cream", o + 8, .7, v, { rz: -.16 }); }
+  soft(.13, .36, .42, .06, "sage", o + 7.86, .68, 2.12, { rz: -.3, ry: .2 }); soft(.13, .34, .4, .06, terra, o + 7.86, .67, 3.66, { rz: -.3, ry: -.2 }); soft(.13, .3, .36, .06, "blue", o + 7.8, .66, 2.5, { rz: -.35 });
+  soft(.5, .04, .7, .02, "sage", o + 7.5, .535, 3.7);
+  rug(3.3, 3.2, 6.55, 2.9, "#e6e0d2", "#96a78d");
+  B("oak", .62, .05, 1.15, 6.3, .4, 2.9, { solid: 1 }); for (const a of [[-.26, -.5], [.26, -.5], [-.26, .5], [.26, .5]]) B("black", .04, .38, .04, 6.3 + a[0], .19, 2.9 + a[1]);
+  hard(o + 6.6075, 2.9, 1.235, 2.4);                                                                      // the table, the two poufs and the gap up to the sofa are one block. The gap was narrower than a walker and trapped them, and so did the corners either side of it
+  B("sage", .22, .04, .3, 6.3, .445, 3.2); B("linen", .2, .035, .28, 6.3, .482, 3.2); put(cyl(.06, .12, 12), "ceramic", o + 6.3, .485, 3.18 + .2); put(cyl(.16, .02, 18), brass, o + 6.3, .435, 2.45);
+  soft(.5, .36, .5, .12, "sage", o + 6.5, .18, 2.02); soft(.46, .32, .46, .12, terra, o + 6.5, .16, 3.8);                                                                                              // poufs
+  put(cyl(.012, 1.6, 6), "steel", o + 6.45, .8, .2); put(cyl(.12, .02, 12), "steel", o + 6.45, .01, .2); put(cyl(.16, .26, 14, .11), "glow", o + 6.45, 1.66, .2, { flat: 1 });   // floor lamp, tight to the wall. Nobody can stand that close to a wall, so it needs no box, and it snags nobody turning in from the front door
+  plant(o + 8.95, .4, 1.6, 7); hard(o + 8.95, .4, .4, .4);
+  for (const s of [6.56, 8.84]) soft(.24, 2.25, .09, .04, "linen", o + s, 1.3, .13); B("steel", 2.5, .025, .025, 7.7, 2.42, .13);
+  art(.9, .7, o + 11.25, 1.6, 5.52, Math.PI, ["#f3efe6", "#96a78d", "#c97b56", "#1f5a5e"]); art(.5, .65, o + 7.95, 1.75, 5.52, Math.PI, ["#e6e0d2", "#3d6166", "#c9a15a"]);
+
+  // ---- kitchen, open to the great room
+  B("cab", 3.8, .88, .62, 11.1, .44, .4, { solid: 1 }); B("quartz", 3.86, .045, .68, 11.1, .905, .42);
+  B("cab", .62, .88, 1.75, 12.69, .44, 1.585, { solid: 1 }); B("quartz", .68, .045, 1.78, 12.67, .905, 1.6);
+  B("tile", 3.8, .19, .02, 11.1, 1.025, .085); B("tile", .02, .55, 1.75, 12.915, 1.21, 1.585);
+  B("cab", .9, .72, .34, 9.68, 2.2, .26); B("cab", 1, .72, .34, 12.45, 2.2, .26); B("cab", .34, .72, .5, 12.76, 2.2, .98);
+  B("steel", .62, .02, .44, 11, .93, .42); B("black", .54, .14, .36, 11, .86, .42); put(cyl(.016, .26, 8), brass, o + 11, 1.06, .2); put(cyl(.014, .16, 8), brass, o + 11, 1.18, .27, { rx: Math.PI / 2 });
+  B("black", .56, .02, .76, 12.67, .935, 1.75); B("steel", .03, .7, .76, 12.365, .5, 1.75); B("black", .01, .34, .56, 12.348, .5, 1.75); for (const k of [-.27, -.09, .09, .27]) put(cyl(.022, .03, 10), "black", o + 12.35, .84, 1.75 + k, { rz: Math.PI / 2 });
+  B("steel", .5, .12, .8, 12.72, 1.78, 1.75); B("steel", .3, .5, .3, 12.82, 2.1, 1.75);
+  B("steel", .78, 1.92, .85, 12.6, .96, 2.92, { solid: 1 }); B("black", .012, 1.9, .008, 12.205, .96, 2.92); for (const v of [2.86, 2.98]) B("steel", .02, 1.1, .03, 12.19, 1.15, v);
+  B("cabB", 1.8, .88, .9, 10.3, .44, 2.35, { solid: 1 }); B("quartz", 2.1, .05, 1.15, 10.3, .905, 2.4);                                                                                                // the island
+  for (const u of [9.6, 10.2, 10.8]) { put(cyl(.17, .05, 16), "oak", o + u, .68, 3.12); put(cyl(.02, .66, 8), brass, o + u, .33, 3.12); put(cyl(.15, .02, 14), brass, o + u, .02, 3.12); }
+  for (const u of [9.75, 10.85]) { put(cyl(.006, .8, 5), "black", o + u, H - .4, 2.4, { flat: 1 }); put(cyl(.15, .2, 16, .05), brass, o + u, H - .9, 2.4); put(ball(.05, 1), "glow", o + u, H - .98, 2.4, { flat: 1 }); }
+  put(cyl(.17, .07, 18, .1), "oak", o + 10.3, .965, 2.2); for (const f of [[10.25, 2.18, 0xf2c14e], [10.36, 2.23, 0xf2c14e], [10.3, 2.12, 0x7da33a]]) put(ball(.05, 1), mat(f[2], { roughness: .5 }), o + f[0], 1.03, f[1]);
+  B("oak", .3, .02, .42, 10.9, .94, 2.3); B("walnut", .05, .2, .05, 9.4, 1.03, .42); B("ceramic", .14, .22, .14, 12.7, 1.04, .95);
+  put(cyl(.45, .04, 26), "oak", o + 11.9, .73, 4.55); put(cyl(.05, .7, 10), "black", o + 11.9, .36, 4.55); put(cyl(.26, .03, 16), "black", o + 11.9, .015, 4.55); hard(o + 11.9, 4.55, .86, .86);    // a table set for two
+  for (const a of [Math.PI, -Math.PI / 2]) { const x = o + 11.9 + Math.cos(a) * .78, z = 4.55 + Math.sin(a) * .78; soft(.42, .07, .42, .03, "cream", x, .45, z); put(cyl(.02, .42, 6), "black", x, .21, z); soft(.42, .4, .05, .02, "sage", x + Math.cos(a) * .2, .7, z + Math.sin(a) * .2, { ry: -a + Math.PI / 2 }); put(cyl(.12, .012, 16), "ceramic", o + 11.9 + Math.cos(a) * .26, .756, 4.55 + Math.sin(a) * .26); hard(x, z, .42, .42); }
+  put(cyl(.035, .18, 10, .05), "glass", o + 11.72, .84, 4.84, { flat: 1 });
+
+  // ---- primary bedroom
+  bed(o + 2.3, 8.75, 1.9, 2.05, "sage", "oak"); nightstand(o + .98, 9.6, "oak"); nightstand(o + 3.62, 9.6, "oak");
+  B("oak", 1.4, .06, .4, 2.3, .44, 7.45, { solid: 1 }); for (const u of [1.7, 2.9]) B("black", .04, .42, .36, u, .21, 7.45); soft(1.3, .09, .36, .03, "cream", o + 2.3, .515, 7.45);
+  B("oak", 1.5, .9, .46, 2, .45, 5.93, { solid: 1 }); for (const y of [.25, .52, .79]) { B("black", 1.3, .012, .012, 2, y + .12, 6.165); for (const u of [1.6, 2.4]) put(ball(.02, 0), brass, o + u, y, 6.17); }
+  put(cyl(.08, .3, 12, .1), "ceramic", o + 1.5, 1.05, 5.93); put(cyl(.13, .2, 14, .09), "glow", o + 1.5, 1.3, 5.93, { flat: 1 });
+  soft(.8, .3, .78, .09, "cream", o + .75, .3, 6.17); soft(.2, .5, .78, .08, "cream", o + .42, .62, 6.17, { rz: .14 }); for (const v of [5.75, 6.59]) soft(.8, .2, .16, .06, "cream", o + .75, .5, v); hard(o + .75, 6.17, .86, .9);   // reading chair, in the corner by the dresser so there is room to walk past the foot of the bed
+  rug(3.2, 2.2, 2.3, 8.1, "#e3ddd0", "#c97b56");
+  for (const v of [7.16, 8.84]) soft(.09, 2.1, .22, .04, "linen", o + .13, 1.3, v);
+  art(.7, .5, o + 2, 1.65, 5.69, 0, ["#f3efe6", "#3d6166", "#c97b56"]);
+  plant(o + 5.08, 9.55, 1.3, 6); hard(o + 5.08, 9.55, .4, .4);
+
+  // ---- bath, with a door from the bedroom and a door from the great room
+  B("ceramic", 1.7, .56, .8, 7.25, .28, 9.5, { solid: 1 }); B("stone", 1.46, .02, .58, 7.25, .565, 9.5); put(cyl(.018, .22, 8), brass, o + 6.5, .68, 9.5); B("oak", .5, .02, .2, 7.5, .575, 9.5);
+  B("cabB", .5, .82, 1.8, 7.88, .41, 7, { solid: 1 }); B("quartz", .56, .045, 1.9, 7.86, .845, 7);
+  for (const v of [6.55, 7.45]) { put(cyl(.17, .05, 20, .13), "ceramic", o + 7.84, .885, v); put(cyl(.013, .18, 8), brass, o + 8.04, .96, v); }
+  B("oak", .03, .95, 1.6, 8.115, 1.62, 7); B("steel", .012, .85, 1.5, 8.095, 1.62, 7);
+  put(cyl(.19, .36, 18, .15), "ceramic", o + 6.02, .2, 9); B("ceramic", .46, .05, .42, 6.02, .41, 9); B("ceramic", .18, .4, .42, 5.68, .58, 9); hard(o + 5.9, 9, .66, .46);
+  B("steel", .7, .02, .02, 6.1, 1.2, 5.69); soft(.5, .6, .06, .025, "sage", o + 6.1, .94, 5.72); soft(.9, .03, .55, .012, "linen", o + 7.2, .016, 8.75);
+  put(cyl(.07, .1, 10, .09), "pot", o + 7.86, .92, 6.2); put(ball(.09, 0), "leaf", o + 7.86, 1.04, 6.2);
+
+  // ---- office, or second bedroom
+  B("oak", 1.5, .04, .65, 11.3, .74, 9.45); for (const u of [10.6, 12]) B("black", .04, .72, .55, u, .36, 9.45); hard(o + 11.3, 9.45, 1.5, .65);
+  B("black", .56, .34, .03, 11.1, 1.12, 9.66); B("black", .14, .1, .14, 11.1, .81, 9.64); B("black", .4, .015, .14, 11.1, .768, 9.36);
+  soft(.44, .08, .44, .03, "cream", o + 11.2, .47, 8.75); put(cyl(.025, .45, 8), "steel", o + 11.2, .23, 8.75); soft(.42, .46, .06, .03, "cream", o + 11.2, .76, 8.53); hard(o + 11.2, 8.75, .44, .44);
+  B("oak", .32, 1.9, 1.5, 12.77, .95, 7, { solid: 1 }); for (const y of [.5, .95, 1.4]) { B("black", .012, .012, 1.4, 12.605, y, 7); for (let i = 0; i < 6; i++) B(["sage", "linen", "blue", "walnut"][(i + Math.round(y * 2)) % 4], .2, .26 + (i % 3) * .03, .05 + (i % 2) * .02, 12.68, y + .16, 6.45 + i * .2); }
+  rug(2.4, 2, 10.9, 7.6, "#dfe6e2", "#3d6166");
+  plant(o + 12.6, 5.98, 1.2, 6); hard(o + 12.6, 5.98, .4, .4);
+  art(.6, .8, o + 8.29, 1.6, 6.6, Math.PI / 2, ["#f3efe6", "#96a78d", "#1f5a5e", "#c9a15a"]);
+  for (const s of [10.16, 12.44]) soft(.24, 2.1, .09, .04, "linen", o + s, 1.3, 9.87);
+  into = world;
+}
+buildStreet(); buildModel();
+for (const d of DOORWAYS) if (d.ax === "x" && d.c === 0 && d.a > MX) { d.far = 7; d.twin = 1; }   // the model's front door and its sales office door: the same help as the resale front door, from the edge of the court
+for (const k in batches) batches[k].build();
+{ const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(buntP, 3)); g.setAttribute("color", new THREE.Float32BufferAttribute(buntC, 3)); const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide })); m.userData.fx = true; world.add(m); }
+renderer.shadowMap.needsUpdate = true;
+
+/* ---------- the bot's road map for the resale house: door centres and room centres, joined where you can walk ---------- */
 const NODES = { F: [2.5, -3], E: [2.5, 0], L: [4, 3], LK: [8, 3], K: [13.6, 2.4], BD: [16, 2.5], P: [18.2, 3.6], LH: [3.6, 6], HW: [3.6, 6.7], KH: [11.6, 6], HE: [11.6, 6.7],
   H1: [2.5, 6.7], H2: [7.1, 6.7], H3: [10.5, 6.7], H4: [14.5, 6.7], B1: [2.6, 9.6], BA: [7.2, 9.6], B2: [11.3, 9.4], G: [14.4, 9.8] };
 const EDGES = [["F", "E"], ["E", "L"], ["L", "LK"], ["LK", "K"], ["K", "BD"], ["BD", "P"], ["L", "LH"], ["LH", "HW"], ["K", "KH"], ["KH", "HE"], ["H1", "HW"], ["HW", "H2"], ["H2", "H3"], ["H3", "HE"], ["HE", "H4"], ["H1", "B1"], ["H2", "BA"], ["H3", "B2"], ["H4", "G"]];
-const NEAR = {}; for (const k in NODES) NEAR[k] = []; for (const [a, b] of EDGES) { NEAR[a].push(b); NEAR[b].push(a); }
 
 /* =====================================================================================
    RED FLAGS. Each is something a visitor can really see at an open house, and one line
@@ -601,7 +884,7 @@ const ANSWERS = [
   { id: "presale", at: [.42, 1.0, 8.3], q: "What is a pre-sale inspection?", a: "Some sellers inspect before they list, then disclose what turns up and decide what to fix. It removes the surprise that kills deals later.",
     build(g) { box(.24, .05, .3, .42, .975, 8.3, 0x1f5fa8, { parent: g }); plane(.2, .26, paper("INSPECTION", "#1f5fa8"), .42, 1.003, 8.3, { parent: g, rx: -Math.PI / 2 }); } },
   { id: "dual", at: [9.3, .98, .45], q: "What is dual agency?", a: "One brokerage representing both buyer and seller. In California it takes written consent from both. Always ask who each agent works for.", build(g) { flat(g, "WHO REPRESENTS YOU", 9.3, .932, .45, "#c0392b"); } },
-  { id: "credit", at: [19, .8, 3.25], q: "What is a seller concession?", a: "A credit the seller agrees to give the buyer, often toward closing costs. Sellers say yes when it nets them a better deal.", build(g) { flat(g, "CLOSING COSTS", 19, .754, 3.25, "#2e7d5b"); } },
+  { id: "credit", at: [19, .8, 3.25], q: "What is a seller concession?", a: "A credit the seller agrees to give the buyer, often toward closing costs. It is one of the terms both sides negotiate.", build(g) { flat(g, "CLOSING COSTS", 19, .754, 3.25, "#2e7d5b"); } },
   { id: "writing", at: [5.34, .78, 11.42], q: "Three agents said three different things. How do I compare them?", a: "Ask each agent and each lender to put their offer in writing. Then lay them side by side. Promises get specific on paper.", build(g) { flat(g, "PROPOSALS", 5.32, .512, 11.36, "#17120a"); } },
   { id: "curb", at: [3.75, .5, -1.05], q: "How fast do buyers make up their minds about a house?", a: "Fast, and often from the curb. That is why the front yard gets the first weekend of work.",
     build(g) { put(cyl(.2, .34, 14, .26), "pot", 3.75, .17, -1.05, { parent: g }); for (let i = 0; i < 7; i++) put(ball(.07, 0), mat([0xe84a5f, 0xffd166, 0xff8fab][i % 3], { roughness: .8 }), 3.75 + Math.cos(i) * .13, .42 + (i % 2) * .05, -1.05 + Math.sin(i) * .13, { parent: g }); } }
@@ -627,7 +910,139 @@ const DEVICES = [
   { id: "opener", name: "Smart garage opener", at: [15.9, 1.5, 9.2], node: "G", build(g) { box(.03, .2, .14, 15.915, 1.5, 9.2, 0xf4f4f4, { parent: g }); } }
 ];
 
-const lowName = (d) => d.def.name.replace(/^Smart|^Robot/, (m) => m.toLowerCase());   // mid-sentence: "smart TV", not "smart tv"
+const lowName = (d) => d.def.name.replace(/^Smart|^Robot|^Video|^Touch/, (m) => m.toLowerCase());   // mid-sentence: "smart TV", not "smart tv"
+
+/* =====================================================================================
+   THE MODEL HOME LEVEL. Same shapes as the lists above: red flags, straight answers,
+   lies, devices and a road map for the bot. Everything here is something a visitor can
+   see in a builder's model, and a question worth asking about it. Builder policies
+   differ, so the copy says "usually", "often" and "ask", and never quotes an amount.
+   ===================================================================================== */
+const sheet = (g, w, h, lines, x, y, z, o = {}) => plane(w, h, paint(256, Math.round(256 * h / w), (c, W, Hh) => { c.fillStyle = o.bg || "#fffdf8"; c.fillRect(0, 0, W, Hh); c.fillStyle = o.head || "#1f5a5e"; c.fillRect(0, 0, W, Hh * .2); c.textAlign = "center"; c.textBaseline = "middle"; lines.forEach((l, i) => { c.fillStyle = i === 0 ? "#fff" : i === lines.length - 1 && o.red ? "#c0392b" : "#17120a"; let s = i === 0 ? Hh * .1 : Hh * .085; c.font = `800 ${s}px Arial, Helvetica, sans-serif`; while (c.measureText(l).width > W * .92) { s *= .94; c.font = `800 ${s}px Arial, Helvetica, sans-serif`; } c.fillText(l, W / 2, i === 0 ? Hh * .105 : Hh * (.2 + (i - .5) * .8 / (lines.length - 1))); }); }), x, y, z, Object.assign({ parent: g }, o));
+const MFLAGS = [
+  { id: "m-upgrade", room: "the kitchen", name: "A small upgrade tag on the counter", tip: "Models usually show optional upgrades. Ask which finishes in this room are extra, and ask for the included features list.", always: 1, cover: "towel",
+    build(g, cov) { box(.075, .11, .004, MX + 11.15, .86, 2.982, 0xffffff, { parent: g }); plane(.07, .1, label("UPGRADE", .07, .1, "#ffffff", "#c0392b"), MX + 11.15, .86, 2.985, { parent: g }); box(.004, .05, .004, MX + 11.15, .935, 2.98, 0x2a2622, { parent: g });
+      box(.34, .012, .3, MX + 11.15, .938, 2.84, 0x96a78d, { parent: cov }); box(.34, .26, .012, MX + 11.15, .81, 2.992, 0x96a78d, { parent: cov }); box(.34, .03, .013, MX + 11.15, .72, 2.993, 0xf3efe6, { parent: cov });
+      return [MX + 11.15, .86, 3]; } },
+  { id: "m-fridge", room: "the kitchen", name: "A tag on the fridge that says optional", tip: "Ask which appliances come with the home. The included features list for this plan answers that.",
+    build(g) { box(.004, .11, .17, MX + 12.2, 1.3, 2.7, 0xffffff, { parent: g }); plane(.16, .1, label("OPTIONAL", .16, .1, "#ffffff", "#c0392b"), MX + 12.196, 1.3, 2.7, { parent: g, ry: -Math.PI / 2 }); return [MX + 12.19, 1.3, 2.7]; } },
+  { id: "m-list", room: "the entry", name: "An interest list that asks a lot", tip: "A sign-in card hands the builder your contact details. Decide what you want to share, and ask if you can name your agent on it.",
+    build(g) { const t = new THREE.Group(); t.position.set(MX + 4.47, .9, .95); t.rotation.z = .35; g.add(t); box(.02, .3, .22, 0, 0, 0, 0x17191d, { parent: t });
+      plane(.2, .28, paint(200, 280, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 200, 280); c.fillStyle = "#1f5a5e"; c.font = "800 17px Arial"; c.fillText("JOIN THE INTEREST LIST", 8, 26); c.font = "600 15px Arial"; ["Name", "Phone", "Email", "Household income", "Your current lender", "Best time to call"].forEach((l, i) => { c.fillStyle = i === 3 || i === 4 ? "#c0392b" : "#17120a"; c.fillText(l, 10, 62 + i * 38); c.fillRect(10, 70 + i * 38, 180, 1.5); }); }), .012, 0, 0, { parent: t, ry: Math.PI / 2 });
+      return [MX + 4.5, .92, .95]; } },
+  { id: "m-complete", room: "the great room", name: "A move-in date marked estimated", tip: "A completion date on a home being built is normally an estimate. Ask how the contract handles a date that moves.",
+    build(g) { box(.48, .6, .02, MX + 5.85, 1.5, 5.52, 0x2a2622, { parent: g }); sheet(g, .42, .54, ["HOMESITE STATUS", "Lot 9", "Framing started", "ESTIMATED COMPLETION", "Date subject to change"], MX + 5.85, 1.5, 5.505, { ry: Math.PI, red: 1 }); return [MX + 5.85, 1.5, 5.5]; } },
+  { id: "m-lot", room: "the sales office", name: "A premium marked on the lot map", tip: "A lot premium is an extra charge for one homesite, on top of the base price. Ask what it is for the lot you want.",
+    build(g) { plane(.2, .2, paint(96, 96, (c) => { c.fillStyle = "#e8a838"; c.beginPath(); for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5 - Math.PI / 2, r = i % 2 ? 20 : 46; c.lineTo(48 + Math.cos(a) * r, 48 + Math.sin(a) * r); } c.closePath(); c.fill(); c.strokeStyle = "#17120a"; c.lineWidth = 3; c.stroke(); }), MX + .108, 1.78, 1.55, { parent: g, alpha: 1, ry: Math.PI / 2 });
+      plane(.3, .09, label("PREMIUM LOT", .3, .09, "#17120a", "#f3bd54"), MX + .109, 1.63, 1.55, { parent: g, ry: Math.PI / 2 }); return [MX + .12, 1.72, 1.55]; } },
+  { id: "m-lender", room: "the sales office", name: "An incentive with a condition", tip: "Read what the incentive depends on. Here it is the builder's own lender. Ask for any incentive in writing, in the contract.",
+    build(g) { box(.02, .46, .36, MX + 4.115, 1.62, 1.3, 0x2a2622, { parent: g }); sheet(g, .3, .4, ["SPECIAL INCENTIVE", "Closing cost credit", "and design credit", "when you finance with", "our preferred lender"], MX + 4.1, 1.62, 1.3, { ry: -Math.PI / 2, head: "#e8743b", red: 1 }); return [MX + 4.09, 1.62, 1.3]; } },
+  { id: "m-deposit", room: "the kitchen", name: "A deposit form waiting on the table", tip: "Ask when a deposit stops being refundable, on the home and on upgrades. The builder's contract spells out those points.",
+    build(g) { box(.25, .015, .33, MX + 12.1, .758, 4.66, 0x5a4632, { parent: g }); sheet(g, .22, .3, ["RESERVATION", "DEPOSIT FORM", "Homesite", "Buyer", "Sign here today"], MX + 12.1, .768, 4.66, { rx: -Math.PI / 2, rz: Math.PI, red: 1 }); put(cyl(.007, .15, 6), "black", MX + 11.93, .765, 4.7, { parent: g, rx: Math.PI / 2, rz: .5 }); return [MX + 12.1, .8, 4.66]; } },
+  { id: "m-tax", room: "the sales office", name: "A special tax notice under the brochures", tip: "Many newer California communities carry a special tax and HOA dues on top of the regular property tax. Ask for the special tax notice and the HOA budget, and read both.", cover: "brochures",
+    build(g, cov) { sheet(g, .24, .32, ["NOTICE OF", "SPECIAL TAX", "Community facilities", "district", "Read before you sign"], MX + 3.1, .834, 5.3, { rx: -Math.PI / 2, rz: Math.PI, head: "#7a5ea8", red: 1 }); sheet(g, .22, .3, ["HOA BUDGET", "Monthly dues", "Rules and", "restrictions"], MX + 3.38, .833, 5.26, { rx: -Math.PI / 2, rz: Math.PI, head: "#2e7d5b" });
+      for (let i = 0; i < 4; i++) { const b = box(.3, .014, .4, MX + 3.2 + (i % 2) * .05, .842 + i * .015, 5.29, [0x2f8f86, 0xe8743b, 0xf3efe6, 0x1f5a5e][i], { parent: cov }); b.rotation.y = (i - 1.5) * .12; }
+      return [MX + 3.2, .9, 5.28]; } },
+  { id: "m-warranty", room: "the sales office", name: "A poster that says the warranty covers everything", tip: "GLOSS wrote that one. A real builder warranty is limited, and different parts are covered for different lengths of time. Ask for the warranty document.",
+    build(g) { box(.56, .72, .02, MX + 3.55, 1.55, .085, 0x2a2622, { parent: g }); sheet(g, .5, .66, ["PEACE OF MIND", "OUR WARRANTY", "COVERS", "EVERYTHING*", "*See the limited warranty"], MX + 3.55, 1.55, .1, { head: "#2f8f86", red: 1 }); return [MX + 3.55, 1.55, .12]; } },
+  { id: "m-view", room: "the office", name: "A view that is a painted backdrop", tip: "The view from the model is not the view from your lot. Ask to walk the homesite you would buy before you choose it.", cover: "backdrop",
+    build(g, cov) { box(3.4, 2.5, .14, MX + 11.3, 1.25, 10.85, 0x9a958c, { parent: g }); for (let i = 0; i < 4; i++) box(3.4, .02, .15, MX + 11.3, .5 + i * .5, 10.845, 0x7f7a72, { parent: g }); box(.8, .7, .7, MX + 12.2, .35, 10.42, 0xb9bdc0, { parent: g });
+      plane(2.8, 1.7, paint(256, 156, (c) => { const s = c.createLinearGradient(0, 0, 0, 156); s.addColorStop(0, "#7fb6e6"); s.addColorStop(.6, "#f6d9b0"); c.fillStyle = s; c.fillRect(0, 0, 256, 156); c.fillStyle = "#8aa37a"; c.beginPath(); c.moveTo(0, 156); c.lineTo(0, 96); c.quadraticCurveTo(60, 50, 120, 92); c.quadraticCurveTo(190, 40, 256, 88); c.lineTo(256, 156); c.fill(); c.fillStyle = "#5c8a57"; c.beginPath(); c.moveTo(0, 156); c.lineTo(0, 124); c.quadraticCurveTo(128, 92, 256, 128); c.lineTo(256, 156); c.fill(); c.fillStyle = "#fff7d6"; c.beginPath(); c.arc(196, 40, 13, 0, 7); c.fill(); }), MX + 11.3, 1.5, 10.22, { parent: cov, ry: Math.PI });
+      for (const u of [9.92, 12.68]) box(.05, 2.3, .05, MX + u, 1.15, 10.24, 0x2a2622, { parent: cov }); return [MX + 11.3, 1.5, 9.9]; } },
+  { id: "m-bed", room: "the office", name: "A bed too short to sleep in", tip: "GLOSS staged this bed short. That is the game. In a real model, measure the rooms and check the floor plan.",
+    build(g) { box(1, .28, 1.5, MX + 8.8, .16, 8.7, 0xb08a5c, { parent: g }); box(1, .9, .07, MX + 8.8, .5, 9.47, 0xb08a5c, { parent: g }); box(.92, .2, 1.42, MX + 8.8, .4, 8.7, 0xefeae0, { parent: g }); box(.96, .1, .9, MX + 8.8, .51, 8.42, 0x96a78d, { parent: g }); box(.5, .1, .3, MX + 8.8, .55, 9.2, 0xffffff, { parent: g });
+      box(.035, .012, 1.5, MX + 9.42, .012, 8.7, 0xf2c81d, { parent: g }); box(.09, .09, .05, MX + 9.42, .05, 9.47, 0xf2c81d, { parent: g }); for (let i = 0; i < 8; i++) box(.035, .013, .008, MX + 9.42, .013, 7.98 + i * .2, 0x17120a, { parent: g });
+      solids.push({ x1: MX + 8.3, x2: MX + 9.3, z1: 7.95, z2: 9.5, run: 1 }); return [MX + 8.8, .5, 8.6]; } },
+  { id: "m-door", room: "the office", name: "A door taken off its hinges", tip: "GLOSS took this door off. That is the game. In a real model, look at how each door swings with furniture in the room.",
+    build(g) { for (const y of [.3, 1.05, 1.8]) box(.02, .1, .07, MX + 9.47, y, 5.6, 0xc9a15a, { parent: g }); const d = box(.82, 2, .04, MX + 10.25, 1, 5.86, 0xfdfbf6, { parent: g }); d.rotation.x = -.09; const k = box(.04, .04, .09, MX + 9.95, 1, 5.88, 0xc9a15a, { parent: g }); k.rotation.x = -.09; return [MX + 10.25, 1.1, 5.9]; } },
+  { id: "m-option", room: "the primary bedroom", name: "A plaque that says this room is an option", tip: "Rooms and layouts shown in a model can be extras. Structural options usually have to be chosen early, so ask for the deadline.",
+    build(g) { box(.38, .26, .015, MX + 3.55, 1.5, 5.68, 0xc9a15a, { parent: g }); sheet(g, .34, .22, ["PRIMARY RETREAT", "Shown with optional", "extended layout"], MX + 3.55, 1.5, 5.69, { red: 1 }); return [MX + 3.55, 1.5, 5.72]; } },
+  { id: "m-yard", room: "the front yard", name: "Landscaping that is for the model only", tip: "Ask what landscaping, fencing and window coverings come with the home. It differs by builder and community.",
+    build(g) { box(.03, .5, .03, MX + 9.75, .25, -1, 0x6a4a33, { parent: g }); box(.4, .26, .02, MX + 9.75, .52, -1.01, 0xffffff, { parent: g }); sheet(g, .36, .22, ["MODEL LANDSCAPE", "For display only", "Not included"], MX + 9.75, .52, -1.022, { ry: Math.PI, head: "#2e7d5b", red: 1 }); return [MX + 9.75, .52, -1.05]; } }
+];
+const MANSWERS = [
+  { id: "m-whofor", always: 1, at: [MX + 4.3, 1.5, 5.3], q: "Who does the agent in the sales office work for?", a: "Usually the builder. They can be helpful and they know the homes, but for an advocate of your own you bring your own agent.",
+    build(g) { box(.02, .26, .38, MX + 4.28, 1.5, 5.3, 0xc9a15a, { parent: g }); plane(.34, .22, sign(["SALES COUNSELOR", "ON DUTY", "Representing the builder"], .34, .22, "#ffffff", "#1f5a5e", true), MX + 4.292, 1.5, 5.3, { parent: g, ry: Math.PI / 2 }); } },
+  { id: "m-rereg", at: [MX + 8.9, 1.12, -6.3], q: "I already toured a model without my agent. Is it too late?", a: "Maybe not. Registration is a builder policy, not a law, and some builders make exceptions. Ask the builder what it will recognize.",
+    build(g) { box(.26, .2, .02, MX + 8.9, 1.12, -6.29, 0xffffff, { parent: g }); plane(.24, .18, label("TAKE ONE", .24, .18, "#ffffff", "#1f5a5e"), MX + 8.9, 1.12, -6.302, { parent: g, ry: Math.PI }); } },
+  { id: "m-pay", at: [MX + 6.3, .46, 2.82], q: "Who pays my agent if I bring one?", a: "On new homes the builder often offers to. That is the builder's choice and the terms vary. Your written agreement with your agent spells it out. What the builder does not cover can fall to you.", build(g) { flat(g, "AGENT AGREEMENT", MX + 6.3, .428, 2.82); } },
+  { id: "m-report", at: [MX + 1.92, 1, 5.3], q: "What is the public report?", a: "Most new California subdivisions need a public report from the Department of Real Estate before homes are sold. You get a copy before you are committed. It is a disclosure, not an endorsement.",
+    build(g) { box(.3, .07, .25, MX + 1.92, .868, 5.3, 0xffffff, { parent: g }); plane(.26, .2, label("PUBLIC REPORT", .26, .2, "#ffffff", "#17120a"), MX + 1.92, .905, 5.3, { parent: g, rx: -Math.PI / 2, rz: Math.PI }); } },
+  { id: "m-whole", at: [MX + 9.65, .96, 2.3], q: "How do I compare this home with another one?", a: "Compare the whole deal and the monthly payment, not the sign out front. Base price, lot premium, upgrades, closing costs, loan terms, taxes and dues all count.",
+    build(g) { box(.1, .02, .15, MX + 9.52, .941, 2.3, 0x23262b, { parent: g }); box(.08, .004, .04, MX + 9.52, .953, 2.25, 0x9fd7c2, { parent: g }); flat(g, "SIDE BY SIDE", MX + 9.78, .934, 2.3, "#2e7d5b"); } },
+  { id: "m-design", at: [MX + .9, 1.5, 5.48], q: "When do I have to choose my options?", a: "Structural options are usually chosen early, and design selections often need their own deposit. Ask for the deadlines before you sign.", build() {} },
+  { id: "m-phase", insider: 1, at: [MX + .12, 1.5, 4], q: "Why are only some of the lots for sale today?", a: "Builders usually release homes in phases. Prices, lot premiums and incentives can change from one phase to the next, in either direction.",
+    build(g) { box(.03, .6, .8, MX + .085, 1.5, 4, 0x2a2622, { parent: g }); sheet(g, .74, .54, ["RELEASES", "Phase 1: sold out", "Phase 2: selling now", "Phase 3: date to come"], MX + .104, 1.5, 4, { ry: Math.PI / 2 }); } },
+  { id: "m-timing", insider: 1, at: [MX + 4.09, 1.62, 2.25], q: "Does it matter when I buy?", a: "It can. What is available, and on what terms, changes as homes finish and phases sell. Ask what is available today and get any offer in writing.",
+    build(g) { box(.02, .46, .36, MX + 4.115, 1.62, 2.25, 0x2a2622, { parent: g }); sheet(g, .3, .4, ["QUICK MOVE-IN", "Finished homes", "ready sooner", "Ask what is available"], MX + 4.1, 1.62, 2.25, { ry: -Math.PI / 2, head: "#2f8f86" }); } },
+  { id: "m-nego", insider: 1, at: [MX + 9.75, .96, .45], q: "What can a buyer usually negotiate on a new home?", a: "It varies by builder and market. Some builders will not negotiate at all. Ask what is open to discussion, such as options, lot choice or credits, and get the answer in writing.", build(g) { flat(g, "PRICE SHEET", MX + 9.75, .932, .45, "#17120a"); } },
+  { id: "m-loan", insider: 1, at: [MX + 4.5, .5, 2.3], q: "Do I have to use the builder's lender to get the incentive?", a: "The biggest incentives often depend on it. You can still shop other lenders and compare Loan Estimates side by side. Sometimes the builder's lender is the best one.", build(g) { flat(g, "LOAN ESTIMATE", MX + 4.5, .464, 2.3, "#2e7d5b"); } },
+  { id: "m-standard", insider: 1, at: [MX + 7.86, .9, 7], q: "Is everything I see in this model included?", a: "Usually not. Models are shown with optional upgrades and decorator items. The included features list for this plan and community says what standard means.", build(g) { flat(g, "INCLUDED FEATURES", MX + 7.74, .872, 7, "#1f5a5e"); } },
+  { id: "m-inspect", insider: 1, at: [MX + 11.85, .86, 9.4], q: "It is brand new. Why would anyone get it inspected?", a: "City inspections are limited in scope. Many buyers also hire their own inspector, and that is their choice. Ask the builder early when outside inspectors are allowed on site.",
+    build(g) { const y = mat(0xf2c81d, { roughness: .5 }); put(new THREE.SphereGeometry(.13, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), y, MX + 11.85, .765, 9.4, { parent: g }); put(cyl(.16, .014, 18), y, MX + 11.85, .77, 9.4, { parent: g }); } },
+  { id: "m-contract", insider: 1, at: [MX + 2.45, .97, 5.93], q: "Is the builder's contract the same form as a resale?", a: "Usually not. Builders write their own purchase agreement, and deposits, timelines and dispute terms can differ. Read it carefully, ideally with your agent or an attorney.",
+    build(g) { box(.3, .06, .24, MX + 2.45, .93, 5.93, 0x1f5a5e, { parent: g }); plane(.26, .2, sign(["PURCHASE", "AGREEMENT"], .26, .2, "#1f5a5e", "#ffffff", true), MX + 2.45, .962, 5.93, { parent: g, rx: -Math.PI / 2 }); } }
+];
+/* What GLOSS says in the model home. Each one is a thing people believe about new homes. */
+const MLIES = [
+  ["“The model is exactly what you get.”", "Models usually show optional upgrades. The included features list says what is standard."],
+  ["“It is brand new. Nothing to inspect.”", "New has not been checked by anyone working for you. Hiring your own inspector is your call."],
+  ["“The sales agent is your agent.”", "The sales agent usually represents the builder. Ask them who they represent."],
+  ["“The builder’s lender is fine. No need to compare.”", "Sometimes it is the best offer. You only know once you compare Loan Estimates."],
+  ["“The move-in date is the move-in date.”", "On a home still being built it is normally an estimate. Ask how the contract handles a change."],
+  ["“The number on the sign is the whole cost.”", "Lot premium, upgrades, special taxes and dues can sit on top. Compare the whole deal."],
+  ["“The warranty covers everything.”", "Builder warranties are limited. The warranty document says what is left out."],
+  ["“I can add my agent later. No rush.”", "Some builders only recognize an agent who is registered on the first visit. Ask before you sign in."]
+];
+const MDEVICES = [
+  { id: "m-bell", name: "Video doorbell", at: [MX + 6.42, 1.25, -.1], node: "EN", build(g) { box(.06, .15, .03, MX + 6.42, 1.25, -.085, 0x17191d, { parent: g }); } },
+  { id: "m-tv", name: "Smart TV", at: [MX + 4.33, 1.3, 2.9], node: "GR", build(g) { box(.04, .82, 1.45, MX + 4.3, 1.3, 2.9, 0x0c0d10, { parent: g, mat: M.black }); } },
+  { id: "m-display", name: "Smart display", at: [MX + 12.2, 1.04, .38], node: "K2", build(g) { box(.24, .16, .02, MX + 12.2, 1.03, .36, 0x17191d, { parent: g }); box(.14, .02, .09, MX + 12.2, .938, .36, 0x17191d, { parent: g }); } },
+  { id: "m-thermo", name: "Smart thermostat", at: [MX + 10.3, 1.5, 5.51], node: "GO", build(g) { box(.14, .14, .03, MX + 10.3, 1.5, 5.515, 0xf4f4f4, { parent: g }); } },
+  { id: "m-kiosk", name: "Touch screen kiosk", at: [MX + .6, 1.2, .55], node: "S4", build(g) { const k = box(.36, .26, .03, MX + .6, 1.2, .55, 0x17191d, { parent: g }); k.rotation.x = .5; } },
+  { id: "m-mirror", name: "Smart mirror", at: [MX + 8.08, 1.62, 7], node: "BA", build(g) { box(.012, .3, .4, MX + 8.085, 1.62, 7, 0x1d2b33, { parent: g }); } },
+  { id: "m-speaker", name: "Smart speaker", at: [MX + 10.72, .85, 9.5], node: "OF", build(g) { put(cyl(.07, .14, 16, .06), mat(0x2b2f36, { roughness: 1 }), MX + 10.72, .83, 9.5, { parent: g }); } }
+];
+const MNODES = { O: [MX + 5.7, -3], FD: [MX + 5.7, 0], O2: [MX + 2.1, -2.5], SF: [MX + 2.1, 0], EN: [MX + 5.7, .95], GR: [MX + 5.3, 2.7], GS: [MX + 5.3, 4.55], SI: [MX + 4.2, 4.5],
+  S1: [MX + 3.45, 4.55], S2: [MX + 3.45, 1.5], S3: [MX + 2.1, 1.4], S4: [MX + .7, 1.5], S5: [MX + .7, 4.6], GB: [MX + 6.85, 4.6], BD: [MX + 6.85, 5.6], BA: [MX + 6.6, 6.9], BA2: [MX + 6.4, 8.05], BP: [MX + 5.5, 8.05], PW: [MX + 4.7, 8.05],
+  PD: [MX + 4.85, 5.6], P1: [MX + 4.85, 6.7], PX: [MX + 2.3, 6.6], GO: [MX + 9.05, 4.6], OD: [MX + 9.05, 5.6], O1: [MX + 9.05, 6.7], OF: [MX + 10.6, 7.4], K1: [MX + 8.8, 1.3], K2: [MX + 11.75, 1.3], K3: [MX + 11.4, 3.45], K4: [MX + 8.8, 3.6] };
+const MEDGES = [["O", "FD"], ["FD", "EN"], ["O2", "SF"], ["SF", "S3"], ["EN", "GR"], ["EN", "K1"], ["GR", "GS"], ["GS", "SI"], ["SI", "S1"], ["S1", "S2"], ["S2", "S3"], ["S3", "S4"], ["S4", "S5"], ["S5", "S1"], ["GS", "GB"], ["GS", "PD"], ["PD", "P1"], ["P1", "PX"], ["P1", "PW"], ["PW", "BP"], ["BP", "BA2"], ["BA2", "BA"], ["BA", "BD"], ["BD", "GB"],
+  ["GB", "GO"], ["GO", "OD"], ["OD", "O1"], ["O1", "OF"], ["GO", "K4"], ["K4", "K1"], ["K1", "K2"], ["K2", "K3"], ["K3", "K4"]];
+
+/* =====================================================================================
+   LEVELS. One row per run the title screen offers. A level is only data: where the player
+   starts, the bot's road map, the pools a run draws from, where the lamps and the minimap
+   sit, and the words on screen. Both houses are always in the world. The level decides
+   which one the run happens in.
+   ===================================================================================== */
+const SCANKEY = IS_TOUCH ? "SCAN" : "the mouse button";
+const LEVELS = {
+  resale: { id: "resale", key: "", seed: "hunt", start: "hunt-start", spawn: [2.5, -5.6, Math.PI],
+    nodes: NODES, edges: EDGES, noGo: { F: 1, E: 1 },
+    flags: FLAGS, flagCount: 8, answers: ANSWERS, answerCount: 6, insiders: 0, devices: DEVICES, lies: LIES, reg: null,
+    map: [-3.5, -7.5], orbit: [8, 4],
+    lights: { touch: [[6, 3.4, 0xffe6c2, 13], [5, 9.4, 0xffdcae, 11], [12.5, 8.6, 0xffe2b8, 11]], desk: [[4, 3, 0xffe2b8, 9], [12, 3, 0xfff0d8, 9], [3.2, 9.7, 0xffdcae, 7], [11, 9.7, 0xffdcae, 8], [8, 6.7, 0xffe2b8, 5]], away: [[6, 3.4, 0xffe6c2, 11], [8, 9.2, 0xffdcae, 9]] },
+    entered: (p) => p.z > 1.1 && p.x < 16.5,
+    text: { daily: "Daily house", random: "Random house", again: "Another house", other: "Walk the model home", start: "Walk up to the house and go in.",
+      enter: "Turn right. Something on the table by the door looks wrong. Aim at it and hold " + SCANKEY + ".", hunt: "", cleared: "Bot caught. House cleared.", wrecked: " in a stranger’s house.", guide: "What to look for at a real open house", hud: "Red flags", flags: "Red flags", flag: "Red flag", each: "Each red flag you tag", all: "Every red flag found", some: " red flags found", fire: "At a real open house the only thing you fire is questions.",
+      last: "Walk a few. Look under the sink. Count the smoke alarms. And watch who is running the room.", fine: "The house and its problems are fiction and nothing here is legal, financial or inspection advice. A real home needs a qualified home inspector.", share: "" } },
+  model: { id: "model", key: "m:", seed: "hunt-model", start: "hunt-start-model", spawn: [MX + 3.9, -8.1, Math.PI],
+    nodes: MNODES, edges: MEDGES, noGo: { O: 1, FD: 1, O2: 1, SF: 1 },
+    flags: MFLAGS, flagCount: 8, answers: MANSWERS, answerCount: 6, insiders: 4, devices: MDEVICES, lies: MLIES,
+    reg: { card: [MX + 4.15, 1.3, -1.2], desk: [MX + 2.2, .82, 2.74] },
+    map: [MX - 6.5, -9], orbit: [MX + 6.5, 4],
+    lights: { touch: [[MX + 7, 2.8, 0xffe6c2, 13], [MX + 2.1, 2.8, 0xfff0d8, 11], [MX + 6.6, 7.8, 0xffdcae, 11]], desk: [[MX + 6.4, 2.8, 0xffe2b8, 9], [MX + 10.6, 2.5, 0xfff0d8, 9], [MX + 2.1, 2.8, 0xfff0d8, 8], [MX + 2.7, 7.8, 0xffdcae, 7], [MX + 10.4, 7.8, 0xffdcae, 7]], away: [[MX + 7, 2.8, 0xffe6c2, 11], [MX + 6.6, 7.8, 0xffdcae, 9]] },
+    entered: (p) => p.z > -5.4 && p.x > MX - 1.5,
+    text: { daily: "Daily model home", random: "Random model home", again: "Another model home", other: "Walk the resale house", start: "Walk up to the model home.",
+      enter: "The sales office says start here. The card by the front door asks a different question. Aim at one and hold " + SCANKEY + ".", hunt: "Now find what GLOSS staged. Aim at anything that looks off and hold " + SCANKEY + ".", cleared: "Bot caught. Model home cleared.", wrecked: " in a builder’s model home.", guide: "What to look for in a real model home", hud: "Ask about", flags: "Things to ask", flag: "Thing to ask", each: "Each one you tag", all: "Everything to ask found", some: " things to ask found", fire: "In a real model home the only thing you fire is questions.",
+      last: "Ask who the sales agent represents. Ask for the included features list. Ask about the agent policy before you sign in.", fine: "The model home, the builder and the paperwork are fiction and nothing here is legal, financial or inspection advice. Builder policies differ, so read the documents and ask a licensed professional.", share: " · Model Home" } }
+};
+for (const k in LEVELS) { const L = LEVELS[k]; L.near = {}; for (const n in L.nodes) L.near[n] = []; for (const [a, b] of L.edges) { L.near[a].push(b); L.near[b].push(a); } }
+let LV = LEVELS.resale;                                               // the level the current run is in
+const sprite = (draw, w = 96, h = 96) => new THREE.SpriteMaterial({ map: paint(w, h, draw), depthWrite: false });
+const pill = (text, bg, fg) => sprite((c) => { c.fillStyle = bg; c.beginPath(); c.arc(40, 40, 36, Math.PI / 2, Math.PI * 1.5); c.arc(216, 40, 36, -Math.PI / 2, Math.PI / 2); c.closePath(); c.fill(); c.strokeStyle = fg; c.lineWidth = 5; c.stroke(); c.fillStyle = fg; c.font = "900 30px Arial, Helvetica, sans-serif"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(text, 128, 42); }, 256, 80);
+const qlock = sprite((c) => { c.fillStyle = "rgba(12,11,16,.85)"; c.beginPath(); c.arc(48, 48, 44, 0, 7); c.fill(); c.strokeStyle = "#8d939c"; c.lineWidth = 6; c.stroke(); c.fillStyle = "#8d939c"; c.font = "900 62px Arial"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("?", 48, 52); });
+const regMark = pill("YOUR AGENT?", "rgba(12,11,16,.88)", "#f3bd54"), deskMark = pill("SIGN IN HERE", "rgba(12,11,16,.88)", "#7fe0c4");
 
 /* ---------- one run ---------- */
 const P = { x: 2.5, z: -5.6, yaw: Math.PI, pitch: 0, vx: 0, vz: 0, vw: 0, door: null, doorT: 0 };   // the player: place, view, speed of walking and turning, and the last door walked through
@@ -636,25 +1051,34 @@ const TOTAL = 210;                                                    // seconds
 const led = new THREE.MeshBasicMaterial({ color: 0x35e0ff });
 const coverGlow = [];
 
-function newRun(seed, daily) {
-  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0;
+function newRun(seed, daily, level = "resale") {
+  LV = LEVELS[level] || LEVELS.resale; const away = LV === LEVELS.resale ? LEVELS.model : LEVELS.resale;
+  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0; Go = null; NAV = null; tapMark.visible = false; P.spin = null;
   for (const m of smashed) m.visible = true; smashed.length = 0; for (const q of scorches) fx.remove(q); scorches.length = 0; for (const q of beams) fx.remove(q.m); beams.length = 0;
   for (let i = solids.length - 1; i >= 0; i--) if (solids[i].run) solids.splice(i, 1);
   coverGlow.length = 0;
   const rng = rngFrom(seed);
-  const pool = FLAGS.filter((f) => !f.always); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-  const chosen = FLAGS.filter((f) => f.always).concat(pool.slice(0, 7));
-  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); g.userData.keep = cov.userData.keep = true; perRun.add(g); if (f.cover) { perRun.add(cov); cov.traverse((o) => {}); } const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
-  const devs = DEVICES.map((d) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); const l = new THREE.Mesh(new THREE.SphereGeometry(.018, 8, 8), led); l.position.set(d.at[0], d.at[1] + .1, d.at[2]); g.add(l); return { def: d, g, checked: false }; });
+  const pool = LV.flags.filter((f) => !f.always); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  const fixed = LV.flags.filter((f) => f.always), chosen = fixed.concat(pool.slice(0, LV.flagCount - fixed.length));
+  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); g.userData.keep = cov.userData.keep = true; perRun.add(g); if (f.cover) perRun.add(cov); const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
+  const devs = LV.devices.map((d) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); const l = new THREE.Mesh(new THREE.SphereGeometry(.018, 8, 8), led); l.position.set(d.at[0], d.at[1] + .1, d.at[2]); g.add(l); return { def: d, g, checked: false }; });
+  for (const d of away.devices) { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); }     // the other house keeps its TV on the wall, as furniture
   const hide = devs[1 + Math.floor(rng() * (devs.length - 1))];          // never the first one: too close to the door
-  const apool = ANSWERS.filter((a) => !a.always); for (let i = apool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [apool[i], apool[j]] = [apool[j], apool[i]]; }
-  const answers = ANSWERS.filter((a) => a.always).concat(apool.slice(0, 4)).map((a) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); a.build(g); const mark = new THREE.Sprite(qmark); mark.scale.set(.2, .2, 1); mark.position.set(a.at[0], a.at[1] + .34, a.at[2]); perRun.add(mark); return { def: a, g, mark, at: a.at, found: false }; });
-  const lies = LIES.map((_, i) => i); for (let i = lies.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [lies[i], lies[j]] = [lies[j], lies[i]]; }
+  const apool = LV.answers.filter((a) => !a.always); for (let i = apool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [apool[i], apool[j]] = [apool[j], apool[i]]; }
+  // A level can hold back some answers as "insider" ones. A run always draws its share of them.
+  const first = LV.answers.filter((a) => a.always), inside = apool.filter((a) => a.insider).slice(0, LV.insiders), open = apool.filter((a) => !a.insider).slice(0, LV.answerCount - first.length - inside.length);
+  const answers = first.concat(inside, open).map((a) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); a.build(g); const mark = new THREE.Sprite(a.insider ? qlock : qmark); mark.scale.set(.2, .2, 1); mark.position.set(a.at[0], a.at[1] + .34, a.at[2]); perRun.add(mark); return { def: a, g, mark, at: a.at, found: false, shut: false, wait: 0 }; });
+  const lies = LV.lies.map((_, i) => i); for (let i = lies.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [lies[i], lies[j]] = [lies[j], lies[i]]; }
+  // The two things at the model's doors: the card that registers your agent, and the desk that signs you in without one.
+  let rCard = null, rDesk = null;
+  if (LV.reg) { const mk = (at, m) => { const mark = new THREE.Sprite(m); mark.scale.set(.9, .281, 1); mark.position.set(at[0], at[1] + .7, at[2]); perRun.add(mark); return { at, mark }; }; rCard = mk(LV.reg.card, regMark); rDesk = mk(LV.reg.desk, deskMark); }
+  // bring the lamps to this house
+  { const here = LV.lights[IS_TOUCH ? "touch" : "desk"]; lamps.forEach((l, i) => { const p = i < here.length ? here[i] : away.lights.away[i - here.length]; l.position.set(p[0], 2.3, p[1]); l.color.setHex(p[2]); l.intensity = p[3]; }); }
   renderer.shadowMap.needsUpdate = true;
-  G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
-  P.x = 2.5; P.z = -5.6; P.yaw = Math.PI; P.pitch = 0; P.vx = P.vz = P.vw = 0; P.door = null; In.two = 0;
-  $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("timer").classList.remove("low");
-  objective("Walk up to the house and go in.");
+  G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, level: LV.id, reg: null, card: rCard, desk: rDesk, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
+  P.x = LV.spawn[0]; P.z = LV.spawn[1]; P.yaw = LV.spawn[2]; P.pitch = 0; P.vx = P.vz = P.vw = 0; P.door = null; In.two = 0;
+  $("fl").textContent = LV.text.hud; $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("rg").textContent = LV.reg ? "No agent yet" : ""; $("timer").classList.remove("low");
+  objective(LV.text.start);
 }
 
 /* ---------- the bot ---------- */
@@ -670,15 +1094,16 @@ function makeBot(at) {
 function botPick(b, here) {
   // Run to whichever next spot is farthest from the player. Avoid dead ends while there is a choice.
   let best = null, bs = -1e9;
-  for (const n of NEAR[here]) {
-    if (n === "F" || n === "E" || (n === b.from && NEAR[here].length > 1)) continue;   // it will not leave by the front door
-    const p = NODES[n], d = Math.hypot(p[0] - P.x, p[1] - P.z);
-    const s = d + (NEAR[n].length === 1 ? -5 : 0) + G.rng() * 1.6;
+  const near = LV.near, nodes = LV.nodes;
+  for (const n of near[here]) {
+    if (LV.noGo[n] || (n === b.from && near[here].length > 1)) continue;   // it will not leave by the front door
+    const p = nodes[n], d = Math.hypot(p[0] - P.x, p[1] - P.z);
+    const s = d + (near[n].length === 1 ? -5 : 0) + G.rng() * 1.6;
     if (s > bs) { bs = s; best = n; }
   }
   b.from = here; b.to = best || b.from;
 }
-function nearestNode(x, z) { let b = null, bd = 1e9; for (const k in NODES) { if (k === "F" || k === "E") continue; const d = Math.hypot(NODES[k][0] - x, NODES[k][1] - z); if (d < bd) { bd = d; b = k; } } return b; }
+function nearestNode(x, z) { let b = null, bd = 1e9; for (const k in LV.nodes) { if (LV.noGo[k]) continue; const d = Math.hypot(LV.nodes[k][0] - x, LV.nodes[k][1] - z); if (d < bd) { bd = d; b = k; } } return b; }
 
 /* ---------- HUD helpers ---------- */
 function objective(t) { $("obj").textContent = t; }
@@ -751,8 +1176,9 @@ function blocked(x, z) { for (const s of solids) if (x > s.x1 - R && x < s.x2 + 
     so a wall, a corner or a door jamb turns the walker aside instead of stopping it dead.
     thumb: the player is on a touch screen. Two rules then keep a clumsy thumb in the room it means to be in.
     A walker rubbing along a wall is not asking to go through the doors in it, so to that walker a doorway is wall.
-    And nobody backs straight out of a door they walked through a moment ago. Turn toward a door and it is a door again. */
-function walk(dx, dz, thumb, backing) {
+    And nobody backs straight out of a door they walked through a moment ago. Turn toward a door and it is a door again.
+    square: a two-thumb player. They steer with the view, and a round jamb slid them into doors they were only walking past. For them a corner is square. */
+function walk(dx, dz, thumb, backing, square) {
   const ox = P.x, oz = P.z, r = R + 1e-6, shut = []; let hit = true;
   if (thumb) for (const d of DOORWAYS) { const X = d.ax === "x", across = X ? dz : dx, along = X ? dx : dz;
     if (d.b - d.a > 1.6 || (d.far && across > 0)) continue;                                                  // never a wide opening, never the way in from the street
@@ -763,20 +1189,24 @@ function walk(dx, dz, thumb, backing) {
   P.x += dx; P.z += dz;
   for (let pass = 0; pass < 4 && hit; pass++) { hit = false;
     for (let corner = 0; corner < 2; corner++) for (const s of shut.length ? solids.concat(shut) : solids) {   // flat faces first, then corners: the seam between two boxes in one flat wall must not act as a corner
-      const ex = P.x - Math.max(s.x1, Math.min(s.x2, P.x)), ez = P.z - Math.max(s.z1, Math.min(s.z2, P.z)), d2 = ex * ex + ez * ez; if (d2 > r * r - 1e-9 || (ex && ez ? 1 : 0) !== corner) continue; hit = true;
-      if (d2 > 1e-9) { const k = r / Math.sqrt(d2) - 1; P.x += ex * k; P.z += ez * k; }
+      const ex = P.x - Math.max(s.x1, Math.min(s.x2, P.x)), ez = P.z - Math.max(s.z1, Math.min(s.z2, P.z)), sq = square && ex && ez, d2 = sq ? Math.max(ex * ex, ez * ez) : ex * ex + ez * ez; if (d2 > r * r - 1e-9 || (ex && ez ? 1 : 0) !== corner) continue; hit = true;
+      if (sq) { if (ex * ex > ez * ez) P.x += Math.sign(ex) * r - ex; else P.z += Math.sign(ez) * r - ez; }   // a square corner: out along one axis only, so it stops the walker and does not steer
+      else if (d2 > 1e-9) { const k = r / Math.sqrt(d2) - 1; P.x += ex * k; P.z += ez * k; }
       else { const l = P.x - s.x1, e = s.x2 - P.x, u = P.z - s.z1, m = Math.min(l, e, u, s.z2 - P.z); if (m === l) P.x = s.x1 - r; else if (m === e) P.x = s.x2 + r; else if (m === u) P.z = s.z1 - r; else P.z = s.z2 + r; }   // the centre got inside: leave by the nearest face
     } }
-  if (hit) { P.x = ox; P.z = oz; }                                      // wedged between two things: stay put
+  if (hit) { P.x = ox; P.z = oz; if (square) return walk(dx, dz, thumb, backing, false); }   // wedged between two things: stay put. A spot that is legal for a round walker can sit inside a square corner, so a two-thumb walker stuck there moves by the round rule
   for (const d of DOORWAYS) { const X = d.ax === "x", u = X ? P.x : P.z; if (u > d.a && u < d.b && ((X ? oz : ox) - d.c) * ((X ? P.z : P.x) - d.c) < 0) { P.door = d; P.doorT = G.t; } }   // remember the door just walked through
 }
 /** Doorway help. A walker close to a door and heading for it, but on course to clip a jamb, is bent just enough to walk through clear.
-    v is the wanted velocity [x, z] and is changed in place. Returns how far it was turned, as a yaw angle. */
-function doorHelp(v) {
+    v is the wanted velocity [x, z] and is changed in place. Returns how far it was turned, as a yaw angle.
+    two: a two-thumb player aims with the view, so indoors they get no help. It pulled them into the wrong room on the way past. The front door from the street still helps. */
+function doorHelp(v, two) {
   const sp = Math.hypot(v[0], v[1]); if (sp < .2) return 0;
-  const yv = Math.atan2(-v[0], -v[1]), lim = (q) => Math.max(0, Math.min(1, q)); let turn = 0, best = 0;
+  const yv = Math.atan2(-v[0], -v[1]), lim = (q) => Math.max(0, Math.min(1, q)); let turn = 0, best = 0, aimed = null, miss = 1e9;
+  for (const d of DOORWAYS) { if (!d.twin) continue; const va = v[1], gap = d.c - P.z; if (va <= 0 || gap < -.4 || gap > d.far) continue;   // the model home has two doors on the street. Only the one the walk is pointed at may help, or the nearer one pulled walkers in on their way to the other
+    const at = P.x + v[0] / va * Math.max(gap, 0), m = Math.max(d.a - at, at - d.b, 0); if (m < miss) { miss = m; aimed = d; } }
   for (const d of DOORWAYS) {
-    const X = d.ax === "x", va = X ? v[1] : v[0], vl = X ? v[0] : v[1], dir = va < 0 ? -1 : 1, far = d.far && dir > 0;   // far: walking up to the front door from outside
+    const X = d.ax === "x", va = X ? v[1] : v[0], vl = X ? v[0] : v[1], dir = va < 0 ? -1 : 1, far = d.far && dir > 0; if ((two && !far) || (far && d.twin && d !== aimed)) continue;   // far: walking up to the front door from outside
     if (!far && Math.abs(va) <= Math.abs(vl)) continue;                                                      // rubbing along the wall, not heading for the door
     const depth = ((X ? P.z : P.x) - d.c) * dir, reach = far ? d.far : 2.5; if (depth < -reach || depth > .4) continue;   // depth: metres past the door plane, negative before it
     const half = (d.b - d.a) / 2, lat = (X ? P.x : P.z) - (d.a + d.b) / 2, room = half + Math.max(0, -depth) * .58; if (Math.abs(lat) > room) continue;   // the help reaches out as a funnel in front of the door
@@ -786,24 +1216,25 @@ function doorHelp(v) {
     let ang = Math.atan2(X ? -side : -ahead * dir, X ? -ahead * dir : -side) - yv; ang = Math.atan2(Math.sin(ang), Math.cos(ang));
     let w = lim(((far && IS_TOUCH ? 1.5 : .78) - Math.abs(ang)) / .35) * lim((reach + depth) / .5) * lim((room - Math.abs(lat)) / .25);   // only for a walker already pointed at the door. A thumb on the front walk gets the widest margin
     if (!IS_TOUCH) w *= lim((.45 - (Math.abs(at) - half)) / .2);                                              // a keyboard walks straight: help it only past a jamb it was about to clip
-    if (w > best) { best = w; turn = ang * w; }
+    if (w > best) { best = w; turn = ang * w; doorHelp.street = !!far; }   // street: the help came from a door on the street. update() will not let that one turn the view against a thumb pushed plainly sideways
   }
   if (turn) { v[0] = -Math.sin(yv + turn) * sp; v[1] = -Math.cos(yv + turn) * sp; }
   return turn;
 }
 function sees(x1, z1, x2, z2) {
   const dx = x2 - x1, dz = z2 - z1;
-  for (const s of solids) { if (!s.los) continue; let t0 = 0, t1 = 1, ok = true;
-    for (const [p, d, lo, hi] of [[x1, dx, s.x1, s.x2], [z1, dz, s.z1, s.z2]]) { if (Math.abs(d) < 1e-9) { if (p < lo || p > hi) { ok = false; break; } } else { let a = (lo - p) / d, b = (hi - p) / d; if (a > b) [a, b] = [b, a]; t0 = Math.max(t0, a); t1 = Math.min(t1, b); if (t0 > t1) { ok = false; break; } } }
-    if (ok && t1 > .02 && t0 < .98) return false; }
+  for (const s of solids) { if (!s.los) continue; let t0 = 0, t1 = 1, a, b, t;
+    if (Math.abs(dx) < 1e-9) { if (x1 < s.x1 || x1 > s.x2) continue; } else { a = (s.x1 - x1) / dx; b = (s.x2 - x1) / dx; if (a > b) { t = a; a = b; b = t; } if (a > t0) t0 = a; if (b < t1) t1 = b; if (t0 > t1) continue; }
+    if (Math.abs(dz) < 1e-9) { if (z1 < s.z1 || z1 > s.z2) continue; } else { a = (s.z1 - z1) / dz; b = (s.z2 - z1) / dz; if (a > b) { t = a; a = b; b = t; } if (a > t0) t0 = a; if (b < t1) t1 = b; if (t0 > t1) continue; }
+    if (t1 > .02 && t0 < .98) return false; }
   return true;
 }
 
 /* ---------- input: one small object the rest of the game reads ---------- */
-const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
+const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0, down: 0, upAt: 0 };   // two: seconds the player still counts as two-thumbed after a drag on the look side
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
-addEventListener("blur", () => { In.keys = {}; In.scan = false; });   // keys must not stick when the window loses focus
+addEventListener("blur", () => { In.keys = {}; In.scan = false; In.edge = null; stopGo(); });   // keys must not stick when the window loses focus
 const look = (dx, dy, k) => { P.yaw -= dx * k; P.pitch = Math.max(-1.25, Math.min(1.25, P.pitch - dy * k)); };
 if (!IS_TOUCH) {
   let drag = false;
@@ -812,19 +1243,129 @@ if (!IS_TOUCH) {
   addEventListener("mousemove", (e) => { if (state !== "play") return; if (document.pointerLockElement === canvas || drag) look(e.movementX, e.movementY, .0023); });
 } else {
   // The left side of the screen is a walk stick that appears where the thumb lands. The right side looks. One thumb on the stick is enough: see update().
-  let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild;
-  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute") continue; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.display = "block"; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
-  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
+  let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild, taps = new Map(), resting = (o) => o.far <= TAP.px && G.t - o.t > 1;
+  addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute" || t.target.id === "turnbtn") { In.edge = null; continue; }
+      let lone = true; for (const o of taps.values()) if (!resting(o)) { o.solo = false; lone = false; }   // a second finger down: neither one is a tap. A palm or a thumb that has lain still for a second does not count as a finger
+      taps.set(t.identifier, { x: t.clientX, y: t.clientY, t: G.t, ts: e.timeStamp, lag: TAP.lag, far: 0, yaw: 0, pitch: 0, two: In.two, solo: lone }); In.edge = lone && onArrow(t.clientX, t.clientY) ? { dir: edgeOf(t.clientX), t: G.t, id: t.identifier } : null; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
+  addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { const tp = taps.get(t.identifier), y0 = P.yaw, p0 = P.pitch; if (tp && tp.far <= TAP.px && (tp.far = Math.max(tp.far, Math.hypot(t.clientX - tp.x, t.clientY - tp.y))) > TAP.px) { stopGo(); In.edge = null; }   // a drag, on either side, ends a tap walk
+      if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
       if (d > leash) { const k = 1 - leash / d; sx += dx * k; sy += dy * k; dx -= dx * k; dy -= dy * k; d = leash; stick.style.left = sx + "px"; stick.style.top = sy + "px"; }   // the base follows a thumb that drags well past its edge
-      if (d > m) { dx *= m / d; dy *= m / d; d = m; } knob.style.transform = `translate(${dx}px,${dy}px)`;
+      if (d > m) { dx *= m / d; dy *= m / d; d = m; } if (d > 6) stick.style.display = "block"; knob.style.transform = `translate(${dx}px,${dy}px)`;
       const g = Math.max(0, d / m - .12) / .88, out = d ? g * (.4 + .6 * g) / d : 0; In.mx = dx * out; In.mz = dy * out;                                             // a small dead zone, then a gentle curve
     } else if (t.identifier === lid) { const dx = t.clientX - lx, dy = t.clientY - ly; look(dx, dy, .0058); lx = t.clientX; ly = t.clientY;
-      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
+      In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); if (tp) { tp.yaw += P.yaw - y0; tp.pitch += P.pitch - p0; } } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
   const end = (e) => { if (state === "play") audio();   // lifting a finger is the only touch iPhone accepts for waking sound mid-run
-    for (const t of e.changedTouches) { if (t.identifier === sid) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null; } };
+    for (const t of e.changedTouches) { const wasStick = t.identifier === sid; if (wasStick) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null;
+      const tp = taps.get(t.identifier), held = In.edge && In.edge.id === t.identifier && G.t - In.edge.t > TAP.s; taps.delete(t.identifier); if (In.edge && In.edge.id === t.identifier) In.edge = null; if (!tp || held || state !== "play" || G.over) continue; if (tp.far > TAP.px) { G.restT = G.t + (wasStick ? TAP.rest : .25); continue; }   // restT: a touch that soon after a drag is a thumb changing sides, not a tap. A walker on the stick gets the longer wait
+      let lone = tp.solo && e.type === "touchend" && !In.scan && !(G.t < G.restT); for (const o of taps.values()) if (!resting(o)) lone = false;
+      const dur = Math.max(G.t - tp.t, Math.min((e.timeStamp - tp.ts) / 1000, G.t - tp.t + TAP.lag - tp.lag));   // game time, plus the time the game lost to slow frames while the finger was down. A slow phone must not turn a long press into a tap
+      if (lone && dur <= TAP.long) { P.yaw -= tp.yaw; P.pitch -= tp.pitch; In.two = Math.min(In.two, tp.two); onTap(t.clientX, t.clientY); }   // a tap. The few pixels it wobbled must not turn the view or count as a second thumb
+      else { stopGo(); if (lone && dur < 1.6) tip("Tap and let go to walk."); } } };                                                                      // a finger pressed and held: stop
   addEventListener("touchend", end); addEventListener("touchcancel", end);
-  const sb = $("scanbtn"); sb.addEventListener("touchstart", (e) => { In.scan = true; sb.classList.add("down"); audio(); e.preventDefault(); }, { passive: false }); const up = () => { In.scan = false; sb.classList.remove("down"); }; sb.addEventListener("touchend", up); sb.addEventListener("touchcancel", up);
+  for (const k of ["touchstart", "touchend", "touchcancel"]) addEventListener(k, (e) => { In.down = e.touches.length; if (k !== "touchstart") In.upAt = performance.now(); }, { passive: true });   // fingers on the glass, for the result screen
+  const sb = $("scanbtn"); $("turnbtn").addEventListener("touchstart", (e) => { if (state === "play" && !G.over) turnAround(); e.preventDefault(); }, { passive: false });
+  sb.addEventListener("touchstart", (e) => { if (!G.bot || G.over || G.target) stopGo(); In.scan = true; sb.classList.add("down"); audio(); e.preventDefault(); }, { passive: false }); const up = () => { In.scan = false; sb.classList.remove("down"); }; sb.addEventListener("touchend", up); sb.addEventListener("touchcancel", up);
 }
+
+/* ---------- tap to walk: touch a spot and the game walks you there, the way a home tour does ----------
+   A tap is a lone finger that lifts within TAP.long seconds and never strays TAP.px, and not within TAP.rest seconds of a stick drag. Anything else is still the stick or the look drag.
+   The world is cut into CELL squares once per run. One flood from the player finds every square they can walk to, and the way there. */
+const edgeOf = (cx) => { const e = Math.min(64, innerWidth * .13), l = $("el").getBoundingClientRect(), r = $("er").getBoundingClientRect(); return cx < Math.max(e, l.width ? l.right + 2 : 0) ? 1 : cx > Math.min(innerWidth - e, r.width ? r.left - 2 : innerWidth) ? -1 : 0; };   // the strips at the left and right edge of the screen, under the two arrows
+const onArrow = (cx, cy) => { const r = $("el").getBoundingClientRect(); return edgeOf(cx) && Math.abs(cy - (r.top + r.bottom) / 2) < 60; };   // on an arrow itself. Only there does a finger held down keep turning: a thumb at rest on the bezel must not spin the view
+const tip = (s) => { G.tip = s; G.tipT = G.t + 2; };
+const TAP = { px: 12, s: .45, long: .7, rest: 1, lag: 0 }, CELL = .2, NX = [1, -1, 0, 0, 1, 1, -1, -1], NZ = [0, 0, 1, -1, 1, -1, 1, -1];
+let Go = null, NAV = null, tapN = 0;                                  // Go: the walk in progress. tapN: taps seen, for tests
+const wrapA = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+const tapMark = new THREE.Mesh(new THREE.RingGeometry(.17, .27, 32), new THREE.MeshBasicMaterial({ color: 0xf3bd54, transparent: true, opacity: .95, depthTest: false, side: THREE.DoubleSide }));
+tapMark.rotation.x = -Math.PI / 2; tapMark.renderOrder = 9; tapMark.visible = false; scene.add(tapMark);   // the gold ring on the floor where the walk will end. It shows through furniture and doorways
+/** Is a straight walk clear for the round walker? The first step is not tested: a walker leaning on a round corner reads as blocked there. */
+function clearWalk(x1, z1, x2, z2, pad = 0) { const d = Math.hypot(x2 - x1, z2 - z1), n = Math.max(1, Math.ceil(d / .08)), q = R + pad;
+  for (let i = 1; i <= n; i++) { const k = i / n, x = x1 + (x2 - x1) * k, z = z1 + (z2 - z1) * k; if (k * d < .3 && i < n) continue; for (const s of solids) if (x > s.x1 - q && x < s.x2 + q && z > s.z1 - q && z < s.z2 + q) return false; } return true; }
+function nav() { if (NAV) return NAV; let x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9;
+  for (const k in LEVELS) for (const p of Object.values(LEVELS[k].nodes).concat([LEVELS[k].spawn])) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); z0 = Math.min(z0, p[1]); z1 = Math.max(z1, p[1]); }
+  x0 -= 5; z0 -= 5; const w = Math.ceil((x1 + 5 - x0) / CELL) + 1, h = Math.ceil((z1 + 5 - z0) / CELL) + 1, free = new Uint8Array(w * h).fill(1);   // 1: open floor. 2: floor right beside something. 0: no place to stand
+  for (const s of solids) { const a = Math.max(0, Math.floor((s.x1 - R - x0) / CELL) + 1), b = Math.min(w - 1, Math.ceil((s.x2 + R - x0) / CELL) - 1), c = Math.max(0, Math.floor((s.z1 - R - z0) / CELL) + 1), d = Math.min(h - 1, Math.ceil((s.z2 + R - z0) / CELL) - 1); for (let j = c; j <= d; j++) for (let i = a; i <= b; i++) free[j * w + i] = 0; }
+  for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) { const m = j * w + i; if (free[m]) for (let e = 0; e < 8; e++) if (!free[m + NX[e] + NZ[e] * w]) { free[m] = 2; break; } }
+  return NAV = { x0, z0, w, h, free, dist: new Float32Array(w * h), prev: new Int32Array(w * h) }; }
+/** Walking distance from the player to every square they can reach. Squares beside furniture and jambs cost double, so a path keeps to open floor. */
+function flood() { const n = nav(), { x0, z0, w, h, free, dist, prev } = n, q = [], ci = Math.round((P.x - x0) / CELL), cj = Math.round((P.z - z0) / CELL); dist.fill(1e9);
+  for (let j = cj - 2; j <= cj + 2; j++) for (let i = ci - 2; i <= ci + 2; i++) { if (i < 0 || j < 0 || i >= w || j >= h) continue; const m = j * w + i, d = Math.hypot(x0 + i * CELL - P.x, z0 + j * CELL - P.z); if (free[m] && d < .45) { dist[m] = d; prev[m] = -1; q.push(m); } }
+  if (!q.length) { let b = -1, bd = .85; for (let j = cj - 4; j <= cj + 4; j++) for (let i = ci - 4; i <= ci + 4; i++) { if (i < 0 || j < 0 || i >= w || j >= h) continue; const m = j * w + i, d = Math.hypot(x0 + i * CELL - P.x, z0 + j * CELL - P.z); if (free[m] && d < bd) { bd = d; b = m; } } if (b >= 0) { dist[b] = bd; prev[b] = -1; q.push(b); } }   // squeezed into a corner the squares do not cover: start from the nearest one
+  for (let k = 0; k < q.length; k++) { const c = q[k], i = c % w, j = (c - i) / w, d0 = dist[c];
+    for (let e = 0; e < 8; e++) { const I = i + NX[e], J = j + NZ[e]; if (I < 0 || J < 0 || I >= w || J >= h) continue; const m = J * w + I; if (!free[m] || (e > 3 && (!free[j * w + I] || !free[J * w + i]))) continue;   // never diagonally past a corner
+      const nd = d0 + (e > 3 ? 1.414 : 1) * CELL * (free[m] === 2 ? 2 : 1); if (nd < dist[m] - 1e-4) { dist[m] = nd; prev[m] = c; q.push(m); } } }
+  return n; }
+/** After flood(): the reachable square nearest (gx, gz), no further than reach from it. -1 if there is none. vis: only squares in plain sight of the player or of (gx, gz), so never one on the far side of a wall. */
+function cellNear(gx, gz, reach, vis) { const { x0, z0, w, h, dist } = NAV, r = Math.ceil(reach / CELL), ci = Math.round((gx - x0) / CELL), cj = Math.round((gz - z0) / CELL); let best = -1, bs = 1e9;
+  for (let j = Math.max(0, cj - r); j <= Math.min(h - 1, cj + r); j++) for (let i = Math.max(0, ci - r); i <= Math.min(w - 1, ci + r); i++) { const m = j * w + i; if (dist[m] >= 1e9) continue; const e = Math.hypot(x0 + i * CELL - gx, z0 + j * CELL - gz), sc = e + dist[m] * .05; if (e <= reach && sc < bs && (!vis || sees(P.x, P.z, x0 + i * CELL, z0 + j * CELL) || sees(gx, gz, x0 + i * CELL, z0 + j * CELL))) { bs = sc; best = m; } }
+  return best; }
+/** After flood(): the corners of the walk from the player to square c, and on to (gx, gz) itself when that last step is clear. */
+function trace(c, gx, gz) { const { x0, z0, w, prev } = NAV, cells = [], out = []; for (; c >= 0; c = prev[c]) cells.push([x0 + (c % w) * CELL, z0 + Math.floor(c / w) * CELL]); cells.reverse();
+  const e = cells[cells.length - 1]; if (Math.hypot(e[0] - gx, e[1] - gz) < .5 && !blocked(gx, gz) && clearWalk(e[0], e[1], gx, gz)) cells.push([gx, gz]);
+  let ax = P.x, az = P.z; for (let i = 0; i < cells.length;) { let j = i; while (j + 1 < cells.length && clearWalk(ax, az, cells[j + 1][0], cells[j + 1][1], .06)) j++; out.push(cells[j]); ax = cells[j][0]; az = cells[j][1]; i = j + 1; }
+  return out; }
+/** A point on the screen to a place to walk to. Floor: that spot. A wall, or anything above the floor: up to it. A doorway, its frame, or just beyond it: through the door.
+    Whatever it is, the place is pulled back to where the walker can stand and get to without a long way round. null: nowhere to go. */
+function pickFloor(cx, cy) {
+  const t = Math.tan(camera.fov * Math.PI / 360), nx = (cx / innerWidth * 2 - 1) * t * camera.aspect, ny = (1 - cy / innerHeight * 2) * t, cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), ry = ny * cp + sp, rz = ny * sp - cp;
+  const cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), rx = nx * cw + rz * sw, rzz = -nx * sw + rz * cw, hz = Math.hypot(rx, rzz); if (hz < .05) return null;
+  const ux = rx / hz, uz = rzz / hz, floor = ry < -.02 * hz; let far = floor ? Math.min(10, 1.6 * hz / -ry) : 6, s = 0, wall = false, door = null, dk = 1e9, x, z;
+  while (s + .1 <= far && sees(P.x, P.z, P.x + ux * (s + .1), P.z + uz * (s + .1))) s += .1;
+  if (s + .1 <= far) { wall = true; far = s; }
+  for (const d of DOORWAYS) { if (d.b - d.a > 1.65) continue; const X = d.ax === "x", gap = d.c - (X ? P.z : P.x), ua = X ? uz : ux, k = gap / ua; if (Math.abs(gap) < .05 || !(k > 0) || k >= dk) continue;
+    const u = X ? P.x + ux * k : P.z + uz * k, m = wall ? .45 : .05; if (u < d.a - m || u > d.b + m || k > far + (wall ? .5 : .15) || (floor && !wall && far - k > .9)) continue;   // the opening, or the frame and the wall right beside it. A floor tap well past the door keeps its own spot
+    const keep = Math.max(0, (d.b - d.a) / 2 - R - .1), mid = (d.a + d.b) / 2, uu = Math.max(mid - keep, Math.min(mid + keep, u)), a = d.c + Math.sign(gap) * .9; door = d; dk = k; x = X ? uu : a; z = X ? a : uu; }
+  flood(); let c = -1;
+  if (door) { c = cellNear(x, z, .8); if (c >= 0 && NAV.dist[c] > 3 * Math.hypot(x - P.x, z - P.z) + 4) c = -1; if (c < 0) door = null; }
+  if (wall) far = Math.max(0, far - .45);
+  for (let d = far, reach = 1.2; c < 0 && d >= .4; d -= .3, reach = .45) { x = P.x + ux * d; z = P.z + uz * d; c = cellNear(x, z, reach, true); if (c >= 0 && NAV.dist[c] > Math.min(3 * d + 4, d + 9)) c = -1; }   // over a fence or behind a window: come back along the line to a spot with a short way to it
+  if (c < 0) return null; const path = trace(c, x, z), e = path[path.length - 1]; if (Math.hypot(e[0] - P.x, e[1] - P.z) < .4) return null;
+  return { x: e[0], z: e[1], path, door, kind: door ? "door" : wall ? "wall" : floor ? "floor" : "way" };
+}
+function stopGo() { if (Go) { Go = null; tapMark.visible = false; } }
+function goTo(t) { Go = { path: t.path, x: t.x, z: t.z, t: 0, n: 0, chk: .5, cx: P.x, cz: P.z, re: 0, face: null, kind: t.kind }; tapMark.position.set(t.x, .03, t.z); tapMark.visible = true;
+  if (t.door) { const X = t.door.ax === "x", sd = Math.sign(t.door.c - (X ? P.z : P.x)) || 1, a0 = X ? (sd > 0 ? Math.PI : 0) : -sd * Math.PI / 2;   // through a door into a narrow hall: end the walk looking along the hall, not at its wall
+    const open = (a) => { let d = 0; while (d < 8 && sees(t.x, t.z, t.x - Math.sin(a) * (d + .25), t.z - Math.cos(a) * (d + .25))) d += .25; return d; }, f = open(a0), l = open(a0 + Math.PI / 2), r = open(a0 - Math.PI / 2);
+    if (f < 2.2 && Math.max(l, r) > f + .8) Go.face = l >= r ? a0 + Math.PI / 2 : a0 - Math.PI / 2; } }
+/** One step of a tap walk. Returns the velocity wanted, in the world. The view turns to face the way it is going. */
+function autoStep(dt) { const g = Go, p = g.path, turn = (to, rate) => { const e = wrapA(to - P.yaw); P.yaw += Math.max(-rate * dt, Math.min(rate * dt, e * (1 - Math.exp(-dt * 8)))); return e; }; g.t += dt;
+  tapMark.scale.setScalar(1 + .14 * Math.sin(G.t * 9)); if (!G.target && !(g.turn && g.aim)) P.pitch *= 1 - dt * 2;
+  if (g.turn) { let done; if (g.aim) { const hx = g.aim[0] - P.x, hz = g.aim[2] - P.z, pt = Math.max(-1.25, Math.min(1.25, Math.atan2(g.aim[1] - 1.6, Math.hypot(hx, hz)))); P.pitch += (pt - P.pitch) * (1 - Math.exp(-dt * 9)); done = Math.abs(turn(Math.atan2(-hx, -hz), 3.4)) < .04 && Math.abs(pt - P.pitch) < .04; }   // a tap on something to scan: end the walk with the crosshair on it
+    else done = Math.abs(turn(g.face, 3)) < .06; if (done || (g.turn += dt) > 1.6) stopGo(); return [0, 0]; }
+  while (p.length > 1 && (Math.hypot(p[0][0] - P.x, p[0][1] - P.z) < .3 || (g.n++ % 6 === 0 && clearWalk(P.x, P.z, p[1][0], p[1][1], .04)))) p.shift();
+  let dx = p[0][0] - P.x, dz = p[0][1] - P.z; const d = Math.hypot(dx, dz) || 1e-6;
+  if (p.length === 1 && d < .12) { if (g.kind === "door") G.said.door = 1; if (g.face === null && !g.aim) stopGo(); else g.turn = dt; return [0, 0]; }
+  if (g.t > g.chk) { if (Math.hypot(P.x - g.cx, P.z - g.cz) < .12) { if (g.re++ > 1 || g.t > 30) { stopGo(); return [0, 0]; } flood(); const c = cellNear(g.x, g.z, .6); if (c < 0) { stopGo(); return [0, 0]; } g.path = trace(c, g.x, g.z); } g.chk = g.t + .5; g.cx = P.x; g.cz = P.z; }   // wedged: look for another way, twice, then give up
+  let lx = dx, lz = dz; if (p.length > 1 && d < 1) { const ex = p[1][0] - p[0][0], ez = p[1][1] - p[0][1], el = Math.hypot(ex, ez) || 1; lx += ex / el * (1 - d); lz += ez / el * (1 - d); }   // look a metre along the path, so the view turns into a corner before the walk does
+  const err = Math.abs(turn(Math.atan2(-lx, -lz), 3.2)), sp = (G.bot ? 3.7 : 3.2) * Math.max(.25, Math.min(1, 1.2 - err / 1.4)) * (p.length === 1 ? Math.max(.25, Math.min(1, d / .6)) : 1);
+  return [dx / d * sp, dz / d * sp]; }
+/** The TURN button shows the way out. It turns to the nearest door in sight behind the player. With none behind, to the nearest door in sight that is off the screen. With no door at all it is a plain about-face. */
+function turnAround() { stopGo(); let e = null, bd = 9, eb = null, bb = 9; const half = Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect); G.said.arrow = 1;
+  for (const d of DOORWAYS) { if (d.b - d.a > 1.65) continue; const X = d.ax === "x", sd = Math.sign((X ? P.z : P.x) - d.c) || 1, m = (d.a + d.b) / 2, px = X ? m : d.c + sd * .5, pz = X ? d.c + sd * .5 : m, dd = Math.hypot(px - P.x, pz - P.z), a = wrapA(Math.atan2(P.x - px, P.z - pz) - P.yaw); if (dd > .6 && Math.abs(a) > half * .8 && dd < Math.max(bd, bb) && sees(P.x, P.z, px, pz)) { if (dd < bd) { bd = dd; e = a; } if (Math.abs(a) > 1.75 && dd < bb) { bb = dd; eb = a; } } }
+  if (eb !== null) e = eb; P.spin = e === null ? { dir: 1, left: Math.PI } : { dir: Math.sign(e), left: Math.abs(e) }; buzz(10); }
+/** A place in the world to its spot on the screen, in pixels, and how far in front it is. null when it is behind the player. The ray in pickFloor, the other way round. */
+function scr(x, y, z) { const dx = x - P.x, dy = y - 1.6, dz = z - P.z, cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), nx = dx * cw - dz * sw, rz = dx * sw + dz * cw, ny = dy * cp + rz * sp, dep = dy * sp - rz * cp, t = Math.tan(camera.fov * Math.PI / 360);
+  return dep > .1 ? [(nx / dep / (t * camera.aspect) + 1) / 2 * innerWidth, (1 - ny / dep / t) / 2 * innerHeight, dep] : null; }
+const scanAt = (g) => g.kind === "dev" ? g.ref.def.at : g.ref.at;
+/** Is the tap on something that can be scanned? Returns where that thing is. People tap the thing itself, so the walk should end aimed at it. */
+function tapThing(cx, cy) { let best = null, bs = 1; const t = Math.tan(camera.fov * Math.PI / 360);
+  const c = (at) => { const p = scr(at[0], at[1], at[2]); if (!p || Math.hypot(at[0] - P.x, at[2] - P.z) > 9) return; const s = Math.hypot(p[0] - cx, p[1] - cy) / Math.max(22, Math.min(56, innerWidth * .14, .25 * innerHeight / (2 * t * p[2]))); if (s < bs && sees(P.x, P.z, at[0], at[2])) { bs = s; best = at; } };
+  for (const f of G.flags) if (!f.found) c(f.at); for (const a of G.answers) if (!a.found && !a.shut && a.wait <= G.t) c(a.at); if (G.card && !G.reg) { c(G.card.at); c(G.desk.at); } if (!G.bot && !G.caught) for (const d of G.devs) if (!d.checked) c(d.def.at);
+  return best; }
+/** Walk to about two metres from a thing and end facing it, so SCAN is ready. Close enough already: only turn to it. false: no spot to stand on. */
+function aimAt(at) { const dx = P.x - at[0], dz = P.z - at[2], d = Math.hypot(dx, dz) || 1e-6, base = { x: P.x, z: P.z, t: 0, n: 0, chk: .5, cx: P.x, cz: P.z, re: 0, face: null, aim: at, kind: "aim" };
+  if (d <= 2.6) { Go = Object.assign(base, { path: [[P.x, P.z]], turn: 1e-3 }); tapMark.visible = false; return true; }
+  flood(); for (const da of [0, .5, -.5, 1, -1]) for (const k of [2, 1.6, 2.4, 1.2]) { const ca = Math.cos(da), sa = Math.sin(da), x = at[0] + (dx * ca - dz * sa) / d * k, z = at[2] + (dx * sa + dz * ca) / d * k, c = cellNear(x, z, .5); if (c < 0 || NAV.dist[c] > Math.min(3 * d + 4, d + 9)) continue; const path = trace(c, x, z), e = path[path.length - 1]; if (![[0, 0], [.15, 0], [-.15, 0], [0, .15], [0, -.15]].every(([i, j]) => sees(e[0] + i, e[1] + j, at[0], at[2]))) continue;   // in plain sight of the thing, with room to spare
+    Go = Object.assign(base, { path, x: e[0], z: e[1] }); tapMark.position.set(e[0], .03, e[1]); tapMark.visible = true; return true; }
+  return false; }
+/** A tap on the picture. Not on the HUD. A tap on an open card closes it. A tap on the thing under the crosshair wants SCAN. A tap at the left or right edge turns. */
+function onTap(cx, cy) { tapN++;
+  for (const id of ["card", "obj", "flags", "timer", "sig", "map", "mute", "scanbtn", "turnbtn"]) { const el = $(id), r = el.getBoundingClientRect(), m = id === "scanbtn" && innerWidth >= 360 ? 16 : id.endsWith("btn") ? 10 : 0; if ((id !== "card" || el.classList.contains("on")) && r.width && cx > r.left - m && (cx < r.right + m || id === "scanbtn") && cy > r.top - m && cy < r.bottom + m) { if (id === "card") { G.cardT = 0; el.className = ""; } return; } }   // a near miss beside SCAN, out to the edge of the screen, is not a walk and not a turn
+  const dir = edgeOf(cx); if (dir) { stopGo(); G.said.arrow = 1; P.spin = { dir, left: (P.spin && P.spin.dir === dir ? P.spin.left : 0) + Math.min(.78, 1.2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect)) }; buzz(8); return; }   // the two arrows at the edges of the screen: a tap there turns the view and walks nowhere. A finger held on an arrow keeps turning: see update(). The turn is a little over half the width of the view, so what was just off the edge comes to the middle
+  const at = tapThing(cx, cy);
+  if (G.target) { const ta = scanAt(G.target), p = scr(ta[0], ta[1], ta[2]); if (at === ta || Math.hypot(cx - innerWidth / 2, cy - innerHeight / 2) < 30 || (!at && p && Math.hypot(cx - p[0], cy - p[1]) < 90)) { const sb = $("scanbtn"); sb.classList.remove("nudge"); void sb.offsetWidth; sb.classList.add("nudge"); return; } }   // people press the object itself. It is under the crosshair already: show them the button
+  const t = pickFloor(cx, cy); if (at && !(t && t.door) && aimAt(at)) { buzz(10); return; }   // something to scan that is not under the crosshair yet: go and face it. A door comes first: a thing beside a doorway must not stop the walk through it
+  if (t) { goTo(t); buzz(10); } else if (Go) stopGo(); else tip("Tap the floor or a door."); }
 
 /* ---------- the simulation: one fixed slice of time ---------- */
 const STEP = 1 / 60, fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
@@ -838,16 +1379,20 @@ function update(dt) {
   if (In.keys.KeyW || In.keys.ArrowUp) mz -= 1; if (In.keys.KeyS || In.keys.ArrowDown) mz += 1; if (In.keys.KeyA) mx -= 1; if (In.keys.KeyD) mx += 1;
   if (In.keys.ArrowLeft) P.yaw += 2.2 * dt; if (In.keys.ArrowRight) P.yaw -= 2.2 * dt;
   const len = Math.hypot(mx, mz); if (len > 1) { mx /= len; mz /= len; }
-  const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw);
-  const v = [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = In.scan && G.target ? 0 : doorHelp(v), k = 1 - Math.exp(-dt * (!one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
+  if (Go && (len > .05 || (In.scan && (!G.bot || G.over || G.target)))) stopGo();   // the stick, a key or SCAN takes over from a tap walk at once. FIRE does not: in the chase a tap walker can run and fire
+  if (In.edge && !In.scan && !G.over && G.t - In.edge.t > TAP.s) { stopGo(); P.spin = null; G.said.arrow = 1; P.yaw += In.edge.dir * 1.8 * dt; if (!G.target) P.pitch *= 1 - dt * 3; }   // a finger held on an edge arrow
+  if (P.spin) { const a = Math.min(P.spin.left, 4.2 * dt); P.yaw += P.spin.dir * a; if ((P.spin.left -= a) <= 0) P.spin = null; if (!G.target) P.pitch *= 1 - dt * 3; }   // the TURN button
+  const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw), auto = Go ? autoStep(dt) : null;
+  const v = auto || [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = auto || (In.scan && G.target) ? 0 : doorHelp(v, IS_TOUCH && In.two > 0), k = 1 - Math.exp(-dt * (auto ? 12 : !one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
   P.vx += (v[0] - P.vx) * k; P.vz += (v[1] - P.vz) * k;
-  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH, mz > 0);
+  const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH && !auto, mz > 0, IS_TOUCH && In.two > 0 && !auto); cull(P.x);   // a tap walk follows a path that already clears every jamb, so it gets no doorway help and none of the thumb rules
   const moved = Math.hypot(P.x - ox, P.z - oz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
-  if (one) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
-    P.vw += (-Math.sign(lat) * Math.max(0, Math.abs(lat) - .5) * 3.6 - P.vw) * k; P.yaw += P.vw * dt + bend * Math.min(1, dt * 6); if (moved && !G.target) P.pitch *= 1 - dt * 1.2; } else P.vw = 0;   // past 30 degrees off straight the view turns toward the walk. It also follows the walk through a door. A view left tilted up or down comes back level on the walk, unless it is aimed at something to scan
-  if (!G.said.walk && (G.walked = (G.walked || 0) + moved) > 1.5 && (Math.abs(P.yaw - Math.PI) > .5 || G.walked > 22)) { G.said.walk = 1; $("lhint").style.display = "none"; }   // the walking hint goes once they have walked and turned, or walked a good way
+  if (one && !auto) { const lat = len > .15 && Math.abs(mx) > .8 * len ? mx / len * Math.max(len, .75) : moved < .25 * Math.hypot(P.vx, P.vz) * dt ? mx : ((P.x - ox) * c - (P.z - oz) * s) / (sp * dt);   // lat: how much of this step went sideways across the view. Blocked, or a stick pushed plainly sideways: what the stick asked for, so a light push turns too and a wall cannot stop the turn
+    P.vw += (-Math.sign(lat) * Math.max(0, Math.abs(lat) - .5) * 3.6 - P.vw) * k; P.yaw += P.vw * dt + (doorHelp.street && bend * mx > 0 && len > .15 && Math.abs(mx) > .8 * len ? 0 : bend * Math.min(1, dt * 6)); if (moved && !G.target) P.pitch *= 1 - dt * 1.2; } else P.vw = 0;   // past 30 degrees off straight the view turns toward the walk. It also follows the walk through a door. A view left tilted up or down comes back level on the walk, unless it is aimed at something to scan
+  if (!G.said.walk) { G.walked = (G.walked || 0) + moved; G.turned = (G.turned || 0) + (Math.abs(P.vw) + (In.two > 0 ? 1 : 0)) * dt; const h = $("lhint").children, off = (i) => { if (!((G.said.h || 0) >> i & 1)) { G.said.h |= 1 << i; h[i].style.display = "none"; } };   // the three lines of the walking hint go one at a time, each once the player has done what it says
+    if (G.walked > 1.5 && G.t > 5) off(0); if (G.said.door || (G.said.in && G.t > 5) || G.walked > 30) off(1); if ((G.said.arrow && G.t > 5) || (G.turned > 1.5 && G.t > 8) || G.walked > 45) off(2); if (G.said.h === 7) { G.said.walk = 1; $("lhint").style.display = "none"; } }
   G.bob = (G.bob || 0) + moved * 4.2;
-  if (!G.said.in && P.z > 1.1) { G.said.in = 1; objective("Turn right. Something on the table by the door looks wrong. Aim at it and hold " + (IS_TOUCH ? "SCAN" : "the mouse button") + "."); }   // not sooner: until here the open door leaf hides the table
+  if (!G.said.in && LV.entered(P)) { G.said.in = 1; if (!G.found && !G.reg && !G.bot && !G.caught) objective(LV.text.enter); }   // resale: not before z 1.1, because until there the open door leaf hides the table
 
   // --- what is under the crosshair
   camera.getWorldDirection(fwd);
@@ -855,7 +1400,8 @@ function update(dt) {
   const consider = (kind, ref, at, range, cone) => { tmp.set(at[0] - P.x, at[1] - 1.6, at[2] - P.z); const d = tmp.length(); if (d > range) return; const a = Math.acos(Math.max(-1, Math.min(1, tmp.dot(fwd) / d))); if (a > cone || a >= ba) return; if (!sees(P.x, P.z, at[0], at[2])) return; ba = a; best = { kind, ref, d }; };
   const cone = IS_TOUCH ? .34 : .26;                                    // generous on purpose: aiming should never be the hard part
   for (const f of G.flags) if (!f.found) consider("flag", f, f.at, 3.7, cone);
-  for (const a of G.answers) if (!a.found) consider("ans", a, a.at, 3.6, cone);
+  for (const a of G.answers) if (!a.found && !a.shut && a.wait <= G.t) consider("ans", a, a.at, 3.6, cone);
+  if (G.card && !G.reg) { consider("reg", G.card, G.card.at, 3.7, cone); consider("desk", G.desk, G.desk.at, 3.7, cone); }
   if (!G.bot && !G.caught) for (const d of G.devs) if (!d.checked) consider("dev", d, d.def.at, 3.7, cone * .9);
   if (!best || !G.target || best.ref !== G.target.ref) G.scan = 0;
   G.target = best;
@@ -866,8 +1412,8 @@ function update(dt) {
   if (best && In.scan && !G.over) { G.scan += dt; if (Math.floor(G.scan * 14) !== Math.floor((G.scan - dt) * 14)) beep(500 + G.scan / need * 700, .03, "sine", .05); if (G.scan >= need) { G.scan = 0; doScan(best); } } else if (!In.scan) G.scan = 0;
   $("cross").className = best ? "hot" : armed ? "hot bot" : ""; $("prog").style.setProperty("--p", best ? Math.min(100, G.scan / need * 100) : 0);
   const hint = $("hint"), how = IS_TOUCH ? "hold SCAN" : "hold the mouse button";   // name the control: pressing the object itself does nothing
-  if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · " + how + " to check" : best.kind === "ans" ? "A straight answer · " + how + " to read" : best.ref.cov && best.ref.cov.visible ? "This looks staged · " + how : how[0].toUpperCase() + how.slice(1) + " to scan"; hint.classList.add("on"); }
-  else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else hint.classList.remove("on");
+  if (best) { hint.textContent = best.kind === "dev" ? best.ref.def.name + " · " + how + " to check" : best.kind === "reg" ? "Register your agent · " + how : best.kind === "desk" ? "Sales desk · " + how + " to sign in" : best.kind === "ans" ? (best.ref.def.insider && G.reg !== "yes" ? "A locked answer · " + how + " to try" : "A straight answer · " + how + " to read") : best.ref.cov && best.ref.cov.visible ? "This looks staged · " + how : how[0].toUpperCase() + how.slice(1) + " to scan"; hint.classList.add("on"); }
+  else if (armed) { hint.textContent = "GLOSS " + "●".repeat(G.bot.hp) + "○".repeat(3 - G.bot.hp) + " · " + (IS_TOUCH ? "hold FIRE" : "hold the mouse button"); hint.classList.add("on"); } else if (G.tipT > G.t) { hint.textContent = G.tip; hint.classList.add("on"); } else hint.classList.remove("on");
 
   // --- tracker: hot or cold. Its reach grows with every red flag you tag.
   let sig = 0, far = 0;
@@ -879,7 +1425,7 @@ function update(dt) {
   // --- GLOSS runs
   const b = G.bot;
   if (b) {
-    b.age += dt; const tgt = NODES[b.to], ddx = tgt[0] - b.x, ddz = tgt[1] - b.z, d = Math.hypot(ddx, ddz);
+    b.age += dt; const tgt = LV.nodes[b.to], ddx = tgt[0] - b.x, ddz = tgt[1] - b.z, d = Math.hypot(ddx, ddz);
     b.panic = Math.max(0, b.panic - dt); const v = (Math.max(2.5, b.speed - b.age * .028) + (b.panic > 0 ? 1.5 : 0)) * dt;              // it tires, slowly, so a chase always ends
     if (d <= v) { b.x = tgt[0]; b.z = tgt[1]; botPick(b, b.to); } else { b.x += ddx / d * v; b.z += ddz / d * v; }
     b.g.position.set(b.x, .62 + Math.sin(G.t * 7) * .07, b.z); botLight.position.copy(b.g.position); b.shell.rotation.y += dt * 3; b.shell.rotation.x += dt * 1.7; b.ring.rotation.z += dt * 5;
@@ -889,7 +1435,8 @@ function update(dt) {
   for (const cov of coverGlow) if (cov.visible) { const k = .5 + .5 * Math.sin(G.t * 9 + cov.id); cov.position.y = Math.sin(G.t * 23 + cov.id) > .93 ? .012 : 0; cov.scale.setScalar(1 + k * .012); }
   led.color.setHSL(.52, 1, .45 + .25 * Math.sin(G.t * 4));
   for (const a of G.answers) if (!a.found) a.mark.position.y = a.at[1] + .34 + Math.sin(G.t * 2.4 + a.at[0]) * .035;
-  if (!G.over && !G.bot && G.cardT <= 0 && G.t > G.nextLie && G.lies.length) { const l = LIES[G.lies.pop()]; G.nextLie = G.t + 46; sfx.chirp(); card("botc", "GLOSS is lying to you", l[0], l[1], 6.5); }
+  if (G.card && !G.reg) { G.card.mark.position.y = G.card.at[1] + .7 + Math.sin(G.t * 2.4) * .04; G.desk.mark.position.y = G.desk.at[1] + .7 + Math.sin(G.t * 2.4 + 2) * .04; }
+  if (!G.over && !G.bot && G.cardT <= 0 && G.t > G.nextLie && G.lies.length) { const l = LV.lies[G.lies.pop()]; G.nextLie = G.t + 46; sfx.chirp(); card("botc", "GLOSS is lying to you", l[0], l[1], 6.5); }
   for (let i = bits.length - 1; i >= 0; i--) { const p = bits[i]; p.life -= dt; p.vy -= 7 * dt; p.m.position.x += p.vx * dt; p.m.position.y += p.vy * dt; p.m.position.z += p.vz * dt; p.m.material.opacity = Math.max(0, p.life / .7); if (p.life <= 0) { perRun.remove(p.m); bits.splice(i, 1); } }
   if (G.cardT > 0) { G.cardT -= dt; if (G.cardT <= 0) $("card").className = ""; }
   G.shake = Math.max(0, G.shake - dt * 2.2);
@@ -901,15 +1448,31 @@ function doScan(hit) {
     const f = hit.ref; f.found = true; G.found++; $("fc").textContent = G.found;
     if (f.cov) { f.cov.visible = false; f.g.visible = true; burst(f.at[0], f.at[1], f.at[2], 0x35e0ff, 22); renderer.shadowMap.needsUpdate = true; }
     burst(f.at[0], f.at[1], f.at[2], 0xf3bd54, 14); sfx.found(); buzz(40); flash("#f3bd54");
-    card("", f.cov ? "GLOSS was hiding this" : "Red flag " + G.found + " of " + G.flags.length, f.def.name, f.def.tip, 6);
+    card("", f.cov ? "GLOSS was hiding this" : LV.text.flag + " " + G.found + " of " + G.flags.length, f.def.name, f.def.tip, 6);
     const guide = store.get("guide", {}); guide[f.def.id] = 1; store.set("guide", guide);
-    if (G.found === 1) objective("GLOSS is hiding in a smart device. The bot signal (top left) is weak. Each red flag you tag makes it reach further. More bars means closer. A wrong device costs time.");
-    else if (G.found === G.flags.length) objective("Every red flag found. Now find GLOSS.");
+    if (G.found === 1) objective("GLOSS is hiding in a smart device. The bot signal (top left) is weak. " + LV.text.each + " makes it reach further. More bars means closer. A wrong device costs time.");
+    else if (G.found === G.flags.length) objective(LV.text.all + ". Now find GLOSS.");
   } else if (hit.kind === "ans") {
-    const a = hit.ref; a.found = true; a.mark.visible = false; G.ans++; $("ac").textContent = G.ans; G.time += 6;
+    const a = hit.ref;
+    if (a.def.insider && G.reg !== "yes") {                              // an insider answer, and no registered agent to open it
+      sfx.wrong(); buzz(60);
+      if (G.reg === "no") { a.shut = true; a.mark.material = qlock; card("lockc", "Locked · no time added", "A question for an agent of your own.", "You signed in on your own, so this one stays closed for this run.", 5.5); }
+      else { a.wait = G.t + 6; card("lockc", "Locked", "This one opens for a registered agent.", "There is a card for that by the front door.", 4.5); }
+      return;
+    }
+    a.found = true; a.mark.visible = false; G.ans++; $("ac").textContent = G.ans; G.time += 6;
     beep(660, .1, "triangle", .1); beep(990, .16, "triangle", .1, 0, .09); buzz(25); burst(a.at[0], a.at[1] + .3, a.at[2], 0xf3bd54, 10);
     card("ansc", "Straight answer · plus 6 seconds", a.def.q, a.def.a, 8.5);
     const got = store.get("answers", {}); got[a.def.id] = 1; store.set("answers", got); track("hunt-answer");
+  } else if (hit.kind === "reg" || hit.kind === "desk") {
+    // The heart of the model home level: which of the two you reached for first.
+    const yes = hit.kind === "reg"; G.reg = yes ? "yes" : "no"; G.card.mark.visible = G.desk.mark.visible = false; track("hunt-register-" + G.reg); buzz(40);
+    $("rg").textContent = yes ? "Agent registered" : "Signed in alone";
+    if (yes) { for (const a of G.answers) if (a.def.insider) { a.mark.material = qmark; burst(a.at[0], a.at[1] + .34, a.at[2], 0xf3bd54, 8); } sfx.found(); flash("#f3bd54"); burst(hit.ref.at[0], hit.ref.at[1], hit.ref.at[2], 0xf3bd54, 18);
+      card("ansc", "Agent registered", "Your agent is on the card before you said hello.", "Many builders only recognize a buyer’s agent who is registered on the first visit. Policies vary by builder. The agent answers are open.", 9.5); }
+    else { beep(330, .16, "triangle", .09); beep(262, .22, "triangle", .09, 0, .12); burst(hit.ref.at[0], hit.ref.at[1], hit.ref.at[2], 0x7fe0c4, 12);
+      card("lockc", "Signed in on your own", "The guest card has no agent on it.", "Many builders only recognize a buyer’s agent who is registered on the first visit. Policies vary and some make exceptions. You can always hire your own agent. The agent answers stay locked this run.", 11); }
+    if (!G.found && !G.bot && !G.caught) objective(LV.text.hunt);
   } else if (hit.kind === "dev") {
     const d = hit.ref; d.checked = true;
     if (d === G.hide) {
@@ -926,53 +1489,60 @@ function doScan(hit) {
 
 /* ---------- the ending ---------- */
 function finish(caught) {
-  if (G.over) return; G.over = true; In.scan = false;
+  if (G.over) return; G.over = true; In.scan = false; stopGo();
   const left = Math.ceil(G.time), n = G.flags.length, all = G.found === n;
-  const score = G.found * 100 + G.ans * 60 + (caught ? 500 + left * 2 : 0) - G.wrong * 40;
+  const score = G.found * 100 + G.ans * 60 + (caught ? 500 + left * 2 : 0) - G.wrong * 40 + (G.reg === "yes" ? 150 : 0);
   const grade = caught && all ? "S" : caught && G.found >= n - 2 ? "A" : caught || all ? "B" : G.found >= 5 ? "C" : "D";
   if (!caught) sfx.lost();
-  banner(caught ? "GLOSS CAUGHT" : "DOORS CLOSED", caught ? (all ? "Every red flag found" : G.found + " of " + n + " red flags found") : "The bot got away");
+  banner(caught ? "GLOSS CAUGHT" : "DOORS CLOSED", caught ? (all ? LV.text.all : G.found + " of " + n + LV.text.some) : "The bot got away");
   track("hunt-finish-" + grade.toLowerCase()); if (caught) track("hunt-bot-caught");
-  const best = store.get("best", 0); if (score > best) store.set("best", score);
-  if (G.daily) { const k = "daily:" + todayKey(); if (!store.get(k, null)) { const st = store.get("streak", { n: 0, last: "" }); st.n = st.last === yesterdayKey() ? st.n + 1 : 1; st.last = todayKey(); store.set("streak", st); } store.set(k, { grade, score }); }
+  const best = store.get(LV.key + "best", 0); if (score > best) store.set(LV.key + "best", score);
+  if (G.daily) { const k = LV.key + "daily:" + todayKey(); if (!store.get(k, null)) { const st = store.get(LV.key + "streak", { n: 0, last: "" }); st.n = st.last === yesterdayKey() ? st.n + 1 : 1; st.last = todayKey(); store.set(LV.key + "streak", st); } store.set(k, { grade, score }); }
   setTimeout(() => showEnd({ caught, left, n, all, score, grade, best: score > best }), 2300);
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 function showEnd(r) {
   if (document.pointerLockElement) document.exitPointerLock();
   state = "end"; document.body.className = "end" + (IS_TOUCH ? " is-touch" : "");
-  const head = r.grade === "S" ? "Nothing gets past you." : r.caught ? "Bot caught. House cleared." : r.all ? (G.hide.checked ? "You saw everything. The bot still got out." : "You saw everything. The bot stayed hidden.") : "The doors closed on you.";
+  const T = LV.text, model = !!LV.reg;
+  const head = r.grade === "S" ? "Nothing gets past you." : r.caught ? T.cleared : r.all ? (G.hide.checked ? "You saw everything. The bot still got out." : "You saw everything. The bot stayed hidden.") : "The doors closed on you.";
   const mmss = Math.floor(r.left / 60) + ":" + ("0" + r.left % 60).slice(-2);
-  let h = '<div class="kick">' + (G.daily ? "Daily house #" + dailyNumber() : "Random house") + '</div>' +
+  // In the model home, the first thing the result says is which way the registration went and what that meant.
+  const policy = "Many builders only recognize a buyer’s agent who is registered on the first visit. Policies vary by builder, and some make exceptions.";
+  const regItem = !model ? "" : '<div class="item reg" style="margin-top:10px">' + (G.reg === "yes" ? "<em>Registered</em><b>Your agent was registered before you signed in.</b>The agent answers opened. " + policy + " An agent who knows new construction can help you compare communities, ask the builder your questions, and go through the paperwork with you. For legal questions, ask an attorney. The builder still decides what it offers."
+    : G.reg === "no" ? '<em style="color:#aab0b8">Signed in alone</em><b>You signed in at the sales desk first.</b>The agent answers stayed locked. ' + policy + " You can always hire your own agent. Ask each builder about its agent policy before you go inside."
+    : '<em style="color:#aab0b8">Undecided</em><b>You never registered an agent and never signed in.</b>The agent answers stayed locked. ' + policy + " Ask about the agent policy before you sign anything.") + "</div>";
+  let h = '<div class="kick">' + (G.daily ? T.daily + " #" + dailyNumber() : T.random) + '</div>' +
     '<div class="grade"><div class="letter">' + r.grade + '</div><div><h2>' + esc(head) + '</h2><p class="lead" style="font-size:14.5px">Score ' + r.score + (r.best ? " · new best" : "") + '</p></div></div>' +
-    '<div class="stats"><div class="stat"><b>' + G.found + "/" + r.n + '</b><span>Red flags</span></div><div class="stat"><b>' + (r.caught ? "Caught" : "Escaped") + '</b><span>GLOSS</span></div><div class="stat"><b>' + mmss + '</b><span>Time left</span></div></div>' +
+    '<div class="stats"><div class="stat"><b>' + G.found + "/" + r.n + '</b><span>' + T.flags + '</span></div><div class="stat"><b>' + (r.caught ? "Caught" : "Escaped") + '</b><span>GLOSS</span></div><div class="stat"><b>' + mmss + '</b><span>Time left</span></div></div>' + regItem +
     (r.caught ? "" : '<div class="item" style="margin-top:10px"><b>' + esc(G.hide.checked ? "GLOSS got out of the " + lowName(G.hide) + "." : "GLOSS was hiding in the " + lowName(G.hide) + ".") + "</b>" + (G.hide.checked ? "Next time, chase it and land three hits before the doors close." : "Scan the device where the bot signal peaks to flush it out. Then land three hits.") + "</div>") +   // a loss should say what the missing step was
-    (G.wrecked ? '<div class="item" style="margin-top:10px"><b>You blasted ' + G.wrecked + (G.wrecked === 1 ? " thing" : " things") + ' in a stranger’s house.</b>At a real open house the only thing you fire is questions.</div>' : "") +
-    '<button class="btn" id="share">Share your result</button><div class="row"><button class="btn ghost" id="again">' + (G.daily ? "Random house" : "Another house") + '</button><a class="btn ghost" href="/play/">Play Escrow Run</a></div>' +
-    '<div class="sec">What to look for at a real open house</div><div class="list">';
+    (G.wrecked ? '<div class="item" style="margin-top:10px"><b>You blasted ' + G.wrecked + (G.wrecked === 1 ? " thing" : " things") + T.wrecked + '</b>' + T.fire + '</div>' : "") +
+    '<button class="btn" id="share">Share your result</button><div class="row"><button class="btn ghost" id="again">' + (G.daily ? T.random : T.again) + '</button><button class="btn ghost" id="other">' + T.other + '</button></div><a class="btn ghost" href="/play/">Play Escrow Run</a>' +
+    '<div class="sec">' + T.guide + '</div><div class="list">';
   for (const f of G.flags) h += f.found ? '<div class="item"><em>Found</em><b>' + esc(f.def.name) + "</b>" + esc(f.def.tip) + "</div>" : '<div class="item miss"><em>Missed</em><b>Something in ' + esc(f.def.room) + "</b>Play again and look closer.</div>";
   h += '</div><div class="sec">Straight answers · ' + G.ans + " of " + G.answers.length + '</div><div class="list">';
-  for (const a of G.answers) h += a.found ? '<div class="item"><b>' + esc(a.def.q) + "</b>" + esc(a.def.a) + "</div>" : '<div class="item miss"><em>Not read</em><b>A question you walked past</b>Look for the gold question marks.</div>';
+  for (const a of G.answers) h += a.found ? '<div class="item"><b>' + esc(a.def.q) + "</b>" + esc(a.def.a) + "</div>" : a.def.insider && G.reg !== "yes" ? '<div class="item lock"><em>Locked in the run</em><b>' + esc(a.def.q) + "</b>" + esc(a.def.a) + " A good question to bring to an agent of your own.</div>" : '<div class="item miss"><em>Not read</em><b>A question you walked past</b>Look for the gold question marks.</div>';
   h += '</div><div class="sec">Try it on a real one this weekend</div><div class="near">' +
     '<a href="https://santaclaritaopenhouses.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-scoh">Santa Clarita open houses <span>SantaClaritaOpenHouses.com</span></a>' +
     '<a href="https://sellersonlyagent.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-soa">Selling yours? Seller’s Only Agent™ <span>SellersOnlyAgent.com</span></a></div>' +
-    '<p class="fine" style="text-align:left">Walk a few. Look under the sink. Count the smoke alarms. And watch who is running the room.</p>' +
+    '<p class="fine" style="text-align:left">' + T.last + '</p>' +
     '<div class="host"><img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="54" height="54"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div></div>' +
-    '<p class="fine">Open House Game is a game. The house and its problems are fiction and nothing here is legal, financial or inspection advice. A real home needs a qualified home inspector.<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
-  const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0;
-  const text = "Open House Game" + (G.daily ? " #" + dailyNumber() : "") + "\n🚩 " + G.found + "/" + r.n + " · 🤖 " + (r.caught ? "caught" : "got away") + " · 💬 " + G.ans + "/" + G.answers.length + " · Grade " + r.grade + "\n" + G.flags.map((f) => f.found ? "🟩" : "⬜").join("") + "\nhttps://openhousegame.com/hunt";
+    '<p class="fine">Open House Game is a game. ' + T.fine + '<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';
+  const end = $("end"); end.innerHTML = h; $("ov-end").scrollTop = 0; end.style.pointerEvents = "none"; const t0 = performance.now(), open = () => { const now = performance.now(); if (now < t0 + 900 || In.down || now < In.upAt + 350) setTimeout(open, 150); else end.style.pointerEvents = ""; }; open();   // a thumb still tapping to walk, or still down from the run, must not press Play again
+  const text = "Open House Game" + T.share + (G.daily ? " #" + dailyNumber() : "") + "\n🚩 " + G.found + "/" + r.n + " · 🤖 " + (r.caught ? "caught" : "got away") + " · 💬 " + G.ans + "/" + G.answers.length + (model ? " · 🤝 " + (G.reg === "yes" ? "agent registered" : G.reg === "no" ? "signed in alone" : "no sign in") : "") + " · Grade " + r.grade + "\n" + G.flags.map((f) => f.found ? "🟩" : "⬜").join("") + "\nhttps://openhousegame.com/hunt";
   end.querySelector("#share").addEventListener("click", (e) => { track("hunt-share"); const b = e.currentTarget, say = (t) => { b.textContent = t; setTimeout(() => b.textContent = "Share your result", 2600); }, done = () => say("Copied. Paste it anywhere."), fail = () => say("Could not copy. Take a screenshot.");
     const copy = () => navigator.clipboard ? navigator.clipboard.writeText(text).then(done, fail) : fail();   // only say Copied when it was
     if (navigator.share && IS_TOUCH) navigator.share({ text }).catch((err) => { if (!err || err.name !== "AbortError") copy(); }); else copy(); });
-  end.querySelector("#again").addEventListener("click", () => begin(false));
+  const lvl = LV.id; end.querySelector("#again").addEventListener("click", () => begin(false, lvl)); end.querySelector("#other").addEventListener("click", () => begin(true, lvl === "resale" ? "model" : "resale"));
   end.querySelectorAll("[data-ev]").forEach((a) => a.addEventListener("click", () => track(a.dataset.ev)));
 }
 
 /* ---------- start, title, minimap, frame ---------- */
-function begin(daily) {
-  audio(); newRun(daily ? hash(todayKey() + "hunt") : (Math.random() * 4294967296) >>> 0, daily);
-  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : ""); $("card").className = ""; $("lhint").style.display = "";
-  track("hunt-start"); last = performance.now(); acc = 0;
+function begin(daily, level = "resale") {
+  const L = LEVELS[level] || LEVELS.resale;                             // each level has its own daily seed
+  audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id);
+  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; $("lhint").style.display = ""; for (const c of $("lhint").children) c.style.display = "";
+  track(L.start); last = performance.now(); acc = 0;
   if (!IS_TOUCH && canvas.requestPointerLock) { try { canvas.requestPointerLock(); } catch (e) {} }
   try { if (!history.state || !history.state.g) history.pushState({ g: 1 }, ""); } catch (e) {}   // one spare history entry, so a stray back-swipe has something to pop
 }
@@ -981,14 +1551,20 @@ function begin(daily) {
 addEventListener("popstate", (e) => { try { if (state === "play" && !G.backed) { G.backed = 1; history.pushState({ g: 1 }, ""); } else if (!e.state) history.back(); } catch (err) {} });
 $("go").addEventListener("click", () => begin(true));
 $("fresh").addEventListener("click", () => begin(false));
-{ const st = store.get("streak", { n: 0 }), b = store.get("best", 0), d = store.get("daily:" + todayKey(), null);
-  $("daily").textContent = "Daily house #" + dailyNumber() + " · the same house for everyone today";
-  $("best").textContent = (d ? "Today you got " + d.grade + ". " : "") + (b ? "Best score " + b + ". " : "") + (st.n > 1 && (st.last === todayKey() || st.last === yesterdayKey()) ? "Streak " + st.n + " days." : ""); }   // a streak that skipped a day is over, so do not show it
+$("go2").addEventListener("click", () => begin(true, "model"));
+$("fresh2").addEventListener("click", () => begin(false, "model"));
+{ const live = (k) => { const q = store.get(k, { n: 0 }); return q.n > 1 && (q.last === todayKey() || q.last === yesterdayKey()) ? q.n : 0; }, st = live("streak"), sm = live("m:streak"), b = store.get("best", 0), d = store.get("daily:" + todayKey(), null), dm = store.get("m:daily:" + todayKey(), null), bm = store.get("m:best", 0);
+  $("daily").textContent = "Daily #" + dailyNumber() + " · the same two houses for everyone today";
+  $("best").textContent = (d ? "Today you got " + d.grade + " in the resale house. " : "") + (dm ? "Today you got " + dm.grade + " in the model home. " : "") + (b ? "Best score " + b + ". " : "") + (bm ? "Model home best " + bm + ". " : "") + (st ? "Resale house streak " + st + " days. " : "") + (sm ? "Model home streak " + sm + " days." : ""); }   // a streak that skipped a day is over, so do not show it
 
-const map = $("map"), mc = map.getContext("2d"), MS = 264 / 26, mapX = (x) => (x + 3.5) * MS, mapZ = (z) => (z + 7.5) * MS;
+/* The minimap shows the house the run is in. If the player walks off down the street, it follows them. */
+const map = $("map"), mc = map.getContext("2d"), MS = 264 / 26, PADS = [[0, 0, 16, 12], [16, -.4, 5, 6.8], [MX, 0, 13, 10], [MX - .2, -7.4, 8.6, 7.4]];
+let mapX0 = -3.5, mapZ0 = -7.5;
+const mapX = (x) => (x - mapX0) * MS, mapZ = (z) => (z - mapZ0) * MS;
 function drawMap() {
-  mc.clearRect(0, 0, 264, 216); mc.fillStyle = "rgba(243,238,228,.16)"; mc.fillRect(mapX(0), mapZ(0), 16 * MS, 12 * MS); mc.fillRect(mapX(16), mapZ(-.4), 5 * MS, 6.8 * MS);
-  mc.fillStyle = "rgba(243,238,228,.75)"; for (const s of solids) if (s.los) mc.fillRect(mapX(s.x1), mapZ(s.z1), Math.max(2, (s.x2 - s.x1) * MS), Math.max(2, (s.z2 - s.z1) * MS));
+  mapX0 = LV.map[0]; mapZ0 = LV.map[1]; if (P.x < mapX0 || P.x > mapX0 + 26) mapX0 = P.x - 13;
+  mc.clearRect(0, 0, 264, 216); mc.fillStyle = "rgba(243,238,228,.16)"; for (const r of PADS) mc.fillRect(mapX(r[0]), mapZ(r[1]), r[2] * MS, r[3] * MS);
+  mc.fillStyle = "rgba(243,238,228,.75)"; for (const s of solids) if (s.los && s.x2 > mapX0 && s.x1 < mapX0 + 26) mc.fillRect(mapX(s.x1), mapZ(s.z1), Math.max(2, (s.x2 - s.x1) * MS), Math.max(2, (s.z2 - s.z1) * MS));
   for (const f of G.flags) if (f.found) { mc.fillStyle = "#f3bd54"; mc.beginPath(); mc.arc(mapX(f.at[0]), mapZ(f.at[2]), 4.5, 0, 7); mc.fill(); }
   if (G.bot) { mc.fillStyle = "#35e0ff"; mc.beginPath(); mc.arc(mapX(G.bot.x), mapZ(G.bot.z), 5 + Math.sin(G.t * 12) * 1.5, 0, 7); mc.fill(); }
   mc.save(); mc.translate(mapX(P.x), mapZ(P.z)); mc.rotate(-P.yaw); mc.fillStyle = "#fff"; mc.beginPath(); mc.moveTo(0, -9); mc.lineTo(6, 7); mc.lineTo(0, 3.5); mc.lineTo(-6, 7); mc.closePath(); mc.fill(); mc.restore();
@@ -1000,21 +1576,22 @@ function pace(dt) { if (dt > 1 / 28) { if (++slow > 45) { slow = 0; if (PR > .85
         scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; }); } } } else { slow = Math.max(0, slow - 1); } }
 function frame(now) {
   requestAnimationFrame(frame);
-  const dt = Math.min(.1, (now - last) / 1000); last = now; pace(dt);
+  const raw = (now - last) / 1000, dt = Math.min(.1, raw); last = now; pace(dt); if (state === "play" && raw > dt) TAP.lag += Math.min(2, raw) - dt;   // under ten frames a second the game runs slow. Taps are timed against the clock all the same
+  for (let i = 0; i < feathers.length; i++) { const f = feathers[i]; f.rotation.y = f.userData.ry + Math.sin(now * .0021 + i * 1.7) * .16 + Math.sin(now * .0057 + i) * .05; }   // the feather flags flutter
   if (state === "play") {
     acc += dt; let n = 0; while (acc >= STEP && n++ < 6 && state === "play") { update(STEP); acc -= STEP; }
     stepFx(dt); const sh = G.shake * .05; camera.position.set(P.x + (Math.random() - .5) * sh, 1.6 + Math.sin(G.bob || 0) * .022 + (Math.random() - .5) * sh, P.z);
     camera.rotation.set(P.pitch, P.yaw, 0); drawMap();
   } else if (state === "title") {
-    attract += dt * .06; camera.position.set(5 + Math.sin(attract) * 7, 1.9 + Math.sin(attract * .7) * .3, -7 + Math.cos(attract * 1.3) * .8); camera.lookAt(7, 1.6, 2);   // attract mode: a slow drift past the front of the house
-  } else { attract += dt * .05; camera.position.set(8 + Math.sin(attract) * 9, 5.2, -7.6); camera.lookAt(8, 1.4, 4); }
+    attract += dt * .06; camera.position.set(5 + Math.sin(attract) * 7, 1.9 + Math.sin(attract * .7) * .3, -7 + Math.cos(attract * 1.3) * .8); camera.lookAt(7, 1.6, 2); cull(camera.position.x);   // attract mode: a slow drift past the front of the house
+  } else { attract += dt * .05; camera.position.set(LV.orbit[0] + Math.sin(attract) * 9, 5.2, -7.6); camera.lookAt(LV.orbit[0], 1.4, LV.orbit[1]); cull(camera.position.x); }
   renderer.render(scene, camera);
 }
 newRun(hash(todayKey() + "hunt"), true); G.over = true;
 requestAnimationFrame(frame);
 
 /* a small door for tests: lets a script stand the player somewhere and read the state */
-window.__ohg = { P, get G() { return G; }, get state() { return state; }, begin, In, NODES, FLAGS, DEVICES, ANSWERS, doScan, blocked, sees, fire, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
+window.__ohg = { P, get G() { return G; }, get state() { return state; }, get LV() { return LV; }, LEVELS, solids, DOORWAYS, get info() { return renderer.info.render; }, begin, In, get NODES() { return LV.nodes; }, get FLAGS() { return LV.flags; }, get DEVICES() { return LV.devices; }, get ANSWERS() { return LV.answers; }, doScan, blocked, sees, fire, TAP, scr, tapThing, pickFloor, goTo, stopGo, onTap, turnAround, clearWalk, nav, get Go() { return Go; }, get taps() { return tapN; }, get mark() { return tapMark.visible; }, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
 </script>
 </body>
 </html>
