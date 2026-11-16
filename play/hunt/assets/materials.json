@@ -1,0 +1,1267 @@
+{
+ "version": 2,
+ "licence": "CC0",
+ "licenceNote": "Every file listed here is CC0 1.0 / public domain (Poly Haven: https://polyhaven.com/license, ambientCG: https://docs.ambientcg.com/license/). No attribution required.",
+ "basePath": "play/hunt/assets/",
+ "totalBytes": 4964208,
+ "budgetBytes": 6500000,
+ "conventions": {
+  "format": "JPEG, progressive. Colour maps 4:2:0 q82 (lawn q78); normal and packed maps 4:4:4 q85, except the noisy outdoor and carpet maps (exterior-stucco, lawn-grass, concrete-paving normal; carpet normal; exterior-stucco and lawn-grass orm at 256 px), which are 4:2:0 q70 to q75. Cards are WebP with alpha.",
+  "packing": "orm.jpg = AO in red, roughness in green, metalness in blue. Assign the SAME texture object to aoMap, roughnessMap (and metalnessMap where channels.b is metalness). Set material.roughness = 1 and material.metalness = 1 only where channels.b is metalness, else 0.",
+  "normal": "OpenGL convention, use as-is with normalMap (no Y flip).",
+  "uv": "Set wrapS = wrapT = RepeatWrapping and repeat = surfaceSizeInMetres / sizeMeters so texel density is physically right.",
+  "ao": "three.js r160 aoMap reads the first UV set (uv) by default; no uv2 needed.",
+  "resolution": "Colour is always 1024. Fine-grained normal maps and most packed maps were reduced to 512 to meet the 6.5 MB budget; see px per map.",
+  "tiers": "surfaces[slug].phone.skip lists maps the phone and low tiers do not download. maps[x].optional marks a map that nothing fetches by default. env.skyPhone replaces env.sky on phones. Phones also cap every texture at 512 px before upload (lab.html shrink())."
+ },
+ "env": {
+  "assetId": "kloofendal_48d_partly_cloudy_puresky",
+  "source": "Poly Haven",
+  "sourceUrl": "https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky",
+  "licence": "CC0",
+  "hdr": {
+   "file": "env/kloofendal_48d_partly_cloudy_puresky_512.hdr",
+   "px": [
+    512,
+    256
+   ],
+   "bytes": 380181,
+   "downloaded": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloofendal_48d_partly_cloudy_puresky_1k.hdr",
+   "note": "Poly Haven 1k Radiance RGBE, downsampled 2x2 (box filter in linear radiance) to 512x256 and re-written as RLE RGBE; the sun is still in it (peak about 23000). It is only ever used blurred through PMREM, which needs at least 64 px of width. Load with RGBELoader at its default HalfFloatType (not FloatType: iPhones cannot filter 32-bit float textures), clamp to lighting.clampRadiance, then PMREMGenerator."
+  },
+  "sky": {
+   "file": "env/kloofendal_48d_partly_cloudy_puresky_sky_2k.jpg",
+   "px": [
+    2048,
+    1024
+   ],
+   "bytes": 113464,
+   "downloaded": "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/kloofendal_48d_partly_cloudy_puresky.jpg",
+   "note": "Poly Haven tonemapped JPG downscaled to 2048x1024 q80. sRGB, equirectangular, same orientation as the .hdr. Use as scene.background (EquirectangularReflectionMapping, SRGBColorSpace). Lower half is a soft mirrored sky, hide it with the game ground.",
+   "sizeException": "Deliberately 2048x1024, above the 1024 px texture rule: it is a full panorama and a window only ever shows a small slice of it, so 1024 looks soft on a desktop. Phones load skyPhone instead."
+  },
+  "measured": {
+   "peak_luminance": 60449.791999999994,
+   "sun_direction_three": [
+    0.5544,
+    0.7417,
+    0.3776
+   ],
+   "sun_elevation_deg": 47.9,
+   "sun_azimuth_deg_atan2_z_x": 34.3,
+   "sun_irradiance_on_normal_surface": 4.181634056306967,
+   "sun_rgb_ratio": [
+    0.995,
+    1.009,
+    0.923
+   ],
+   "sky_irradiance_horizontal_excl_sun": 1.6858526506366849,
+   "sky_mean_rgb_upper_excl_sun": [
+    0.431,
+    0.492,
+    0.69
+   ]
+  },
+  "lighting": {
+   "note": "Measured from the .hdr with three.js equirect mapping (u = atan2(z,x)/2pi + 0.5, v = asin(y)/pi + 0.5), unrotated. The sun is inside the HDR (6 texels, peak ~60000). Recommended: after loading with HalfFloatType (the RGBELoader default), clamp every channel to clampRadiance before PMREM so the environment gives sky fill only, then add one shadow-casting DirectionalLight from sun.direction. That avoids counting the sun twice and avoids PMREM fireflies. If the scene is rotated, rotate sun.direction by the same angle.",
+   "clampRadiance": 30,
+   "sun": {
+    "direction": [
+     0.5544,
+     0.7417,
+     0.3776
+    ],
+    "color": [
+     1.0,
+     0.97,
+     0.9
+    ],
+    "intensity": 4.0
+   },
+   "toneMapping": "ACESFilmicToneMapping",
+   "toneMappingExposure": 0.6,
+   "exposureNote": "0.6 suits sunlit exteriors; interiors lit through windows will want roughly 1.5 to 2.5 or extra fill.",
+   "labValues": {
+    "toneMappingExposure": 2.1,
+    "sunIntensity": 2.0,
+    "sunColor": [
+     1.0,
+     0.95,
+     0.86
+    ],
+    "note": "What lab.html uses for an interior exposed like a listing photo. sun.intensity above (4.0) is the physically measured value and suits exposure 0.6 outdoors."
+   }
+  },
+  "skyPhone": {
+   "file": "env/kloofendal_48d_partly_cloudy_puresky_sky_1k.jpg",
+   "px": [
+    1024,
+    512
+   ],
+   "bytes": 44618,
+   "downloaded": "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/kloofendal_48d_partly_cloudy_puresky.jpg",
+   "note": "The same panorama at 1024x512 q82 for the phone and low tiers (within the 1024 px rule, a quarter of the GPU memory)."
+  }
+ },
+ "surfaces": {
+  "floor-wood": {
+   "use": "light wide-plank wood floor (interior)",
+   "dir": "tex/floor-wood/",
+   "source": "Poly Haven",
+   "assetId": "laminate_floor_02",
+   "sourceUrl": "https://polyhaven.com/a/laminate_floor_02",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/laminate_floor_02/laminate_floor_02_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/laminate_floor_02/laminate_floor_02_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/laminate_floor_02/laminate_floor_02_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/laminate_floor_02/laminate_floor_02_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/laminate_floor_02/laminate_floor_02_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.7,
+    1.7
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 1700 x 1700 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 166607,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 111472,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 149280,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.377,
+    "color_mean_srgb": [
+     155,
+     128,
+     99
+    ]
+   },
+   "hints": {}
+  },
+  "wall-plaster": {
+   "use": "painted plaster interior wall",
+   "dir": "tex/wall-plaster/",
+   "source": "Poly Haven",
+   "assetId": "painted_plaster_wall",
+   "sourceUrl": "https://polyhaven.com/a/painted_plaster_wall",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/painted_plaster_wall/painted_plaster_wall_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/painted_plaster_wall/painted_plaster_wall_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/painted_plaster_wall/painted_plaster_wall_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/painted_plaster_wall/painted_plaster_wall_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/painted_plaster_wall/painted_plaster_wall_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    2.0,
+    2.0
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 2000 x 2000 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 146511,
+     "colorSpace": "srgb",
+     "optional": "Not fetched by default: hints.flatColorAlternative is used instead of this colour map (lab.html never requests it)."
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 37777,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 16438,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.919,
+    "color_mean_srgb": [
+     170,
+     162,
+     159
+    ]
+   },
+   "hints": {
+    "colorMultiplier": [
+     1.75,
+     1.72,
+     1.64
+    ],
+    "flatColorAlternative": "#efebe2"
+   }
+  },
+  "exterior-stucco": {
+   "use": "exterior stucco",
+   "dir": "tex/exterior-stucco/",
+   "source": "Poly Haven",
+   "assetId": "white_stucco_02",
+   "sourceUrl": "https://polyhaven.com/a/white_stucco_02",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_stucco_02/white_stucco_02_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_stucco_02/white_stucco_02_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_stucco_02/white_stucco_02_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_stucco_02/white_stucco_02_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_stucco_02/white_stucco_02_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.8,
+    1.8
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions list 1800 mm on one axis, the other is a near-zero error value; texture is square so 1.8 used for both)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 153262,
+     "colorSpace": "srgb",
+     "optional": "Not fetched by default: hints.flatColorAlternative is used instead of this colour map (lab.html never requests it)."
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 59041,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      256,
+      256
+     ],
+     "bytes": 9410,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.888,
+    "color_mean_srgb": [
+     174,
+     173,
+     170
+    ]
+   },
+   "hints": {
+    "colorMultiplier": [
+     1.7,
+     1.68,
+     1.62
+    ],
+    "flatColorAlternative": "#ece8de"
+   },
+   "phone": {
+    "skip": [
+     "normal",
+     "orm"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "floor-tile": {
+   "use": "large pale floor tile (kitchen / bath / entry)",
+   "dir": "tex/floor-tile/",
+   "source": "Poly Haven",
+   "assetId": "marble_01",
+   "sourceUrl": "https://polyhaven.com/a/marble_01",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_01/marble_01_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_01/marble_01_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_01/marble_01_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_01/marble_01_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_01/marble_01_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.5,
+    1.5
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 1500 x 1500 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 103531,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 34276,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 75387,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.506,
+    "color_mean_srgb": [
+     177,
+     156,
+     121
+    ]
+   },
+   "hints": {}
+  },
+  "carpet": {
+   "use": "neutral carpet (bedrooms)",
+   "dir": "tex/carpet/",
+   "source": "ambientCG",
+   "assetId": "Carpet016",
+   "sourceUrl": "https://ambientcg.com/view?id=Carpet016",
+   "downloaded": [
+    "https://ambientcg.com/get?file=Carpet016_1K-PNG.zip"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.7,
+    1.7
+   ],
+   "sizeFrom": "asset metadata (ambientCG dimensionX/Y 170 cm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 156754,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 59339,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 54738,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.648,
+    "color_mean_srgb": [
+     187,
+     176,
+     147
+    ]
+   },
+   "hints": {},
+   "phone": {
+    "skip": [
+     "normal"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "counter-stone": {
+   "use": "pale stone / quartz countertop",
+   "dir": "tex/counter-stone/",
+   "source": "ambientCG",
+   "assetId": "Marble021",
+   "sourceUrl": "https://ambientcg.com/view?id=Marble021",
+   "downloaded": [
+    "https://ambientcg.com/get?file=Marble021_1K-PNG.zip"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.2,
+    1.2
+   ],
+   "sizeFrom": "ESTIMATE (ambientCG gives no dimensions for Marble021)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 129913,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 13967,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "roughness": {
+     "file": "rough.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 66529,
+     "colorSpace": "linear",
+     "packed": false,
+     "note": "greyscale; no AO offered by the source"
+    }
+   },
+   "measured": {
+    "rough_mean": 0.116,
+    "color_mean_srgb": [
+     243,
+     242,
+     240
+    ]
+   },
+   "hints": {}
+  },
+  "concrete-paving": {
+   "use": "concrete paving (driveway, walk, patio)",
+   "dir": "tex/concrete-paving/",
+   "source": "Poly Haven",
+   "assetId": "concrete_pavement",
+   "sourceUrl": "https://polyhaven.com/a/concrete_pavement",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/concrete_pavement/concrete_pavement_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/concrete_pavement/concrete_pavement_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/concrete_pavement/concrete_pavement_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/concrete_pavement/concrete_pavement_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/concrete_pavement/concrete_pavement_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.8,
+    1.8
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 1800 x 1800 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 226760,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 40791,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 47302,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.864,
+    "color_mean_srgb": [
+     127,
+     116,
+     102
+    ]
+   },
+   "hints": {},
+   "phone": {
+    "skip": [
+     "normal",
+     "orm"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "asphalt": {
+   "use": "asphalt (street)",
+   "dir": "tex/asphalt/",
+   "source": "Poly Haven",
+   "assetId": "clean_asphalt",
+   "sourceUrl": "https://polyhaven.com/a/clean_asphalt",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clean_asphalt/clean_asphalt_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clean_asphalt/clean_asphalt_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clean_asphalt/clean_asphalt_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clean_asphalt/clean_asphalt_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clean_asphalt/clean_asphalt_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    2.1,
+    2.1
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 2100 x 2100 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 143012,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 19484,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 37192,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.66,
+    "color_mean_srgb": [
+     68,
+     69,
+     69
+    ]
+   },
+   "hints": {},
+   "phone": {
+    "skip": [
+     "normal"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "lawn-grass": {
+   "use": "lawn grass",
+   "dir": "tex/lawn-grass/",
+   "source": "ambientCG",
+   "assetId": "Grass005",
+   "sourceUrl": "https://ambientcg.com/view?id=Grass005",
+   "downloaded": [
+    "https://ambientcg.com/get?file=Grass005_1K-PNG.zip"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.5,
+    1.5
+   ],
+   "sizeFrom": "ESTIMATE (ambientCG gives no dimensions for Grass005)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 240812,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 43776,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      256,
+      256
+     ],
+     "bytes": 10442,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.702,
+    "color_mean_srgb": [
+     101,
+     131,
+     43
+    ]
+   },
+   "hints": {},
+   "phone": {
+    "skip": [
+     "normal",
+     "orm"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "roof-tile": {
+   "use": "clay roof tile",
+   "dir": "tex/roof-tile/",
+   "source": "Poly Haven",
+   "assetId": "clay_roof_tiles_02",
+   "sourceUrl": "https://polyhaven.com/a/clay_roof_tiles_02",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clay_roof_tiles_02/clay_roof_tiles_02_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clay_roof_tiles_02/clay_roof_tiles_02_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clay_roof_tiles_02/clay_roof_tiles_02_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clay_roof_tiles_02/clay_roof_tiles_02_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/clay_roof_tiles_02/clay_roof_tiles_02_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    2.5,
+    2.5
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 2500 x 2500 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 213137,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 121482,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 69992,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.915,
+    "color_mean_srgb": [
+     145,
+     79,
+     42
+    ]
+   },
+   "hints": {},
+   "phone": {
+    "skip": [
+     "orm"
+    ],
+    "why": "Outdoor or soft surface: on the phone and low tiers these maps are not downloaded; the measured roughness is used instead."
+   }
+  },
+  "upholstery-fabric": {
+   "use": "sofa / upholstery fabric",
+   "dir": "tex/upholstery-fabric/",
+   "source": "ambientCG",
+   "assetId": "Fabric061",
+   "sourceUrl": "https://ambientcg.com/view?id=Fabric061",
+   "downloaded": [
+    "https://ambientcg.com/get?file=Fabric061_1K-PNG.zip"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    0.4,
+    0.4
+   ],
+   "sizeFrom": "asset metadata (ambientCG dimensionX/Y 40 cm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 263276,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 91070,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 54852,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.839,
+    "color_mean_srgb": [
+     141,
+     135,
+     130
+    ]
+   },
+   "hints": {
+    "note": "The colour map is a fine two-tone weave that shimmers (moire) when seen small. lab.html uses a flat colour with the normal map only."
+   }
+  },
+  "wood-light": {
+   "use": "light wood veneer for furniture and cabinetry",
+   "dir": "tex/wood-light/",
+   "source": "Poly Haven",
+   "assetId": "ash_veneer",
+   "sourceUrl": "https://polyhaven.com/a/ash_veneer",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/ash_veneer/ash_veneer_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/ash_veneer/ash_veneer_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/ash_veneer/ash_veneer_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/ash_veneer/ash_veneer_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/ash_veneer/ash_veneer_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.0,
+    1.0
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 1000 x 1000 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 137598,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 71405,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 66179,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.619,
+    "color_mean_srgb": [
+     172,
+     148,
+     124
+    ]
+   },
+   "hints": {}
+  },
+  "wood-dark": {
+   "use": "dark wood for furniture accents",
+   "dir": "tex/wood-dark/",
+   "source": "Poly Haven",
+   "assetId": "walnut_veneer",
+   "sourceUrl": "https://polyhaven.com/a/walnut_veneer",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/walnut_veneer/walnut_veneer_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/walnut_veneer/walnut_veneer_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/walnut_veneer/walnut_veneer_arm_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/walnut_veneer/walnut_veneer_rough_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/walnut_veneer/walnut_veneer_ao_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    1.8,
+    1.8
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 1800 x 1800 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 95058,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 96572,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 46156,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.576,
+    "color_mean_srgb": [
+     138,
+     105,
+     80
+    ]
+   },
+   "hints": {}
+  },
+  "metal-brushed": {
+   "use": "brushed metal (appliances, taps, handles, lamp parts)",
+   "dir": "tex/metal-brushed/",
+   "source": "ambientCG",
+   "assetId": "Metal009",
+   "sourceUrl": "https://ambientcg.com/view?id=Metal009",
+   "downloaded": [
+    "https://ambientcg.com/get?file=Metal009_1K-PNG.zip"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    0.5,
+    0.5
+   ],
+   "sizeFrom": "ESTIMATE (ambientCG gives no dimensions for Metal009)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 86090,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 81722,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 48995,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "unused (255)",
+      "g": "roughness",
+      "b": "metalness"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.469,
+    "color_mean_srgb": [
+     146,
+     148,
+     151
+    ]
+   },
+   "hints": {}
+  },
+  "wood-oak": {
+   "use": "pale rift-cut white oak veneer for cabinetry and joinery (grain runs along V)",
+   "dir": "tex/wood-oak/",
+   "source": "Poly Haven",
+   "assetId": "white_oak_veneer",
+   "sourceUrl": "https://polyhaven.com/a/white_oak_veneer",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_oak_veneer/white_oak_veneer_diff_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_oak_veneer/white_oak_veneer_nor_gl_1k.png",
+    "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/white_oak_veneer/white_oak_veneer_arm_1k.png"
+   ],
+   "licence": "CC0",
+   "sizeMeters": [
+    0.5,
+    0.5
+   ],
+   "sizeFrom": "asset metadata (Poly Haven dimensions 500 x 500 mm)",
+   "maps": {
+    "color": {
+     "file": "color.jpg",
+     "px": [
+      1024,
+      1024
+     ],
+     "bytes": 119876,
+     "colorSpace": "srgb"
+    },
+    "normal": {
+     "file": "normal.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 29138,
+     "convention": "OpenGL (+Y up), three.js default",
+     "colorSpace": "linear"
+    },
+    "orm": {
+     "file": "orm.jpg",
+     "px": [
+      512,
+      512
+     ],
+     "bytes": 31572,
+     "colorSpace": "linear",
+     "packed": true,
+     "channels": {
+      "r": "ao",
+      "g": "roughness",
+      "b": "unused (0)"
+     }
+    }
+   },
+   "measured": {
+    "rough_mean": 0.734,
+    "color_mean_srgb": [
+     144,
+     120,
+     98
+    ]
+   },
+   "hints": {
+    "colorMultiplier": [
+     1.72,
+     1.78,
+     1.84
+    ],
+    "tileSizeUsed": 0.75,
+    "note": "Rift-cut look: straight grain running along V (up the image), so vertical faces need no swap. The multiplier lifts the mid-brown source to a pale natural oak. lab.html tiles it at 0.75 m instead of the true 0.5 m so the repeat is less obvious along a 7 m run."
+   }
+  }
+ },
+ "cards": {
+  "olive_tree": {
+   "use": "a gnarled multi-stem tree, used as olive trees behind the garden wall",
+   "file": "cards/olive_tree.webp",
+   "px": [
+    768,
+    627
+   ],
+   "bytes": 180128,
+   "sizeMeters": [
+    4.376,
+    3.575
+   ],
+   "padMeters": 0.084,
+   "colorSpace": "srgb",
+   "alpha": "straight alpha, colour bled into the transparent area; use alphaTest 0.5 (with alphaToCoverage where there is MSAA)",
+   "source": "Poly Haven",
+   "assetId": "island_tree_02",
+   "sourceUrl": "https://polyhaven.com/a/island_tree_02",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/island_tree_02/island_tree_02_1k.gltf",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_nor_gl_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_diff_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_arm_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_leaves_nor_gl_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_leaves_diff_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_leaves_arm_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_branches_nor_gl_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_branches_diff_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/island_tree_02/island_tree_02_branches_arm_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/island_tree_02/island_tree_02.bin"
+   ],
+   "licence": "CC0",
+   "derived": "Orthographic side view of the unmodified CC0 model (1072213 triangles), rendered by this project in three.js with baked sky and sun light, then scaled to 768 px. The model itself is not shipped. A derivative of a CC0 work, released here as CC0.",
+   "placement": "Upright quad, sizeMeters wide and high at scale 1, the plant standing padMeters above the bottom edge. Unlit (MeshBasicMaterial); multiply the colour to match exposure (lab.html: 0.5 at exposure 2.1)."
+  },
+  "shrub_row": {
+   "use": "three leafy shrubs side by side, used as planting along the garden wall",
+   "file": "cards/shrub_row.webp",
+   "px": [
+    768,
+    391
+   ],
+   "bytes": 167844,
+   "sizeMeters": [
+    4.968,
+    2.53
+   ],
+   "padMeters": 0.096,
+   "colorSpace": "srgb",
+   "alpha": "straight alpha, colour bled into the transparent area; use alphaTest 0.5 (with alphaToCoverage where there is MSAA)",
+   "source": "Poly Haven",
+   "assetId": "searsia_lucida",
+   "sourceUrl": "https://polyhaven.com/a/searsia_lucida",
+   "downloaded": [
+    "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/searsia_lucida/searsia_lucida_1k.gltf",
+    "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/searsia_lucida/searsia_lucida.bin",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/searsia_lucida/searsia_lucida_nor_gl_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/searsia_lucida/searsia_lucida_diff_1k.jpg",
+    "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/searsia_lucida/searsia_lucida_arm_1k.jpg"
+   ],
+   "licence": "CC0",
+   "derived": "Orthographic side view of the unmodified CC0 model (377192 triangles), rendered by this project in three.js with baked sky and sun light, then scaled to 768 px. The model itself is not shipped. A derivative of a CC0 work, released here as CC0.",
+   "placement": "Upright quad, sizeMeters wide and high at scale 1, the plant standing padMeters above the bottom edge. Unlit (MeshBasicMaterial); multiply the colour to match exposure (lab.html: 0.5 at exposure 2.1)."
+  }
+ },
+ "budget": {
+  "budgetBytes": 14000000,
+  "note": "Everything a phone must download for the premium look, all rooms together, must stay within budgetBytes. Bytes are uncompressed, as served. Shared files (vendored code, manifests, environment, surfaces already loaded by an earlier room) count once, in the first room that needs them.",
+  "rooms": {
+   "great-room (lab.html)": {
+    "desktopBytes": 6066922,
+    "phoneBytes": 5662879,
+    "desktopByKind": {
+     "manifests": 60457,
+     "vendor": 252253,
+     "tex": 2356955,
+     "env": 493645,
+     "models": 2555640,
+     "cards": 347972
+    },
+    "phoneByKind": {
+     "manifests": 60457,
+     "vendor": 176715,
+     "models": 2555640,
+     "env": 424799,
+     "tex": 2097296,
+     "cards": 347972
+    },
+    "desktopRequests": 65,
+    "phoneRequests": 46,
+    "phoneFiles": [
+     "assets/cards/olive_tree.webp",
+     "assets/cards/shrub_row.webp",
+     "assets/env/kloofendal_48d_partly_cloudy_puresky_512.hdr",
+     "assets/env/kloofendal_48d_partly_cloudy_puresky_sky_1k.jpg",
+     "assets/materials.json",
+     "assets/models.json",
+     "assets/models/ceramic_vase_01.glb",
+     "assets/models/ceramic_vase_02.glb",
+     "assets/models/ceramic_vase_04.glb",
+     "assets/models/mid_century_lounge_chair.glb",
+     "assets/models/modern_arm_chair_01.glb",
+     "assets/models/modern_ceiling_lamp_01.glb",
+     "assets/models/modern_coffee_table_01.glb",
+     "assets/models/modern_wooden_cabinet.glb",
+     "assets/models/potted_plant_01.glb",
+     "assets/models/potted_plant_02.glb",
+     "assets/models/potted_plant_04.glb",
+     "assets/models/side_table_01.glb",
+     "assets/models/standing_picture_frame_01.glb",
+     "assets/models/wooden_bowl_01.glb",
+     "assets/tex/carpet/color.jpg",
+     "assets/tex/carpet/orm.jpg",
+     "assets/tex/concrete-paving/color.jpg",
+     "assets/tex/counter-stone/color.jpg",
+     "assets/tex/counter-stone/normal.jpg",
+     "assets/tex/counter-stone/rough.jpg",
+     "assets/tex/floor-wood/color.jpg",
+     "assets/tex/floor-wood/normal.jpg",
+     "assets/tex/floor-wood/orm.jpg",
+     "assets/tex/lawn-grass/color.jpg",
+     "assets/tex/metal-brushed/color.jpg",
+     "assets/tex/metal-brushed/normal.jpg",
+     "assets/tex/metal-brushed/orm.jpg",
+     "assets/tex/upholstery-fabric/normal.jpg",
+     "assets/tex/wall-plaster/normal.jpg",
+     "assets/tex/wall-plaster/orm.jpg",
+     "assets/tex/wood-dark/color.jpg",
+     "assets/tex/wood-dark/normal.jpg",
+     "assets/tex/wood-dark/orm.jpg",
+     "assets/tex/wood-oak/color.jpg",
+     "assets/tex/wood-oak/normal.jpg",
+     "assets/tex/wood-oak/orm.jpg",
+     "vendor/libs/meshopt_decoder.module.js",
+     "vendor/loaders/GLTFLoader.js",
+     "vendor/loaders/RGBELoader.js",
+     "vendor/utils/BufferGeometryUtils.js"
+    ]
+   }
+  },
+  "usedPhoneBytes": 5662879,
+  "remainingPhoneBytes": 8337121,
+  "onDiskBytes": 8859491
+ }
+}
