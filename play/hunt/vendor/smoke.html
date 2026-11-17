@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>vendor smoke test</title>
+<style>body{margin:16px;font:14px/1.5 system-ui,sans-serif;background:#f4f1ec;color:#222}#result{font-weight:700;font-size:20px}pre{white-space:pre-wrap}</style>
+</head>
+<body>
+<div id="result">RUNNING</div>
+<pre id="detail"></pre>
+<canvas id="c" width="320" height="180"></canvas>
+<script type="module">
+// Smoke test for play/hunt/vendor: every vendored three.js r160 addon, no bundler, no import map.
+// Writes exactly "OK" into #result on success, or "ERROR: ..." on failure.
+const result = document.getElementById('result'), detail = document.getElementById('detail');
+const log = [];
+const note = (s) => { log.push(s); detail.textContent = log.join('\n'); };
+// 2.8 KB GLB made with glTF-Transform: an 81-vertex plane, EXT_meshopt_compression (required) + EXT_texture_webp (required).
+const TEST_GLB = 'Z2xURgIAAAAcCwAARAgAAEpTT057ImFzc2V0Ijp7ImdlbmVyYXRvciI6ImdsVEYtVHJhbnNmb3JtIHY0LjUuMSIsInZlcnNpb24iOiIyLjAifSwiYWNjZXNzb3JzIjpbeyJ0eXBlIjoiVkVDMyIsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50Ijo4MSwibWF4IjpbMC41LDAuNSwwXSwibWluIjpbLTAuNSwtMC41LDBdLCJub3JtYWxpemVkIjpmYWxzZSwiYnl0ZU9mZnNldCI6MCwiYnVmZmVyVmlldyI6MX0seyJ0eXBlIjoiVkVDMyIsImNvbXBvbmVudFR5cGUiOjUxMjAsImNvdW50Ijo4MSwibm9ybWFsaXplZCI6dHJ1ZSwiYnl0ZU9mZnNldCI6MCwiYnVmZmVyVmlldyI6Mn0seyJ0eXBlIjoiVkVDMiIsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50Ijo4MSwibm9ybWFsaXplZCI6ZmFsc2UsImJ5dGVPZmZzZXQiOjAsImJ1ZmZlclZpZXciOjN9LHsidHlwZSI6IlNDQUxBUiIsImNvbXBvbmVudFR5cGUiOjUxMjMsImNvdW50IjozODQsIm5vcm1hbGl6ZWQiOmZhbHNlLCJieXRlT2Zmc2V0IjowLCJidWZmZXJWaWV3Ijo0fV0sImJ1ZmZlclZpZXdzIjpbeyJidWZmZXIiOjAsImJ5dGVPZmZzZXQiOjAsImJ5dGVMZW5ndGgiOjYyfSx7ImJ1ZmZlciI6MSwiYnl0ZU9mZnNldCI6MCwiYnl0ZUxlbmd0aCI6OTcyLCJ0YXJnZXQiOjM0OTYyLCJieXRlU3RyaWRlIjoxMiwiZXh0ZW5zaW9ucyI6eyJFWFRfbWVzaG9wdF9jb21wcmVzc2lvbiI6eyJidWZmZXIiOjAsImJ5dGVPZmZzZXQiOjY0LCJieXRlTGVuZ3RoIjoyMjEsIm1vZGUiOiJBVFRSSUJVVEVTIiwiYnl0ZVN0cmlkZSI6MTIsImNvdW50Ijo4MX19fSx7ImJ1ZmZlciI6MSwiYnl0ZU9mZnNldCI6OTcyLCJieXRlTGVuZ3RoIjozMjQsInRhcmdldCI6MzQ5NjIsImJ5dGVTdHJpZGUiOjQsImV4dGVuc2lvbnMiOnsiRVhUX21lc2hvcHRfY29tcHJlc3Npb24iOnsiYnVmZmVyIjowLCJieXRlT2Zmc2V0IjoyODgsImJ5dGVMZW5ndGgiOjQxLCJtb2RlIjoiQVRUUklCVVRFUyIsImZpbHRlciI6Ik9DVEFIRURSQUwiLCJieXRlU3RyaWRlIjo0LCJjb3VudCI6ODF9fX0seyJidWZmZXIiOjEsImJ5dGVPZmZzZXQiOjEyOTYsImJ5dGVMZW5ndGgiOjY0OCwidGFyZ2V0IjozNDk2MiwiYnl0ZVN0cmlkZSI6OCwiZXh0ZW5zaW9ucyI6eyJFWFRfbWVzaG9wdF9jb21wcmVzc2lvbiI6eyJidWZmZXIiOjAsImJ5dGVPZmZzZXQiOjMzMiwiYnl0ZUxlbmd0aCI6MjAzLCJtb2RlIjoiQVRUUklCVVRFUyIsImJ5dGVTdHJpZGUiOjgsImNvdW50Ijo4MX19fSx7ImJ1ZmZlciI6MSwiYnl0ZU9mZnNldCI6MTk0NCwiYnl0ZUxlbmd0aCI6NzY4LCJ0YXJnZXQiOjM0OTYzLCJleHRlbnNpb25zIjp7IkVYVF9tZXNob3B0X2NvbXByZXNzaW9uIjp7ImJ1ZmZlciI6MCwiYnl0ZU9mZnNldCI6NTM2LCJieXRlTGVuZ3RoIjoxNjEsIm1vZGUiOiJUUklBTkdMRVMiLCJieXRlU3RyaWRlIjoyLCJjb3VudCI6Mzg0fX19XSwic2FtcGxlcnMiOlt7IndyYXBTIjoxMDQ5Nywid3JhcFQiOjEwNDk3fV0sInRleHR1cmVzIjpbeyJzYW1wbGVyIjowLCJleHRlbnNpb25zIjp7IkVYVF90ZXh0dXJlX3dlYnAiOnsic291cmNlIjowfX19XSwiaW1hZ2VzIjpbeyJuYW1lIjoidCIsIm1pbWVUeXBlIjoiaW1hZ2Uvd2VicCIsImJ1ZmZlclZpZXciOjB9XSwiYnVmZmVycyI6W3siYnl0ZUxlbmd0aCI6NzAwfSx7ImJ5dGVMZW5ndGgiOjI3MTIsImV4dGVuc2lvbnMiOnsiRVhUX21lc2hvcHRfY29tcHJlc3Npb24iOnsiZmFsbGJhY2siOnRydWV9fX1dLCJtYXRlcmlhbHMiOlt7Im5hbWUiOiJtIiwicGJyTWV0YWxsaWNSb3VnaG5lc3MiOnsiYmFzZUNvbG9yVGV4dHVyZSI6eyJpbmRleCI6MH19fV0sIm1lc2hlcyI6W3sibmFtZSI6InBsYW5lIiwicHJpbWl0aXZlcyI6W3siYXR0cmlidXRlcyI6eyJQT1NJVElPTiI6MCwiTk9STUFMIjoxLCJURVhDT09SRF8wIjoyfSwibW9kZSI6NCwibWF0ZXJpYWwiOjAsImluZGljZXMiOjN9XX1dLCJub2RlcyI6W3sibmFtZSI6InBsYW5lIiwibWVzaCI6MH1dLCJzY2VuZXMiOlt7Im5vZGVzIjpbMF19XSwiZXh0ZW5zaW9uc1VzZWQiOlsiRVhUX21lc2hvcHRfY29tcHJlc3Npb24iLCJFWFRfdGV4dHVyZV93ZWJwIl0sImV4dGVuc2lvbnNSZXF1aXJlZCI6WyJFWFRfbWVzaG9wdF9jb21wcmVzc2lvbiIsIkVYVF90ZXh0dXJlX3dlYnAiXX0gvAIAAEJJTgBSSUZGNgAAAFdFQlBWUDggKgAAALABAJ0BKgQABAABQCYlmAJ0ugAEMAAA/vCQo/4Dow5WqX/kjvPZfAAAAAAAoAAAAABVBT8Pz8N/f///gIB/f///8/D8/ICAf3///4CAf3//Pz8Pz/+AgH9///+AgH9/w/Pw/P//gIB/f///gID8Pz8Pf3///4CAf3///4DAAAAAgFUFEPC0PIR8/4R8LQ8LQ/+EfP+EwtDwtHz/hHz/PC0PC4R8/4R8/0PC0PCEfP+EfIAAAAAAAAAARQEAADAAfwwAAwB//wAMAAP/gAAAwACAEQEAABAAAMAAMIR8AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAAvwAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/AAAAAKAAAAAA/wcAAP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQED/AP+AgEBAQMAAAABAVQEwgDwgfH18DwgDwn18fXwA8IA8fXx9fCAPCAN9fH3CAPCAfH18AAAAAFQBDAADAP+AAMAAMIBAAAwAA0BAAADAAEARAAAAMAB8AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOH+HhAOEA4QDhAOEA4QDhAO/h4QDhAOEA4QDhAOEA4QDv4eEA4QDhAOEA4QDhAOEA7+HhAOEA4QDhAOEA4QDhAO/h4QDhAOEA4QDhAOEA4QDv4eEA4QDhAOEA4QDhAOEA7+HhAOEA4QDhAOEA4QDhAO/h4QDhAOEA4QDhAOEA4QDg8SDwIPAg8CDwIPAg8CDwIAdodWZ3iphmWJaJgBaQAAAAAA';
+try {
+  const THREE = await import('../three.module.min.js');
+  const { GLTFLoader } = await import('./loaders/GLTFLoader.js');
+  const { RGBELoader } = await import('./loaders/RGBELoader.js');
+  const { MeshoptDecoder } = await import('./libs/meshopt_decoder.module.js');
+  const BufferGeometryUtils = await import('./utils/BufferGeometryUtils.js');
+  const { EffectComposer } = await import('./postprocessing/EffectComposer.js');
+  const { RenderPass } = await import('./postprocessing/RenderPass.js');
+  const { ShaderPass } = await import('./postprocessing/ShaderPass.js');
+  const { OutputPass } = await import('./postprocessing/OutputPass.js');
+  const { GTAOPass } = await import('./postprocessing/GTAOPass.js');
+  const { CopyShader } = await import('./shaders/CopyShader.js');
+  note('imports ok, three r' + THREE.REVISION);
+
+  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: false });
+  renderer.setPixelRatio(1);
+  renderer.setSize(320, 180, false);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xe9e4dc);
+  const camera = new THREE.PerspectiveCamera(50, 320 / 180, 0.1, 50);
+  camera.position.set(2.2, 1.8, 3);
+  camera.lookAt(0, 0.4, 0);
+
+  // RGBELoader: parse a 128x64 flat Radiance .hdr built in memory, use it as the environment through PMREM.
+  const w = 128, h = 64;
+  const head = new TextEncoder().encode('#?RADIANCE\nFORMAT=32-bit_rle_rgbe\n\n-Y ' + h + ' +X ' + w + '\n');
+  const hdr = new Uint8Array(head.length + w * h * 4);
+  hdr.set(head);
+  for (let i = 0; i < w * h; i++) hdr.set([200, 190, 170, 129], head.length + i * 4);
+  const parsed = new RGBELoader().parse(hdr.buffer);
+  if (parsed.width !== w || parsed.height !== h) throw new Error('RGBELoader parsed ' + parsed.width + 'x' + parsed.height);
+  const envTex = new THREE.DataTexture(parsed.data, parsed.width, parsed.height, THREE.RGBAFormat, parsed.type);
+  envTex.mapping = THREE.EquirectangularReflectionMapping;
+  envTex.colorSpace = THREE.LinearSRGBColorSpace;
+  envTex.needsUpdate = true;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromEquirectangular(envTex).texture;
+  note('RGBELoader ok ' + parsed.width + 'x' + parsed.height);
+
+  // BufferGeometryUtils: merge a floor and a cube into one geometry.
+  const floor = new THREE.BoxGeometry(6, 0.1, 6).translate(0, -0.05, 0);
+  const cube = new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0);
+  const merged = BufferGeometryUtils.mergeGeometries([floor, cube]);
+  if (!merged || merged.attributes.position.count !== 48) throw new Error('mergeGeometries failed');
+  scene.add(new THREE.Mesh(merged, new THREE.MeshStandardMaterial({ color: 0xd8c9b0, roughness: 0.6 })));
+  scene.add(new THREE.DirectionalLight(0xffffff, 2));
+  note('BufferGeometryUtils ok');
+
+  // GLTFLoader + meshopt + WebP.
+  const bin = Uint8Array.from(atob(TEST_GLB), (c) => c.charCodeAt(0));
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  const gltf = await loader.parseAsync(bin.buffer, '');
+  let glbMesh = null;
+  gltf.scene.traverse((o) => { if (o.isMesh) glbMesh = o; });
+  if (!glbMesh) throw new Error('GLB has no mesh');
+  const vc = glbMesh.geometry.attributes.position.count, img = glbMesh.material.map && glbMesh.material.map.image;
+  if (vc !== 81) throw new Error('meshopt decode: expected 81 vertices, got ' + vc);
+  if (!img || img.width !== 4) throw new Error('WebP texture did not decode');
+  glbMesh.geometry.computeBoundingBox();
+  const bb = glbMesh.geometry.boundingBox;
+  if (Math.abs(bb.max.x - 0.5) > 0.01 || Math.abs(bb.min.y + 0.5) > 0.01) throw new Error('meshopt decode: wrong bounds');
+  gltf.scene.position.set(-1.2, 0.6, 0.8);
+  scene.add(gltf.scene);
+  note('GLTFLoader ok: meshopt ' + vc + ' verts, webp ' + img.width + 'x' + img.height);
+
+  // EffectComposer: RenderPass + GTAOPass + ShaderPass(Copy) + OutputPass, one frame.
+  const composer = new EffectComposer(renderer);
+  composer.setPixelRatio(1);
+  composer.setSize(320, 180);
+  composer.addPass(new RenderPass(scene, camera));
+  const gtao = new GTAOPass(scene, camera, 320, 180);
+  composer.addPass(gtao);
+  composer.addPass(new ShaderPass(CopyShader));
+  composer.addPass(new OutputPass());
+  composer.render();
+  const gl = renderer.getContext();
+  const glErr = gl.getError();
+  if (glErr) throw new Error('WebGL error ' + glErr);
+  const px = new Uint8Array(4);
+  gl.readPixels(160, 90, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  note('composer frame ok, centre pixel ' + Array.from(px).join(','));
+  if (px[0] + px[1] + px[2] === 0) throw new Error('composer rendered black');
+  result.textContent = 'OK';
+} catch (e) {
+  result.textContent = 'ERROR: ' + (e && e.message ? e.message : e);
+  note(e && e.stack ? e.stack : String(e));
+}
+</script>
+</body>
+</html>
