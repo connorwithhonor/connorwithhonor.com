@@ -61,6 +61,11 @@ body.play .hud{display:block}
 #card.lockc{border-left-color:#8d939c}#card.lockc small{color:#aab0b8}
 #card b{display:block;font-size:16px}#card span{display:block;font-size:14px;color:var(--muted);margin-top:3px;line-height:1.4}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .35s}
+#warp{position:absolute;inset:0;overflow:hidden;display:none;--a:#52e0cd}
+#warp.on{display:block}
+#warp i{position:absolute;left:50%;top:50%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;opacity:0;will-change:transform,opacity;background:repeating-conic-gradient(from 0deg,transparent 0 7deg,var(--a) 12deg 16deg,#fff 18deg,transparent 24deg 30deg);-webkit-mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%);mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%)}
+#warp b{position:absolute;inset:0;opacity:0;background:radial-gradient(circle at 50% 50%,#fff 0,#fff 28%,var(--a) 120%)}
+#warp.calm i{display:none}#warp.calm b{background:#0c0b10}
 #vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 58%,rgba(8,6,4,.34) 100%)}
 #banner{position:absolute;left:0;right:0;top:34%;text-align:center;font-family:var(--serif);font-weight:700;font-size:clamp(30px,9vw,62px);color:var(--gold-bright);text-shadow:0 2px 0 #000,0 0 30px rgba(0,0,0,.9);opacity:0;transform:scale(.9);transition:opacity .3s,transform .3s}
 #banner.on{opacity:1;transform:none}
@@ -154,6 +159,7 @@ body.lv-reg #mute{margin-top:16px}
   <div id="card"><small></small><b></b><span></span></div>
   <div id="banner"></div>
   <div id="flash"></div>
+  <div id="warp"><i></i><b></b></div>
   <div class="touch">
     <div id="stick"><i></i></div>
     <div id="lhint"><span>Tap where you want to go.</span><span>Tap a door to walk through it.</span><span>Tap or hold an arrow to turn.</span></div>
@@ -204,6 +210,8 @@ import * as THREE from "./three.module.min.js";
    6. TWO LEVELS.      A resale open house and a builder's model home stand on the same street.
                        Both are always built. LEVELS says which one a run happens in, and holds
                        everything that differs: the spawn, the bot's road map, the pools, the words.
+   7. PORTAL DOORS.    A glowing door on each lawn starts a run in the other house. PORTALS is the
+                       table: one row per door. See PORTAL DOORS below.
    ===================================================================================== */
 
 const $ = (id) => document.getElementById(id);
@@ -248,7 +256,8 @@ const sfx = {
   caught() { [392, 523, 659, 784, 1047, 1319].forEach((f, i) => beep(f, .22, "triangle", .14, 0, i * .09)); },
   lost() { [392, 330, 262, 196].forEach((f, i) => beep(f, .3, "sawtooth", .08, 0, i * .16)); },
   chirp() { beep(1400 + Math.random() * 600, .05, "square", .04, 500); },
-  tick() { beep(1000, .03, "square", .05); }
+  tick() { beep(1000, .03, "square", .05); },
+  portal(calm) { if (calm) { beep(440, .25, "sine", .07, 220); return; } beep(120, .7, "sine", .13, 760); beep(60, .6, "triangle", .09, 240); beep(1800, .5, "sine", .03, -1300, .1); [784, 1175, 1568].forEach((f, i) => beep(f, .3, "triangle", .07, 0, .62 + i * .07)); }   // a rising whoosh, then three notes on the far side
 };
 $("mute").textContent = muted ? "Sound off" : "Sound on";
 $("mute").addEventListener("click", () => { muted = !muted; store.set("muted", muted); $("mute").textContent = muted ? "Sound off" : "Sound on"; });
@@ -446,6 +455,18 @@ function lump(material, parts, x, y, z, o = {}) {
   const b = new Batch(typeof material === "string" ? M[material] : material); for (const p of parts) b.add(NI(p[0]), p[1] || 0, p[2] || 0, p[3] || 0);
   const m = b.build(o.parent || into); m.userData.weld = false; m.position.set(x, y, z); if (o.ry) m.rotation.y = o.ry; m.userData.brk = !o.keep; if (o.flat) m.castShadow = false; return m;
 }
+/** Staging, premium only: many plain pieces of one material as a single loose piece, so a whole room of small things costs one draw call and is
+    left out of every view that does not look its way. Each part is [w, h, d, x, y, z, radius] in world metres, or [geometry, x, y, z]. Nothing here is solid. */
+function stage(material, parts, o = {}) { return lump(material, parts.map((p) => p[0] && p[0].isBufferGeometry ? p : [p[6] ? roundedBox(p[0], p[1], p[2], p[6]) : new THREE.BoxGeometry(p[0], p[1], p[2]), p[3], p[4], p[5]]), 0, 0, 0, Object.assign({ keep: 1 }, o)); }
+/** A print for a wall: soft bands like a far landscape, or arches. Drawn the same way every time. */
+function printTex(kind, cols) { return paint(160, 128, (c) => { c.fillStyle = cols[0]; c.fillRect(0, 0, 160, 128);
+  if (kind === "bands") { [[78, 1, 14], [92, 2, 9], [104, 3, 12]].forEach(([y, k, a], j) => { c.fillStyle = cols[k % cols.length]; c.beginPath(); c.moveTo(0, 128); c.lineTo(0, y); for (let x = 0; x <= 160; x += 8) c.lineTo(x, y + Math.sin(x * .045 + j * 1.9) * a * .5); c.lineTo(160, 128); c.closePath(); c.fill(); }); c.fillStyle = cols[cols.length - 1]; c.beginPath(); c.arc(112, 40, 15, 0, 7); c.fill(); }
+  else { [[46, 1], [33, 2], [20, 0], [9, 3]].forEach(([r, k]) => { c.fillStyle = cols[k % cols.length]; c.beginPath(); c.arc(80, 112, r * 1.7, Math.PI, 0); c.closePath(); c.fill(); }); }
+  c.strokeStyle = "#fbf8f1"; c.lineWidth = 14; c.strokeRect(0, 0, 160, 128); }); }
+/** A rug with a border, a fine inner line and a woven field. */
+function rugTex(a, b) { return paint(256, 256, (c) => { c.fillStyle = a; c.fillRect(0, 0, 256, 256); c.globalAlpha = .1; c.fillStyle = b; for (let y = 0; y < 256; y += 4) c.fillRect(0, y, 256, 1); for (let x = 0; x < 256; x += 4) c.fillRect(x, 0, 1, 256); c.globalAlpha = 1;
+  c.strokeStyle = b; c.lineWidth = 9; c.strokeRect(14, 14, 228, 228); c.lineWidth = 2; c.strokeRect(28, 28, 200, 200); c.globalAlpha = .5; c.lineWidth = 1.5; for (let i = -6; i <= 6; i++) { c.beginPath(); c.moveTo(128 + i * 30 - 100, 28); c.lineTo(128 + i * 30 + 100, 228); c.moveTo(128 + i * 30 + 100, 28); c.lineTo(128 + i * 30 - 100, 228); c.stroke(); }
+  c.globalAlpha = 1; c.fillStyle = a; c.fillRect(0, 0, 256, 9); c.fillRect(0, 247, 256, 9); c.fillRect(0, 0, 9, 256); c.fillRect(247, 0, 9, 256); c.strokeStyle = a; c.lineWidth = 10; c.strokeRect(21, 21, 214, 214); c.strokeStyle = b; c.lineWidth = 9; c.strokeRect(14, 14, 228, 228); }); }
 /** A rounded rectangle path, for extruded shapes. */
 function rrect(s, w, d, r) { const a = w / 2 - r, b = d / 2 - r; s.moveTo(-a, -d / 2); s.lineTo(a, -d / 2); s.quadraticCurveTo(w / 2, -d / 2, w / 2, -b); s.lineTo(w / 2, b); s.quadraticCurveTo(w / 2, d / 2, a, d / 2); s.lineTo(-a, d / 2); s.quadraticCurveTo(-w / 2, d / 2, -w / 2, b); s.lineTo(-w / 2, -b); s.quadraticCurveTo(-w / 2, -d / 2, -a, -d / 2); return s; }
 /** A smooth lumpy ball: clipped shrubs, tree crowns. The lumps come from a few sine waves, so every one is a little different. */
@@ -521,7 +542,9 @@ function soft(w, h, d, r, material, x, y, z, o = {}) {
 }
 function plane(w, h, tex, x, y, z, o = {}) {
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), std({ map: tex || null, color: o.color ?? 0xffffff, transparent: !!o.alpha, side: o.double ? THREE.DoubleSide : THREE.FrontSide, depthWrite: !o.alpha, roughness: .9, envMapIntensity: .3, polygonOffset: true, polygonOffsetFactor: -2 }));
-  m.position.set(x, y, z); if (o.rx != null) m.rotation.x = o.rx; if (o.ry != null) m.rotation.y = o.ry; if (o.rz != null) m.rotation.z = o.rz; m.receiveShadow = true; (o.parent || into).add(m); return m;
+  m.position.set(x, y, z); if (o.rx != null) m.rotation.x = o.rx; if (o.ry != null) m.rotation.y = o.ry; if (o.rz != null) m.rotation.z = o.rz; m.receiveShadow = true; (o.parent || into).add(m);
+  if (o.lift && LOOK.on && tex) { m.material.emissive.set(0xffffff); m.material.emissiveMap = tex; m.material.emissiveIntensity = o.lift; }   // a sign in the shade of its own board keeps some of its colour
+  return m;
 }
 function sign(lines, w, h, bg, fg, sub) {
   return paint(512, Math.round(512 * h / w), (c, W, Hh) => {
@@ -542,12 +565,13 @@ function wall(ax, c, a, b, open = [], mA = "wall", mB = "wall", inside = 0) {
   let cur = a, cp = 0;
   for (const o of open.slice().sort((m, n) => m.a - n.a)) {
     part(cur, o.a, 0, H, cp, 1); cp = 1; base(cur, o.a); if (o.a > cur) block(cur, o.a);
-    const len = o.b - o.a, mid = (o.a + o.b) / 2, at = (w, h, d, u, y, v = 0) => ax === "x" ? bx("trim", w, h, d, u, y, c + v) : bx("trim", d, h, w, c + v, y, u);
+    const len = o.b - o.a, mid = (o.a + o.b) / 2, at = (w, h, d, u, y, v = 0, k) => ax === "x" ? bx("trim", w, h, d, u, y, c + v, k) : bx("trim", d, h, w, c + v, y, u, k), EZ = { r: .007 };
     if (o.win) { const y0 = o.y0 ?? .9, y1 = o.y1 ?? 2.1; part(o.a, o.b, 0, y0, 1, 1); part(o.a, o.b, y1, H, 1, 1); base(o.a, o.b); block(o.a, o.b);
       at(len + .12, .05, T + .1, mid, y0 - .01); at(len + .12, .06, T + .05, mid, y1 + .02); at(.06, y1 - y0, T + .05, o.a - .01, (y0 + y1) / 2); at(.06, y1 - y0, T + .05, o.b + .01, (y0 + y1) / 2);
       at(.035, y1 - y0, .04, mid, (y0 + y1) / 2); at(len, .035, .04, mid, (y0 + y1) / 2);
       const g = new THREE.Mesh(unit, M.glass); g.scale.set(ax === "x" ? len : .012, y1 - y0, ax === "x" ? .012 : len); g.position.set(ax === "x" ? mid : c, (y0 + y1) / 2, ax === "x" ? c : mid); world.add(g);
-    } else { part(o.a, o.b, 2.1, H, 1, 1); at(.08, 2.1, T + .05, o.a + .02, 1.05); at(.08, 2.1, T + .05, o.b - .02, 1.05); at(len + .08, .09, T + .05, mid, 2.13); }
+    } else { part(o.a, o.b, 2.1, H, 1, 1); at(.08, 2.1, T + .05, o.a + .02, 1.05, 0, EZ); at(.08, 2.1, T + .05, o.b - .02, 1.05, 0, EZ); at(len + .08, .09, T + .05, mid, 2.13, 0, EZ);
+      if (LOOK.on) at(len + .15, .028, T + .085, mid, 2.188); }   // premium: door casings have eased edges and a cap over the head, so the trim throws a shadow line and is not one flat white band
     if (!o.win) DOORWAYS.push({ ax, c, a: o.a, b: o.b });
     if (LOOK.on && (/^stucco/.test(mA) || /^stucco/.test(mB))) WINDOWS.push({ ax, c, a: o.a, b: o.b, y0: o.win ? o.y0 ?? .9 : 0, y1: o.win ? o.y1 ?? 2.1 : 2.1, n: /^stucco/.test(mA) ? 1 : -1 });   // daylight comes in here
     cur = o.b;
@@ -572,7 +596,7 @@ function palm(x, z, h) {
   lump("frond", [[blades(L, 2)]], x + tx, h, z);
 }
 /** A shrub or a tree crown, premium: smooth lumpy balls welded into one piece. list is [[x, y, z, radius], ...]. */
-function bush(m, list, x, z, s, seed) { return lump(m, list.map((p, i) => [blob(p[3] * s, !LOD && (i || p[3] * s < .4) ? 0 : i || (LOOK.tier !== "desktop" && p[3] * s < .6) ? 1 : 2, seed + i * 2.3, .9), p[0] * s, p[1] * s, p[2] * s]), x, 0, z); }
+function bush(m, list, x, z, s, seed, fine) { return lump(m, list.map((p, i) => [blob(p[3] * s, !LOD && (i || p[3] * s < .4) ? 0 : fine && p[3] * s > .65 ? 2 : i || (LOOK.tier !== "desktop" && p[3] * s < .6) ? 1 : 2, seed + i * 2.3, .9), p[0] * s, p[1] * s, p[2] * s]), x, 0, z); }
 /** A bar stool: turned seat, four splayed legs and a foot ring. */
 function stool(x, z, metal) {
   lump("oak", [[puck(.17, .05, .014)]], x, .655, z);
@@ -678,7 +702,7 @@ function nightstand(x, z, frame = "walnut") { prop("stand" + standN++, () => bx(
    ===================================================================================== */
 function buildHouse() {
   // ---- ground, street, the neighbourhood
-  bx("grass", 120, .2, 110, 8, -.12, 6);
+  bx("grass", LOOK.on ? 184 : 120, .2, LOOK.on ? 184 : 110, 8, -.12, 6);   // premium: the lawn runs on to the foot of the hills. It used to stop short, and the gap showed as a pale band under them
   bx("asphalt", 120, .2, 7, 8, -.105, -12.4); bx("concrete", 120, .2, 1.5, 8, -.09, -8.1); bx("concrete", 120, .14, .25, 8, -.07, -8.95);
   for (let x = -50; x < 66; x += 6) bx("trim", 2.6, .02, .14, x, -.004, -12.4);
   bx("concrete", 1.7, .2, 7.4, 2.5, -.085, -3.7); bx("concrete", 3.4, .22, 1.5, 2.5, -.08, -.75);
@@ -754,6 +778,7 @@ function buildHouse() {
   for (const x of [4.98, 7.22]) soft(.22, .5, .95, .07, "sofa", x, .42, 5.28);
   for (const x of [5.42, 6.1, 6.78]) { soft(.66, .17, .72, .06, "sofa", x, .43, 5.2); soft(.62, .4, .17, .07, "sofa", x, .7, 5.6, { rx: -.16 }); }
   soft(.42, .36, .13, .06, "blue", 5.3, .68, 5.42, { rx: -.3, ry: .2 }); soft(.4, .34, .13, .06, mat(0xd9a441, { roughness: 1 }), 6.95, .67, 5.42, { rx: -.3, ry: -.2 });
+  if (LOOK.on) plane(3.5, 2.7, rugTex("#d6cab3", "#8f5f4a"), 6.1, .012, 4.12, { rx: -Math.PI / 2 }); else
   plane(2.9, 2, paint(128, 128, (c) => { c.fillStyle = "#c9b79a"; c.fillRect(0, 0, 128, 128); c.strokeStyle = "#8f5f4a"; c.lineWidth = 6; c.strokeRect(8, 8, 112, 112); c.strokeStyle = "#e9dfcc"; c.lineWidth = 2; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(20, 22 + i * 10.5); c.lineTo(108, 22 + i * 10.5); c.stroke(); } }), 6.1, .012, 4.05, { rx: -Math.PI / 2 });
   prop("coffee", () => { bx("oak", 1.15, .05, .62, 6.1, .4, 4.05, { solid: 1 }); for (const a of [[-.5, -.24], [.5, -.24], [-.5, .24], [.5, .24]]) bx("black", .04, .38, .04, 6.1 + a[0], .19, 4.05 + a[1]); }); bx("blue", .3, .04, .22, 5.85, .445, 4.05); if (LOOK.on) lump("ceramic", [[turned([[0, 0], [.05, 0], [.085, .025], [.115, .095], [.105, .1], [.08, .035], [0, .02]], 24)]], 6.4, .425, 4.1); else put(cyl(.09, .1, 14, .12), "ceramic", 6.4, .475, 4.1);
   prop("console", () => { bx("walnut", .4, .46, 1.7, .3, .23, 4.2, { solid: 1 }); bx("black", .03, .5, .5, .09, .26, 4.2); });                                                      // media console under the TV
@@ -766,6 +791,31 @@ function buildHouse() {
   for (const s of [4.36, 7.04]) if (LOOK.on) curtain(s, 1.3, .13, .3, 2.15); else soft(.24, 2.15, .09, .04, "linen", s, 1.3, .13);                                                                        // curtains
   bx("steel", 3, .025, .025, 5.7, 2.4, .13);
   art(.55, .7, 7.9, 1.55, 5.2, -Math.PI / 2, ["#e9dfcc", "#c0392b", "#1f5fa8", "#e8a838"]);
+  if (LOOK.on) {   // staging, premium only. Every piece hangs on a wall, stands within a hand of one, or sits where a solid already is, so no walking line changes and nothing new is solid
+    const blk = [], oak = [], glow = [], linen = [];
+    // a wide print over the sofa and a small one by the armchair
+    blk.push([1.67, .77, .03, 6.1, 1.62, 5.915, .006], [.03, .64, .5, 7.915, 1.55, .8, .006]);
+    plane(1.6, .7, printTex("bands", ["#e9dfcc", "#c9a27a", "#7f9a8c", "#4f6b62", "#e8a838"]), 6.1, 1.62, 5.895, { ry: Math.PI }); plane(.43, .57, printTex("arch", ["#efe6d6", "#b5553c", "#d9a441", "#4f6b8a"]), 7.895, 1.55, .8, { ry: -Math.PI / 2 });
+    // a mirror over the entry table
+    for (const [h, d, y, z] of [[.03, .56, 1.98, 1.2], [.03, .56, 1.12, 1.2], [.83, .03, 1.55, .935], [.83, .03, 1.55, 1.465]]) blk.push([.03, h, d, .085, y, z]); stage("mirror", [[.008, .83, .5, .078, 1.55, 1.2]]);
+    // a floor lamp at the end of the sofa, tight to the wall
+    blk.push(barG(.011, 4.62, .02, 5.79, 4.62, 1.5, 5.79), [puck(.13, .022, .008, 14), 4.62, 0, 5.79]); glow.push([cyl(.13, .24, 16, .1), 4.62, 1.6, 5.79]);
+    // a ceiling fan with a light
+    blk.push(barG(.014, 4, 2.46, 3, 4, H, 3), [puck(.1, .07, .02, 14), 4, 2.39, 3]); for (let i = 0; i < 5; i++) { const b = new THREE.BoxGeometry(.56, .012, .125); b.translate(.38, 0, 0); b.rotateY(i * Math.PI * .4 + .3); oak.push([b, 4, 2.44, 3]); }
+    glow.push([new THREE.SphereGeometry(.085, 12, 5, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), 4, 2.395, 3]);
+    // a low bookcase on the wall by the hall door, with books and two pots
+    for (const x of [1.0, 2.2]) oak.push([.03, 1.22, .24, x, .61, 5.81]); for (const y of [.06, .44, .82, 1.2]) oak.push([1.2, .028, .235, 1.6, y, 5.81]); oak.push([1.18, 1.2, .012, 1.6, .61, 5.922]);
+    for (const [y, n, x0] of [[.074, 9, 1.06], [.454, 7, 1.34], [.834, 6, 1.05]]) for (let i = 0, x = x0; i < n; i++) { const w = .032 + (i * 7 % 3) * .011, hb = .21 + (i * 5 % 4) * .022; (i % 3 === 1 ? blk : linen).push([w, hb, .15 + (i % 2) * .02, x + w / 2, y + hb / 2, 5.82]); x += w + .004; }
+    linen.push([.26, .035, .17, 1.9, .4715, 5.81], [.24, .03, .16, 1.9, .504, 5.81], [.22, .03, .16, 1.95, .8515, 5.81]);
+    // a tall open shelf on the TV wall, between the flyer and the screen, and a runner inside the front door
+    for (const z of [2.86, 3.24]) oak.push([.22, 1.86, .026, .182, .93, z]); for (const y of [.1, .52, .94, 1.36, 1.78]) oak.push([.215, .026, .36, .182, y, 3.05]); oak.push([.012, 1.84, .38, .078, .93, 3.05]);
+    for (const [y, n] of [[.113, 6], [.953, 5]]) for (let i = 0, z = 2.89; i < n; i++) { const w = .034 + (i * 5 % 3) * .012, hb = .22 + (i * 3 % 4) * .02; (i % 3 === 2 ? blk : linen).push([.15, hb, w, .18, y + hb / 2, z + w / 2]); z += w + .004; }
+    linen.push([.17, .03, .24, .18, .548, 3.02], [.16, .028, .22, .18, .577, 3.03]);
+    plane(1.05, 1.9, rugTex("#cfc6b4", "#4f6b62"), 2.5, .012, 1.3, { rx: -Math.PI / 2 });
+    linen.push([turned([[0, 0], [.045, 0], [.07, .03], [.078, .12], [.06, .2], [.05, .2], [0, .19]], 12), .18, 1.373, 3.05], [turned([[0, 0], [.05, 0], [.075, .04], [.08, .12], [.055, .2], [.035, .24], [.045, .262], [.036, .262], [0, .235]], 12), 1.3, 1.214, 5.81], [turned([[0, 0], [.06, 0], [.09, .03], [.1, .1], [.085, .15], [.075, .15], [.085, .1], [0, .02]], 12), 1.92, 1.214, 5.81]);
+    stage("black", blk); stage("oak", oak); for (const q of glow) weld("glow", q[0], q[1], q[2], q[3]); stage("linen", linen);
+    plantP(6.36, .38, 1.75, 6);   // a tall plant in the window, in the closed slot behind the armchair
+  }
 
   // ---- kitchen
   bx("cab", 6.4, .88, .62, 12.2, .44, .4, { solid: 1 }); bx("stone", 6.5, .045, .68, 12.2, .905, .42); hard(15.665, .4, .53, .62);   // the notch between the counter end and the wall was a hair narrower than a walker: closed
@@ -796,6 +846,7 @@ function buildHouse() {
   bx("walnut", .5, .95, 1.5, .36, .475, 8.3, { solid: 1 }); for (const y of [.2, .48, .76]) { if (LOOK.on) fronts("z", 7.57, 9.03, .61, 1, y - .13, y + .14, 1, { bare: 1, m: "walnut" }); else bx("black", .012, .012, 1.3, .615, y + .12, 8.3); for (const z of [7.95, 8.65]) put(ball(.02, LOOK.on ? 1 : 0), "steel", LOOK.on ? .634 : .62, y, z); }
   for (const s of [1.36, 2.94]) if (LOOK.on) curtain(s, 1.3, 11.87, .28, 2.1); else soft(.22, 2.1, .09, .04, "linen", s, 1.3, 11.87);
   art(.6, .45, 5.42, 1.6, 9.2, -Math.PI / 2, ["#f3e9dc", "#4f6b8a", "#d9a441"]);
+  if (LOOK.on) { stage("black", [[1.17, .57, .03, 4, 1.72, 11.915, .006]]); plane(1.1, .5, printTex("bands", ["#eef0ee", "#b9c4cf", "#5d7791", "#33485c", "#f3e9dc"]), 4, 1.72, 11.895, { ry: Math.PI }); }   // a print over the bed
 
   // ---- bathroom
   if (LOOK.on) { hard(7.3, 11.5, 2.6, .82); tub(7.3, 11.5, 2.6, .82); } else { bx("ceramic", 2.6, .56, .82, 7.3, .28, 11.5, { solid: 1 }); bx("black", 2.36, .02, .6, 7.3, .565, 11.5); } put(cyl(.018, .2, 8), "steel", 8.45, .68, 11.5);
@@ -803,12 +854,13 @@ function buildHouse() {
   bx("walnut", .03, .95, 1.25, 8.925, 1.62, 8.8); bx(LOOK.on ? "mirror" : "steel", .012, .85, 1.15, 8.9, 1.62, 8.8);                                                           // mirror
   if (LOOK.on) toilet(5.92, 9.9, 0, 1, .32); else { put(cyl(.19, .36, 18, .15), "ceramic", 5.92, .2, 9.9); bx("ceramic", .42, .05, .46, 5.92, .41, 9.9); bx("ceramic", .42, .4, .18, 5.92, .58, 10.22); } hard(5.92, 10, .46, .7);
   bx("steel", .02, .02, .7, 5.62, 1.2, 8.3); soft(.06, .6, .5, .025, "blue", 5.66, .94, 8.3);                                                             // towel
-  soft(.9, .03, .55, .012, "linen", 7.2, .016, 10.7);
+  if (LOOK.on) soft(.9, .018, .55, .008, "blue", 7.2, .01, 10.7); else soft(.9, .03, .55, .012, "linen", 7.2, .016, 10.7);
 
   // ---- bedroom 2
   bed(9.95, 10.85, 1.3, 1.95, mat(0xc98b5b, { roughness: 1 })); nightstand(11, 11.7);
-  bx("oak", .6, .04, 1.4, 12.62, .74, 8.6); for (const z of [7.95, 9.25]) bx("black", .5, .72, .04, 12.62, .36, z); hard(12.62, 8.6, .6, 1.4);
-  bx("black", .03, .34, .56, 12.84, 1.12, 8.6); bx("black", .14, .1, .14, 12.8, .81, 8.6); prop("chair", () => { if (LOOK.on) return chairP(12, 8.6, Math.PI / 2, "black", "steel"); soft(.44, .08, .44, .03, "black", 12, .47, 8.6); put(cyl(.025, .45, 8), "steel", 12, .23, 8.6); soft(.42, .46, .06, .03, "black", 11.8, .76, 8.6, { ry: Math.PI / 2 }); }); hard(12, 8.6, .44, .44);
+  bx("oak", .6, .04, 1.4, 12.62, .74, 8.6); if (LOOK.on) { for (const z of [7.97, 9.23]) for (const x of [12.39, 12.85]) bar("black", .016, x, 0, z, x, .72, z); } else for (const z of [7.95, 9.25]) bx("black", .5, .72, .04, 12.62, .36, z); hard(12.62, 8.6, .6, 1.4);
+  if (LOOK.on) { bx("black", .02, .34, .56, 12.84, 1.13, 8.6, { r: .009 }); bx("inox", .02, .2, .035, 12.852, .86, 8.6); bx("inox", .15, .012, .22, 12.82, .766, 8.6); }   // a screen on a neck and a foot, and a desk on four legs
+  else { bx("black", .03, .34, .56, 12.84, 1.12, 8.6); bx("black", .14, .1, .14, 12.8, .81, 8.6); } prop("chair", () => { if (LOOK.on) return chairP(12, 8.6, Math.PI / 2, "black", "steel"); soft(.44, .08, .44, .03, "black", 12, .47, 8.6); put(cyl(.025, .45, 8), "steel", 12, .23, 8.6); soft(.42, .46, .06, .03, "black", 11.8, .76, 8.6, { ry: Math.PI / 2 }); }); hard(12, 8.6, .44, .44);
   bx("oak", .24, .03, 1.2, 9.2, 1.5, 9); for (let i = 0; i < 9; i++) bx(["blue", "walnut", "linen"][i % 3], .17, .2 + (i % 3) * .03, .035 + (i % 2) * .02, 9.2, 1.62 + (i % 3) * .015, 8.5 + i * .11);
   for (const s of [10.16, 11.84]) if (LOOK.on) curtain(s, 1.3, 11.87, .28, 2.1); else soft(.22, 2.1, .09, .04, "linen", s, 1.3, 11.87);
 
@@ -851,14 +903,21 @@ function bunting(x1, y1, z1, x2, y2, z2, n, sag) {
 function feather(x, z, col, word, fg = "#ffffff") {
   put(cyl(.022, 4.7, 6), "steel", x, 2.35, z, { keep: 1 }); hard(x, z, .16, .16);
   const g = new THREE.Group(); g.position.set(x, 0, z); g.userData.ry = g.rotation.y = (feathers.length * .37) % 1 - .5; world.add(g); feathers.push(g);
-  plane(.72, 3.4, paint(96, 448, (c) => { c.fillStyle = col; c.beginPath(); c.moveTo(0, 448); c.lineTo(0, 60); c.quadraticCurveTo(4, 2, 60, 6); c.quadraticCurveTo(96, 40, 92, 448); c.closePath(); c.fill(); c.fillStyle = fg; c.textAlign = "center"; c.textBaseline = "middle"; c.font = "900 56px Arial, Helvetica, sans-serif"; [...word].forEach((ch, i) => c.fillText(ch, 46, 104 + i * (290 / Math.max(1, word.length - 1)))); }), .38, 2.95, 0, { parent: g, alpha: 1, double: 1 });
+  // One flag, two faces: the word reads the right way round from the street and from the house. The left half of the picture is the front,
+  // the right half is the back, with the shape turned over and the letters not. One piece, one draw call, as before.
+  const f = plane(.72, 3.4, paint(192, 448, (c) => { for (const back of [0, 1]) { c.save(); c.translate(back ? 192 : 0, 0); c.scale(back ? -1 : 1, 1); c.fillStyle = col; c.beginPath(); c.moveTo(0, 448); c.lineTo(0, 60); c.quadraticCurveTo(4, 2, 60, 6); c.quadraticCurveTo(96, 40, 92, 448); c.closePath(); c.fill(); c.restore();
+    c.fillStyle = fg; c.textAlign = "center"; c.textBaseline = "middle"; c.font = "900 56px Arial, Helvetica, sans-serif"; [...word].forEach((ch, i) => c.fillText(ch, back ? 146 : 46, 104 + i * (290 / Math.max(1, word.length - 1)))); } }), .38, 2.95, 0, { parent: g, alpha: 1 });
+  const fg2 = new THREE.BufferGeometry(), a = .36, b = 1.7, e = .002;
+  fg2.setAttribute("position", new THREE.Float32BufferAttribute([-a, -b, e, a, -b, e, a, b, e, -a, b, e, a, -b, -e, -a, -b, -e, -a, b, -e, a, b, -e], 3));
+  fg2.setAttribute("normal", new THREE.Float32BufferAttribute([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1], 3));
+  fg2.setAttribute("uv", new THREE.Float32BufferAttribute([0, 0, .5, 0, .5, 1, 0, 1, .5, 0, 1, 0, 1, 1, .5, 1], 2)); fg2.setIndex([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]); f.geometry.dispose(); f.geometry = fg2;
 }
 function tree(x, z, h = 3.2) {
   if (LOOK.on) {                                           // a trunk that leans and forks, under one soft crown
     const tg = new THREE.CylinderGeometry(.07, .15, h, 10, 6), p = tg.attributes.position; for (let i = 0; i < p.count; i++) { const t = p.getY(i) / h + .5; p.setX(i, p.getX(i) * (1 + .5 * Math.pow(1 - t, 6)) + Math.sin(t * 2 + x) * .09); p.setZ(i, p.getZ(i) * (1 + .5 * Math.pow(1 - t, 6))); } tg.computeVertexNormals();
     const br = (dx, dz, y0, y1) => { const g = new THREE.CylinderGeometry(.03, .06, 1, 6), d = new THREE.Vector3(dx, y1 - y0, dz), len = d.length(); g.scale(1, len, 1); g.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize())); return [g, dx / 2, (y0 + y1) / 2, dz / 2]; };
     lump("walnut", [[tg, 0, h / 2, 0], br(.6, .3, h * .62, h + .1), br(-.55, -.2, h * .55, h + .15), br(.1, -.35, h * .7, h + .5)], x, 0, z);
-    bush("leaf", [[0, h + .5, 0, 1.15], [.62, h + .1, .3, .8], [-.55, h + .2, -.2, .85], [.1, h + 1.15, -.3, .7], [-.2, h + .05, .55, .6], [.5, h + .75, -.45, .55]], x, z, 1, x); hard(x, z, .4, .4); return;
+    bush("leaf", [[0, h + .5, 0, 1.15], [.62, h + .1, .3, .8], [-.55, h + .2, -.2, .85], [.1, h + 1.15, -.3, .7], [-.2, h + .05, .55, .6], [.5, h + .75, -.45, .55]], x, z, 1, x, 1); hard(x, z, .4, .4); return;
   }
   put(cyl(.13, h, 8, .09), "walnut", x, h / 2, z); for (const p of [[0, h + .5, 0, 1.15], [.62, h + .1, .3, .8], [-.55, h + .2, -.2, .85], [.1, h + 1.15, -.3, .7]]) put(ball(p[3], 1), "leaf", x + p[0], p[1], z + p[2]); hard(x, z, .4, .4); }
 /** A roof with a ridge: two slopes, and the two wall triangles under them. Returns [slopes, ends]. */
@@ -892,10 +951,10 @@ function buildStreet() {
   // the builder's weekend sign: the board faces people walking up from the resale house
   for (const z of [-6.95, -5.85]) bx("white", .08, 1.9, .08, 26.6, .95, z); hard(26.6, -6.4, .16, 1.3);
   box(.04, .95, 1.3, 26.6, 1.42, -6.4, 0xffffff);
-  plane(1.24, .9, paint(512, 372, (c) => { c.fillStyle = "#2f8f86"; c.fillRect(0, 0, 512, 372); c.fillStyle = "#fff"; c.textAlign = "center"; c.font = "800 62px Arial, Helvetica, sans-serif"; c.fillText("NEW HOMES", 256, 78); c.font = "800 44px Arial, Helvetica, sans-serif"; c.fillText("MODEL HOME OPEN", 256, 140); c.beginPath(); c.moveTo(256, 172); c.lineTo(340, 262); c.lineTo(290, 262); c.lineTo(290, 344); c.lineTo(222, 344); c.lineTo(222, 262); c.lineTo(172, 262); c.closePath(); c.fill(); }), 26.576, 1.42, -6.4, { ry: -Math.PI / 2 });
-  plane(1.24, .9, sign(["OPEN HOUSE", "this way", "SantaClaritaOpenHouses.com"], 1.24, .9, "#c0392b", "#ffffff"), 26.624, 1.42, -6.4, { ry: Math.PI / 2 });
+  plane(1.24, .9, paint(512, 372, (c) => { c.fillStyle = "#2f8f86"; c.fillRect(0, 0, 512, 372); c.fillStyle = "#fff"; c.textAlign = "center"; c.font = "800 62px Arial, Helvetica, sans-serif"; c.fillText("NEW HOMES", 256, 78); c.font = "800 44px Arial, Helvetica, sans-serif"; c.fillText("MODEL HOME OPEN", 256, 140); c.beginPath(); c.moveTo(256, 172); c.lineTo(340, 262); c.lineTo(290, 262); c.lineTo(290, 344); c.lineTo(222, 344); c.lineTo(222, 262); c.lineTo(172, 262); c.closePath(); c.fill(); }), 26.576, 1.42, -6.4, { ry: -Math.PI / 2, lift: .22 });
+  plane(1.24, .9, sign(["OPEN HOUSE", "this way", "SantaClaritaOpenHouses.com"], 1.24, .9, "#c0392b", "#ffffff"), 26.624, 1.42, -6.4, { ry: Math.PI / 2, lift: .22 });
   // a bench, three trees and some planting on the lawn between the lots
-  bx("oak", 1.6, .06, .45, 24.6, .45, -6.85, { solid: 1 }); bx("oak", 1.6, .4, .05, 24.6, .72, -6.63); for (const x of [23.9, 25.3]) bx("black", .06, .44, .42, x, .22, -6.85);
+  bx("oak", 1.6, .06, .45, 24.6, .45, -6.85, { solid: 1 }); bx("oak", 1.6, .4, .05, 24.6, .72, -6.63); for (const x of [23.9, 25.3]) bx("black", .06, .44, .42, x, .22, -6.85, { r: .02 });
   tree(24.2, -3.2); tree(28.9, -4.6, 3.6); tree(29.5, -2.4, 2.9);
   for (const p of [[22.2, -1.3, 1.1], [23, -1.1, .9], [26.6, -2, 1.2], [27.4, -1.7, .9], [27, -2.6, .8]]) shrub(p[0], p[1], p[2]);
   if (LOOK.on) { bx("mulch", 1.9, .05, 1.2, 22.6, -.005, -1.2, { r: .02 }); bx("mulch", 1.9, .05, 1.9, 27, -.005, -2.15, { r: .02 }); for (const t of [[24.2, -3.2], [28.9, -4.6], [29.5, -2.4]]) weld("mulch", puck(.55, .04, .02, 20), t[0], -.015, t[1]); }
@@ -938,7 +997,7 @@ function buildStreet() {
 function buildModel() {
   const o = MX, B = (n, w, h, d, u, y, v, k) => bx(n, w, h, d, o + u, y, v, k);
   const brass = mat(0xc9a15a, { metalness: .9, roughness: .3 }), terra = mat(0xc97b56, { roughness: 1 }), TEAL = 0x1f5a5e;
-  const rug = (w, d, u, v, a, b) => plane(w, d, paint(128, 128, (c) => { c.fillStyle = a; c.fillRect(0, 0, 128, 128); c.strokeStyle = b; c.lineWidth = 3; c.strokeRect(7, 7, 114, 114); c.lineWidth = 1.5; for (let i = 0; i < 8; i++) { c.beginPath(); c.moveTo(18 + i * 13, 18); c.lineTo(18 + i * 13, 110); c.stroke(); } }), o + u, .012, v, { rx: -Math.PI / 2 });
+  const rug = (w, d, u, v, a, b) => plane(w, d, LOOK.on ? rugTex(a, b) : paint(128, 128, (c) => { c.fillStyle = a; c.fillRect(0, 0, 128, 128); c.strokeStyle = b; c.lineWidth = 3; c.strokeRect(7, 7, 114, 114); c.lineWidth = 1.5; for (let i = 0; i < 8; i++) { c.beginPath(); c.moveTo(18 + i * 13, 18); c.lineTo(18 + i * 13, 110); c.stroke(); } }), o + u, .012, v, { rx: -Math.PI / 2 });
 
   // ---- the lot: a paved court from the sidewalk to both doors, a porch, planting
   B("paver", 8.6, .2, 7.4, 4.1, -.085, -3.7); B("concrete", 2.8, .22, 1.5, 5.7, -.08, -.75);
@@ -987,9 +1046,9 @@ function buildModel() {
     for (const s of [1, -1]) { const b = box(.99, 1.26, .03, 0, .63, s * .19, 0xffffff, { parent: af }); b.rotation.x = -s * .26; const a = plane(.93, 1.2, aTex, 0, .63, s * .215, { parent: af, ry: s > 0 ? 0 : Math.PI }); a.rotation.x = -s * .26; } hard(o + .55, -2.5, 1, .8); }
   // MODEL HOME OPEN, on posts by the sidewalk, and a blade sign for people walking up from the resale house.
   { const t = sign(["MODEL HOME OPEN", "Tour it today", "Sales office on site"], 2.5, .95, "#1f5a5e", "#ffffff");
-    for (const u of [10.05, 12.55]) B("white", .1, 2.1, .1, u, 1.05, -6.3); box(2.6, 1.05, .04, o + 11.3, 1.52, -6.3, 0xffffff); plane(2.5, .95, t, o + 11.3, 1.52, -6.325, { ry: Math.PI }); plane(2.5, .95, t, o + 11.3, 1.52, -6.275); hard(o + 11.3, -6.3, 2.7, .2);
-    B("white", .1, 2.4, .1, -1.9, 1.2, -7.02); box(.04, .9, 1.5, o - 1.9, 1.85, -6.3, 0xffffff); hard(o - 1.9, -6.5, .2, 1.3);
-    plane(1.42, .82, sign(["MODEL HOME", "OPEN TODAY"], 1.42, .82, "#1f5a5e", "#ffffff"), o - 1.925, 1.85, -6.3, { ry: -Math.PI / 2 }); plane(1.42, .82, sign(["THANK YOU", "FOR VISITING"], 1.42, .82, "#1f5a5e", "#ffffff", true), o - 1.875, 1.85, -6.3, { ry: Math.PI / 2 }); }
+    for (const u of [10.05, 12.55]) B("white", .1, 2.1, .1, u, 1.05, -6.3); box(2.6, 1.05, .04, o + 11.3, 1.52, -6.3, 0xffffff); plane(2.5, .95, t, o + 11.3, 1.52, -6.325, { ry: Math.PI, lift: .22 }); plane(2.5, .95, t, o + 11.3, 1.52, -6.275, { lift: .22 }); hard(o + 11.3, -6.3, 2.7, .2);
+    B("white", .1, 2.4, .1, -1.9, 1.2, LOOK.on ? -7.1 : -7.02);   /* premium: the post stands at the end of the board, not through the words */ box(.04, .9, 1.5, o - 1.9, 1.85, -6.3, 0xffffff); hard(o - 1.9, -6.5, .2, 1.3);
+    plane(1.42, .82, sign(["MODEL HOME", "OPEN TODAY"], 1.42, .82, "#1f5a5e", "#ffffff"), o - 1.925, 1.85, -6.3, { ry: -Math.PI / 2, lift: .22 }); plane(1.42, .82, sign(["THANK YOU", "FOR VISITING"], 1.42, .82, "#1f5a5e", "#ffffff", true), o - 1.875, 1.85, -6.3, { ry: Math.PI / 2, lift: .22 }); }
   // A brochure box on a post at the edge of the court.
   B("white", .08, 1, .08, 8.9, .5, -6.2); B("oak", .3, .26, .16, 8.9, 1.1, -6.2); hard(o + 8.9, -6.2, .3, .2);
   feather(o - .7, -6.9, "#2f8f86", "OPEN"); feather(o + 9.6, -6.9, "#e8743b", "MODEL"); feather(o + 13.3, -6.9, "#2f8f86", "HOMES"); feather(o - .7, -3.2, "#e8743b", "TOUR"); feather(o + 14.6, -3.2, "#f4f1ea", "OPEN", "#1f5a5e");
@@ -998,7 +1057,7 @@ function buildModel() {
   // ---- the sales office, in what was the garage. From here on, loose pieces go in the model's inside group.
   into = inside.model;
   B("oak", 1.6, .74, .7, 2.05, .37, 2.95, { solid: 1 }); B("quartz", 1.7, .04, .8, 2.05, .76, 2.95);                     // the desk faces the doors: the first thing a visitor walks up to
-  B("black", .5, .32, .03, 2.5, 1.02, 3.12); B("black", .16, .1, .12, 2.5, .83, 3.14); B("black", .34, .015, .13, 2.45, .788, 2.98);
+  if (LOOK.on) { B("black", .5, .32, .02, 2.5, 1.03, 3.12, { r: .009 }); B("inox", .035, .16, .02, 2.5, .86, 3.135); B("inox", .2, .012, .14, 2.5, .786, 3.12); } else { B("black", .5, .32, .03, 2.5, 1.02, 3.12); B("black", .16, .1, .12, 2.5, .83, 3.14); } B("black", .34, .015, .13, 2.45, .788, 2.98);
   box(.52, .2, .02, o + 1.55, .88, 2.64, 0xffffff); plane(.5, .18, label("WELCOME. PLEASE SIGN IN.", .5, .18, "#ffffff", LOOK.on ? "#0b2b2e" : "#1f5a5e"), o + 1.55, .88, 2.628, { ry: Math.PI });
   box(.25, .015, .33, o + 2.2, .788, 2.74, 0x5a4632);                                                                     // the guest card on its clipboard
   plane(.22, .3, paint(220, 300, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 220, 300); c.fillStyle = "#1f5a5e"; c.font = "800 24px Arial"; c.fillText("GUEST CARD", 16, 36); c.fillStyle = "#17120a"; c.font = "600 16px Arial"; ["Name", "Phone", "Email", "Agent (if any)"].forEach((l, i) => { c.fillText(l, 16, 78 + i * 56); c.fillStyle = "#b9b4a8"; c.fillRect(16, 90 + i * 56, 188, 2); c.fillStyle = "#17120a"; }); }), o + 2.2, .797, 2.74, { rx: -Math.PI / 2, rz: Math.PI });   // rz: the top of the card is away from the visitor, so it reads the right way up from the doors
@@ -1048,13 +1107,17 @@ function buildModel() {
   // ---- kitchen, open to the great room
   B("cab", 3.8, .88, .62, 11.1, .44, .4, { solid: 1 }); B("quartz", 3.86, .045, .68, 11.1, .905, .42);
   B("cab", .62, .88, 1.75, 12.69, .44, 1.585, { solid: 1 }); B("quartz", .68, .045, 1.78, 12.67, .905, 1.6);
-  B("tile", 3.8, .19, .02, 11.1, 1.025, .085); B("tile", .02, .55, 1.75, 12.915, 1.21, 1.585);
-  B("cab", .9, .72, .34, 9.68, 2.2, .26); B("cab", 1, .72, .34, 12.45, 2.2, .26); B("cab", .34, .72, .5, 12.76, 2.2, .98);
+  if (LOOK.on) { B("quartz", 3.8, .19, .02, 11.1, 1.025, .085); B("quartz", .94, .72, .02, 9.67, 1.48, .085); B("quartz", 1.07, .72, .02, 12.395, 1.48, .085); B("quartz", .02, .91, 1.75, 12.915, 1.385, 1.585); }   // premium: a slab backsplash, full height under the uppers
+  else { B("tile", 3.8, .19, .02, 11.1, 1.025, .085); B("tile", .02, .55, 1.75, 12.915, 1.21, 1.585); }
+  B("cab", .9, .72, .34, 9.68, 2.2, .26); B("cab", 1, .72, .34, 12.45, 2.2, .26);
+  if (LOOK.on) { B("cab", .34, .72, .9, 12.76, 2.2, .88); B("cab", .34, .72, .33, 12.76, 2.2, 2.325); B("cab", .62, .6, .85, 12.62, 2.26, 2.92); }   // premium: the uppers run from the corner to the hood, on to the fridge and over it. Loose panels on a bare wall read as floating
+  else B("cab", .34, .72, .5, 12.76, 2.2, .98);
   if (LOOK.on) { fronts("x", o + 9.22, o + 12.36, .71, 1, .1, .87, 5, { pull: "brass" }); fronts("z", .73, 1.36, o + 12.38, -1, .1, .87, 1, { pull: "brass" }); fronts("z", 2.14, 2.44, o + 12.38, -1, .1, .87, 1, { bare: 1 });
-    fronts("x", o + 9.25, o + 10.11, .43, 1, 1.85, 2.55, 2, { up: 1, pull: "brass" }); fronts("x", o + 11.97, o + 12.58, .43, 1, 1.85, 2.55, 2, { up: 1, pull: "brass" }); fronts("z", .75, 1.21, o + 12.59, -1, 1.85, 2.55, 1, { up: 1, pull: "brass" }); }
+    fronts("x", o + 9.25, o + 10.11, .43, 1, 1.85, 2.55, 2, { up: 1, pull: "brass" }); fronts("x", o + 11.97, o + 12.58, .43, 1, 1.85, 2.55, 2, { up: 1, pull: "brass" }); fronts("z", .45, 1.31, o + 12.59, -1, 1.85, 2.55, 2, { up: 1, pull: "brass" }); fronts("z", 2.17, 2.48, o + 12.59, -1, 1.85, 2.55, 1, { up: 1, pull: "brass" }); fronts("z", 2.51, 3.33, o + 12.31, -1, 1.97, 2.55, 2, { up: 1, pull: "brass" }); }
   B("steel", .62, .02, .44, 11, .93, .42); B("black", .54, .14, .36, 11, .86, .42); put(cyl(.016, .26, 8), brass, o + 11, 1.06, .2); put(cyl(.014, .16, 8), brass, o + 11, 1.18, .27, { rx: Math.PI / 2 });
   B("black", .56, .02, .76, 12.67, .935, 1.75); B(SS, .03, .7, .76, 12.365, .5, 1.75); B("black", .01, .34, .56, 12.348, .5, 1.75); for (const k of [-.27, -.09, .09, .27]) put(cyl(.022, .03, 10), "black", o + 12.35, .84, 1.75 + k, { rz: Math.PI / 2 });
-  B(SS, .5, .12, .8, 12.72, 1.78, 1.75); B(SS, .3, .5, .3, 12.82, 2.1, 1.75);
+  if (LOOK.on) { B("inox", .5, .075, .8, 12.68, 1.76, 1.75, { r: .008 }); B("black", .4, .012, .66, 12.68, 1.718, 1.75); B("inox", .3, .92, .44, 12.78, 2.25, 1.75, { r: .006 }); }   // premium: a hood with a chimney that goes up to the ceiling
+  else { B(SS, .5, .12, .8, 12.72, 1.78, 1.75); B(SS, .3, .5, .3, 12.82, 2.1, 1.75); }
   if (LOOK.on) { hard(o + 12.6, 2.92, .78, .85); B("inox", .755, 1.92, .85, 12.6125, .96, 2.92); for (const s of [-1, 1]) { rbx("inox", .024, 1.9, .419, o + 12.222, .96, 2.92 + s * .2125, .008); const v = 2.92 + s * .05; bar("steel", .009, o + 12.183, .62, v, o + 12.183, 1.68, v, 10); for (const y of [.68, 1.62]) bar("steel", .006, o + 12.183, y, v, o + 12.211, y, v, 6); } }
   else { B("steel", .78, 1.92, .85, 12.6, .96, 2.92, { solid: 1 }); B("black", .012, 1.9, .008, 12.205, .96, 2.92); for (const v of [2.86, 2.98]) B("steel", .02, 1.1, .03, 12.19, 1.15, v); }
   B("cabB", 1.8, .88, .9, 10.3, .44, 2.35, { solid: 1 }); B("quartz", 2.1, .05, 1.15, 10.3, .905, 2.4); if (LOOK.on) { fronts("x", o + 9.42, o + 11.18, 1.9, -1, .1, .87, 4, { m: "cabB", pull: "brass" }); fronts("z", 1.92, 2.78, o + 9.4, -1, .1, .87, 1, { bare: 1, m: "cabB" }); fronts("z", 1.92, 2.78, o + 11.2, 1, .1, .87, 1, { bare: 1, m: "cabB" }); }                                                                                                // the island
@@ -1069,7 +1132,7 @@ function buildModel() {
 
   // ---- primary bedroom
   bed(o + 2.3, 8.75, 1.9, 2.05, "sage", "oak"); nightstand(o + .98, 9.6, "oak"); nightstand(o + 3.62, 9.6, "oak");
-  B("oak", 1.4, .06, .4, 2.3, .44, 7.45, { solid: 1 }); for (const u of [1.7, 2.9]) B("black", .04, .42, .36, u, .21, 7.45); soft(1.3, .09, .36, .03, "cream", o + 2.3, .515, 7.45);
+  B("oak", 1.4, .06, .4, 2.3, .44, 7.45, { solid: 1 }); if (LOOK.on) { for (const u of [1.68, 2.92]) for (const v of [7.31, 7.59]) bar("black", .014, o + u, 0, v, o + u, .42, v); } else for (const u of [1.7, 2.9]) B("black", .04, .42, .36, u, .21, 7.45); soft(1.3, .09, .36, .03, "cream", o + 2.3, .515, 7.45);
   B("oak", 1.5, .9, .46, 2, .45, 5.93, { solid: 1 }); for (const y of [.25, .52, .79]) { if (LOOK.on) fronts("x", o + 1.27, o + 2.73, 6.16, 1, y - .14, y + .105, 1, { bare: 1, m: "oak" }); else B("black", 1.3, .012, .012, 2, y + .12, 6.165); for (const u of [1.6, 2.4]) put(ball(.02, LOOK.on ? 1 : 0), brass, o + u, y, LOOK.on ? 6.184 : 6.17); }
   put(cyl(.08, .3, 12, .1), "ceramic", o + 1.5, 1.05, 5.93); put(cyl(.13, .2, 14, .09), "glow", o + 1.5, 1.3, 5.93, { flat: 1 });
   prop("mread", () => { soft(.8, .3, .78, .09, "cream", o + .75, .3, 6.17); soft(.2, .5, .78, .08, "cream", o + .42, .62, 6.17, { rz: .14 }); for (const v of [5.75, 6.59]) soft(.8, .2, .16, .06, "cream", o + .75, .5, v); }); hard(o + .75, 6.17, .86, .9);   // reading chair, in the corner by the dresser so there is room to walk past the foot of the bed
@@ -1084,12 +1147,12 @@ function buildModel() {
   for (const v of [6.55, 7.45]) { put(cyl(.17, .05, 20, .13), "ceramic", o + 7.84, .885, v); put(cyl(.013, .18, 8), brass, o + 8.04, .96, v); }
   B("oak", .03, .95, 1.6, 8.115, 1.62, 7); B(LOOK.on ? "mirror" : "steel", .012, .85, 1.5, 8.095, 1.62, 7);
   if (LOOK.on) toilet(o + 6.02, 9, -1, 0, .34); else { put(cyl(.19, .36, 18, .15), "ceramic", o + 6.02, .2, 9); B("ceramic", .46, .05, .42, 6.02, .41, 9); B("ceramic", .18, .4, .42, 5.68, .58, 9); } hard(o + 5.9, 9, .66, .46);
-  B("steel", .7, .02, .02, 6.1, 1.2, 5.69); soft(.5, .6, .06, .025, "sage", o + 6.1, .94, 5.72); soft(.9, .03, .55, .012, "linen", o + 7.2, .016, 8.75);
+  B("steel", .7, .02, .02, 6.1, 1.2, 5.69); soft(.5, .6, .06, .025, "sage", o + 6.1, .94, 5.72); if (LOOK.on) soft(.9, .018, .55, .008, "sage", o + 7.2, .01, 8.75); else soft(.9, .03, .55, .012, "linen", o + 7.2, .016, 8.75);
   put(cyl(.07, .1, 10, .09), "pot", o + 7.86, .92, 6.2); put(ball(.09, 0), "leaf", o + 7.86, 1.04, 6.2);
 
   // ---- office, or second bedroom
-  B("oak", 1.5, .04, .65, 11.3, .74, 9.45); for (const u of [10.6, 12]) B("black", .04, .72, .55, u, .36, 9.45); hard(o + 11.3, 9.45, 1.5, .65);
-  B("black", .56, .34, .03, 11.1, 1.12, 9.66); B("black", .14, .1, .14, 11.1, .81, 9.64); B("black", .4, .015, .14, 11.1, .768, 9.36);
+  B("oak", 1.5, .04, .65, 11.3, .74, 9.45); if (LOOK.on) { for (const u of [10.61, 11.99]) for (const v of [9.18, 9.72]) bar("black", .016, o + u, 0, v, o + u, .72, v); } else for (const u of [10.6, 12]) B("black", .04, .72, .55, u, .36, 9.45); hard(o + 11.3, 9.45, 1.5, .65);
+  if (LOOK.on) { B("black", .56, .34, .02, 11.1, 1.13, 9.66, { r: .009 }); B("inox", .035, .2, .02, 11.1, .86, 9.672); B("inox", .22, .012, .15, 11.1, .766, 9.64); } else { B("black", .56, .34, .03, 11.1, 1.12, 9.66); B("black", .14, .1, .14, 11.1, .81, 9.64); } B("black", .4, .015, .14, 11.1, .768, 9.36);
   prop("mchair1", () => { if (LOOK.on) return chairP(o + 11.2, 8.75, 0, "cream", "oak"); soft(.44, .08, .44, .03, "cream", o + 11.2, .47, 8.75); put(cyl(.025, .45, 8), "steel", o + 11.2, .23, 8.75); soft(.42, .46, .06, .03, "cream", o + 11.2, .76, 8.53); }); hard(o + 11.2, 8.75, .44, .44);
   if (LOOK.on) {                                         // a real bookcase: sides, back and shelves, with the books standing inside it
     hard(o + 12.77, 7, .32, 1.5); B("walnut", .02, 1.9, 1.5, 12.92, .95, 7); for (const v of [6.265, 7.735]) B("oak", .32, 1.9, .03, 12.77, .95, v); for (const y of [.04, .485, .935, 1.385, 1.885]) B("oak", .3, .03, 1.44, 12.76, y, 7);
@@ -1255,7 +1318,7 @@ const MANSWERS = [
   { id: "m-rereg", at: [MX + 8.9, 1.12, -6.3], q: "I already toured a model without my agent. Is it too late?", a: "Maybe not. Registration is a builder policy, not a law, and some builders make exceptions. Ask the builder what it will recognize.",
     build(g) { box(.26, .2, .02, MX + 8.9, 1.12, -6.29, 0xffffff, { parent: g }); plane(.24, .18, label("TAKE ONE", .24, .18, "#ffffff", "#1f5a5e"), MX + 8.9, 1.12, -6.302, { parent: g, ry: Math.PI }); } },
   { id: "m-pay", at: [MX + 6.3, .46, 2.82], q: "Who pays my agent if I bring one?", a: "On new homes the builder often offers to. That is the builder's choice and the terms vary. Your written agreement with your agent spells it out. What the builder does not cover can fall to you.", build(g) { flat(g, "AGENT AGREEMENT", MX + 6.3, .428, 2.82); } },
-  { id: "m-report", at: [MX + 1.92, 1, 5.3], q: "What is the public report?", a: "Most new California subdivisions need a public report from the Department of Real Estate before homes are sold. You get a copy before you are committed. It is a disclosure, not an endorsement.",
+  { id: "m-report", at: [MX + 1.92, 1, 5.3], q: "What is the public report?", a: "Most new California subdivisions need a public report from the Real Estate Commissioner before lots are sold. You must get a copy before you sign a binding contract. It informs. It does not endorse.",
     build(g) { box(.3, .07, .25, MX + 1.92, .868, 5.3, 0xffffff, { parent: g }); plane(.26, .2, label("PUBLIC REPORT", .26, .2, "#ffffff", "#17120a"), MX + 1.92, .905, 5.3, { parent: g, rx: -Math.PI / 2, rz: Math.PI }); } },
   { id: "m-whole", at: [MX + 9.65, .96, 2.3], q: "How do I compare this home with another one?", a: "Compare the whole deal and the monthly payment, not the sign out front. Base price, lot premium, upgrades, closing costs, loan terms, taxes and dues all count.",
     build(g) { box(.1, .02, .15, MX + 9.52, .941, 2.3, 0x23262b, { parent: g }); box(.08, .004, .04, MX + 9.52, .953, 2.25, 0x9fd7c2, { parent: g }); flat(g, "SIDE BY SIDE", MX + 9.78, .934, 2.3, "#2e7d5b"); } },
@@ -1342,7 +1405,7 @@ const coverGlow = [];
 
 function newRun(seed, daily, level = "resale") {
   LV = LEVELS[level] || LEVELS.resale; const away = LV === LEVELS.resale ? LEVELS.model : LEVELS.resale;
-  scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0; Go = null; NAV = null; tapMark.visible = false; P.spin = null;
+  gatesFor(LV.id); const oldRun = perRun; scene.remove(perRun); perRun = new THREE.Group(); scene.add(perRun); botLight.intensity = 0; Go = null; NAV = null; tapMark.visible = false; P.spin = null;
   for (const m of smashed) m.visible = true; smashed.length = 0; for (const q of scorches) fx.remove(q); scorches.length = 0; for (const q of beams) fx.remove(q.m); beams.length = 0;
   for (let i = solids.length - 1; i >= 0; i--) if (solids[i].run) solids.splice(i, 1);
   coverGlow.length = 0;
@@ -1367,7 +1430,13 @@ function newRun(seed, daily, level = "resale") {
   G = { wrecked: 0, shots: 0, cool: 0, kick: 0, shadowDirty: 0, answers, ans: 0, lies, nextLie: 38, seed, daily, level: LV.id, reg: null, card: rCard, desk: rDesk, rng, flags, devs, hide, time: TOTAL, found: 0, bot: null, caught: false, over: false, scan: 0, target: null, wrong: 0, stepAcc: 0, pingAcc: 0, said: {}, cardT: 0, shake: 0, t: 0, started: performance.now() };
   P.x = LV.spawn[0]; P.z = LV.spawn[1]; P.yaw = LV.spawn[2]; P.pitch = 0; P.vx = P.vz = P.vw = 0; P.door = null; In.two = 0;
   $("fl").textContent = LV.text.hud; $("fc").textContent = "0"; $("ft").textContent = flags.length; $("ac").textContent = "0"; $("at").textContent = answers.length; $("rg").textContent = LV.reg ? "No agent yet" : ""; $("timer").classList.remove("low");
-  objective(LV.text.start);
+  objective(LV.text.start); dropRun(oldRun);
+}
+/** A run paints its own small pictures and cuts its own shapes. When the run is replaced they are handed back, or every new run would leave a few more on the graphics card.
+    Anything the world or the new run still uses is kept. */
+function dropRun(old) {
+  const grab = (o, set) => { if (o.geometry) set.add(o.geometry); const m = o.material; if (m) for (const q of (m.length ? m : [m])) for (const k of ["map", "bumpMap", "normalMap", "roughnessMap", "aoMap", "emissiveMap", "alphaMap"]) if (q[k]) set.add(q[k]); };
+  const keep = new Set(), gone = new Set(); scene.traverse((o) => grab(o, keep)); old.traverse((o) => grab(o, gone)); for (const r of gone) if (!keep.has(r)) r.dispose();
 }
 
 /* ---------- the bot ---------- */
@@ -1524,7 +1593,7 @@ const In = { mx: 0, mz: 0, scan: false, keys: {}, two: 0, down: 0, upAt: 0 };   
 addEventListener("keydown", (e) => { In.keys[e.code] = true; if (e.code === "KeyE" || e.code === "Space") { In.scan = true; e.preventDefault(); } });
 addEventListener("keyup", (e) => { In.keys[e.code] = false; if (e.code === "KeyE" || e.code === "Space") In.scan = false; });
 addEventListener("blur", () => { In.keys = {}; In.scan = false; In.edge = null; stopGo(); });   // keys must not stick when the window loses focus
-const look = (dx, dy, k) => { P.yaw -= dx * k; P.pitch = Math.max(-1.25, Math.min(1.25, P.pitch - dy * k)); };
+const look = (dx, dy, k) => { if (WARP) return; P.yaw -= dx * k; P.pitch = Math.max(-1.25, Math.min(1.25, P.pitch - dy * k)); };
 if (!IS_TOUCH) {
   let drag = false;
   canvas.addEventListener("mousedown", (e) => { if (state !== "play") return; audio(); if (document.pointerLockElement !== canvas) { canvas.requestPointerLock && canvas.requestPointerLock(); drag = true; } In.scan = true; });
@@ -1629,7 +1698,7 @@ function autoStep(dt) { const g = Go, p = g.path, turn = (to, rate) => { const e
   const err = Math.abs(turn(Math.atan2(-lx, -lz), 3.2)), sp = (G.bot ? 3.7 : 3.2) * Math.max(.25, Math.min(1, 1.2 - err / 1.4)) * (p.length === 1 ? Math.max(.25, Math.min(1, d / .6)) : 1);
   return [dx / d * sp, dz / d * sp]; }
 /** The TURN button shows the way out. It turns to the nearest door in sight behind the player. With none behind, to the nearest door in sight that is off the screen. With no door at all it is a plain about-face. */
-function turnAround() { stopGo(); let e = null, bd = 9, eb = null, bb = 9; const half = Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect); G.said.arrow = 1;
+function turnAround() { if (WARP) return; stopGo(); let e = null, bd = 9, eb = null, bb = 9; const half = Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect); G.said.arrow = 1;
   for (const d of DOORWAYS) { if (d.b - d.a > 1.65) continue; const X = d.ax === "x", sd = Math.sign((X ? P.z : P.x) - d.c) || 1, m = (d.a + d.b) / 2, px = X ? m : d.c + sd * .5, pz = X ? d.c + sd * .5 : m, dd = Math.hypot(px - P.x, pz - P.z), a = wrapA(Math.atan2(P.x - px, P.z - pz) - P.yaw); if (dd > .6 && Math.abs(a) > half * .8 && dd < Math.max(bd, bb) && sees(P.x, P.z, px, pz)) { if (dd < bd) { bd = dd; e = a; } if (Math.abs(a) > 1.75 && dd < bb) { bb = dd; eb = a; } } }
   if (eb !== null) e = eb; P.spin = e === null ? { dir: 1, left: Math.PI } : { dir: Math.sign(e), left: Math.abs(e) }; buzz(10); }
 /** A place in the world to its spot on the screen, in pixels, and how far in front it is. null when it is behind the player. The ray in pickFloor, the other way round. */
@@ -1648,17 +1717,148 @@ function aimAt(at) { const dx = P.x - at[0], dz = P.z - at[2], d = Math.hypot(dx
     Go = Object.assign(base, { path, x: e[0], z: e[1] }); tapMark.position.set(e[0], .03, e[1]); tapMark.visible = true; return true; }
   return false; }
 /** A tap on the picture. Not on the HUD. A tap on an open card closes it. A tap on the thing under the crosshair wants SCAN. A tap at the left or right edge turns. */
-function onTap(cx, cy) { tapN++;
+function onTap(cx, cy) { tapN++; if (WARP) return;
   for (const id of ["card", "obj", "flags", "timer", "sig", "map", "mute", "scanbtn", "turnbtn"]) { const el = $(id), r = el.getBoundingClientRect(), m = id === "scanbtn" && innerWidth >= 360 ? 16 : id.endsWith("btn") ? 10 : 0; if ((id !== "card" || el.classList.contains("on")) && r.width && cx > r.left - m && (cx < r.right + m || id === "scanbtn") && cy > r.top - m && cy < r.bottom + m) { if (id === "card") { G.cardT = 0; el.className = ""; } return; } }   // a near miss beside SCAN, out to the edge of the screen, is not a walk and not a turn
   const dir = edgeOf(cx); if (dir) { stopGo(); G.said.arrow = 1; P.spin = { dir, left: (P.spin && P.spin.dir === dir ? P.spin.left : 0) + Math.min(.78, 1.2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect)) }; buzz(8); return; }   // the two arrows at the edges of the screen: a tap there turns the view and walks nowhere. A finger held on an arrow keeps turning: see update(). The turn is a little over half the width of the view, so what was just off the edge comes to the middle
   const at = tapThing(cx, cy);
   if (G.target) { const ta = scanAt(G.target), p = scr(ta[0], ta[1], ta[2]); if (at === ta || Math.hypot(cx - innerWidth / 2, cy - innerHeight / 2) < 30 || (!at && p && Math.hypot(cx - p[0], cy - p[1]) < 90)) { const sb = $("scanbtn"); sb.classList.remove("nudge"); void sb.offsetWidth; sb.classList.add("nudge"); return; } }   // people press the object itself. It is under the crosshair already: show them the button
+  if (gateTap(cx, cy, at)) { buzz(10); return; }   // a tap on a portal door: walk to it and through
   const t = pickFloor(cx, cy); if (at && !(t && t.door) && aimAt(at)) { buzz(10); return; }   // something to scan that is not under the crosshair yet: go and face it. A door comes first: a thing beside a doorway must not stop the walk through it
   if (t) { goTo(t); buzz(10); } else if (Go) stopGo(); else tip("Tap the floor or a door."); }
+
+/* =====================================================================================
+   PORTAL DOORS. A glowing door on the lawn of one house leads to another house.
+   One row per door: the level it stands in, where it stands, the way a player faces to walk
+   into it, the level it leads to, and where the player comes out there and which way they face.
+   A third house is one more level in LEVELS and one more row here for each door.
+   What a door means: it starts a run in the other house, the way the result screen's own
+   "other house" button does. The clock and the score start over there, so a door can never
+   add time or count a find twice. A run with finds in it asks once before it lets go.
+   Each door is four draw calls: the frame, one shader piece for the swirl, the glow around it
+   and the light on the ground, the sign, and a few drifting motes. No light, no texture file.
+   ===================================================================================== */
+const PORTALS = [
+  { id: "resale-model", from: "resale", at: [6.3, -4.3], yaw: -1.900, to: "model", arrive: [MX + 6.01, -5.72, 2.776], label: "To the model home", tint: [0x52e0cd, 0x0b2f3d] },
+  { id: "model-resale", from: "model", at: [MX + 7, -4.6], yaw: -2.417, to: "resale", arrive: [4.88, -4.79, 2.654], label: "To the resale open house", tint: [0xffb24d, 0x3d150c] }
+];
+const CALM = matchMedia("(prefers-reduced-motion: reduce)");           // asked for less motion: the swirl drifts, and the trip is a plain fade
+const GATE_D = .34;                                                    // how near the plane of a door counts as stepping in, metres
+const gateU = { uT: { value: 0 }, uPx: { value: 60 } }, gates = [];
+let WARP = null, gateUses = 0, gateLast = 0, gateTold = store.get("gate", 0);   // gateTold: 0 never told about the doors, 1 pointed toward one once, 2 pointed twice, 9 has seen one and read the line                                         // WARP: the trip in progress. While it runs the game stands still and takes no input
+const GATE_VS = "attribute float k; varying vec2 vP; varying float vK; void main() { vK = k; vP = k > .5 ? position.xz : position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }";
+const GATE_FS = `uniform float uT; uniform vec3 uA; uniform vec3 uB; varying vec2 vP; varying float vK;
+float sd(vec2 p) { p.x = abs(p.x); return p.y > 1.6 ? length(p - vec2(0., 1.6)) - .5 : max(p.x - .5, -p.y); }
+void main() { vec3 c; float a = 0.;
+  if (vK > .5) { float g = max(0., 1. - length(vP) * .62); c = uA * g * g * g * (.3 + .04 * sin(uT * 1.7)); }
+  else { float d = sd(vP);
+    if (d < 0.) { vec2 q = (vP - vec2(0., 1.12)) * vec2(1., .52); float r = length(q) * 2., an = atan(q.y, q.x);
+      float s = .5 + .5 * sin(an * 3. + r * 7. - uT * 2.4), s2 = .5 + .5 * sin(-an * 2. + r * 11. + uT * 1.5 + s * 2.5);
+      float core = smoothstep(.8, 0., r), rim = smoothstep(-.1, 0., d);
+      c = mix(uB, uA, smoothstep(.1, .8, s * s2 + .25 * s)) + vec3(1., .96, .88) * core * core * .9 + uA * rim * .7; a = 1.; }
+    else { float g = max(0., 1. - d / .9); c = uA * g * g * g * (.5 + .06 * sin(uT * 1.7)); } }
+  gl_FragColor = vec4(c, a);
+}`;
+const FRAME_VS = "varying vec3 vN; varying float vY; void main() { vN = normalize(mat3(modelMatrix) * normal); vY = position.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }";
+const FRAME_FS = `uniform float uT; uniform vec3 uA; varying vec3 vN; varying float vY;
+void main() { float l = .62 + .38 * max(0., dot(normalize(vN), normalize(vec3(.35, .8, -.5)))), band = smoothstep(.86, 1., sin(vY * 2.6 - uT * 1.9));
+  gl_FragColor = vec4(mix(uA, vec3(1., .97, .9), .5) * l + uA * band * .4, 1.);
+}`;
+const MOTE_VS = `attribute float s; uniform float uT; uniform float uPx; varying float vA;
+void main() { float y = fract(uT * (.1 + .08 * fract(s * 7.31)) + s), an = s * 40. + uT * (.5 + fract(s * 3.7)), r = .42 + .36 * fract(s * 5.3);
+  vA = sin(y * 3.1416); vec4 mv = modelViewMatrix * vec4(cos(an) * r, .1 + y * 2.5, sin(an) * r * .5, 1.); gl_Position = projectionMatrix * mv; gl_PointSize = uPx * (.6 + fract(s * 9.1)) / -mv.z; }`;
+const MOTE_FS = `uniform vec3 uA; varying float vA;
+void main() { float d = length(gl_PointCoord - .5); gl_FragColor = vec4(mix(uA, vec3(1.), .4) * smoothstep(.5, .05, d) * vA, 0.);
+}`;
+const gateGlow = { transparent: true, depthWrite: false, side: THREE.DoubleSide, toneMapped: false, blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor };   // one piece that is solid where the swirl is and pure added light everywhere else
+function buildPortals() {
+  const root = new THREE.Group(); fx.add(root);                                          // under fx: the blaster, the light probes and the look's material sorting all leave it alone
+  // the frame: two posts and a round head, cut from one outline
+  const sh = new THREE.Shape(); sh.moveTo(.5, 0); sh.lineTo(.64, 0); sh.lineTo(.64, 1.6); sh.absarc(0, 1.6, .64, 0, Math.PI, false); sh.lineTo(-.64, 0); sh.lineTo(-.5, 0); sh.lineTo(-.5, 1.6); sh.absarc(0, 1.6, .5, Math.PI, 0, true); sh.lineTo(.5, 0);
+  const frameG = new THREE.ExtrudeGeometry(sh, { depth: .14, bevelEnabled: false, curveSegments: 10 }); frameG.translate(0, 0, -.07);
+  // the glow: one upright piece for the swirl and the light around the door, one flat piece for the light on the ground
+  const glowG = new THREE.BufferGeometry(), X = 1.55, Y0 = -.1, Y1 = 3.3, S = 1.7, gy = .035;
+  glowG.setAttribute("position", new THREE.Float32BufferAttribute([-S, gy, -S, S, gy, -S, S, gy, S, -S, gy, S, -X, Y0, 0, X, Y0, 0, X, Y1, 0, -X, Y1, 0], 3));
+  glowG.setAttribute("k", new THREE.Float32BufferAttribute([1, 1, 1, 1, 0, 0, 0, 0], 1)); glowG.setIndex([0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7]);
+  const moteG = new THREE.BufferGeometry(), seeds = []; for (let i = 0; i < 18; i++) seeds.push((i + .37) / 18);
+  moteG.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(54), 3)); moteG.setAttribute("s", new THREE.Float32BufferAttribute(seeds, 1)); moteG.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 1.35, 0), 1.7);
+  const signG = new THREE.BufferGeometry(), a = .76, b = .155, e = .075;
+  signG.setAttribute("position", new THREE.Float32BufferAttribute([-a, -b, e, a, -b, e, a, b, e, -a, b, e, a, -b, -e, -a, -b, -e, -a, b, -e, a, b, -e], 3));
+  signG.setAttribute("uv", new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1], 2)); signG.setIndex([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]);   // two faces, so the words read the right way round from both sides
+  for (const p of PORTALS) {                                            // the shaders work in screen colour, so added light adds the way it looks
+    const g = new THREE.Group(), raw = (h) => new THREE.Vector3((h >> 16 & 255) / 255, (h >> 8 & 255) / 255, (h & 255) / 255), A = raw(p.tint[0]), B = raw(p.tint[1]), hex = "#" + ("00000" + p.tint[0].toString(16)).slice(-6), u = { uT: gateU.uT, uPx: gateU.uPx, uA: { value: A }, uB: { value: B } };
+    g.position.set(p.at[0], 0, p.at[1]); g.rotation.y = p.yaw; root.add(g);
+    const frame = new THREE.Mesh(frameG, new THREE.ShaderMaterial({ uniforms: u, vertexShader: FRAME_VS, fragmentShader: FRAME_FS, toneMapped: false }));
+    const glow = new THREE.Mesh(glowG, new THREE.ShaderMaterial(Object.assign({ uniforms: u, vertexShader: GATE_VS, fragmentShader: GATE_FS }, gateGlow))); glow.renderOrder = 2;
+    const motes = new THREE.Points(moteG, new THREE.ShaderMaterial(Object.assign({ uniforms: u, vertexShader: MOTE_VS, fragmentShader: MOTE_FS }, gateGlow))); motes.renderOrder = 3;
+    const words = p.label.toUpperCase(), sign = new THREE.Mesh(signG, new THREE.MeshBasicMaterial({ alphaTest: .5, toneMapped: false, map: paint(512, 105, (c) => { c.fillStyle = "#0c0b10"; c.strokeStyle = hex; c.lineWidth = 7; c.beginPath(); c.moveTo(50, 5); c.lineTo(462, 5); c.arc(462, 52.5, 47.5, -Math.PI / 2, Math.PI / 2); c.lineTo(50, 100); c.arc(50, 52.5, 47.5, Math.PI / 2, Math.PI * 1.5); c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = "#f3eee4"; c.textAlign = "center"; c.textBaseline = "middle"; let px = 46; do { c.font = "900 " + px + "px Arial, Helvetica, sans-serif"; } while (c.measureText(words).width > 420 && --px > 16); c.fillText(words, 256, 55); }) }));
+    sign.position.y = 2.5;
+    for (const m of [frame, glow, motes, sign]) { m.userData.fx = true; g.add(m); }
+    gates.push({ def: p, g, u, nx: Math.sin(p.yaw), nz: Math.cos(p.yaw), in: false, hex });   // (nx, nz): the way the door faces, out toward the player walking up to it
+  }
+}
+buildPortals();
+/** Show the doors of the level the run is in, and only those. */
+let HERE = [];
+function gatesFor(id) { for (const q of gates) { q.g.visible = q.def.from === id; q.in = false; } HERE = gates.filter((q) => q.def.from === id); }
+const gateSeen = (q) => { const p = scr(q.def.at[0], 1.25, q.def.at[1]); return !!p && p[2] < 16 && p[0] > 20 && p[0] < innerWidth - 20 && p[1] > 0 && p[1] < innerHeight && sees(P.x, P.z, q.def.at[0], q.def.at[1]); };
+/** Is the walk pointed straight at a portal door a few steps ahead? Then the front door's helping hand stays out of it: the lawn door stands inside the funnel that draws a thumb to the front door. */
+function gateAhead(v) { const sp = Math.hypot(v[0], v[1]); if (sp < .2) return false;
+  for (const q of HERE) { const dx = P.x - q.def.at[0], dz = P.z - q.def.at[1], un = (v[0] * q.nx + v[1] * q.nz) / sp; if (Math.abs(un) < .2) continue; const t = -(dx * q.nx + dz * q.nz) / un; if (t > 0 && t < 6 && Math.abs((dx + v[0] / sp * t) * q.nz - (dz + v[1] / sp * t) * q.nx) < .62) return true; }
+  return false; }
+/** Once a step, after the walk: has the player stepped into a door, and should the first-time line show? */
+function gateStep(pushing) {
+  if (G.over) return;
+  if (G.said.leave === 1 && !pushing && !Go) G.said.leave = 2;                            // asked, and the player has let go of the walk: the next step in is a yes
+  for (const q of HERE) { const dx = P.x - q.def.at[0], dz = P.z - q.def.at[1], n = dx * q.nx + dz * q.nz; let inz = Math.abs(n) < GATE_D && Math.abs(dx * q.nz - dz * q.nx) < .7;
+    const fresh = G.t < (G.gateT || 0);                                                    // just stepped out of a door: for a beat every door is shut, so a walk held through the trip cannot bounce the player straight back
+    if (inz && !q.in && !fresh && (!Go || Go.kind === "gate")) { q.in = true; enterGate(q); if (WARP) return; }   // a tap walk to some other spot that happens to cross the door does not go through it
+    if (inz && (fresh || G.said.leave === 1)) { const k = (n < 0 ? -1 : 1) * (GATE_D + .03) - n; P.x += q.nx * k; P.z += q.nz * k; P.vx = P.vz = 0; inz = false; }   // shut for now: the door holds like a wall. While the player is being asked, a thumb that keeps pushing does not answer for them
+    q.in = inz;
+    // the first-time line. Once on this device, when a door is first in plain view. A player who has not looked its way a few seconds into a run is told which way to look, on two runs at most.
+    if (gateTold < 9) { const where = q.def.label.replace(/^To /, "");
+      if (gateSeen(q)) { store.set("gate", gateTold = 9); G.tip = "Glowing door. Walk in to visit " + where + "."; G.tipT = G.t + 6; }
+      else if (gateTold < 2 && !G.said.nudge && G.t > 3 && !G.said.in && Math.hypot(dx, dz) < 12) { G.said.nudge = 1; store.set("gate", ++gateTold); const a = wrapA(Math.atan2(-dx, -dz) + Math.PI - P.yaw); G.tip = "A glowing door is " + (Math.abs(a) > 2.4 ? "behind you." : a > 0 ? "on your left." : "on your right."); G.tipT = G.t + 5; } }
+  }
+}
+function enterGate(q) {
+  if (WARP || G.over) return;
+  if ((G.found || G.ans || G.reg || G.bot) && !G.said.leave) { G.said.leave = 1; stopGo(); beep(520, .12, "triangle", .08); buzz(20);     // a run with something in it is not thrown away by one stray step
+    card("lockc", "Portal door", "Leave this house?", "A new run starts on the other side. What you found here will not be scored. Step in again to go.", 8); return; }
+  if (G.said.leave === 1) return;
+  stopGo(); In.scan = false; In.edge = null; P.spin = null; P.vx = P.vz = P.vw = 0; G.cardT = 0; $("card").className = ""; $("hint").classList.remove("on"); gateUses++;
+  WARP = { q, t: 0, all: 0, calm: CALM.matches, cut: false, x: P.x, z: P.z, yaw: P.yaw, pitch: P.pitch, side: Math.sign((P.x - q.def.at[0]) * q.nx + (P.z - q.def.at[1]) * q.nz) || 1 };
+  const w = $("warp"); w.style.setProperty("--a", q.hex); w.className = WARP.calm ? "on calm" : "on"; sfx.portal(WARP.calm); buzz(WARP.calm ? 15 : [20, 30, 50]); track("hunt-portal");
+}
+/** A tap on the door itself: walk to it and through. Returns true when the tap was on a door. at: something to scan near the tap. It wins only when it stands in front of the door, not behind it. */
+function gateTap(cx, cy, at) {
+  const t = Math.tan(camera.fov * Math.PI / 360), ax = (cx / innerWidth * 2 - 1) * t * camera.aspect, ay = (1 - cy / innerHeight * 2) * t, cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), ry = ay * cp + sp, rz = ay * sp - cp, cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), rx = ax * cw + rz * sw, rzz = -ax * sw + rz * cw;   // the line of sight through the tap, as in pickFloor
+  for (const q of HERE) { const [gx, gz] = q.def.at, un = rx * q.nx + rzz * q.nz; if (Math.abs(un) < 1e-4) continue;
+    const k = -((P.x - gx) * q.nx + (P.z - gz) * q.nz) / un, y = 1.6 + ry * k, a = (P.x + rx * k - gx) * q.nz - (P.z + rzz * k - gz) * q.nx;   // where that line meets the plane of the door
+    if (!(k > 0) || Math.abs(a) > .66 || y < -.05 || y > 2.35 || Math.hypot(gx - P.x, gz - P.z) > 20 || !sees(P.x, P.z, gx, gz) || (at && Math.hypot(at[0] - P.x, at[2] - P.z) < k * Math.hypot(rx, rzz))) continue;
+    if (q.in) { enterGate(q); return true; }
+    flood(); const c = cellNear(gx, gz, .6); if (c < 0) continue; const path = trace(c, gx, gz), e = path[path.length - 1]; goTo({ x: e[0], z: e[1], path, kind: "gate" }); return true; }
+  return false;
+}
+/** One step of a trip. The first part pulls the player into the door while the light comes up. At full light the run in the other house starts.
+    The second part lets the light go again. Reduced motion: a plain fade to dark and back, with no pull and no change of view. */
+const WARP_IN = .62, WARP_OUT = .42, CALM_IN = .22, CALM_OUT = .26, baseFov = () => (innerWidth < innerHeight ? 78 : 66);
+function warpStep(dt) {
+  const w = WARP, d = w.q.def, tin = w.calm ? CALM_IN : WARP_IN, tout = w.calm ? CALM_OUT : WARP_OUT, el = $("warp"), sw = el.firstElementChild, bl = el.lastElementChild; w.t += dt; w.all += dt;
+  if (!w.cut) { const p = Math.min(1, w.t / tin), e = p * p * (3 - 2 * p);
+    if (!w.calm) { P.x = w.x + (d.at[0] + w.side * w.q.nx * .16 - w.x) * e; P.z = w.z + (d.at[1] + w.side * w.q.nz * .16 - w.z) * e; P.yaw = w.yaw + wrapA(d.yaw + (w.side < 0 ? Math.PI : 0) - w.yaw) * e; P.pitch = w.pitch * (1 - e);
+      camera.fov = baseFov() + 24 * p * p; camera.updateProjectionMatrix(); sw.style.opacity = Math.min(1, p * 2.2) * .9; sw.style.transform = "rotate(" + (p * p * 250).toFixed(1) + "deg) scale(" + (.7 + p * 1.5).toFixed(3) + ")"; }
+    bl.style.opacity = w.calm ? p : Math.pow(p, 2.4);
+    if (p >= 1) { w.cut = true; w.t = 0; sw.style.opacity = 0; bl.style.opacity = 1; begin(!!G.daily, d.to, d.arrive); cull(P.x); $("timer").textContent = Math.floor(TOTAL / 60) + ":" + ("0" + TOTAL % 60).slice(-2); if (!w.calm) burst(P.x - Math.sin(P.yaw) * 2, 1.1, P.z - Math.cos(P.yaw) * 2, d.tint[0], 12, .5); }
+  } else { const p = Math.min(1, w.t / tout), k = Math.max(0, (p - .18) / .82);                      // the light holds a moment while the other house comes in, then goes once
+    bl.style.opacity = 1 - k * k * (3 - 2 * k); if (!w.calm) { camera.fov = baseFov() - 9 * (1 - p) * (1 - p); camera.updateProjectionMatrix(); }
+    if (p >= 1) { gateLast = w.all; WARP = null; el.className = ""; bl.style.opacity = 0; camera.fov = baseFov(); camera.updateProjectionMatrix(); In.scan = false; } }
+}
 
 /* ---------- the simulation: one fixed slice of time ---------- */
 const STEP = 1 / 60, fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
 function update(dt) {
+  if (WARP) return warpStep(dt);                                       // a trip through a portal door: the clock, the bot and every control wait for it
   G.t += dt;
   if (!G.over) { G.time -= dt; if (G.time <= 0) { G.time = 0; return finish(false); } }
   // --- walk. The stick walks where it points. With one thumb the view also turns to follow the walk, so pushing sideways turns you that way.
@@ -1672,7 +1872,7 @@ function update(dt) {
   if (In.edge && !In.scan && !G.over && G.t - In.edge.t > TAP.s) { stopGo(); P.spin = null; G.said.arrow = 1; P.yaw += In.edge.dir * 1.8 * dt; if (!G.target) P.pitch *= 1 - dt * 3; }   // a finger held on an edge arrow
   if (P.spin) { const a = Math.min(P.spin.left, 4.2 * dt); P.yaw += P.spin.dir * a; if ((P.spin.left -= a) <= 0) P.spin = null; if (!G.target) P.pitch *= 1 - dt * 3; }   // the TURN button
   const sp = 3.7, s = Math.sin(P.yaw), c = Math.cos(P.yaw), auto = Go ? autoStep(dt) : null;
-  const v = auto || [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = auto || (In.scan && G.target) ? 0 : doorHelp(v, IS_TOUCH && In.two > 0), k = 1 - Math.exp(-dt * (auto ? 12 : !one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
+  const v = auto || [(mx * c + mz * s) * sp, (-mx * s + mz * c) * sp], bend = auto || (In.scan && G.target) || gateAhead(v) ? 0 : doorHelp(v, IS_TOUCH && In.two > 0), k = 1 - Math.exp(-dt * (auto ? 12 : !one ? 30 : len > .05 ? 12 : 22));   // no doorway help while SCAN is held on something: the walk must not drift off the aim. Then ease into a walk and out of it. One thumb gets the gentlest start
   P.vx += (v[0] - P.vx) * k; P.vz += (v[1] - P.vz) * k;
   const ox = P.x, oz = P.z; walk(P.vx * dt, P.vz * dt, IS_TOUCH && !auto, mz > 0, IS_TOUCH && In.two > 0 && !auto); cull(P.x);   // a tap walk follows a path that already clears every jamb, so it gets no doorway help and none of the thumb rules
   const moved = Math.hypot(P.x - ox, P.z - oz); G.stepAcc += moved; if (G.stepAcc > .62) { G.stepAcc = 0; sfx.step(); }
@@ -1682,6 +1882,8 @@ function update(dt) {
     if (G.walked > 1.5 && G.t > 5) off(0); if (G.said.door || (G.said.in && G.t > 5) || G.walked > 30) off(1); if ((G.said.arrow && G.t > 5) || (G.turned > 1.5 && G.t > 8) || G.walked > 45) off(2); if (G.said.h === 7) { G.said.walk = 1; $("lhint").style.display = "none"; } }
   G.bob = (G.bob || 0) + moved * 4.2;
   if (!G.said.in && LV.entered(P)) { G.said.in = 1; if (!G.found && !G.reg && !G.bot && !G.caught) objective(LV.text.enter); }   // resale: not before z 1.1, because until there the open door leaf hides the table
+
+  gateStep(len > .05); if (WARP) return;
 
   // --- what is under the crosshair
   camera.getWorldDirection(fwd);
@@ -1827,11 +2029,13 @@ function showEnd(r) {
 }
 
 /* ---------- start, title, minimap, frame ---------- */
-function begin(daily, level = "resale") {
+function begin(daily, level = "resale", at) {                         // at: [x, z, yaw], a place to start from instead of the kerb. A portal door uses it
   const L = LEVELS[level] || LEVELS.resale;                             // each level has its own daily seed
-  audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id);
-  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; $("lhint").style.display = ""; for (const c of $("lhint").children) c.style.display = "";
+  if (WARP && !at) { WARP = null; $("warp").className = ""; camera.fov = baseFov(); camera.updateProjectionMatrix(); }   // a run started any other way ends a trip that was under way
+  audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id); if (at) { P.x = at[0]; P.z = at[1]; P.yaw = at[2]; G.gateT = .8; }
+  state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; if (!at) { $("lhint").style.display = ""; for (const c of $("lhint").children) c.style.display = ""; }   // a player who came through a portal door is not shown the walking lines again
   track(L.start); last = performance.now(); acc = 0;
+  if (at) return;                                                       // mid-run: the mouse is already held and the spare history entry is already there
   if (!IS_TOUCH && canvas.requestPointerLock) { try { canvas.requestPointerLock(); } catch (e) {} }
   try { if (!history.state || !history.state.g) history.pushState({ g: 1 }, ""); } catch (e) {}   // one spare history entry, so a stray back-swipe has something to pop
 }
@@ -1855,6 +2059,7 @@ function drawMap() {
   mc.clearRect(0, 0, 264, 216); mc.fillStyle = "rgba(243,238,228,.16)"; for (const r of PADS) mc.fillRect(mapX(r[0]), mapZ(r[1]), r[2] * MS, r[3] * MS);
   mc.fillStyle = "rgba(243,238,228,.75)"; for (const s of solids) if (s.los && s.x2 > mapX0 && s.x1 < mapX0 + 26) mc.fillRect(mapX(s.x1), mapZ(s.z1), Math.max(2, (s.x2 - s.x1) * MS), Math.max(2, (s.z2 - s.z1) * MS));
   for (const f of G.flags) if (f.found) { mc.fillStyle = "#f3bd54"; mc.beginPath(); mc.arc(mapX(f.at[0]), mapZ(f.at[2]), 4.5, 0, 7); mc.fill(); }
+  for (const q of HERE) { mc.strokeStyle = q.hex; mc.lineWidth = 3; mc.beginPath(); mc.arc(mapX(q.def.at[0]), mapZ(q.def.at[1]), 5 + Math.sin(G.t * 2), 0, 7); mc.stroke(); }   // a ring where the portal door stands
   if (G.bot) { mc.fillStyle = "#35e0ff"; mc.beginPath(); mc.arc(mapX(G.bot.x), mapZ(G.bot.z), 5 + Math.sin(G.t * 12) * 1.5, 0, 7); mc.fill(); }
   mc.save(); mc.translate(mapX(P.x), mapZ(P.z)); mc.rotate(-P.yaw); mc.fillStyle = "#fff"; mc.beginPath(); mc.moveTo(0, -9); mc.lineTo(6, 7); mc.lineTo(0, 3.5); mc.lineTo(-6, 7); mc.closePath(); mc.fill(); mc.restore();
 }
@@ -2267,6 +2472,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   if (LOOK.hold) { last = now; if (performance.now() < LOOK.hold && !programsReady()) return; showLook(); }   // the switch to the premium look is being prepared: hold the last picture, and the game with it
   const raw = (now - last) / 1000, dt = Math.min(.1, raw); last = now; pace(dt); lookFrame(dt, raw * 1000); if (LOOK.hold) return; if (state === "play" && raw > dt) TAP.lag += Math.min(2, raw) - dt;   // under ten frames a second the game runs slow. Taps are timed against the clock all the same
+  gateU.uT.value = now * .001 % 3600 * (CALM.matches ? .15 : 1); gateU.uPx.value = canvas.height * .045;   // the portal doors keep turning on the title and result screens too
   for (let i = 0; i < feathers.length; i++) { const f = feathers[i]; f.rotation.y = f.userData.ry + Math.sin(now * .0021 + i * 1.7) * .16 + Math.sin(now * .0057 + i) * .05; }   // the feather flags flutter
   if (state === "play") {
     acc += dt; let n = 0; while (acc >= STEP && n++ < 6 && state === "play") { update(STEP); acc -= STEP; }
@@ -2282,7 +2488,7 @@ requestAnimationFrame(frame);
 requestAnimationFrame(() => setTimeout(startLook, 0));   // the premium look starts loading only after the first frame is on screen
 
 /* a small door for tests: lets a script stand the player somewhere and read the state */
-window.__ohg = { P, get G() { return G; }, get state() { return state; }, get LV() { return LV; }, LEVELS, solids, DOORWAYS, get info() { return renderer.info.render; }, begin, In, get NODES() { return LV.nodes; }, get FLAGS() { return LV.flags; }, get DEVICES() { return LV.devices; }, get ANSWERS() { return LV.answers; }, doScan, blocked, sees, fire, TAP, scr, tapThing, pickFloor, goTo, stopGo, onTap, turnAround, clearWalk, nav, get Go() { return Go; }, get taps() { return tapN; }, get mark() { return tapMark.visible; }, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
+window.__ohg = { P, get G() { return G; }, get state() { return state; }, get LV() { return LV; }, LEVELS, solids, DOORWAYS, get info() { return renderer.info.render; }, begin, In, get NODES() { return LV.nodes; }, get FLAGS() { return LV.flags; }, get DEVICES() { return LV.devices; }, get ANSWERS() { return LV.answers; }, doScan, blocked, sees, fire, TAP, scr, tapThing, pickFloor, goTo, stopGo, onTap, turnAround, clearWalk, nav, get Go() { return Go; }, get taps() { return tapN; }, get mark() { return tapMark.visible; }, PORTALS, gateTap, get warp() { return WARP ? { t: WARP.t, cut: WARP.cut, calm: WARP.calm, to: WARP.q.def.to } : null; }, get gates() { return gates.map((q) => ({ id: q.def.id, from: q.def.from, to: q.def.to, at: q.def.at, yaw: q.def.yaw, arrive: q.def.arrive, visible: q.g.visible, in: q.in })); }, get portalUses() { return gateUses; }, get lastTrip() { return gateLast; }, get mem() { return { geo: renderer.info.memory.geometries, tex: renderer.info.memory.textures, prog: (renderer.info.programs || []).length, run: perRun.children.length, fx: fx.children.length, solids: solids.length, bits: bits.length }; }, get fov() { return camera.fov; }, tick(n) { for (let i = 0; i < n && state === "play"; i++) { camera.position.set(P.x, 1.6, P.z); camera.rotation.set(P.pitch, P.yaw, 0); camera.updateMatrixWorld(); update(STEP); } } };
 </script>
 </body>
 </html>
