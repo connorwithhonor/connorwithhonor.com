@@ -50,7 +50,7 @@ body.play .hud{display:block}
 #cross.hot #ring{border-color:var(--gold-bright);transform:scale(1.08)}
 #cross.bot #ring{border-color:var(--bot)}
 #prog{position:absolute;inset:-9px;border-radius:50%;background:conic-gradient(var(--gold-bright) calc(var(--p,0)*1%),transparent 0);-webkit-mask:radial-gradient(circle,transparent 15px,#000 16px);mask:radial-gradient(circle,transparent 15px,#000 16px)}
-#hint{position:absolute;left:50%;top:calc(50% + 34px);transform:translateX(-50%);font-size:13px;font-weight:700;white-space:nowrap;text-shadow:0 1px 3px #000,0 0 10px #000;opacity:0;transition:opacity .12s}
+#hint{position:absolute;left:50%;top:calc(50% + 34px);transform:translateX(-50%);width:max-content;max-width:calc(100vw - 116px);text-align:center;line-height:1.3;font-size:13px;font-weight:700;text-shadow:0 1px 3px #000,0 0 10px #000;opacity:0;transition:opacity .12s}
 #hint.on{opacity:1}
 #card{position:absolute;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translate(-50%,16px);width:min(92vw,440px);background:rgba(12,11,16,.9);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:12px 14px;opacity:0;transition:opacity .2s,transform .2s}
 #card.on{opacity:1;transform:translate(-50%,0)}
@@ -63,7 +63,7 @@ body.play .hud{display:block}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .35s}
 #warp{position:absolute;inset:0;overflow:hidden;display:none;--a:#52e0cd}
 #warp.on{display:block}
-#warp i{position:absolute;left:50%;top:50%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;opacity:0;will-change:transform,opacity;background:repeating-conic-gradient(from 0deg,transparent 0 7deg,var(--a) 12deg 16deg,#fff 18deg,transparent 24deg 30deg);-webkit-mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%);mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%)}
+#warp i{position:absolute;left:50%;top:50%;width:60vmax;height:60vmax;margin:-30vmax 0 0 -30vmax;opacity:0;will-change:transform,opacity;background:repeating-conic-gradient(from 0deg,transparent 0 5deg,var(--a) 15deg,transparent 25deg 30deg);-webkit-mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%);mask:radial-gradient(circle,transparent 3%,#000 15%,#000 34%,transparent 50%)}
 #warp b{position:absolute;inset:0;opacity:0;background:radial-gradient(circle at 50% 50%,#fff 0,#fff 28%,var(--a) 120%)}
 #warp.calm i{display:none}#warp.calm b{background:#0c0b10}
 #vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 58%,rgba(8,6,4,.34) 100%)}
@@ -86,6 +86,7 @@ body.play.is-touch .touch{display:block}
 @media(orientation:landscape){#turnbtn{top:calc(10px + env(safe-area-inset-top));right:calc(172px + env(safe-area-inset-right));height:40px}.edge{top:max(46%,170px)}}
 #scanbtn.fire{background:rgba(53,224,255,.92);box-shadow:0 0 0 4px rgba(53,224,255,.25),0 6px 22px rgba(0,0,0,.5)}
 #lhint{position:absolute;left:calc(12px + env(safe-area-inset-left));bottom:calc(44px + env(safe-area-inset-bottom));max-width:min(57vw,260px);box-sizing:border-box;padding:6px 10px;border-radius:10px;background:rgba(12,11,16,.55);font-size:14px;line-height:1.45;font-weight:700;color:rgba(255,255,255,.95);text-shadow:0 1px 3px #000}#lhint span{display:block}
+#card.on~.touch #lhint{visibility:hidden}
 #mute{position:absolute;right:calc(10px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));pointer-events:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 /* overlays */
 .ov{position:fixed;inset:0;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;background:linear-gradient(180deg,rgba(12,11,16,.55),rgba(12,11,16,.93) 46%)}
@@ -803,17 +804,18 @@ function buildHouse() {
     // a ceiling fan with a light
     blk.push(barG(.014, 4, 2.46, 3, 4, H, 3), [puck(.1, .07, .02, 14), 4, 2.39, 3]); for (let i = 0; i < 5; i++) { const b = new THREE.BoxGeometry(.56, .012, .125); b.translate(.38, 0, 0); b.rotateY(i * Math.PI * .4 + .3); oak.push([b, 4, 2.44, 3]); }
     glow.push([new THREE.SphereGeometry(.085, 12, 5, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), 4, 2.395, 3]);
-    // a low bookcase on the wall by the hall door, with books and two pots
-    for (const x of [1.0, 2.2]) oak.push([.03, 1.22, .24, x, .61, 5.81]); for (const y of [.06, .44, .82, 1.2]) oak.push([1.2, .028, .235, 1.6, y, 5.81]); oak.push([1.18, 1.2, .012, 1.6, .61, 5.922]);
-    for (const [y, n, x0] of [[.074, 9, 1.06], [.454, 7, 1.34], [.834, 6, 1.05]]) for (let i = 0, x = x0; i < n; i++) { const w = .032 + (i * 7 % 3) * .011, hb = .21 + (i * 5 % 4) * .022; (i % 3 === 1 ? blk : linen).push([w, hb, .15 + (i % 2) * .02, x + w / 2, y + hb / 2, 5.82]); x += w + .004; }
-    linen.push([.26, .035, .17, 1.9, .4715, 5.81], [.24, .03, .16, 1.9, .504, 5.81], [.22, .03, .16, 1.95, .8515, 5.81]);
+    // a low bookcase on the wall by the hall door, with books
+    for (const x of [1.0, 2.2]) oak.push([.03, .8, .24, x, .4, 5.81]); for (const y of [.06, .42, .786]) oak.push([1.2, .028, .235, 1.6, y, 5.81]); oak.push([1.18, .78, .012, 1.6, .4, 5.922]);   // it stops under the picture that can hang on this wall
+    if (LOD) for (const [y, n, x0] of [[.074, 9, 1.06], [.434, 7, 1.34]]) for (let i = 0, x = x0; i < n; i++) { const w = .032 + (i * 7 % 3) * .011, hb = .21 + (i * 5 % 4) * .022; (i % 3 === 1 ? blk : linen).push([w, hb, .15 + (i % 2) * .02, x + w / 2, y + hb / 2, 5.82]); x += w + .004; }
+    linen.push([.26, .035, .17, 1.9, .4515, 5.81], [.24, .03, .16, 1.9, .484, 5.81]);
     // a tall open shelf on the TV wall, between the flyer and the screen, and a runner inside the front door
     for (const z of [2.86, 3.24]) oak.push([.22, 1.86, .026, .182, .93, z]); for (const y of [.1, .52, .94, 1.36, 1.78]) oak.push([.215, .026, .36, .182, y, 3.05]); oak.push([.012, 1.84, .38, .078, .93, 3.05]);
-    for (const [y, n] of [[.113, 6], [.953, 5]]) for (let i = 0, z = 2.89; i < n; i++) { const w = .034 + (i * 5 % 3) * .012, hb = .22 + (i * 3 % 4) * .02; (i % 3 === 2 ? blk : linen).push([.15, hb, w, .18, y + hb / 2, z + w / 2]); z += w + .004; }
+    if (LOD) for (const [y, n] of [[.113, 6], [.953, 5]]) for (let i = 0, z = 2.89; i < n; i++) { const w = .034 + (i * 5 % 3) * .012, hb = .22 + (i * 3 % 4) * .02; (i % 3 === 2 ? blk : linen).push([.15, hb, w, .18, y + hb / 2, z + w / 2]); z += w + .004; }
     linen.push([.17, .03, .24, .18, .548, 3.02], [.16, .028, .22, .18, .577, 3.03]);
     plane(1.05, 1.9, rugTex("#cfc6b4", "#4f6b62"), 2.5, .012, 1.3, { rx: -Math.PI / 2 });
-    linen.push([turned([[0, 0], [.045, 0], [.07, .03], [.078, .12], [.06, .2], [.05, .2], [0, .19]], 12), .18, 1.373, 3.05], [turned([[0, 0], [.05, 0], [.075, .04], [.08, .12], [.055, .2], [.035, .24], [.045, .262], [.036, .262], [0, .235]], 12), 1.3, 1.214, 5.81], [turned([[0, 0], [.06, 0], [.09, .03], [.1, .1], [.085, .15], [.075, .15], [.085, .1], [0, .02]], 12), 1.92, 1.214, 5.81]);
-    stage("black", blk); stage("oak", oak); for (const q of glow) weld("glow", q[0], q[1], q[2], q[3]); stage("linen", linen);
+    if (LOD) linen.push([turned([[0, 0], [.045, 0], [.07, .03], [.078, .12], [.06, .2], [.05, .2], [0, .19]], 12), .18, 1.373, 3.05]);   // the low tier keeps the shelves and leaves the books and the vase out
+    const into2 = (name, list) => { for (const p of list) { const q = p[0] && p[0].isBufferGeometry ? p : [p[6] ? roundedBox(p[0], p[1], p[2], p[6]) : new THREE.BoxGeometry(p[0], p[1], p[2]), p[3], p[4], p[5]]; weld(name, q[0], q[1], q[2], q[3]); } };   // welded into the pieces of the same material the room already draws: no draw call of their own
+    into2("black", blk); into2("oak", oak); for (const q of glow) weld("glow", q[0], q[1], q[2], q[3]); into2("linen", linen);
     plantP(6.36, .38, 1.75, 6);   // a tall plant in the window, in the closed slot behind the armchair
   }
 
@@ -900,9 +902,9 @@ function bunting(x1, y1, z1, x2, y2, z2, n, sag) {
   const cols = [[.1, .42, .4], [.85, .3, .1], [.9, .6, .15], [1, 1, 1]], dx = x2 - x1, dz = z2 - z1, len = Math.hypot(dx, dz), ux = dx / len, uz = dz / len, w = len / n * .4;
   for (let i = 0; i < n; i++) { const t = (i + .5) / n, x = x1 + dx * t, z = z1 + dz * t, y = y1 + (y2 - y1) * t - sag * 4 * t * (1 - t), c = cols[i % 4]; buntP.push(x - ux * w, y, z - uz * w, x + ux * w, y, z + uz * w, x, y - .36, z); for (let k = 0; k < 3; k++) buntC.push(c[0], c[1], c[2]); }
 }
-function feather(x, z, col, word, fg = "#ffffff") {
+function feather(x, z, col, word, fg = "#ffffff", ry) {
   put(cyl(.022, 4.7, 6), "steel", x, 2.35, z, { keep: 1 }); hard(x, z, .16, .16);
-  const g = new THREE.Group(); g.position.set(x, 0, z); g.userData.ry = g.rotation.y = (feathers.length * .37) % 1 - .5; world.add(g); feathers.push(g);
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.userData.ry = g.rotation.y = ry !== undefined ? ry : (feathers.length * .37) % 1 - .5; world.add(g); feathers.push(g);
   // One flag, two faces: the word reads the right way round from the street and from the house. The left half of the picture is the front,
   // the right half is the back, with the shape turned over and the letters not. One piece, one draw call, as before.
   const f = plane(.72, 3.4, paint(192, 448, (c) => { for (const back of [0, 1]) { c.save(); c.translate(back ? 192 : 0, 0); c.scale(back ? -1 : 1, 1); c.fillStyle = col; c.beginPath(); c.moveTo(0, 448); c.lineTo(0, 60); c.quadraticCurveTo(4, 2, 60, 6); c.quadraticCurveTo(96, 40, 92, 448); c.closePath(); c.fill(); c.restore();
@@ -958,7 +960,7 @@ function buildStreet() {
   tree(24.2, -3.2); tree(28.9, -4.6, 3.6); tree(29.5, -2.4, 2.9);
   for (const p of [[22.2, -1.3, 1.1], [23, -1.1, .9], [26.6, -2, 1.2], [27.4, -1.7, .9], [27, -2.6, .8]]) shrub(p[0], p[1], p[2]);
   if (LOOK.on) { bx("mulch", 1.9, .05, 1.2, 22.6, -.005, -1.2, { r: .02 }); bx("mulch", 1.9, .05, 1.9, 27, -.005, -2.15, { r: .02 }); for (const t of [[24.2, -3.2], [28.9, -4.6], [29.5, -2.4]]) weld("mulch", puck(.55, .04, .02, 20), t[0], -.015, t[1]); }
-  feather(23.6, -7.05, "#2f8f86", "NEW"); feather(29.6, -7.05, "#e8743b", "OPEN");
+  feather(23.6, -7.05, "#2f8f86", "NEW"); feather(29.6, -7.05, "#e8743b", "OPEN", "#ffffff", 3.0);   // turned so the cloth runs away from the blade sign beside it
   // a car parked at the curb
   { const paintJob = mat(0x2e6f8e, { roughness: .25, envMapIntensity: 1.3 }), dark = mat(0x18222c, { roughness: .12, envMapIntensity: 1.5 });
     if (LOOK.on) {                                         // the same car, drawn as a side profile pushed across its width, so the bonnet slopes and the corners are round
@@ -1318,7 +1320,7 @@ const MANSWERS = [
   { id: "m-rereg", at: [MX + 8.9, 1.12, -6.3], q: "I already toured a model without my agent. Is it too late?", a: "Maybe not. Registration is a builder policy, not a law, and some builders make exceptions. Ask the builder what it will recognize.",
     build(g) { box(.26, .2, .02, MX + 8.9, 1.12, -6.29, 0xffffff, { parent: g }); plane(.24, .18, label("TAKE ONE", .24, .18, "#ffffff", "#1f5a5e"), MX + 8.9, 1.12, -6.302, { parent: g, ry: Math.PI }); } },
   { id: "m-pay", at: [MX + 6.3, .46, 2.82], q: "Who pays my agent if I bring one?", a: "On new homes the builder often offers to. That is the builder's choice and the terms vary. Your written agreement with your agent spells it out. What the builder does not cover can fall to you.", build(g) { flat(g, "AGENT AGREEMENT", MX + 6.3, .428, 2.82); } },
-  { id: "m-report", at: [MX + 1.92, 1, 5.3], q: "What is the public report?", a: "Most new California subdivisions need a public report from the Real Estate Commissioner before lots are sold. You must get a copy before you sign a binding contract. It informs. It does not endorse.",
+  { id: "m-report", at: [MX + 1.92, 1, 5.3], q: "What is the public report?", a: "Most new California subdivisions need a public report from the Real Estate Commissioner before lots are sold. The builder must give you a copy before you sign a binding contract. It informs. It does not endorse.",
     build(g) { box(.3, .07, .25, MX + 1.92, .868, 5.3, 0xffffff, { parent: g }); plane(.26, .2, label("PUBLIC REPORT", .26, .2, "#ffffff", "#17120a"), MX + 1.92, .905, 5.3, { parent: g, rx: -Math.PI / 2, rz: Math.PI }); } },
   { id: "m-whole", at: [MX + 9.65, .96, 2.3], q: "How do I compare this home with another one?", a: "Compare the whole deal and the monthly payment, not the sign out front. Base price, lot premium, upgrades, closing costs, loan terms, taxes and dues all count.",
     build(g) { box(.1, .02, .15, MX + 9.52, .941, 2.3, 0x23262b, { parent: g }); box(.08, .004, .04, MX + 9.52, .953, 2.25, 0x9fd7c2, { parent: g }); flat(g, "SIDE BY SIDE", MX + 9.78, .934, 2.3, "#2e7d5b"); } },
@@ -1412,7 +1414,7 @@ function newRun(seed, daily, level = "resale") {
   const rng = rngFrom(seed);
   const pool = LV.flags.filter((f) => !f.always); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
   const fixed = LV.flags.filter((f) => f.always), chosen = fixed.concat(pool.slice(0, LV.flagCount - fixed.length));
-  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); g.userData.keep = cov.userData.keep = true; perRun.add(g); if (f.cover) perRun.add(cov); const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
+  const flags = chosen.map((f) => { const g = new THREE.Group(), cov = new THREE.Group(); g.userData.keep = cov.userData.keep = true; perRun.add(g); if (f.cover) perRun.add(cov); const at = f.build(g, cov); if (f.cover) { g.visible = false; coverGlow.push(cov); const bb = new THREE.Box3().setFromObject(cov); cov.userData.c = bb.isEmpty() ? new THREE.Vector3(at[0], at[1], at[2]) : bb.getCenter(new THREE.Vector3()); } return { def: f, g, cov: f.cover ? cov : null, at, found: false }; });
   const devs = LV.devices.map((d) => { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); const l = new THREE.Mesh(new THREE.SphereGeometry(.018, 8, 8), led); l.position.set(d.at[0], d.at[1] + .1, d.at[2]); g.add(l); return { def: d, g, checked: false }; });
   for (const d of away.devices) { const g = new THREE.Group(); g.userData.keep = true; perRun.add(g); d.build(g); }     // the other house keeps its TV on the wall, as furniture
   const hide = devs[1 + Math.floor(rng() * (devs.length - 1))];          // never the first one: too close to the door
@@ -1604,7 +1606,7 @@ if (!IS_TOUCH) {
   let sid = null, lid = null, sx = 0, sy = 0, lx = 0, ly = 0; const stick = $("stick"), knob = stick.firstElementChild, taps = new Map(), resting = (o) => o.far <= TAP.px && G.t - o.t > 1;
   addEventListener("touchstart", (e) => { if (state !== "play") return; audio(); for (const t of e.changedTouches) { if (t.target.id === "scanbtn" || t.target.id === "mute" || t.target.id === "turnbtn") { In.edge = null; continue; }
       let lone = true; for (const o of taps.values()) if (!resting(o)) { o.solo = false; lone = false; }   // a second finger down: neither one is a tap. A palm or a thumb that has lain still for a second does not count as a finger
-      taps.set(t.identifier, { x: t.clientX, y: t.clientY, t: G.t, ts: e.timeStamp, lag: TAP.lag, far: 0, yaw: 0, pitch: 0, two: In.two, solo: lone }); In.edge = lone && onArrow(t.clientX, t.clientY) ? { dir: edgeOf(t.clientX), t: G.t, id: t.identifier } : null; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
+      taps.set(t.identifier, { ep: tapEpoch, x: t.clientX, y: t.clientY, t: G.t, ts: e.timeStamp, lag: TAP.lag, far: 0, yaw: 0, pitch: 0, two: In.two, solo: lone }); In.edge = lone && onArrow(t.clientX, t.clientY) ? { dir: edgeOf(t.clientX), t: G.t, id: t.identifier } : null; if (t.clientX < innerWidth * (innerWidth < innerHeight ? .55 : .46) && sid === null) { sid = t.identifier; sx = t.clientX; sy = t.clientY; stick.style.left = sx + "px"; stick.style.top = sy + "px"; knob.style.transform = ""; } else if (lid === null) { lid = t.identifier; lx = t.clientX; ly = t.clientY; } } }, { passive: true });
   addEventListener("touchmove", (e) => { if (state !== "play") return; for (const t of e.changedTouches) { const tp = taps.get(t.identifier), y0 = P.yaw, p0 = P.pitch; if (tp && tp.far <= TAP.px && (tp.far = Math.max(tp.far, Math.hypot(t.clientX - tp.x, t.clientY - tp.y))) > TAP.px) { stopGo(); In.edge = null; }   // a drag, on either side, ends a tap walk
       if (t.identifier === sid) { let dx = t.clientX - sx, dy = t.clientY - sy, d = Math.hypot(dx, dy); const m = 64, leash = 96;
       if (d > leash) { const k = 1 - leash / d; sx += dx * k; sy += dy * k; dx -= dx * k; dy -= dy * k; d = leash; stick.style.left = sx + "px"; stick.style.top = sy + "px"; }   // the base follows a thumb that drags well past its edge
@@ -1614,7 +1616,8 @@ if (!IS_TOUCH) {
       In.two = Math.max(In.two, Math.min(sid !== null && t.clientX > innerWidth * .55 ? 10 : 1.2, In.two + Math.hypot(dx, dy) * .05)); if (tp) { tp.yaw += P.yaw - y0; tp.pitch += P.pitch - p0; } } } e.preventDefault(); }, { passive: false });   // only a drag counts, never a finger at rest. A drag on the right while the stick is held is a two-thumb player, and is remembered longer
   const end = (e) => { if (state === "play") audio();   // lifting a finger is the only touch iPhone accepts for waking sound mid-run
     for (const t of e.changedTouches) { const wasStick = t.identifier === sid; if (wasStick) { sid = null; In.mx = In.mz = 0; stick.style.display = "none"; } if (t.identifier === lid) lid = null;
-      const tp = taps.get(t.identifier), held = In.edge && In.edge.id === t.identifier && G.t - In.edge.t > TAP.s; taps.delete(t.identifier); if (In.edge && In.edge.id === t.identifier) In.edge = null; if (!tp || held || state !== "play" || G.over) continue; if (tp.far > TAP.px) { G.restT = G.t + (wasStick ? TAP.rest : .25); continue; }   // restT: a touch that soon after a drag is a thumb changing sides, not a tap. A walker on the stick gets the longer wait
+      const tp = taps.get(t.identifier), held = In.edge && In.edge.id === t.identifier && G.t - In.edge.t > TAP.s; taps.delete(t.identifier); if (In.edge && In.edge.id === t.identifier) In.edge = null; if (!tp || held || state !== "play" || G.over || tp.ep !== tapEpoch) continue;   // a finger that went down before or during a trip through a portal door is not a tap in the new house
+      if (tp.far > TAP.px) { G.restT = G.t + (wasStick ? TAP.rest : .25); continue; }   // restT: a touch that soon after a drag is a thumb changing sides, not a tap. A walker on the stick gets the longer wait
       let lone = tp.solo && e.type === "touchend" && !In.scan && !(G.t < G.restT); for (const o of taps.values()) if (!resting(o)) lone = false;
       const dur = Math.max(G.t - tp.t, Math.min((e.timeStamp - tp.ts) / 1000, G.t - tp.t + TAP.lag - tp.lag));   // game time, plus the time the game lost to slow frames while the finger was down. A slow phone must not turn a long press into a tap
       if (lone && dur <= TAP.long) { P.yaw -= tp.yaw; P.pitch -= tp.pitch; In.two = Math.min(In.two, tp.two); onTap(t.clientX, t.clientY); }   // a tap. The few pixels it wobbled must not turn the view or count as a second thumb
@@ -1722,8 +1725,8 @@ function onTap(cx, cy) { tapN++; if (WARP) return;
   const dir = edgeOf(cx); if (dir) { stopGo(); G.said.arrow = 1; P.spin = { dir, left: (P.spin && P.spin.dir === dir ? P.spin.left : 0) + Math.min(.78, 1.2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect)) }; buzz(8); return; }   // the two arrows at the edges of the screen: a tap there turns the view and walks nowhere. A finger held on an arrow keeps turning: see update(). The turn is a little over half the width of the view, so what was just off the edge comes to the middle
   const at = tapThing(cx, cy);
   if (G.target) { const ta = scanAt(G.target), p = scr(ta[0], ta[1], ta[2]); if (at === ta || Math.hypot(cx - innerWidth / 2, cy - innerHeight / 2) < 30 || (!at && p && Math.hypot(cx - p[0], cy - p[1]) < 90)) { const sb = $("scanbtn"); sb.classList.remove("nudge"); void sb.offsetWidth; sb.classList.add("nudge"); return; } }   // people press the object itself. It is under the crosshair already: show them the button
-  if (gateTap(cx, cy, at)) { buzz(10); return; }   // a tap on a portal door: walk to it and through
-  const t = pickFloor(cx, cy); if (at && !(t && t.door) && aimAt(at)) { buzz(10); return; }   // something to scan that is not under the crosshair yet: go and face it. A door comes first: a thing beside a doorway must not stop the walk through it
+  const t = pickFloor(cx, cy); if (gateTap(cx, cy, at, t)) { buzz(10); return; }   // a tap on a portal door: walk to it and through
+  if (at && !(t && t.door) && aimAt(at)) { buzz(10); return; }   // something to scan that is not under the crosshair yet: go and face it. A door comes first: a thing beside a doorway must not stop the walk through it
   if (t) { goTo(t); buzz(10); } else if (Go) stopGo(); else tip("Tap the floor or a door."); }
 
 /* =====================================================================================
@@ -1744,7 +1747,7 @@ const PORTALS = [
 const CALM = matchMedia("(prefers-reduced-motion: reduce)");           // asked for less motion: the swirl drifts, and the trip is a plain fade
 const GATE_D = .34;                                                    // how near the plane of a door counts as stepping in, metres
 const gateU = { uT: { value: 0 }, uPx: { value: 60 } }, gates = [];
-let WARP = null, gateUses = 0, gateLast = 0, gateTold = store.get("gate", 0);   // gateTold: 0 never told about the doors, 1 pointed toward one once, 2 pointed twice, 9 has seen one and read the line                                         // WARP: the trip in progress. While it runs the game stands still and takes no input
+let WARP = null, tapEpoch = 0, gateUses = 0, gateLast = 0, gateTold = store.get("gate", 0);   // gateTold: 0 never told about the doors, 1 pointed toward one once, 2 pointed twice, 9 has seen one and read the line                                         // WARP: the trip in progress. While it runs the game stands still and takes no input
 const GATE_VS = "attribute float k; varying vec2 vP; varying float vK; void main() { vK = k; vP = k > .5 ? position.xz : position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }";
 const GATE_FS = `uniform float uT; uniform vec3 uA; uniform vec3 uB; varying vec2 vP; varying float vK;
 float sd(vec2 p) { p.x = abs(p.x); return p.y > 1.6 ? length(p - vec2(0., 1.6)) - .5 : max(p.x - .5, -p.y); }
@@ -1758,9 +1761,10 @@ void main() { vec3 c; float a = 0.;
     else { float g = max(0., 1. - d / .9); c = uA * g * g * g * (.5 + .06 * sin(uT * 1.7)); } }
   gl_FragColor = vec4(c, a);
 }`;
-const FRAME_VS = "varying vec3 vN; varying float vY; void main() { vN = normalize(mat3(modelMatrix) * normal); vY = position.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }";
-const FRAME_FS = `uniform float uT; uniform vec3 uA; varying vec3 vN; varying float vY;
-void main() { float l = .62 + .38 * max(0., dot(normalize(vN), normalize(vec3(.35, .8, -.5)))), band = smoothstep(.86, 1., sin(vY * 2.6 - uT * 1.9));
+const FRAME_VS = "attribute float k; varying vec3 vN; varying float vY; varying vec2 vU; varying float vK; void main() { vU = uv; vK = k; vN = normalize(mat3(modelMatrix) * normal); vY = position.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }";
+const FRAME_FS = `uniform float uT; uniform vec3 uA; uniform sampler2D uM; varying vec3 vN; varying float vY; varying vec2 vU; varying float vK;
+void main() { if (vK > .5) { vec4 t = texture2D(uM, vU); if (t.a < .5) discard; gl_FragColor = vec4(t.rgb, 1.); return; }   // the sign over the door rides in the same piece as the frame
+  float l = .62 + .38 * max(0., dot(normalize(vN), normalize(vec3(.35, .8, -.5)))), band = smoothstep(.86, 1., sin(vY * 2.6 - uT * 1.9));
   gl_FragColor = vec4(mix(uA, vec3(1., .97, .9), .5) * l + uA * band * .4, 1.);
 }`;
 const MOTE_VS = `attribute float s; uniform float uT; uniform float uPx; varying float vA;
@@ -1781,78 +1785,99 @@ function buildPortals() {
   glowG.setAttribute("k", new THREE.Float32BufferAttribute([1, 1, 1, 1, 0, 0, 0, 0], 1)); glowG.setIndex([0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7]);
   const moteG = new THREE.BufferGeometry(), seeds = []; for (let i = 0; i < 18; i++) seeds.push((i + .37) / 18);
   moteG.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(54), 3)); moteG.setAttribute("s", new THREE.Float32BufferAttribute(seeds, 1)); moteG.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 1.35, 0), 1.7);
-  const signG = new THREE.BufferGeometry(), a = .76, b = .155, e = .075;
-  signG.setAttribute("position", new THREE.Float32BufferAttribute([-a, -b, e, a, -b, e, a, b, e, -a, b, e, a, -b, -e, -a, -b, -e, -a, b, -e, a, b, -e], 3));
-  signG.setAttribute("uv", new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1], 2)); signG.setIndex([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]);   // two faces, so the words read the right way round from both sides
+  // the sign: two faces, so the words read the right way round from both sides. It is welded onto the frame, so frame and sign are one draw call
+  { const a = .76, b = .155, e = .075, y = 2.5, fp = frameG.attributes.position.array, fn = frameG.attributes.normal.array, n = fp.length / 3, pos = [], nor = [], uv = [], kk = [];
+    const quad = (pts, uvs, nz) => { for (const i of [0, 1, 2, 0, 2, 3]) { pos.push(pts[i][0], pts[i][1] + y, pts[i][2]); nor.push(0, 0, nz); uv.push(uvs[i][0], uvs[i][1]); kk.push(1); } }, U = [[0, 0], [1, 0], [1, 1], [0, 1]];
+    quad([[-a, -b, e], [a, -b, e], [a, b, e], [-a, b, e]], U, 1); quad([[a, -b, -e], [-a, -b, -e], [-a, b, -e], [a, b, -e]], U, -1);
+    const P3 = new Float32Array(fp.length + pos.length), N3 = new Float32Array(fp.length + pos.length), U2 = new Float32Array(n * 2 + uv.length), K1 = new Float32Array(n + kk.length);
+    P3.set(fp); P3.set(pos, fp.length); N3.set(fn); N3.set(nor, fp.length); U2.set(uv, n * 2); K1.set(kk, n);
+    frameG.setAttribute("position", new THREE.BufferAttribute(P3, 3)); frameG.setAttribute("normal", new THREE.BufferAttribute(N3, 3)); frameG.setAttribute("uv", new THREE.BufferAttribute(U2, 2)); frameG.setAttribute("k", new THREE.BufferAttribute(K1, 1)); frameG.computeBoundingSphere(); frameG.computeBoundingBox(); }
   for (const p of PORTALS) {                                            // the shaders work in screen colour, so added light adds the way it looks
     const g = new THREE.Group(), raw = (h) => new THREE.Vector3((h >> 16 & 255) / 255, (h >> 8 & 255) / 255, (h & 255) / 255), A = raw(p.tint[0]), B = raw(p.tint[1]), hex = "#" + ("00000" + p.tint[0].toString(16)).slice(-6), u = { uT: gateU.uT, uPx: gateU.uPx, uA: { value: A }, uB: { value: B } };
     g.position.set(p.at[0], 0, p.at[1]); g.rotation.y = p.yaw; root.add(g);
     const frame = new THREE.Mesh(frameG, new THREE.ShaderMaterial({ uniforms: u, vertexShader: FRAME_VS, fragmentShader: FRAME_FS, toneMapped: false }));
     const glow = new THREE.Mesh(glowG, new THREE.ShaderMaterial(Object.assign({ uniforms: u, vertexShader: GATE_VS, fragmentShader: GATE_FS }, gateGlow))); glow.renderOrder = 2;
     const motes = new THREE.Points(moteG, new THREE.ShaderMaterial(Object.assign({ uniforms: u, vertexShader: MOTE_VS, fragmentShader: MOTE_FS }, gateGlow))); motes.renderOrder = 3;
-    const words = p.label.toUpperCase(), sign = new THREE.Mesh(signG, new THREE.MeshBasicMaterial({ alphaTest: .5, toneMapped: false, map: paint(512, 105, (c) => { c.fillStyle = "#0c0b10"; c.strokeStyle = hex; c.lineWidth = 7; c.beginPath(); c.moveTo(50, 5); c.lineTo(462, 5); c.arc(462, 52.5, 47.5, -Math.PI / 2, Math.PI / 2); c.lineTo(50, 100); c.arc(50, 52.5, 47.5, Math.PI / 2, Math.PI * 1.5); c.closePath(); c.fill(); c.stroke();
-      c.fillStyle = "#f3eee4"; c.textAlign = "center"; c.textBaseline = "middle"; let px = 46; do { c.font = "900 " + px + "px Arial, Helvetica, sans-serif"; } while (c.measureText(words).width > 420 && --px > 16); c.fillText(words, 256, 55); }) }));
-    sign.position.y = 2.5;
-    for (const m of [frame, glow, motes, sign]) { m.userData.fx = true; g.add(m); }
-    gates.push({ def: p, g, u, nx: Math.sin(p.yaw), nz: Math.cos(p.yaw), in: false, hex });   // (nx, nz): the way the door faces, out toward the player walking up to it
+    const words = p.label.toUpperCase(), signT = paint(512, 105, (c) => { c.fillStyle = "#0c0b10"; c.strokeStyle = hex; c.lineWidth = 7; c.beginPath(); c.moveTo(50, 5); c.lineTo(462, 5); c.arc(462, 52.5, 47.5, -Math.PI / 2, Math.PI / 2); c.lineTo(50, 100); c.arc(50, 52.5, 47.5, Math.PI / 2, Math.PI * 1.5); c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = "#f3eee4"; c.textAlign = "center"; c.textBaseline = "middle"; let px = 46; do { c.font = "900 " + px + "px Arial, Helvetica, sans-serif"; } while (c.measureText(words).width > 420 && --px > 16); c.fillText(words, 256, 55); });
+    signT.colorSpace = THREE.NoColorSpace; u.uM = { value: signT };   // read as it was painted: this shader writes screen colour
+    for (const m of [frame, glow, motes]) { m.userData.fx = true; g.add(m); }
+    gates.push({ def: p, g, u, nx: Math.sin(p.yaw), nz: Math.cos(p.yaw), in: false, hex, where: p.label.replace(/^To /, "") });   // (nx, nz): the way the door faces, out toward the player walking up to it
   }
 }
 buildPortals();
 /** Show the doors of the level the run is in, and only those. */
 let HERE = [];
 function gatesFor(id) { for (const q of gates) { q.g.visible = q.def.from === id; q.in = false; } HERE = gates.filter((q) => q.def.from === id); }
-const gateSeen = (q) => { const p = scr(q.def.at[0], 1.25, q.def.at[1]); return !!p && p[2] < 16 && p[0] > 20 && p[0] < innerWidth - 20 && p[1] > 0 && p[1] < innerHeight && sees(P.x, P.z, q.def.at[0], q.def.at[1]); };
+/** Does anything that is drawn stand between a point and a place on a door? Walls, door leaves, trim, signs and glass all count: sees() only knows what is solid. */
+function gateHid(ox, oy, oz, dx, dy, dz) { const d = Math.hypot(dx, dy, dz), far = ray.far; if (d < .4) return false; v1.set(ox, oy, oz); v2.set(dx / d, dy / d, dz / d); ray.set(v1, v2); ray.far = d - .2;
+  const hit = ray.intersectObjects([world, perRun], true).some((h) => { const o = h.object; if (!o.isMesh || o.userData.fx) return false; for (let p = o; p; p = p.parent) if (!p.visible || p.userData.bot) return false; return true; }); ray.far = far; return hit; }
+const gatePlayed = () => store.get("best", 0) > 0 || store.get("m:best", 0) > 0 || !!store.get("answers", null) || !!store.get("guide", null);
+function gateSeen(q) { const p = scr(q.def.at[0], 1.25, q.def.at[1]); if (!(p && p[2] < 16 && p[0] > 20 && p[0] < innerWidth - 20 && p[1] > 0 && p[1] < innerHeight) || roomAt(P.x, P.z) >= 0 || !sees(P.x, P.z, q.def.at[0], q.def.at[1])) return false;
+  if (G.t < (G.gateLook || 0)) return false; G.gateLook = G.t + .4;                        // the costly part, a look through the drawn world, at most a few times a second
+  return !gateHid(P.x, 1.6, P.z, q.def.at[0] - P.x, 1.25 - 1.6, q.def.at[1] - P.z); }
 /** Is the walk pointed straight at a portal door a few steps ahead? Then the front door's helping hand stays out of it: the lawn door stands inside the funnel that draws a thumb to the front door. */
 function gateAhead(v) { const sp = Math.hypot(v[0], v[1]); if (sp < .2) return false;
   for (const q of HERE) { const dx = P.x - q.def.at[0], dz = P.z - q.def.at[1], un = (v[0] * q.nx + v[1] * q.nz) / sp; if (Math.abs(un) < .2) continue; const t = -(dx * q.nx + dz * q.nz) / un; if (t > 0 && t < 6 && Math.abs((dx + v[0] / sp * t) * q.nz - (dz + v[1] / sp * t) * q.nx) < .62) return true; }
   return false; }
 /** Once a step, after the walk: has the player stepped into a door, and should the first-time line show? */
-function gateStep(pushing) {
+function gateStep(pushing, dt) {
   if (G.over) return;
-  if (G.said.leave === 1 && !pushing && !Go) G.said.leave = 2;                            // asked, and the player has let go of the walk: the next step in is a yes
+  let near = 1e9; for (const q of HERE) near = Math.min(near, Math.hypot(P.x - q.def.at[0], P.z - q.def.at[1]));
+  if (G.said.leave === 1) { G.leaveR = pushing || Go ? 0 : G.leaveR + dt; if (G.leaveR >= .3 && G.t - G.leaveAt >= 1) G.said.leave = 2; }   // asked. The card has been up a full second and the walk has been let go for a beat: the next step in is a yes
+  if (G.said.leave && (near > 2.5 || G.t - G.leaveAt > 9)) { if (G.cardT > 0 && $("card").children[0].textContent === "Portal door") G.cardT = .01; G.said.leave = 0; }   // walked away, or the card is long gone: that was a no. The next time the door asks again
+  if (G.gateHold && near > 2.5) G.gateHold = 0;                                          // came out of a door: the way back opens once the player has stepped away from it
   for (const q of HERE) { const dx = P.x - q.def.at[0], dz = P.z - q.def.at[1], n = dx * q.nx + dz * q.nz; let inz = Math.abs(n) < GATE_D && Math.abs(dx * q.nz - dz * q.nx) < .7;
-    const fresh = G.t < (G.gateT || 0);                                                    // just stepped out of a door: for a beat every door is shut, so a walk held through the trip cannot bounce the player straight back
+    const fresh = G.t < (G.gateT || 0) || !!G.gateHold;                                    // just stepped out of a door: every door is shut, so a walk held through the trip, or a first push the wrong way, cannot bounce the player straight back
     if (inz && !q.in && !fresh && (!Go || Go.kind === "gate")) { q.in = true; enterGate(q); if (WARP) return; }   // a tap walk to some other spot that happens to cross the door does not go through it
-    if (inz && (fresh || G.said.leave === 1)) { const k = (n < 0 ? -1 : 1) * (GATE_D + .03) - n; P.x += q.nx * k; P.z += q.nz * k; P.vx = P.vz = 0; inz = false; }   // shut for now: the door holds like a wall. While the player is being asked, a thumb that keeps pushing does not answer for them
+    if (inz && ((fresh && (!Go || Go.kind === "gate")) || G.said.leave === 1)) { const k = (n < 0 ? -1 : 1) * (GATE_D + .03) - n; P.x += q.nx * k; P.z += q.nz * k; P.vx = P.vz = 0; inz = false; }   // shut for now: the door holds like a wall. While the player is being asked, a thumb that keeps pushing does not answer for them
     q.in = inz;
-    // the first-time line. Once on this device, when a door is first in plain view. A player who has not looked its way a few seconds into a run is told which way to look, on two runs at most.
-    if (gateTold < 9) { const where = q.def.label.replace(/^To /, "");
-      if (gateSeen(q)) { store.set("gate", gateTold = 9); G.tip = "Glowing door. Walk in to visit " + where + "."; G.tipT = G.t + 6; }
-      else if (gateTold < 2 && !G.said.nudge && G.t > 3 && !G.said.in && Math.hypot(dx, dz) < 12) { G.said.nudge = 1; store.set("gate", ++gateTold); const a = wrapA(Math.atan2(-dx, -dz) + Math.PI - P.yaw); G.tip = "A glowing door is " + (Math.abs(a) > 2.4 ? "behind you." : a > 0 ? "on your left." : "on your right."); G.tipT = G.t + 5; } }
+    // the first-time line. Once on this device, when a door is first in plain view. A player who has played before and has not looked its way a few seconds into a run is told which way to look, on two runs at most.
+    // On a first run the pointer waits until the player has been inside and is out on the lawn again: it must not pull a new player off the house.
+    if (gateTold < 9) {
+      if (gateSeen(q)) { store.set("gate", gateTold = 9); G.tip = "Glowing door. Walk in to visit " + q.where + "."; G.tipT = G.t + 6; }
+      else if (gateTold < 2 && !G.said.nudge && G.t > 3 && dx * dx + dz * dz < 144 && ((G.played === undefined ? (G.played = gatePlayed()) : G.played) ? !G.said.in : G.said.in && roomAt(P.x, P.z) < 0)) { G.said.nudge = 1; store.set("gate", ++gateTold); const a = wrapA(Math.atan2(-dx, -dz) + Math.PI - P.yaw); G.tip = "A glowing door is " + (Math.abs(a) > 2.4 ? "behind you." : a > 0 ? "on your left." : "on your right."); G.tipT = G.t + 5; } }
   }
 }
 function enterGate(q) {
   if (WARP || G.over) return;
   if ((G.found || G.ans || G.reg || G.bot) && !G.said.leave) { G.said.leave = 1; stopGo(); beep(520, .12, "triangle", .08); buzz(20);     // a run with something in it is not thrown away by one stray step
-    card("lockc", "Portal door", "Leave this house?", "A new run starts on the other side. What you found here will not be scored. Step in again to go.", 8); return; }
+    card("lockc", "Portal door", "Leave this house?", "A new run starts on the other side. What you found here will not be scored. Let go, then step in again to go.", 8); G.leaveAt = G.t; G.leaveR = 0; return; }
   if (G.said.leave === 1) return;
   stopGo(); In.scan = false; In.edge = null; P.spin = null; P.vx = P.vz = P.vw = 0; G.cardT = 0; $("card").className = ""; $("hint").classList.remove("on"); gateUses++;
-  WARP = { q, t: 0, all: 0, calm: CALM.matches, cut: false, x: P.x, z: P.z, yaw: P.yaw, pitch: P.pitch, side: Math.sign((P.x - q.def.at[0]) * q.nx + (P.z - q.def.at[1]) * q.nz) || 1 };
+  tapEpoch++; WARP = { q, t: 0, all: 0, calm: CALM.matches, cut: false, x: P.x, z: P.z, yaw: P.yaw, pitch: P.pitch, side: Math.sign((P.x - q.def.at[0]) * q.nx + (P.z - q.def.at[1]) * q.nz) || 1 };
   const w = $("warp"); w.style.setProperty("--a", q.hex); w.className = WARP.calm ? "on calm" : "on"; sfx.portal(WARP.calm); buzz(WARP.calm ? 15 : [20, 30, 50]); track("hunt-portal");
 }
 /** A tap on the door itself: walk to it and through. Returns true when the tap was on a door. at: something to scan near the tap. It wins only when it stands in front of the door, not behind it. */
-function gateTap(cx, cy, at) {
+function gateTap(cx, cy, at, fl) {
+  if (roomAt(P.x, P.z) >= 0) return false;                               // from a room the tap means the room: its floor, its doorways, its things
   const t = Math.tan(camera.fov * Math.PI / 360), ax = (cx / innerWidth * 2 - 1) * t * camera.aspect, ay = (1 - cy / innerHeight * 2) * t, cp = Math.cos(P.pitch), sp = Math.sin(P.pitch), ry = ay * cp + sp, rz = ay * sp - cp, cw = Math.cos(P.yaw), sw = Math.sin(P.yaw), rx = ax * cw + rz * sw, rzz = -ax * sw + rz * cw;   // the line of sight through the tap, as in pickFloor
   for (const q of HERE) { const [gx, gz] = q.def.at, un = rx * q.nx + rzz * q.nz; if (Math.abs(un) < 1e-4) continue;
     const k = -((P.x - gx) * q.nx + (P.z - gz) * q.nz) / un, y = 1.6 + ry * k, a = (P.x + rx * k - gx) * q.nz - (P.z + rzz * k - gz) * q.nx;   // where that line meets the plane of the door
     if (!(k > 0) || Math.abs(a) > .66 || y < -.05 || y > 2.35 || Math.hypot(gx - P.x, gz - P.z) > 20 || !sees(P.x, P.z, gx, gz) || (at && Math.hypot(at[0] - P.x, at[2] - P.z) < k * Math.hypot(rx, rzz))) continue;
+    if (fl && fl.door && Math.hypot(fl.x - P.x, fl.z - P.z) - .9 < k * Math.hypot(rx, rzz)) continue;   // a doorway nearer than the portal is what the tap is on
+    if (gateHid(P.x, 1.6, P.z, rx * k, ry * k, rzz * k)) continue;                                  // something drawn covers the door at that spot: the tap is on that
+    if (G.said.leave === 1) { if (G.t - G.leaveAt < 1) return true; G.said.leave = 2; }             // asked a moment ago: a tap this soon is not an answer. After that a tap on the door is a yes
+    if (G.t >= (G.gateT || 0)) G.gateHold = 0;                                                      // a tap on the door is no accident: it opens the way back
     if (q.in) { enterGate(q); return true; }
     flood(); const c = cellNear(gx, gz, .6); if (c < 0) continue; const path = trace(c, gx, gz), e = path[path.length - 1]; goTo({ x: e[0], z: e[1], path, kind: "gate" }); return true; }
   return false;
 }
 /** One step of a trip. The first part pulls the player into the door while the light comes up. At full light the run in the other house starts.
     The second part lets the light go again. Reduced motion: a plain fade to dark and back, with no pull and no change of view. */
+const SWIRL_A = .34, SWIRL_DEG = 10;                                     // soft rays that turn less than one ray width in the whole trip: no point on the screen blinks
 const WARP_IN = .62, WARP_OUT = .42, CALM_IN = .22, CALM_OUT = .26, baseFov = () => (innerWidth < innerHeight ? 78 : 66);
 function warpStep(dt) {
   const w = WARP, d = w.q.def, tin = w.calm ? CALM_IN : WARP_IN, tout = w.calm ? CALM_OUT : WARP_OUT, el = $("warp"), sw = el.firstElementChild, bl = el.lastElementChild; w.t += dt; w.all += dt;
   if (!w.cut) { const p = Math.min(1, w.t / tin), e = p * p * (3 - 2 * p);
-    if (!w.calm) { P.x = w.x + (d.at[0] + w.side * w.q.nx * .16 - w.x) * e; P.z = w.z + (d.at[1] + w.side * w.q.nz * .16 - w.z) * e; P.yaw = w.yaw + wrapA(d.yaw + (w.side < 0 ? Math.PI : 0) - w.yaw) * e; P.pitch = w.pitch * (1 - e);
-      camera.fov = baseFov() + 24 * p * p; camera.updateProjectionMatrix(); sw.style.opacity = Math.min(1, p * 2.2) * .9; sw.style.transform = "rotate(" + (p * p * 250).toFixed(1) + "deg) scale(" + (.7 + p * 1.5).toFixed(3) + ")"; }
+    if (!w.calm) { P.x = w.x + (d.at[0] + w.side * w.q.nx * .16 - w.x) * e; P.z = w.z + (d.at[1] + w.side * w.q.nz * .16 - w.z) * e; P.yaw = w.yaw + Math.max(-1.05, Math.min(1.05, wrapA(d.yaw + (w.side < 0 ? Math.PI : 0) - w.yaw))) * e; P.pitch = w.pitch * (1 - e);
+      camera.fov = baseFov() + 24 * p * p; camera.updateProjectionMatrix(); sw.style.opacity = Math.min(1, p * 2.2) * SWIRL_A; sw.style.transform = "rotate(" + (e * SWIRL_DEG).toFixed(1) + "deg) scale(" + (2.8 + p * 6).toFixed(3) + ")"; }   // the swirl is painted small and stretched: a full-size layer would be far too much picture for a phone to hold
     bl.style.opacity = w.calm ? p : Math.pow(p, 2.4);
-    if (p >= 1) { w.cut = true; w.t = 0; sw.style.opacity = 0; bl.style.opacity = 1; begin(!!G.daily, d.to, d.arrive); cull(P.x); $("timer").textContent = Math.floor(TOTAL / 60) + ":" + ("0" + TOTAL % 60).slice(-2); if (!w.calm) burst(P.x - Math.sin(P.yaw) * 2, 1.1, P.z - Math.cos(P.yaw) * 2, d.tint[0], 12, .5); }
+    if (p >= 1) { w.cut = true; w.t = 0; sw.style.opacity = 0; bl.style.opacity = 1; begin(!!G.daily, d.to, d.arrive); cull(P.x); { const sb = $("scanbtn"); sb.textContent = "SCAN"; sb.classList.remove("fire"); $("cross").className = ""; $("prog").style.setProperty("--p", 0); $("banner").classList.remove("on"); for (const i of $("sig").querySelectorAll("i")) i.classList.remove("on"); }   // nothing of the chase in the house left behind shows in the new one
+      $("timer").textContent = Math.floor(TOTAL / 60) + ":" + ("0" + TOTAL % 60).slice(-2); if (!w.calm) burst(P.x - Math.sin(P.yaw) * 2, 1.1, P.z - Math.cos(P.yaw) * 2, d.tint[0], 12, .5); }
   } else { const p = Math.min(1, w.t / tout), k = Math.max(0, (p - .18) / .82);                      // the light holds a moment while the other house comes in, then goes once
     bl.style.opacity = 1 - k * k * (3 - 2 * k); if (!w.calm) { camera.fov = baseFov() - 9 * (1 - p) * (1 - p); camera.updateProjectionMatrix(); }
-    if (p >= 1) { gateLast = w.all; WARP = null; el.className = ""; bl.style.opacity = 0; camera.fov = baseFov(); camera.updateProjectionMatrix(); In.scan = false; } }
+    if (p >= 1) { gateLast = w.all; WARP = null; tapEpoch++; el.className = ""; bl.style.opacity = 0; camera.fov = baseFov(); camera.updateProjectionMatrix(); In.scan = false; } }
 }
 
 /* ---------- the simulation: one fixed slice of time ---------- */
@@ -1883,7 +1908,7 @@ function update(dt) {
   G.bob = (G.bob || 0) + moved * 4.2;
   if (!G.said.in && LV.entered(P)) { G.said.in = 1; if (!G.found && !G.reg && !G.bot && !G.caught) objective(LV.text.enter); }   // resale: not before z 1.1, because until there the open door leaf hides the table
 
-  gateStep(len > .05); if (WARP) return;
+  gateStep(len > .05, dt); if (WARP) return;
 
   // --- what is under the crosshair
   camera.getWorldDirection(fwd);
@@ -1923,7 +1948,7 @@ function update(dt) {
     if (Math.random() < dt * 1.6) sfx.chirp();
   }
   // --- small moving parts
-  for (const cov of coverGlow) if (cov.visible) { const k = .5 + .5 * Math.sin(G.t * 9 + cov.id); cov.position.y = Math.sin(G.t * 23 + cov.id) > .93 ? .012 : 0; cov.scale.setScalar(1 + k * .012); }
+  for (const cov of coverGlow) if (cov.visible) { const k = .5 + .5 * Math.sin(G.t * 9 + cov.id); const s = 1 + k * .012, c = cov.userData.c; cov.scale.setScalar(s); cov.position.set(c.x * (1 - s), (Math.sin(G.t * 23 + cov.id) > .93 ? .012 : 0) + c.y * (1 - s), c.z * (1 - s)); }   // it swells about its own middle, so it stays where it hangs
   led.color.setHSL(.52, 1, .45 + .25 * Math.sin(G.t * 4));
   for (const a of G.answers) if (!a.found) a.mark.position.y = a.at[1] + .34 + Math.sin(G.t * 2.4 + a.at[0]) * .035;
   if (G.card && !G.reg) { G.card.mark.position.y = G.card.at[1] + .7 + Math.sin(G.t * 2.4) * .04; G.desk.mark.position.y = G.desk.at[1] + .7 + Math.sin(G.t * 2.4 + 2) * .04; }
@@ -2032,7 +2057,7 @@ function showEnd(r) {
 function begin(daily, level = "resale", at) {                         // at: [x, z, yaw], a place to start from instead of the kerb. A portal door uses it
   const L = LEVELS[level] || LEVELS.resale;                             // each level has its own daily seed
   if (WARP && !at) { WARP = null; $("warp").className = ""; camera.fov = baseFov(); camera.updateProjectionMatrix(); }   // a run started any other way ends a trip that was under way
-  audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id); if (at) { P.x = at[0]; P.z = at[1]; P.yaw = at[2]; G.gateT = .8; }
+  audio(); newRun(daily ? hash(todayKey() + L.seed) : (Math.random() * 4294967296) >>> 0, daily, L.id); if (at) { P.x = at[0]; P.z = at[1]; P.yaw = at[2]; G.gateT = .8; G.gateHold = 1; }
   state = "play"; document.body.className = "play" + (IS_TOUCH ? " is-touch" : "") + (L.reg ? " lv-reg" : ""); $("card").className = ""; if (!at) { $("lhint").style.display = ""; for (const c of $("lhint").children) c.style.display = ""; }   // a player who came through a portal door is not shown the walking lines again
   track(L.start); last = performance.now(); acc = 0;
   if (at) return;                                                       // mid-run: the mouse is already held and the spare history entry is already there
