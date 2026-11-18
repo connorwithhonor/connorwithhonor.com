@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI That Gets You Back in Front of People | Office Talk | Connor MacIvor</title>
+<meta name="description" content="Every prompt from Connor MacIvor's office AI talk, free, no email: listing posts, database follow-up, open house follow-up, custom instructions, and the rules that keep agents out of trouble.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://connorwithhonor.com/office/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI That Gets You Back in Front of People | Connor MacIvor">
+<meta property="og:description" content="Every prompt from the office AI talk. Free, no email required.">
+<meta property="og:url" content="https://connorwithhonor.com/office/">
+<link rel="icon" href="/favicon-shield.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root{
+  --paper:#fdfcf9; --panel:#ffffff; --ink:#211c15; --body:#4a4438; --muted:#7a7263;
+  --line:#ece5d8; --gold:#e8a838; --gold-deep:#8a6310; --gold-soft:#faf3e0;
+  --red:#a8402f; --red-soft:#fbeeea; --green:#2f6b45; --green-soft:#eaf4ed;
+  --shadow:0 10px 30px rgba(40,30,10,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Source Serif 4',Georgia,serif;color:var(--ink);line-height:1.12;letter-spacing:-.01em;font-weight:600}
+a{color:var(--gold-deep)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-weight:700;font-size:1rem;padding:.85rem 1.4rem;border-radius:12px;text-decoration:none;border:0;cursor:pointer;transition:.18s}
+.btn-gold{background:var(--gold);color:#2a1d00;box-shadow:0 6px 18px rgba(232,168,56,.35)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-deep)}
+.hero{padding:3.6rem 0 2.4rem}
+.eyebrow{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);font-weight:700;font-size:.78rem;letter-spacing:.06em;padding:.4rem .9rem;border-radius:999px;border:1px solid #f0e2bd;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem);max-width:20ch;margin-bottom:1rem}
+.hero h1 em{font-style:normal;color:var(--gold-deep)}
+.lead{font-size:1.16rem;max-width:60ch;margin-bottom:1.6rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem}
+.toc{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.toc a{font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.45rem .85rem;min-height:36px;display:inline-flex;align-items:center}
+.toc a:hover{border-color:var(--gold);color:var(--gold-deep)}
+section{padding:2.8rem 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:.8rem;max-width:26ch}
+section h3{font-size:1.25rem;margin:1.6rem 0 .5rem}
+section p{max-width:68ch;margin-bottom:.9rem;font-size:1.04rem}
+.num{font-family:'Oswald',sans-serif;color:var(--gold-deep);font-weight:700;font-size:.95rem;letter-spacing:.04em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+ul.list,ol.list{margin:.4rem 0 1rem 1.3rem;max-width:68ch}
+ul.list li,ol.list li{margin:.4rem 0;font-size:1.02rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;box-shadow:var(--shadow)}
+.card h4{font-size:1.08rem;margin-bottom:.4rem}
+.card p{font-size:.97rem;margin:0}
+.card.do{border-top:4px solid var(--green)}
+.card.dont{border-top:4px solid var(--red)}
+.card .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.35rem}
+.card.do .tag{color:var(--green)}
+.card.dont .tag{color:var(--red)}
+.callout{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:10px;padding:1.1rem 1.3rem;margin:1.2rem 0;max-width:72ch}
+.callout.warn{background:var(--red-soft);border-left-color:var(--red)}
+.callout p{margin:0}
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1rem 0}
+.ladder div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem}
+.ladder b{font-family:'Oswald',sans-serif;font-size:1.6rem;color:var(--gold-deep);display:block;line-height:1}
+.ladder strong{display:block;color:var(--ink);margin:.3rem 0 .2rem}
+.ladder span{font-size:.92rem}
+.tpl{position:relative;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:10px;padding:1.2rem 1.2rem 1.2rem;margin:1rem 0;white-space:pre-wrap;font:0.92rem/1.6 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);max-width:80ch;overflow-x:auto}
+.tpl-wrap{position:relative;max-width:80ch}
+.copy{position:absolute;top:10px;right:10px;z-index:2;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:.5rem .8rem;font:700 .8rem Inter,sans-serif;cursor:pointer;min-height:36px}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 .2rem}
+.tabs button{font:600 .92rem Inter,sans-serif;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:.5rem 1rem;cursor:pointer;min-height:44px;color:var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tabpanel[hidden]{display:none}
+.ws{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.95rem}
+.ws th{background:var(--gold-soft);color:var(--gold-deep);text-align:left;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:.6rem .5rem}
+.ws td{border-top:1px solid var(--line);padding:.35rem .4rem;vertical-align:middle}
+.ws input,.ws select{width:100%;font:inherit;border:1px solid transparent;background:transparent;padding:.45rem .4rem;border-radius:6px;min-height:40px;color:var(--ink)}
+.ws input:focus,.ws select:focus{border-color:var(--gold);outline:none;background:#fffdf6}
+.ws td.n{width:2.2rem;color:var(--muted);text-align:center;font-weight:700}
+.ws-tools{display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0;align-items:center}
+.ws-total{font-weight:700;color:var(--ink)}
+.ws-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ws-scroll table{min-width:640px}
+.contact{background:linear-gradient(160deg,#241f18,#37301f);color:#f4efe4;border-radius:20px;padding:2.4rem 1.8rem;margin:2.4rem 0 1rem}
+.contact h2{color:#fff}
+.contact p{color:#d8cfbc}
+.contact .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.qr-card{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem;margin-top:1.6rem;max-width:460px;box-shadow:var(--shadow)}
+.qr-card img{width:96px;height:96px;flex:0 0 auto}
+.qr-card p{margin:0;font-size:.95rem}
+.contact .qr-card{background:#fff;color:var(--ink);border:0;margin-top:1.4rem}
+.contact .qr-card p{color:var(--body)}
+.btn-cal{background:#fff;color:#2a1d00;border:2px solid var(--gold)}
+.btn-cal:hover{background:var(--gold-soft)}
+a.btn:focus-visible,button:focus-visible{outline:3px solid var(--gold-deep);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.btn,.btn-gold:hover{transition:none;transform:none}}
+.fine{font-size:.85rem;color:var(--muted);max-width:80ch}
+
+body>nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.1);padding:0 20px}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:#fff;text-decoration:none}
+.nav-brand span{color:#00e5ff}
+.nav-links{display:flex;gap:1.6rem;align-items:center}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:#c8c8d0;text-decoration:none}
+.nav-links a:hover{color:#00e5ff}
+.nav-cta{background:#e8213f;color:#fff!important;padding:8px 16px}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:10px;min-height:44px;justify-content:center}
+.nav-hamburger span{width:28px;height:2px;background:#00e5ff}
+@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:flex}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.98);padding:1.4rem;gap:1.1rem}}
+footer{background:#0a0a0f;color:#9a9aa6;padding:2.6rem 20px 2rem;margin-top:2rem;text-align:center;font-size:.9rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-links{display:flex;gap:1.2rem 2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.6rem}
+.footer-links a{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:#9a9aa6;text-decoration:none}
+.footer-legal{font-size:.82rem;line-height:1.8}
+.footer-legal a,.footer-coded a{color:#7fd7e3;text-decoration:none}
+.footer-coded{font-size:.66rem;letter-spacing:2px;margin-top:1.2rem}
+.macivor{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+@media(max-width:640px){.hero{padding:2.4rem 0 1.6rem}.cta-row .btn{width:100%}.contact{padding:1.8rem 1.2rem;border-radius:14px}}
+@media print{nav,.toc,.cta-row,.copy,.tabs,.ws-tools,.contact .cta-row,footer{display:none!important}.tabpanel[hidden]{display:block!important}body{background:#fff}section{padding:1.2rem 0;break-inside:avoid-page}.card,.tpl{box-shadow:none}}
+.book-hero h1{max-width:22ch}
+.book-cta{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin:1.4rem 0 .6rem}
+.btn-xl{font-size:1.15rem;min-height:58px;padding:1rem 1.8rem}
+.fine{font-size:.92rem;color:var(--muted)}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem;margin:1rem 0;list-style:none}
+.topics li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;box-shadow:var(--shadow)}
+.topics b{display:block;color:var(--ink);margin-bottom:.25rem}
+.facts{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1rem}
+.facts span{background:var(--gold-soft);border:1px solid #f0e2bd;color:var(--gold-deep);font-weight:700;font-size:.9rem;border-radius:999px;padding:.4rem .9rem}
+.why{border-left:4px solid var(--gold);padding:.4rem 0 .4rem 1.2rem;max-width:62ch}
+.why p{font-size:1.08rem;margin-bottom:.8rem}
+.past{list-style:none;display:grid;gap:.8rem;margin-top:1rem}
+.past li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem}
+.past .when{font-family:'Oswald',sans-serif;color:var(--gold-deep);font-weight:600;letter-spacing:.03em;text-transform:uppercase;font-size:.9rem}
+.past a{color:var(--gold-deep);font-weight:700}
+.divider{background:var(--gold-soft);border-top:1px solid #f0e2bd;border-bottom:1px solid #f0e2bd;padding:2rem 0}
+.trust{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:1rem 0 0;font-weight:600;color:var(--ink);font-size:.95rem}
+.trust span::before{content:"\2713";color:var(--green);margin-right:.4rem}
+.steps{list-style:none;counter-reset:st;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin-top:1rem}
+.steps li{counter-increment:st;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+.steps li::before{content:counter(st);display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--gold);color:#2a1d00;font-weight:800;margin-bottom:.5rem}
+.steps b{display:block;color:var(--ink)}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:.5rem 0;padding:0 1.1rem}
+.faq summary{cursor:pointer;font-weight:700;color:var(--ink);min-height:48px;display:flex;align-items:center}
+.faq details p{padding:0 0 1rem}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-brand">Connor <span>with Honor</span></a><div class="nav-links" id="navLinks"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/">Blog</a><a href="/speaking">Speaking</a><a href="tel:6614001720" class="nav-cta">661-400-1720</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<main>
+<div class="hero book-hero">
+  <div class="wrap">
+    <span class="eyebrow">From today's office meeting</span>
+    <h1>AI that gets you <em>back in front of people.</em></h1>
+    <p class="lead">Every prompt from the talk, free, no email required. Copy one, paste it into ChatGPT, Claude or Gemini, fill in the brackets, and check every fact before anything goes to a client.</p>
+    <div class="book-cta">
+      <a class="btn btn-gold btn-xl" href="https://bookwithhonor.com/?utm_source=office-page&amp;utm_medium=web&amp;utm_campaign=office-talks" target="_blank" rel="noopener">Book a free 30-minute setup</a>
+      <a class="btn btn-ghost" href="sms:+16614762217?&amp;body=AI%20SETUP">Text (661) 476-2217</a>
+    </div>
+    <p class="fine">One on one, free. We set up your custom instructions on your own phone and run your first database follow-up together. Put "office talk" in the booking notes. Not recruiting. Nothing to buy.</p>
+    <nav class="toc" aria-label="On this page"><a href="#rule">The rule</a><a href="#posts">Listing posts</a><a href="#database">Database</a><a href="#openhouse">Open house</a><a href="#instructions">Custom instructions</a><a href="#rules">Stay out of trouble</a><a href="#friday">Before Friday</a></nav>
+  </div>
+</div>
+
+<section id="rule"><div class="wrap">
+  <span class="num">01 &middot; The rule</span>
+  <h2>AI does the typing. You do the talking.</h2>
+  <p><b>Let AI draft:</b> listing posts, follow-up notes, market updates, open house recaps, checklists. <b>Let AI help:</b> pricing prep, objection practice, appointment research, your social calendar. <b>Keep human:</b> negotiation, advice, anything signed, money talk with a client, fair housing judgment calls.</p>
+  <p><b>Speed wins the lead.</b> In a well-known lead response study (Dr. James Oldroyd with InsideSales.com, about 15,000 leads), reaching a lead within 5 minutes instead of 30 made it 21 times more likely to qualify.</p>
+</div></section>
+
+<section id="posts"><div class="wrap">
+  <span class="num">02 &middot; Monday move 1</span>
+  <h2>One listing, a week of posts.</h2>
+  <p>Get the listing agent's OK first, then check every fact against the MLS.</p>
+  <div class="tpl-wrap"><button class="copy" type="button" data-copy="tpl-posts">Copy</button><div class="tpl" id="tpl-posts">Here is my listing description: [PASTE]. Write 5 social posts for this home, one per day. Each one leads with a different feature. Under 80 words each. No price claims I did not give you. No words about who should live here. End each with: Call or text [NAME], [PHONE].</div></div>
+</div></section>
+
+<section id="database"><div class="wrap">
+  <span class="num">03 &middot; Monday move 2</span>
+  <h2>Wake up your database.</h2>
+  <p>The cheapest leads in the business are people who already know you and have not heard from you in a year. AI drafts. You edit one line so it sounds like you, and you send it.</p>
+  <div class="tpl-wrap"><button class="copy" type="button" data-copy="tpl-db">Copy</button><div class="tpl" id="tpl-db">Write a short personal text to [FIRST NAME]. I helped them buy [ADDRESS] in [YEAR]. I have not been in touch in a while. Mention one real thing their neighborhood did this year: [FACT]. No sales pitch. End with a question. Under 60 words.</div></div>
+</div></section>
+
+<section id="openhouse"><div class="wrap">
+  <span class="num">04 &middot; Monday move 3</span>
+  <h2>Open house follow-up in two minutes.</h2>
+  <p>Text only the visitors who said you could. Email is the safe default.</p>
+  <div class="tpl-wrap"><button class="copy" type="button" data-copy="tpl-oh">Copy</button><div class="tpl" id="tpl-oh">I held an open house at [ADDRESS] today. Visitors: [NAMES AND ONE NOTE EACH]. Write one short thank-you email for each, using their note, offering one helpful next step. No pressure. Under 90 words each.</div></div>
+</div></section>
+
+<section id="instructions"><div class="wrap">
+  <span class="num">05 &middot; Set it once</span>
+  <h2>Ten minutes of setup that makes every answer better.</h2>
+  <p><b>ChatGPT:</b> Settings, Personalization, Custom instructions. <b>Claude:</b> Settings, Profile. <b>Gemini:</b> Settings, Saved info.</p>
+  <div class="tpl-wrap"><button class="copy" type="button" data-copy="tpl-ci">Copy</button><div class="tpl" id="tpl-ci">WHO I AM: I am a licensed California real estate agent with [BROKERAGE NAME], DRE #[NUMBER], working mainly in [CITIES / ZIP CODES].
+WHO I SERVE: [sellers / buyers / both], mostly [describe your typical client].
+HOW I WRITE: Short sentences. Plain English. Warm and direct. No hype words.
+WHAT I WANT FROM YOU: Ask me one clarifying question before long work. Label anything you are not sure is true as UNVERIFIED.
+NEVER: Give legal or tax advice. Describe a neighborhood by who lives there (race, religion, national origin, family status, disability, or any protected class). Invent facts about a property. Promise a price or a result.
+ALWAYS: Remind me to check the MLS, the disclosures and my broker before anything goes to a client.</div></div>
+  <p><b>The Platinum Card rule:</b> AI drafts, you send, every time. Anything connected to your email, calendar or CRM starts read-only. Anything more goes through your broker first.</p>
+</div></section>
+
+<section id="rules"><div class="wrap">
+  <span class="num">06 &middot; Stay out of trouble</span>
+  <h2>The rules that do not move.</h2>
+  <ul>
+    <li><b>Fair housing.</b> Target the property, never the people.</li>
+    <li><b>AI dialing.</b> The FCC ruled in February 2024 that AI-generated voices are artificial voices under the TCPA. Marketing calls with one need prior express written consent. $500 to $1,500 per call when it goes wrong. Humans dial.</li>
+    <li><b>MLS data.</b> No solicitation lists built from expired or canceled listings. Do not paste MLS data into public AI tools. Ask your broker and CRMLS first.</li>
+    <li><b>Altered listing photos.</b> Since January 1, 2026 (AB 723): disclose on or next to the image and link to the original. Virtual staging included.</li>
+    <li><b>Client files.</b> Only on a business plan with training off, or not at all.</li>
+  </ul>
+  <p class="fine">General education, not legal advice. Your broker's policy comes first.</p>
+</div></section>
+
+<section id="friday"><div class="wrap">
+  <span class="num">07 &middot; Before Friday</span>
+  <h2>Three things.</h2>
+  <ol><li><b>Set your custom instructions.</b> Ten minutes.</li><li><b>Pick 20 names</b> you have not talked to in a year. AI drafts. You edit and send.</li><li><b>Time yourself.</b> How fast did you answer your last three leads?</li></ol>
+</div></section>
+
+<div class="wrap">
+  <div class="contact" id="contact">
+    <span class="eyebrow">Free, no strings</span>
+    <h2>Want help setting it up? 30 minutes, one on one, on your phone.</h2>
+    <p>Not recruiting. Not pitching my office. Nothing to buy.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="https://bookwithhonor.com/?utm_source=office-page&amp;utm_medium=web&amp;utm_campaign=office-talks" target="_blank" rel="noopener">Book a free 30-minute setup</a>
+      <a class="btn btn-ghost" href="sms:+16614762217?&amp;body=AI%20SETUP">Text 661-476-2217</a>
+    </div>
+    <p style="margin-top:1.2rem;font-size:.92rem">Connor MacIvor &middot; REALTOR&reg; since 1998 &middot; CA DRE #01238257 &middot; SYNC Brokerage</p>
+  </div>
+</div>
+</main>
+
+<footer><div class="footer-inner"><div class="footer-links"><a href="/">Home</a><a href="/990">990</a><a href="/ai">AI</a><a href="/blog/" target="_blank">Blog</a><a href="/speaking">Speaking</a><a href="https://sellersonlyagent.com" target="_blank">Sellers Only Agent</a><a href="https://honorelevate.com" target="_blank">HonorElevate</a><a href="https://hireaivoice.com" target="_blank">HireAIVoice</a><a href="https://thelastaddiction.com" target="_blank">The Last Addiction</a><a href="https://godisnotthemachine.com" target="_blank">God Is Not The Machine</a></div><p class="footer-legal">Connor T. <span class="macivor">MacIvor</span> · CalDRE #01238257 · Sync Brokerage, Inc. · DRE #02031490<br>Santa Clarita, California | <a href="mailto:connor@connorwithhonor.com">connor@connorwithhonor.com</a></p><p class="footer-legal" style="margin-top:.8rem">General education for real estate professionals. Not legal advice. Equal Housing Opportunity.</p><p class="footer-coded"><a href="https://honorelevate.com" target="_blank">Coded by Connor with Honor | AI Growth Architect</a></p></div></footer><script>document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('active')});</script>
+
+<script>
+(function(){
+  // tabs
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(o){var on=o===t;o.setAttribute('aria-selected',on);document.getElementById(o.getAttribute('aria-controls')).hidden=!on})})});
+  // copy buttons
+  [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(b){b.addEventListener('click',function(){var txt=document.getElementById(b.getAttribute('data-copy')).innerText;var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)};if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done,function(){})}else{var r=document.createRange();r.selectNodeContents(document.getElementById(b.getAttribute('data-copy')));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');done()}})});
+  // worksheet
+})();
+</script>
+</body>
+</html>
