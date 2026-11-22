@@ -768,7 +768,7 @@ function buildHouse() {
   // The for sale post, with the rider that says who listed it.
   bx("white", .1, 2, .1, .45, 1, -3.6); bx("white", 1.25, .1, .1, 1.02, 1.95, -3.6); put(ball(.07, 1), "white", .45, 2.04, -3.6);
   box(.96, .66, .025, 1.08, 1.52, -3.6, 0xffffff); plane(.92, .62, sign(["FOR SALE"], .92, .62, "#1f5fa8", "#ffffff"), 1.08, 1.52, -3.615, { ry: Math.PI });
-  box(.96, .32, .025, 1.08, 1.0, -3.6, 0xffffff); plane(.92, .28, sign(["Seller's Only Agent™", "SellersOnlyAgent.com"], .92, .28, "#e8a838", "#17120a", true), 1.08, 1.0, -3.615, { ry: Math.PI });
+  box(.96, .32, .025, 1.08, 1.0, -3.6, 0xffffff); plane(.92, .28, sign(["Sellers Only Agent™", "SellersOnlyAgent.com"], .92, .28, "#e8a838", "#17120a", true), 1.08, 1.0, -3.615, { ry: Math.PI });
   for (const x of [.72, 1.44]) for (const y of [1.87, 1.19]) bx("steel", .012, .06, .012, x, y, -3.6);
   hard(.98, -3.6, 1.2, .3);   // post and panels only, so nothing solid is near the walk from the kerb to the door
 
@@ -837,7 +837,7 @@ function buildHouse() {
   // A flyer on the entry wall, where every visitor walks past it.
   box(.02, .72, .56, .085, 1.45, 2.35, 0x2a2622); plane(.5, .66, sign(["THIS WEEKEND'S", "OPEN HOUSES", "SantaClaritaOpenHouses.com"], .5, .66, "#ffffff", "#17120a", true), .1, 1.45, 2.35, { ry: Math.PI / 2 });
   // And a magnet on the fridge.
-  plane(.3, .18, sign(["Seller's Only Agent™", "SellersOnlyAgent.com"], .3, .18, "#e8a838", "#17120a", true), 15.04, 1.55, 4.86, { ry: -Math.PI / 2 });
+  plane(.3, .18, sign(["Sellers Only Agent™", "SellersOnlyAgent.com"], .3, .18, "#e8a838", "#17120a", true), 15.04, 1.55, 4.86, { ry: -Math.PI / 2 });
 
   // ---- hall
   plane(4.6, .8, paint(128, 32, (c) => { c.fillStyle = "#7d3f3a"; c.fillRect(0, 0, 128, 32); c.strokeStyle = "#e6c98f"; c.lineWidth = 2; c.strokeRect(3, 3, 122, 26); for (let i = 0; i < 10; i++) { c.strokeRect(12 + i * 11, 10, 6, 12); } }), 7.5, .012, 6.7, { rx: -Math.PI / 2 });
@@ -1225,7 +1225,7 @@ const FLAGS = [
 const paper = (head, col = "#1f5fa8") => paint(128, 168, (c) => { c.fillStyle = "#fffdf8"; c.fillRect(0, 0, 128, 168); c.fillStyle = col; c.fillRect(0, 0, 128, 26); c.fillStyle = "#fff"; c.font = "800 12px Arial"; c.fillText(head, 8, 17); c.fillStyle = "#b9b4a8"; for (let i = 0; i < 9; i++) c.fillRect(10, 40 + i * 13, 70 + (i * 37) % 40, 3); });
 const flat = (g, head, x, y, z, col) => plane(.21, .28, paper(head, col), x, y, z, { parent: g, rx: -Math.PI / 2 });
 const ANSWERS = [
-  { id: "rider", always: 1, at: [1.08, 1.0, -3.63], q: "What is a Seller’s Only Agent™?", a: "An agent who represents the seller and never takes the buyer as a client. One side, clearly, from listing to closing.", build() {} },
+  { id: "rider", always: 1, at: [1.08, 1.0, -3.63], q: "What is a Sellers Only Agent™?", a: "An agent who represents the seller and never takes the buyer as a client. One side, clearly, from listing to closing.", build() {} },
   { id: "flyer", always: 1, at: [.11, 1.45, 2.35], q: "If I ask about a home online, who actually gets my question?", a: "On SantaClaritaOpenHouses.com it goes to one local agent. It is not auctioned off to whoever pays for the lead.", build() {} },
   { id: "whofor", at: [10.05, 1.0, 3.72], q: "Who does the agent at this open house work for?", a: "The seller. You can tour and ask anything, but for an advocate of your own you hire your own agent.",
     build(g) { box(.11, .02, .07, 10.05, .94, 3.72, 0x2a2622, { parent: g }); const c = plane(.1, .06, paint(96, 58, (c) => { c.fillStyle = "#fff"; c.fillRect(0, 0, 96, 58); c.fillStyle = "#17120a"; c.font = "800 11px Arial"; c.fillText("LISTING AGENT", 8, 24); c.fillStyle = "#b9b4a8"; c.fillRect(8, 34, 60, 3); c.fillRect(8, 42, 44, 3); }), 10.05, .985, 3.72, { parent: g, double: 1 }); c.rotation.x = -.3; } },
@@ -2040,7 +2040,7 @@ function showEnd(r) {
   for (const a of G.answers) h += a.found ? '<div class="item"><b>' + esc(a.def.q) + "</b>" + esc(a.def.a) + "</div>" : a.def.insider && G.reg !== "yes" ? '<div class="item lock"><em>Locked in the run</em><b>' + esc(a.def.q) + "</b>" + esc(a.def.a) + " A good question to bring to an agent of your own.</div>" : '<div class="item miss"><em>Not read</em><b>A question you walked past</b>Look for the gold question marks.</div>';
   h += '</div><div class="sec">Try it on a real one this weekend</div><div class="near">' +
     '<a href="https://santaclaritaopenhouses.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-scoh">Santa Clarita open houses <span>SantaClaritaOpenHouses.com</span></a>' +
-    '<a href="https://sellersonlyagent.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-soa">Selling yours? Seller’s Only Agent™ <span>SellersOnlyAgent.com</span></a></div>' +
+    '<a href="https://sellersonlyagent.com/?utm_source=openhousegame&utm_medium=game&utm_campaign=hunt" target="_blank" rel="noopener" data-ev="hunt-click-soa">Selling yours? Sellers Only Agent™ <span>SellersOnlyAgent.com</span></a></div>' +
     '<p class="fine" style="text-align:left">' + T.last + '</p>' +
     '<div class="host"><img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="54" height="54"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div></div>' +
     '<p class="fine">Open House Game is a game. ' + T.fine + '<br>Connor T. MacIvor &middot; CalDRE #01238257 &middot; Sync Brokerage, Inc. &middot; DRE #02031490 &middot; Equal Housing Opportunity</p>';

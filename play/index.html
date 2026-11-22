@@ -826,7 +826,7 @@ function finish(dead) {
   var host = el("div", "host", '<img src="/img/connor-portrait-400.webp" alt="Connor MacIvor" width="56" height="56" loading="lazy"><div><b>Built by Connor MacIvor</b><span>Selling homes in the Santa Clarita Valley since 1998. 20 years LAPD. He writes his own software.</span></div>');
   card.appendChild(host);
   if (seller) {
-    var soa = el("a", "btn ghost", "Selling for real? Meet the Seller\u2019s Only Agent\u2122");
+    var soa = el("a", "btn ghost", "Selling for real? Meet the Sellers Only Agent\u2122");
     soa.href = "https://sellersonlyagent.com/" + UTM + "&utm_content=seller-" + grade; soa.target = "_blank"; soa.rel = "noopener"; soa.style.textDecoration = "none";
     soa.addEventListener("click", function () { track("click-sellers-only-agent"); });
     card.appendChild(soa);
