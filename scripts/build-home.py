@@ -5,6 +5,7 @@ and the current latest video IDs in as no-JS fallbacks. Run: python3 scripts/bui
 import re,sys,html
 old=open(sys.argv[1]).read(); ep,sh=sys.argv[2],sys.argv[3]
 ld='\n'.join(m.group(0) for m in re.finditer(r'<script type="application/ld\+json">.*?</script>',old,re.S))
+ld=ld.replace('(20 years sworn, 23 years total law enforcement)','(20 years LAPD, honorably retired with no pension; 23 years total in law enforcement)')  # bio canon 2026-11-25
 b=open('blog/index.html').read()
 posts=''
 for m in list(re.finditer(r'<a class="ep-card" href="([^"]+)">(.*?)</a>',b,re.S))[:3]:
