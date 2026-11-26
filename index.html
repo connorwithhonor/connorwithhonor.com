@@ -373,6 +373,8 @@ footer{background:var(--navy-2);color:#93a1b8;font-size:.9rem;padding:46px 0 30p
 <script>
 (function(){
  var n=document.getElementById('nav'),b=document.getElementById('burger');
+ function pin(){var m=document.getElementById('macbox-bar');n.style.top=(m&&getComputedStyle(m).position==='sticky'?m.offsetHeight:0)+'px'}
+ window.addEventListener('load',function(){pin();setTimeout(pin,800)});window.addEventListener('resize',pin);
  b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o)});
  document.querySelectorAll('#links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open')})});
  try{var d=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Los_Angeles'}).format(new Date());if(d==='2026-11-26')document.getElementById('thanks').classList.add('on')}catch(e){}
